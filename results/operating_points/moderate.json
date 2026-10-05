@@ -1,0 +1,47 @@
+[
+ {
+  "problem": "moderate",
+  "n": 32,
+  "n_data_grid": 64,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_data": 2400,
+  "rel_model_error": 0.020852127583759317,
+  "rel_noise": 0.0316227766016838,
+  "model_to_noise": 0.6594021722510293,
+  "phi_truth": 3401.2606159239676,
+  "phi_clean": 2438.2309412828827,
+  "phi_excess_sd": 19.65776091690966,
+  "seconds": 1.0
+ },
+ {
+  "problem": "moderate",
+  "n": 48,
+  "n_data_grid": 96,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_data": 2400,
+  "rel_model_error": 0.00850431661705652,
+  "rel_noise": 0.03162277660168382,
+  "model_to_noise": 0.2689301045311654,
+  "phi_truth": 2578.1311245100205,
+  "phi_clean": 2438.2309412828813,
+  "phi_excess_sd": 2.8557005319030395,
+  "seconds": 0.9
+ },
+ {
+  "problem": "moderate",
+  "n": 64,
+  "n_data_grid": 128,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_data": 2400,
+  "rel_model_error": 0.004415654856947967,
+  "rel_noise": 0.03162277660168379,
+  "model_to_noise": 0.13963526709140558,
+  "phi_truth": 2473.36390460935,
+  "phi_clean": 2438.230941282882,
+  "phi_excess_sd": 0.7171486108480014,
+  "seconds": 1.1
+ }
+]

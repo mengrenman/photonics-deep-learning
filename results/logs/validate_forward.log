@@ -1,0 +1,41 @@
+JAX 0.11.2, devices [CpuDevice(id=0)]
+== 1. Forward vs Mie series: relative error ||d - d_mie|| / ||d_mie|| over 6 tx x 8 rx ==
+   DOI side 2, tx ring r=3, rx ring r=3.5, tol 1e-10, lossless cylinder centered at the origin
+   cylinder R=0.6 eps_r=2  (Mie series truncated at n=16)
+      n     h       err(ss=4)   ratio    err(ss=64)  ratio
+     24  0.0833   3.092e-02    nan    3.080e-02    nan
+     48  0.0417   8.026e-03   3.85    8.432e-03   3.65
+     96  0.0208   2.431e-03   3.30    2.183e-03   3.86
+    192  0.0104   7.412e-04   3.28    5.544e-04   3.94
+   cylinder R=0.8 eps_r=4  (Mie series truncated at n=21)
+      n     h       err(ss=4)   ratio    err(ss=64)  ratio
+     24  0.0833   1.786e-01    nan    1.750e-01    nan
+     48  0.0417   4.790e-02   3.73    5.080e-02   3.44
+     96  0.0208   1.376e-02   3.48    1.323e-02   3.84
+    192  0.0104   2.774e-03   4.96    3.345e-03   3.96
+   cylinder R=0.6 eps_r=2+0.5i  (Mie series truncated at n=16)
+      n     h       err(ss=4)   ratio    err(ss=64)  ratio
+     24  0.0833   1.811e-02    nan    1.820e-02    nan
+     48  0.0417   5.096e-03   3.55    5.227e-03   3.48
+     96  0.0208   1.471e-03   3.46    1.359e-03   3.84
+    192  0.0104   4.393e-04   3.35    3.436e-04   3.96
+
+== 2. Timing: ch15 rings (40 tx, 60 rx), tol 1e-8, GMRES restart 100 ==
+   'G-products/tx' = FFT operator applications per transmitter solved alone (min-max over 4 tx),
+   including one residual evaluation per restart cycle. JAX returns no iteration counts.
+   n=32 cylinder r=1 eps_r=2    fwd    0.05s (compile   0.2s)  value+grad    0.09s (compile   0.3s)  G-products/tx 29-30  max rel resid 9.9e-09
+   n=48 cylinder r=1 eps_r=2    fwd    0.09s (compile   0.3s)  value+grad    0.18s (compile   0.6s)  G-products/tx 31-32  max rel resid 4.0e-09
+   n=64 cylinder r=1 eps_r=2    fwd    0.16s (compile   0.4s)  value+grad    0.35s (compile   0.6s)  G-products/tx 32-32  max rel resid 6.3e-09
+   n=96 cylinder r=1 eps_r=2    fwd    0.35s (compile   0.8s)  value+grad    0.68s (compile   0.9s)  G-products/tx 32-32  max rel resid 8.7e-09
+   n=96 austria_fixed eps_r=2   fwd    0.63s (compile   0.9s)  value+grad    1.22s (compile   1.5s)  G-products/tx 39-55  max rel resid 9.6e-09
+   n=96 austria_fixed eps_r=4   fwd    5.43s (compile   9.0s)  value+grad   10.53s (compile  10.6s)  G-products/tx 95-295  max rel resid 1.0e-08
+   (--hard adds the eps_r=8 phantom, which is slow and does not converge at restart 100)
+
+== 3. stack vs vmap, and warm start (n=48, ch15 rings, eps_r=2 cylinder) ==
+   batch=stack: solve  0.110s (compile   0.1s)  max rel resid 4.0e-09
+   batch=vmap : solve  0.223s (compile   0.5s)  max rel resid 4.0e-09
+   chi perturbed by 0.001: G-products/tx cold [40, 40, 40, 40] warm [33, 33, 33, 34]; solve time cold 0.129s warm 0.097s
+   chi perturbed by 0.01: G-products/tx cold [42, 42, 42, 42] warm [38, 37, 37, 38]; solve time cold 0.134s warm 0.114s
+real 99.95
+user 347.87
+sys 26.99

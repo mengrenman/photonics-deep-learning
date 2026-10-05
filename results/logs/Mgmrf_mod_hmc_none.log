@@ -1,0 +1,18 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 22.6
+operating point: grid model error 2.09% of ||d|| against noise 3.16% (ratio 0.66); Phi(truth on the inference grid) = 3401 = N +1001 (N = 2400), 19.7 sd above the Phi of the noise-free fine-grid data (2438)
+WARNING: the inference grid is too coarse for this noise level (model error above 0.35 of the noise amplitude): the posterior is conditional on a visibly wrong forward model. Refine --n, lower --snr, or treat the run as a labeled control (--data-factor 1).
+MAP: 400 iterations, 436 evaluations, 124.8 s, Phi 2371.3 (N data = 2400), |grad U|_inf 4.19e+00; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: hmc, 2 chains x (60 warmup + 240 samples), thin 1, step0 0.3, init map
+Laplace: K=150 eigenpairs (cached, 302 jvp+vjp products): lam_max 2.71e+06, lam_K 0.0375; #lam>1.5: 124, >10: 111, >100: 95, >1e4: 62
+
+acceptance 0.604, final step 0.06603, Phi (physical misfit) mean 2428.0 (MAP 2371.3, N data 2400); sampler trace mean -5882.1 is reparametrized Phi' = Phi + |xi|^2/2 - |zeta|^2/2
+ESS of Phi 178.2440810452552, tau 2.8021555531790647, min ESS over Phi and 5 pixels 113.58786211356104; ESS/s 0.0626330071926814; max pixel R-hat 1.038725539524097
+err_model (eps_r, eq. 15.21): vacuum 0.3182, MAP 0.1087, posterior mean 0.1093
+err_chi (contrast-normalized): MAP 0.3414, posterior mean 0.3435
+err_data (eq. 15.22): MAP 0.0054, posterior mean 0.0065
+z-map of eps_r (mean - truth)/std: rms 0.80, |z|>2 for 3% of pixels
+forward solves: 6002 sampling + 436 MAP; max solver residual at the final states 9.96e-11 (tol 1e-10); wall 1969.2 s (sampling 1813.5 s, compile 8.2 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/Mgmrf_mod_hmc_none
+real 1973.67
+user 2534.97
+sys 433.32

@@ -1,0 +1,12 @@
+{
+  "label": "a_pcn_pool",
+  "runs": [
+    "a_pcn_map",
+    "a_pcn_prior"
+  ],
+  "chains": 4,
+  "rhat_phi": 7.454895320282392,
+  "rhat_pixels_max": 26.84948508325951,
+  "rhat_pixels_median": 6.505151341017913,
+  "frac_pixels_rhat_lt_1.1": 0.0
+}

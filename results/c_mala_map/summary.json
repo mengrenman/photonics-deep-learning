@@ -1,0 +1,185 @@
+{
+  "args": {
+    "n": 48,
+    "side": 5.0,
+    "n_tx": 40,
+    "n_rx": 60,
+    "phantom": "austria_fixed",
+    "eps_r": 2.0,
+    "radius": null,
+    "snr": 30.0,
+    "data_factor": 2,
+    "prior": "matern",
+    "sigma": 0.5,
+    "ell": 0.4,
+    "nu": 1.5,
+    "mean": 0.0,
+    "link": "log_eps",
+    "born": false,
+    "sampler": "mala",
+    "chains": 2,
+    "warmup": 40,
+    "samples": 160,
+    "thin": 2,
+    "step0": null,
+    "n_leapfrog": 10,
+    "jitter": 0.2,
+    "init": "map",
+    "init_noise": 0.01,
+    "tol": 1e-10,
+    "map_maxiter": 300,
+    "seed": 0,
+    "out": "c_mala_map"
+  },
+  "noise_std": 0.000799802006428839,
+  "data_grid_n": 96,
+  "inverse_crime_control": false,
+  "acceptance": {
+    "mean": 0.0,
+    "per_chain": [
+      0.0,
+      0.0
+    ]
+  },
+  "final_step": [
+    3.6788076258240566e-07,
+    3.6788076258240566e-07
+  ],
+  "phi": {
+    "ess": NaN,
+    "tau": NaN,
+    "rhat": 24328938999584.24,
+    "mean": 374285.26292322285,
+    "std": 872.670707821002,
+    "n_data": 2400
+  },
+  "pixels": {
+    "24,24": {
+      "log_eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": Infinity
+      },
+      "eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": Infinity
+      }
+    },
+    "12,12": {
+      "log_eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": 20948744293904.18
+      },
+      "eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": Infinity
+      }
+    },
+    "36,12": {
+      "log_eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": 162732600554673.47
+      },
+      "eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": Infinity
+      }
+    },
+    "12,36": {
+      "log_eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": 460225750609122.9
+      },
+      "eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": Infinity
+      }
+    },
+    "36,36": {
+      "log_eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": Infinity
+      },
+      "eps_r": {
+        "ess": NaN,
+        "tau": NaN,
+        "rhat": Infinity
+      }
+    }
+  },
+  "rhat_max_over_pixels": Infinity,
+  "wall_time_s": {
+    "total": 1372.5941604159889,
+    "sampling": 748.5954680000432,
+    "compile": 1.4003218750003725,
+    "map": 608.0714841250447
+  },
+  "forward_solves": {
+    "sampling_phi_evals": 402,
+    "sampling_forward_solves": 402,
+    "sampling_adjoint_solves": 402,
+    "map_evaluations": 313,
+    "note": "one solve = all transmitters"
+  },
+  "ess_per_s": {
+    "min_over_phi_and_pixels": NaN,
+    "phi": NaN
+  },
+  "metrics": {
+    "err_model": {
+      "vacuum": 0.32570554097989995,
+      "map": 0.7052139874780491,
+      "posterior_mean": 0.7053718558978018
+    },
+    "err_chi": {
+      "vacuum": 1.0,
+      "map": 2.1651887940143135,
+      "posterior_mean": 2.1656734907722432
+    },
+    "err_data": {
+      "vacuum": 1.0,
+      "map": 0.39195417224850737,
+      "posterior_mean": 0.3928893370101552
+    }
+  },
+  "map": {
+    "success": false,
+    "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+    "nit": 300,
+    "nfev": 313,
+    "U": 372797.15109320043,
+    "phi": 370902.19093258533,
+    "grad_inf": 773.9571929450218,
+    "time_s": 608.0714841250447
+  },
+  "z_eps_r": {
+    "rms": 5955.8969209714105,
+    "frac_abs_gt_2": 0.9878472222222222
+  },
+  "max_solver_residual_final_states": 9.324727403701903e-11,
+  "posterior_mean_eps_r_range": [
+    0.057978208960319494,
+    9.761768642050454
+  ],
+  "posterior_std_eps_r_range": [
+    3.3394525181806856e-06,
+    0.051811099654864634
+  ],
+  "operating_point": {
+    "n_data": 2400,
+    "rel_model_error": 0.08012774886172656,
+    "rel_noise": 0.03162277660168381,
+    "model_to_noise": 2.5338619018502007,
+    "phi_truth": 17989.99541280802,
+    "phi_clean": 2438.2309412828818,
+    "phi_excess_sd": 317.449062959839
+  }
+}

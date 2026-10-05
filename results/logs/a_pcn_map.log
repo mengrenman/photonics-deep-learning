@@ -1,0 +1,15 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom cylinder, max eps_r 1.50; pixels per wavelength in the densest medium on the data grid: 26.1
+MAP: 200 iterations, 215 evaluations, 53.6 s, Phi 2402.5 (N data = 2400), |grad U|_inf 3.52e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: pcn, 2 chains x (600 warmup + 2400 samples), thin 4, step0 0.01, init map
+
+acceptance 0.196, final step 0.0005454, Phi mean 2454.8 (MAP 2402.5, N data 2400)
+ESS of Phi 15.558837498678178, tau 309.29737529145564, min ESS over Phi and 5 pixels 15.558837498678178; ESS/s 0.021121591728317898; max pixel R-hat 3.211811350779623
+err_model (eps_r, eq. 15.21): vacuum 0.1954, MAP 0.0432, posterior mean 0.0433
+err_chi (contrast-normalized): MAP 0.2210, posterior mean 0.2215
+err_data (eq. 15.22): MAP 0.0049, posterior mean 0.0054
+z-map of eps_r (mean - truth)/std: rms 33.26, |z|>2 for 91% of pixels
+forward solves: 6002 sampling + 215 MAP; max solver residual at the final states 9.99e-11 (tol 1e-10); wall 802.2 s (sampling 736.6 s, compile 4.1 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/a_pcn_map
+real 830.68
+user 545.23
+sys 143.65

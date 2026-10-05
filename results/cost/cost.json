@@ -1,0 +1,146 @@
+[
+  {
+    "config": "weak32",
+    "n": 32,
+    "side": 2.0,
+    "phantom": "cylinder",
+    "eps": 1.5,
+    "sigma": 0.5,
+    "ell": 0.4,
+    "snr_db": 30.0,
+    "xi_shape": [
+      64,
+      64
+    ],
+    "noise_std": 0.0002736248500514351,
+    "data_forward_s_incl_compile": 0.3648363340180367,
+    "map_maxiter": 40,
+    "map_nfev": 45,
+    "map_time_s": 1.9445436670212075,
+    "map_s_per_eval": 0.04321208148936017,
+    "map_phi": 2901.2378267849563,
+    "max_eps_at_map": 1.5737514589589912,
+    "phi_s_median_min": [
+      0.0008751249988563359,
+      0.0008685420034453273
+    ],
+    "phi_grad_s_median_min": [
+      0.020151541975792497,
+      0.019764333963394165
+    ],
+    "phi_grad_cold_s_median_min": [
+      0.0360590839991346,
+      0.0353045419906266
+    ],
+    "solver_residual_at_map": 3.5746891735458304e-11,
+    "n_data": 2400
+  },
+  {
+    "config": "moderate32",
+    "n": 32,
+    "side": 2.0,
+    "phantom": "austria",
+    "eps": 2.0,
+    "sigma": 0.5,
+    "ell": 0.4,
+    "snr_db": 30.0,
+    "xi_shape": [
+      64,
+      64
+    ],
+    "noise_std": 0.0003919713736098834,
+    "data_forward_s_incl_compile": 0.16333258402300999,
+    "map_maxiter": 40,
+    "map_nfev": 41,
+    "map_time_s": 2.173292958003003,
+    "map_s_per_eval": 0.05300714531714642,
+    "map_phi": 8342.896359126467,
+    "max_eps_at_map": 2.4848368718226923,
+    "phi_s_median_min": [
+      0.0008692919509485364,
+      0.0008573749801144004
+    ],
+    "phi_grad_s_median_min": [
+      0.02897774998564273,
+      0.028620833007153124
+    ],
+    "phi_grad_cold_s_median_min": [
+      0.0518014999688603,
+      0.05142995901405811
+    ],
+    "solver_residual_at_map": 9.906144709110194e-11,
+    "n_data": 2400
+  },
+  {
+    "config": "book48",
+    "n": 48,
+    "side": 5.0,
+    "phantom": "austria",
+    "eps": 2.0,
+    "sigma": 0.5,
+    "ell": 0.4,
+    "snr_db": 30.0,
+    "xi_shape": [
+      96,
+      96
+    ],
+    "noise_std": 0.000799802006428839,
+    "data_forward_s_incl_compile": 0.9694378330023028,
+    "map_maxiter": 40,
+    "map_nfev": 42,
+    "map_time_s": 19.756829124991782,
+    "map_s_per_eval": 0.47040069345218527,
+    "map_phi": 496473.165199486,
+    "max_eps_at_map": 4.619306316259956,
+    "phi_s_median_min": [
+      0.0016264999867416918,
+      0.0015062500024214387
+    ],
+    "phi_grad_s_median_min": [
+      0.2947219999623485,
+      0.2941719579976052
+    ],
+    "phi_grad_cold_s_median_min": [
+      0.579756291990634,
+      0.5739590409793891
+    ],
+    "solver_residual_at_map": 9.936156308059213e-11,
+    "n_data": 2400
+  },
+  {
+    "config": "book64",
+    "n": 64,
+    "side": 5.0,
+    "phantom": "austria",
+    "eps": 2.0,
+    "sigma": 0.5,
+    "ell": 0.4,
+    "snr_db": 30.0,
+    "xi_shape": [
+      128,
+      128
+    ],
+    "noise_std": 0.0007991912110043725,
+    "data_forward_s_incl_compile": 1.8683562079677358,
+    "map_maxiter": 40,
+    "map_nfev": 43,
+    "map_time_s": 30.058386916993186,
+    "map_s_per_eval": 0.6990322538835625,
+    "map_phi": 502489.8934159167,
+    "max_eps_at_map": 4.398624957615694,
+    "phi_s_median_min": [
+      0.002402749960310757,
+      0.002355625038035214
+    ],
+    "phi_grad_s_median_min": [
+      0.44574195897439495,
+      0.44135012495098636
+    ],
+    "phi_grad_cold_s_median_min": [
+      0.8629106660373509,
+      0.8557457499555312
+    ],
+    "solver_residual_at_map": 9.962727509139987e-11,
+    "n_data": 2400
+  }
+]

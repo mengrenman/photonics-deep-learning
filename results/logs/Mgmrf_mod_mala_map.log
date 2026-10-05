@@ -1,0 +1,19 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 22.6
+operating point: grid model error 2.09% of ||d|| against noise 3.16% (ratio 0.66); Phi(truth on the inference grid) = 3401 = N +1001 (N = 2400), 19.7 sd above the Phi of the noise-free fine-grid data (2438)
+WARNING: the inference grid is too coarse for this noise level (model error above 0.35 of the noise amplitude): the posterior is conditional on a visibly wrong forward model. Refine --n, lower --snr, or treat the run as a labeled control (--data-factor 1).
+MAP: 400 iterations, 436 evaluations, 97.1 s, Phi 2371.3 (N data = 2400), |grad U|_inf 4.19e+00; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: mala, 2 chains x (300 warmup + 2700 samples), thin 3, step0 0.3, init map
+Laplace: K=150 eigenpairs (87.4 s, 302 jvp+vjp products): lam_max 2.71e+06, lam_K 0.0375; #lam>1.5: 124, >10: 111, >100: 95, >1e4: 62
+re-centered along the stiffest direction by 831.4 Laplace sd (mean log eps_r -0.05260 = -Var/2, Var 0.10521); posterior mean of log eps_r minus MAP: -0.05264; final zeta along v0: [-0.3, -0.3]
+
+acceptance 0.008, final step 1.475e-05, Phi (physical misfit) mean 307774.7 (MAP 2371.3, N data 2400); sampler trace mean 307802.8 is reparametrized Phi' = Phi + |xi|^2/2 - |zeta|^2/2
+ESS of Phi 14.468851073804274, tau 373.23513823310645, min ESS over Phi and 5 pixels 13.959482658244873; ESS/s 0.01587956403917147; max pixel R-hat 9.135748018725586
+err_model (eps_r, eq. 15.21): vacuum 0.3182, MAP 0.1087, posterior mean 0.1206
+err_chi (contrast-normalized): MAP 0.3414, posterior mean 0.3788
+err_data (eq. 15.22): MAP 0.0054, posterior mean 0.3571
+z-map of eps_r (mean - truth)/std: rms 22.15, |z|>2 for 81% of pixels
+forward solves: 6002 sampling + 436 MAP; max solver residual at the final states 9.94e-11 (tol 1e-10); wall 1081.8 s (sampling 879.1 s, compile 6.4 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/Mgmrf_mod_mala_map
+real 1084.32
+user 1366.94
+sys 204.92

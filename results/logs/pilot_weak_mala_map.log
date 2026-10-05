@@ -1,0 +1,15 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom cylinder, max eps_r 1.50; pixels per wavelength in the densest medium on the data grid: 26.1
+MAP: 200 iterations, 215 evaluations, 21.7 s, Phi 2402.5 (N data = 2400), |grad U|_inf 3.52e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: mala, 2 chains x (200 warmup + 300 samples), thin 3, step0 1e-05, init map
+
+acceptance 0.565, final step 2.104e-07, Phi mean 2437.9 (MAP 2402.5, N data 2400)
+ESS of Phi 15.352598097997822, tau 39.40805037669371, min ESS over Phi and 5 pixels 15.352598097997822; ESS/s 0.1708583549739113; max pixel R-hat 3.545194223513109
+err_model (eps_r, eq. 15.21): vacuum 0.1954, MAP 0.0432, posterior mean 0.0432
+err_chi (contrast-normalized): MAP 0.2210, posterior mean 0.2212
+err_data (eq. 15.22): MAP 0.0049, posterior mean 0.0050
+z-map of eps_r (mean - truth)/std: rms 48.17, |z|>2 for 93% of pixels
+forward solves: 1002 sampling + 215 MAP; max solver residual at the final states 9.99e-11 (tol 1e-10); wall 114.7 s (sampling 89.9 s, compile 1.1 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/pilot/weak_mala_map
+real 117.05
+user 206.49
+sys 75.00

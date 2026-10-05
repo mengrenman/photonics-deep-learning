@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bayes-scatter"
+version = "0.1.0"
+description = "Bayesian inverse scattering testbed: 2-D Lippmann-Schwinger forward model and from-scratch MCMC in JAX"
+requires-python = ">=3.11"
+dependencies = ["jax>=0.4.30", "numpy>=1.26", "scipy>=1.11", "matplotlib>=3.8"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: tests that take more than ~30 s"]

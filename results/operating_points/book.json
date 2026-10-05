@@ -1,0 +1,62 @@
+[
+ {
+  "problem": "book",
+  "n": 96,
+  "n_data_grid": 192,
+  "snr_db": 20.0,
+  "seed": 0,
+  "n_data": 2400,
+  "rel_model_error": 0.025762106798235297,
+  "rel_noise": 0.10000000000000005,
+  "model_to_noise": 0.25762106798235285,
+  "phi_truth": 2605.927373022982,
+  "phi_clean": 2438.230941282884,
+  "phi_excess_sd": 3.423089078739245,
+  "seconds": 5.5
+ },
+ {
+  "problem": "book",
+  "n": 48,
+  "n_data_grid": 96,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_data": 2400,
+  "rel_model_error": 0.08012774886172656,
+  "rel_noise": 0.03162277660168381,
+  "model_to_noise": 2.5338619018502007,
+  "phi_truth": 17989.99541280802,
+  "phi_clean": 2438.2309412828818,
+  "phi_excess_sd": 317.449062959839,
+  "seconds": 1.9
+ },
+ {
+  "problem": "book",
+  "n": 64,
+  "n_data_grid": 128,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_data": 2400,
+  "rel_model_error": 0.04686483770016074,
+  "rel_noise": 0.031622776601683784,
+  "model_to_noise": 1.481996293066352,
+  "phi_truth": 7799.181600279275,
+  "phi_clean": 2438.230941282884,
+  "phi_excess_sd": 109.42994708981983,
+  "seconds": 2.4
+ },
+ {
+  "problem": "book",
+  "n": 96,
+  "n_data_grid": 192,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_data": 2400,
+  "rel_model_error": 0.025762106798235297,
+  "rel_noise": 0.03162277660168381,
+  "model_to_noise": 0.8146693480693137,
+  "phi_truth": 4057.6780031003323,
+  "phi_clean": 2438.2309412828827,
+  "phi_excess_sd": 33.056824724184985,
+  "seconds": 4.8
+ }
+]

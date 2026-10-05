@@ -1,0 +1,20 @@
+Born problem: n=16 side=2.0 wavelengths, 40 tx x 60 rx, SNR -20 dB per datum (s=0.032), matern prior sigma=0.3 ell=0.3
+  xi has 1024 components; posterior precision (prior = 1): max 193.9, 52 directions above 1.5, 11 above 10
+  exact posterior std of chi per pixel: 0.118 to 0.170 (prior 0.3); exact E[Phi] = 2433.65; setup 0.5 s
+
+sampler       accept     step |      z_mean |       z_var |  var ratio (mean [min,max]) |  Phi z | min ESS   ESS/s wall s  Rhat
+                              |   rms / max |   rms / max |
+-------------------------------------------------------------------------------------------------------------------------------
+pcn            0.252   0.1062 |  1.05 / 3.38 |  1.04 / 2.93 |  0.996 [0.923, 1.095] |   0.63 |     593    12.3   48.3 1.022
+pcn_langevin   0.508   0.0093 |  0.95 / 2.69 |  1.03 / 3.56 |  0.993 [0.912, 1.068] |  -1.55 |     617    23.7   26.1 1.014
+mala           0.591   0.0156 |  0.96 / 2.71 |  0.96 / 3.16 |  1.000 [0.935, 1.103] |   1.04 |     494    18.5   26.6 1.013
+hmc            0.704   0.1166 |  1.00 / 3.33 |  1.06 / 3.50 |  1.000 [0.956, 1.032] |   0.34 |    8338   258.7   32.2 1.001
+
+Expected for a correct sampler: z rms near 1 (pixel z-values are correlated, so max |z| of 3 to 5 is normal), variance ratio near 1, Phi z within 3.
+
+figure: /Users/mengren/Documents/new_projects/photonics-dl/results/born_exact/born_exact.png
+summary: /Users/mengren/Documents/new_projects/photonics-dl/results/born_exact/summary.json
+total 137.3 s
+real 138.07
+user 424.55
+sys 118.06

@@ -1,0 +1,14 @@
+# Copyrighted reference material: never commit
+references/
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Run outputs (large)
+results/**/*.npz
+
+.DS_Store

@@ -1,0 +1,18 @@
+grid n=48 side=2.0 (h=0.042); data grid n=96; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 33.9
+operating point: grid model error 0.85% of ||d|| against noise 3.16% (ratio 0.27); Phi(truth on the inference grid) = 2578 = N +178 (N = 2400), 2.9 sd above the Phi of the noise-free fine-grid data (2438)
+MAP: 400 iterations, 442 evaluations, 203.4 s, Phi 2446.8 (N data = 2400), |grad U|_inf 1.66e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: hmc, 2 chains x (60 warmup + 240 samples), thin 1, step0 0.3, init map
+Laplace: K=150 eigenpairs (cached, 302 jvp+vjp products): lam_max 9.78e+06, lam_K 0.00246; #lam>1.5: 110, >10: 99, >100: 85, >1e4: 42
+re-centered along the stiffest direction by 28.1 Laplace sd (mean log eps_r -0.00178; -Var/2 = -0.00178 would be 28.1 sd); posterior mean of log eps_r minus MAP: -0.00309; final zeta along v0: [-19.5, -14.2]
+
+acceptance 0.679, final step 0.1711, Phi (physical misfit) mean 2434.3 (MAP 2446.8, N data 2400); sampler trace mean 2226.7 is reparametrized Phi' = Phi + |xi|^2/2 - |zeta|^2/2
+ESS of Phi 109.2076209344319, tau 5.196494397519594, min ESS over Phi and 5 pixels 78.69728779238841; ESS/s 0.03595323103329306; max pixel R-hat 1.0407648001100258
+err_model (eps_r, eq. 15.21): vacuum 0.3257, MAP 0.1325, posterior mean 0.1261
+err_chi (contrast-normalized): MAP 0.4069, posterior mean 0.3873
+err_data (eq. 15.22): MAP 0.0074, posterior mean 0.0064
+z-map of eps_r (mean - truth)/std: rms 1.83, |z|>2 for 22% of pixels
+forward solves: 6002 sampling + 442 MAP; max solver residual at the final states 5.39e-11 (tol 1e-10); wall 2440.1 s (sampling 2188.9 s, compile 2.6 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/Mn48_mod_hmc_map
+real 2443.13
+user 3709.30
+sys 471.14

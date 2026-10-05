@@ -1,0 +1,17 @@
+[
+ {
+  "problem": "weak",
+  "n": 32,
+  "n_data_grid": 64,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_data": 2400,
+  "rel_model_error": 0.007361340076105738,
+  "rel_noise": 0.031622776601683764,
+  "model_to_noise": 0.23278601271571395,
+  "phi_truth": 2595.8162643133314,
+  "phi_clean": 2438.230941282882,
+  "phi_excess_sd": 3.216696936468826,
+  "seconds": 1.0
+ }
+]

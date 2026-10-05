@@ -1,0 +1,12 @@
+{
+  "label": "L_mod_hmc_pool",
+  "runs": [
+    "L_mod_hmc_map",
+    "L_mod_hmc_over"
+  ],
+  "chains": 4,
+  "rhat_phi": 1.0062171600981802,
+  "rhat_pixels_max": 1.0941262655412647,
+  "rhat_pixels_median": 1.0126956365878432,
+  "frac_pixels_rhat_lt_1.1": 1.0
+}

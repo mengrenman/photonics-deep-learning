@@ -1,0 +1,23 @@
+[
+  {
+    "name": "sweep_n16_mala_s1",
+    "cmd": ["scripts/run_posterior.py", "--n", "16", "--side", "2", "--phantom", "cylinder", "--eps-r", "1.5",
+            "--snr", "20", "--sampler", "mala", "--chains", "4", "--warmup", "300", "--samples", "600",
+            "--seed", "1", "--out", "sweep_n16_mala_s1"],
+    "device": "cpu",
+    "threads": 1
+  },
+  {
+    "name": "sweep_n16_hmc_s1",
+    "cmd": ["scripts/run_posterior.py", "--n", "16", "--side", "2", "--phantom", "cylinder", "--eps-r", "1.5",
+            "--snr", "20", "--sampler", "hmc", "--n-leapfrog", "10", "--chains", "4", "--warmup", "300",
+            "--samples", "600", "--seed", "1", "--out", "sweep_n16_hmc_s1"]
+  },
+  {
+    "name": "sweep_n16_pcnl_s1",
+    "cmd": ["scripts/run_posterior.py", "--n", "16", "--side", "2", "--phantom", "cylinder", "--eps-r", "1.5",
+            "--snr", "20", "--sampler", "pcn_langevin", "--chains", "4", "--warmup", "300", "--samples", "600",
+            "--seed", "1", "--out", "sweep_n16_pcnl_s1"],
+    "done_marker": "results/sweep_n16_pcnl_s1/summary.json"
+  }
+]

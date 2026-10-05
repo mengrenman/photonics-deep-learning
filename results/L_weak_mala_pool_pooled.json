@@ -1,0 +1,12 @@
+{
+  "label": "L_weak_mala_pool",
+  "runs": [
+    "L_weak_mala_map",
+    "L_weak_mala_over"
+  ],
+  "chains": 4,
+  "rhat_phi": 1.0316078388620273,
+  "rhat_pixels_max": 1.2874534007062766,
+  "rhat_pixels_median": 1.0514548120813862,
+  "frac_pixels_rhat_lt_1.1": 0.83203125
+}

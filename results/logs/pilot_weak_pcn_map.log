@@ -1,0 +1,15 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom cylinder, max eps_r 1.50; pixels per wavelength in the densest medium on the data grid: 26.1
+MAP: 200 iterations, 215 evaluations, 21.6 s, Phi 2402.5 (N data = 2400), |grad U|_inf 3.52e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: pcn, 2 chains x (200 warmup + 300 samples), thin 3, step0 0.01, init map
+
+acceptance 0.092, final step 0.00105, Phi mean 2559.6 (MAP 2402.5, N data 2400)
+ESS of Phi 13.781678034873197, tau 43.53711713792826, min ESS over Phi and 5 pixels 13.781678034873197; ESS/s 0.3122243178144601; max pixel R-hat 5.728673329981278
+err_model (eps_r, eq. 15.21): vacuum 0.1954, MAP 0.0432, posterior mean 0.0433
+err_chi (contrast-normalized): MAP 0.2210, posterior mean 0.2217
+err_data (eq. 15.22): MAP 0.0049, posterior mean 0.0079
+z-map of eps_r (mean - truth)/std: rms 36.12, |z|>2 for 91% of pixels
+forward solves: 1002 sampling + 215 MAP; max solver residual at the final states 9.32e-11 (tol 1e-10); wall 68.4 s (sampling 44.1 s, compile 0.6 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/pilot/weak_pcn_map
+real 70.63
+user 120.25
+sys 41.40

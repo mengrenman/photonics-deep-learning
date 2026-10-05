@@ -1,0 +1,243 @@
+{
+  "args": {
+    "n": 32,
+    "side": 2.0,
+    "n_tx": 40,
+    "n_rx": 60,
+    "phantom": "austria_fixed",
+    "eps_r": 2.0,
+    "radius": null,
+    "snr": 30.0,
+    "data_factor": 2,
+    "prior": "matern",
+    "sigma": 0.5,
+    "ell": 0.4,
+    "nu": 1.5,
+    "mean": 0.0,
+    "link": "log_eps",
+    "born": false,
+    "sampler": "hmc",
+    "chains": 2,
+    "warmup": 60,
+    "samples": 240,
+    "thin": 1,
+    "step0": null,
+    "n_leapfrog": 10,
+    "jitter": 0.2,
+    "init": "map",
+    "init_noise": 0.01,
+    "tol": 1e-10,
+    "map_maxiter": 400,
+    "seed": 0,
+    "out": "L_mod_hmc_map"
+  },
+  "noise_std": 0.0003919713736098834,
+  "data_grid_n": 64,
+  "inverse_crime_control": false,
+  "acceptance": {
+    "mean": 0.4666666666666667,
+    "per_chain": [
+      0.325,
+      0.6083333333333333
+    ]
+  },
+  "final_step": [
+    0.24178968308924495,
+    0.19737638279892153
+  ],
+  "phi": {
+    "ess": 16.71610069841133,
+    "tau": 28.743182326833022,
+    "rhat": 1.315979632729061,
+    "mean": 2247.8078455186464,
+    "std": 106.67075459355797,
+    "n_data": 2400,
+    "kind": "reparametrized Phi' = Phi + |xi|^2/2 - |zeta|^2/2"
+  },
+  "phi_physical": {
+    "ess": 117.2417450437886,
+    "tau": 8.333581864731883,
+    "rhat": 1.0072737375495886,
+    "mean": 2434.8728262316895,
+    "std": 8.33289644726614,
+    "first_quarter_mean": 2435.6875209635195,
+    "last_quarter_mean": 2438.1750117714605,
+    "every": 1,
+    "n_per_chain": 240
+  },
+  "operating_point": {
+    "n_data": 2400,
+    "rel_model_error": 0.020852127583759317,
+    "rel_noise": 0.0316227766016838,
+    "model_to_noise": 0.6594021722510293,
+    "phi_truth": 3401.2606159239676,
+    "phi_clean": 2438.2309412828827,
+    "phi_excess_sd": 19.65776091690966
+  },
+  "pixels": {
+    "16,16": {
+      "log_eps_r": {
+        "ess": 100.79522198543336,
+        "tau": 8.113522209181728,
+        "rhat": 1.0188348826452902
+      },
+      "eps_r": {
+        "ess": 100.16424660395177,
+        "tau": 8.111859889363409,
+        "rhat": 1.0174521176732867
+      }
+    },
+    "8,8": {
+      "log_eps_r": {
+        "ess": 69.27079427631513,
+        "tau": 8.149747829996945,
+        "rhat": 1.0228972553191018
+      },
+      "eps_r": {
+        "ess": 70.24386043908817,
+        "tau": 8.013907742035252,
+        "rhat": 1.0200163227254178
+      }
+    },
+    "24,8": {
+      "log_eps_r": {
+        "ess": 169.67696526565436,
+        "tau": 3.2125539803770895,
+        "rhat": 1.0167575650420746
+      },
+      "eps_r": {
+        "ess": 166.108024696941,
+        "tau": 3.2300649035673206,
+        "rhat": 1.016585741157805
+      }
+    },
+    "8,24": {
+      "log_eps_r": {
+        "ess": 218.31331460286574,
+        "tau": 2.489323508105014,
+        "rhat": 1.0125220886478519
+      },
+      "eps_r": {
+        "ess": 214.3667121798074,
+        "tau": 2.5817739525732284,
+        "rhat": 1.013768267593059
+      }
+    },
+    "24,24": {
+      "log_eps_r": {
+        "ess": 115.46899829926257,
+        "tau": 5.613494944887633,
+        "rhat": 1.0100109583776702
+      },
+      "eps_r": {
+        "ess": 113.73031638102154,
+        "tau": 5.561874108888789,
+        "rhat": 1.0085951266890416
+      }
+    }
+  },
+  "rhat_max_over_pixels": 1.0228972553191018,
+  "wall_time_s": {
+    "total": 2510.3015535420272,
+    "sampling": 2366.7899589589797,
+    "compile": 7.688480333017651,
+    "map": 107.2042945830035
+  },
+  "forward_solves": {
+    "sampling_phi_evals": 6002,
+    "sampling_forward_solves": 6002,
+    "sampling_adjoint_solves": 6002,
+    "map_evaluations": 427,
+    "note": "one solve = all transmitters"
+  },
+  "ess_per_s": {
+    "min_over_phi_and_pixels": 0.02926782497707719,
+    "phi": 0.04953618490732349
+  },
+  "machine": {
+    "cpu_count": 16,
+    "load_avg_1min_at_start": 18.01806640625,
+    "load_avg_1min_at_end": 25.8037109375
+  },
+  "metrics": {
+    "err_model": {
+      "vacuum": 0.3182468114103453,
+      "map": 0.11700289550769379,
+      "posterior_mean": 0.11031547354621374
+    },
+    "err_chi": {
+      "vacuum": 1.0,
+      "map": 0.3676482884123261,
+      "posterior_mean": 0.34663496880719324
+    },
+    "err_data": {
+      "vacuum": 1.0,
+      "map": 0.006752721506253719,
+      "posterior_mean": 0.006259433038948985
+    }
+  },
+  "map": {
+    "success": false,
+    "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+    "nit": 400,
+    "nfev": 427,
+    "U": 2506.242029315714,
+    "phi": 2432.907812809533,
+    "grad_inf": 40.98045128491978,
+    "time_s": 107.2042945830035
+  },
+  "z_eps_r": {
+    "rms": 1.7059310200324491,
+    "frac_abs_gt_2": 0.1982421875
+  },
+  "max_solver_residual_final_states": 9.703804258484413e-11,
+  "posterior_mean_eps_r_range": [
+    0.832016012292381,
+    2.5396764122508033
+  ],
+  "posterior_std_eps_r_range": [
+    0.04223104413682996,
+    0.12408897435440207
+  ],
+  "laplace": {
+    "k": 150,
+    "eigsh_tol": 0.0001,
+    "matvecs_jvp_plus_vjp": 302,
+    "time_s": 91.12144345795969,
+    "cache": "results/laplace_cache/mod.npz",
+    "cache_reused": true,
+    "lam_max": 9708976.413309978,
+    "lam_min_computed": 0.002138598606010844,
+    "n_lam_gt_1.5": 110,
+    "n_lam_gt_10": 99,
+    "n_lam_gt_100": 85,
+    "n_lam_gt_1e4": 42,
+    "n_lam_gt_1e6": 3,
+    "implied_max_stable_mala_step_in_xi": 4.1198983473959106e-07,
+    "implied_max_stable_pcn_langevin_delta_in_xi": 2.0599493858675068e-07,
+    "init": "map",
+    "init_scale": null,
+    "map_nfev": 427,
+    "setup_grad_evals": 729,
+    "setup_grad_evals_note": "MAP value-and-gradient evaluations + eigsh matvecs (one jvp + one vjp each, counted as one gradient evaluation)",
+    "recenter": "lognormal",
+    "recenter_info": {
+      "var_mean": 0.003458527797027456,
+      "theta_mean_shift": -0.001729263898513728,
+      "t": -0.008722065738766669,
+      "n_sd": 27.177287022354523
+    },
+    "zeta_v0_final_per_chain": [
+      -21.389210554114044,
+      -11.615026580675185
+    ],
+    "mean_abs_zeta_proj_sq_final": 799.6519685302669,
+    "expected_proj_sq_gaussian": 150.0,
+    "mean_zeta_rest_sq_final": 3981.621092407567,
+    "expected_rest_sq_gaussian": 3946.0,
+    "theta_mean_post_minus_map": -0.002896530013936416,
+    "theta_mean_post_minus_map_note": "mean over pixels of the posterior mean of log eps_r minus its value at the MAP; the log-normal prediction is -Var/2 (recenter_info)",
+    "laplace_sd_along_v0": 0.0003209321714706984,
+    "physical_phi_time_s": 21.22581595898373
+  }
+}

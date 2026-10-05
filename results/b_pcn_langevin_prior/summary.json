@@ -1,0 +1,185 @@
+{
+  "args": {
+    "n": 32,
+    "side": 2.0,
+    "n_tx": 40,
+    "n_rx": 60,
+    "phantom": "austria_fixed",
+    "eps_r": 2.0,
+    "radius": null,
+    "snr": 30.0,
+    "data_factor": 2,
+    "prior": "matern",
+    "sigma": 0.5,
+    "ell": 0.4,
+    "nu": 1.5,
+    "mean": 0.0,
+    "link": "log_eps",
+    "born": false,
+    "sampler": "pcn_langevin",
+    "chains": 2,
+    "warmup": 1000,
+    "samples": 1000,
+    "thin": 2,
+    "step0": 1e-08,
+    "n_leapfrog": 10,
+    "jitter": 0.2,
+    "init": "prior",
+    "init_noise": 0.01,
+    "tol": 1e-10,
+    "map_maxiter": 200,
+    "seed": 0,
+    "out": "b_pcn_langevin_prior"
+  },
+  "noise_std": 0.0003919713736098834,
+  "data_grid_n": 64,
+  "inverse_crime_control": false,
+  "acceptance": {
+    "mean": 0.663,
+    "per_chain": [
+      0.326,
+      1.0
+    ]
+  },
+  "final_step": [
+    3.3453357642625733e-07,
+    4.786825001847768e-09
+  ],
+  "phi": {
+    "ess": 14.052209671107097,
+    "tau": 142.32985771373504,
+    "rhat": 6.028010589946623,
+    "mean": 504085.217458797,
+    "std": 441481.3098906979,
+    "n_data": 2400
+  },
+  "pixels": {
+    "16,16": {
+      "log_eps_r": {
+        "ess": 13.963984615151382,
+        "tau": 143.23414855540446,
+        "rhat": 2.590581861572971
+      },
+      "eps_r": {
+        "ess": 13.99068683433974,
+        "tau": 142.9569225309866,
+        "rhat": 2.685713394223133
+      }
+    },
+    "8,8": {
+      "log_eps_r": {
+        "ess": 13.973686234558524,
+        "tau": 143.15361690181652,
+        "rhat": 6.718832986045102
+      },
+      "eps_r": {
+        "ess": 14.00253314049186,
+        "tau": 142.8473564474897,
+        "rhat": 6.699323319472091
+      }
+    },
+    "24,8": {
+      "log_eps_r": {
+        "ess": 14.446663901209659,
+        "tau": 138.4521222538233,
+        "rhat": 4.647140131894253
+      },
+      "eps_r": {
+        "ess": 14.48740378616673,
+        "tau": 138.06276317350097,
+        "rhat": 4.717173559612869
+      }
+    },
+    "8,24": {
+      "log_eps_r": {
+        "ess": 14.77459438339308,
+        "tau": 135.6841688571756,
+        "rhat": 3.495805120972769
+      },
+      "eps_r": {
+        "ess": 14.892458479097861,
+        "tau": 134.63659845787998,
+        "rhat": 3.505045794330587
+      }
+    },
+    "24,24": {
+      "log_eps_r": {
+        "ess": 14.114688669141636,
+        "tau": 141.6987831151538,
+        "rhat": 8.123060226708192
+      },
+      "eps_r": {
+        "ess": 14.075307843393588,
+        "tau": 142.09299700158113,
+        "rhat": 8.485018095853453
+      }
+    }
+  },
+  "rhat_max_over_pixels": 8.123060226708192,
+  "wall_time_s": {
+    "total": 1799.5886936669704,
+    "sampling": 1719.0128110420192,
+    "compile": 7.919093000004068,
+    "map": 67.23877595795784
+  },
+  "forward_solves": {
+    "sampling_phi_evals": 4002,
+    "sampling_forward_solves": 4002,
+    "sampling_adjoint_solves": 4002,
+    "map_evaluations": 211,
+    "note": "one solve = all transmitters"
+  },
+  "ess_per_s": {
+    "min_over_phi_and_pixels": 0.008123258026615166,
+    "phi": 0.00817458112053803
+  },
+  "metrics": {
+    "err_model": {
+      "vacuum": 0.3182468114103453,
+      "map": 0.1228979122952505,
+      "posterior_mean": 0.21274086510651555
+    },
+    "err_chi": {
+      "vacuum": 1.0,
+      "map": 0.38617170035613263,
+      "posterior_mean": 0.6684776012797468
+    },
+    "err_data": {
+      "vacuum": 1.0,
+      "map": 0.011076677439711073,
+      "posterior_mean": 0.3577015505260197
+    }
+  },
+  "map": {
+    "success": false,
+    "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+    "nit": 200,
+    "nfev": 211,
+    "U": 2673.2748827791925,
+    "phi": 2610.1541227817293,
+    "grad_inf": 94.32514630023888,
+    "time_s": 67.23877595795784
+  },
+  "z_eps_r": {
+    "rms": 3.127376378336898,
+    "frac_abs_gt_2": 0.3017578125
+  },
+  "max_solver_residual_final_states": 9.897474094301196e-11,
+  "posterior_mean_eps_r_range": [
+    0.7317394583450739,
+    2.031304171141043
+  ],
+  "posterior_std_eps_r_range": [
+    0.004830680657193756,
+    0.49984295525265193
+  ],
+  "operating_point": {
+    "n_data": 2400,
+    "rel_model_error": 0.020852127583759317,
+    "rel_noise": 0.0316227766016838,
+    "model_to_noise": 0.6594021722510293,
+    "phi_truth": 3401.2606159239676,
+    "phi_clean": 2438.2309412828827,
+    "phi_excess_sd": 19.65776091690966
+  }
+}

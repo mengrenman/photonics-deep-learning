@@ -1,0 +1,3 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 22.6
+MAP: 200 iterations, 211 evaluations, 66.7 s, Phi 2610.2 (N data = 2400), |grad U|_inf 9.43e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: hmc, 2 chains x (40 warmup + 160 samples), thin 1, step0 0.001, init map

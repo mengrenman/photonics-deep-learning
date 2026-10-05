@@ -1,0 +1,19 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 22.6
+operating point: grid model error 2.09% of ||d|| against noise 3.16% (ratio 0.66); Phi(truth on the inference grid) = 3401 = N +1001 (N = 2400), 19.7 sd above the Phi of the noise-free fine-grid data (2438)
+WARNING: the inference grid is too coarse for this noise level (model error above 0.35 of the noise amplitude): the posterior is conditional on a visibly wrong forward model. Refine --n, lower --snr, or treat the run as a labeled control (--data-factor 1).
+MAP: 400 iterations, 427 evaluations, 105.6 s, Phi 2432.9 (N data = 2400), |grad U|_inf 4.10e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: mala, 2 chains x (300 warmup + 2700 samples), thin 3, step0 0.3, init map
+Laplace: K=150 eigenpairs (cached, 302 jvp+vjp products): lam_max 9.71e+06, lam_K 0.00214; #lam>1.5: 110, >10: 99, >100: 85, >1e4: 42
+re-centered along the stiffest direction by 27.2 Laplace sd (mean log eps_r -0.00173 = -Var/2, Var 0.00346); posterior mean of log eps_r minus MAP: -0.00264; final zeta along v0: [-10.3, -6.1]
+
+acceptance 0.506, final step 0.07704, Phi (physical misfit) mean 2433.2 (MAP 2432.9, N data 2400); sampler trace mean 2334.3 is reparametrized Phi' = Phi + |xi|^2/2 - |zeta|^2/2
+ESS of Phi 107.24491643040558, tau 53.4716418052156, min ESS over Phi and 5 pixels 47.93073950867752; ESS/s 0.03433782071282036; max pixel R-hat 1.057183359546399
+err_model (eps_r, eq. 15.21): vacuum 0.3182, MAP 0.1170, posterior mean 0.1111
+err_chi (contrast-normalized): MAP 0.3676, posterior mean 0.3491
+err_data (eq. 15.22): MAP 0.0068, posterior mean 0.0062
+z-map of eps_r (mean - truth)/std: rms 1.74, |z|>2 for 21% of pixels
+forward solves: 6002 sampling + 427 MAP; max solver residual at the final states 9.42e-11 (tol 1e-10); wall 1634.1 s (sampling 1395.9 s, compile 6.6 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/L_mod_mala_over
+real 1638.12
+user 1843.07
+sys 246.10

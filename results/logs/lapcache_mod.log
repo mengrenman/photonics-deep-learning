@@ -1,0 +1,16 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 22.6
+MAP: 400 iterations, 427 evaluations, 168.1 s, Phi 2432.9 (N data = 2400), |grad U|_inf 4.10e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: mala, 2 chains x (2 warmup + 4 samples), thin 1, step0 0.3, init map
+Laplace: K=250 eigenpairs in 234.3 s (502 jvp+vjp products): lam_max 9.71e+06, lam_K 1.31e-09; #lam>1.5: 110, >10: 99, >100: 85, >1e4: 42
+
+acceptance 0.000, final step 0.2267, Phi mean 2507.7 (MAP 2432.9, N data 2400)
+ESS of Phi None, tau None, min ESS over Phi and 5 pixels None; ESS/s None; max pixel R-hat None
+err_model (eps_r, eq. 15.21): vacuum 0.3182, MAP 0.1170, posterior mean 0.1171
+err_chi (contrast-normalized): MAP 0.3676, posterior mean 0.3679
+err_data (eq. 15.22): MAP 0.0068, posterior mean 0.0128
+z-map of eps_r (mean - truth)/std: rms 14825.09, |z|>2 for 94% of pixels
+forward solves: 14 sampling + 427 MAP; max solver residual at the final states 9.99e-11 (tol 1e-10); wall 440.9 s (sampling 8.3 s, compile 14.0 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/pilot/lapcache_mod
+real 469.38
+user 294.01
+sys 96.03

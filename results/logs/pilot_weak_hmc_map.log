@@ -1,0 +1,15 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom cylinder, max eps_r 1.50; pixels per wavelength in the densest medium on the data grid: 26.1
+MAP: 200 iterations, 215 evaluations, 21.6 s, Phi 2402.5 (N data = 2400), |grad U|_inf 3.52e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: hmc, 2 chains x (200 warmup + 300 samples), thin 3, step0 0.001, init map
+
+acceptance 0.680, final step 0.0004162, Phi mean 2439.3 (MAP 2402.5, N data 2400)
+ESS of Phi 73.84662732418548, tau 21.031526431984616, min ESS over Phi and 5 pixels 18.770605040155267; ESS/s 0.03380851778987653; max pixel R-hat 4.724748077154562
+err_model (eps_r, eq. 15.21): vacuum 0.1954, MAP 0.0432, posterior mean 0.0435
+err_chi (contrast-normalized): MAP 0.2210, posterior mean 0.2225
+err_data (eq. 15.22): MAP 0.0049, posterior mean 0.0047
+z-map of eps_r (mean - truth)/std: rms 16.73, |z|>2 for 78% of pixels
+forward solves: 10002 sampling + 215 MAP; max solver residual at the final states 9.93e-11 (tol 1e-10); wall 579.7 s (sampling 555.2 s, compile 1.1 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/pilot/weak_hmc_map
+real 581.30
+user 1450.25
+sys 465.28

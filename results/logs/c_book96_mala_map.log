@@ -1,0 +1,16 @@
+grid n=96 side=5.0 (h=0.052); data grid n=192; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 27.2
+operating point: grid model error 2.58% of ||d|| against noise 10.00% (ratio 0.26); Phi(truth on the inference grid) = 2606 = N +206 (N = 2400), 3.4 sd above the Phi of the noise-free fine-grid data (2438)
+MAP: 400 iterations, 435 evaluations, 5450.4 s, Phi 38068.8 (N data = 2400), |grad U|_inf 1.37e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: mala, 2 chains x (20 warmup + 60 samples), thin 2, step0 1e-05, init map
+
+acceptance 0.358, final step 3.203e-06, Phi (physical misfit) mean 38115.5 (MAP 38068.8, N data 2400)
+ESS of Phi 20.7684493041271, tau 5.998080002067389, min ESS over Phi and 5 pixels 20.7684493041271; ESS/s 0.016751895243783715; max pixel R-hat 8.304634531993383
+err_model (eps_r, eq. 15.21): vacuum 0.3318, MAP 0.6448, posterior mean 0.6448
+err_chi (contrast-normalized): MAP 1.9432, posterior mean 1.9434
+err_data (eq. 15.22): MAP 0.3880, posterior mean 0.3880
+z-map of eps_r (mean - truth)/std: rms 539.83, |z|>2 for 98% of pixels
+forward solves: 162 sampling + 435 MAP; max solver residual at the final states 9.96e-11 (tol 1e-10); wall 6749.1 s (sampling 1239.8 s, compile 1.4 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/c_book96_mala_map
+real 1405.08
+user 9608.31
+sys 617.68

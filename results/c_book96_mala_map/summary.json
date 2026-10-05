@@ -1,0 +1,202 @@
+{
+  "args": {
+    "n": 96,
+    "side": 5.0,
+    "n_tx": 40,
+    "n_rx": 60,
+    "phantom": "austria_fixed",
+    "eps_r": 2.0,
+    "radius": null,
+    "snr": 20.0,
+    "data_factor": 2,
+    "prior": "matern",
+    "sigma": 0.5,
+    "ell": 0.4,
+    "nu": 1.5,
+    "mean": 0.0,
+    "link": "log_eps",
+    "born": false,
+    "sampler": "mala",
+    "chains": 2,
+    "warmup": 20,
+    "samples": 60,
+    "thin": 2,
+    "step0": null,
+    "n_leapfrog": 10,
+    "jitter": 0.2,
+    "init": "map",
+    "init_noise": 0.01,
+    "tol": 1e-10,
+    "map_maxiter": 400,
+    "seed": 0,
+    "out": "c_book96_mala_map"
+  },
+  "noise_std": 0.0025266957461283542,
+  "data_grid_n": 192,
+  "inverse_crime_control": false,
+  "acceptance": {
+    "mean": 0.35833333333333334,
+    "per_chain": [
+      0.26666666666666666,
+      0.45
+    ]
+  },
+  "final_step": [
+    3.720132189635076e-06,
+    2.6853228290785988e-06
+  ],
+  "phi": {
+    "ess": 20.7684493041271,
+    "tau": 5.998080002067389,
+    "rhat": 1.3918199695630313,
+    "mean": 38115.496581706684,
+    "std": 4.417638734479951,
+    "n_data": 2400,
+    "kind": "physical"
+  },
+  "phi_physical": {
+    "ess": 20.7684493041271,
+    "tau": 5.998080002067389,
+    "rhat": 1.3918199695630313,
+    "mean": 38115.496581706684,
+    "std": 4.417638734479951,
+    "first_quarter_mean": 38120.513060843754,
+    "last_quarter_mean": 38113.870720922634,
+    "every": 1,
+    "n_per_chain": 60
+  },
+  "operating_point": {
+    "n_data": 2400,
+    "rel_model_error": 0.025762106798235297,
+    "rel_noise": 0.10000000000000005,
+    "model_to_noise": 0.25762106798235285,
+    "phi_truth": 2605.927373022982,
+    "phi_clean": 2438.230941282884,
+    "phi_excess_sd": 3.423089078739245
+  },
+  "pixels": {
+    "48,48": {
+      "log_eps_r": {
+        "ess": 23.359426713159227,
+        "tau": 5.356614129326715,
+        "rhat": 2.927356951020141
+      },
+      "eps_r": {
+        "ess": 23.336821986133288,
+        "tau": 5.360839371943718,
+        "rhat": 2.927191876372108
+      }
+    },
+    "24,24": {
+      "log_eps_r": {
+        "ess": 43.1405300327248,
+        "tau": 2.804007758463607,
+        "rhat": 4.013710102084984
+      },
+      "eps_r": {
+        "ess": 43.15675142828081,
+        "tau": 2.803080960980171,
+        "rhat": 4.022337912721427
+      }
+    },
+    "72,24": {
+      "log_eps_r": {
+        "ess": 37.09911181699916,
+        "tau": 4.5084205750653625,
+        "rhat": 2.580962909353433
+      },
+      "eps_r": {
+        "ess": 37.10557869538525,
+        "tau": 4.50767740141595,
+        "rhat": 2.580106433686433
+      }
+    },
+    "24,72": {
+      "log_eps_r": {
+        "ess": 41.52045928492924,
+        "tau": 4.663347233444721,
+        "rhat": 8.304634531993383
+      },
+      "eps_r": {
+        "ess": 41.52013195264351,
+        "tau": 4.663720105214601,
+        "rhat": 8.286176864869974
+      }
+    },
+    "72,72": {
+      "log_eps_r": {
+        "ess": 22.7217096034857,
+        "tau": 5.762441258360072,
+        "rhat": 2.8440838625182585
+      },
+      "eps_r": {
+        "ess": 22.70952937702522,
+        "tau": 5.765661778748486,
+        "rhat": 2.8462678893768456
+      }
+    }
+  },
+  "rhat_max_over_pixels": 8.304634531993383,
+  "wall_time_s": {
+    "total": 6749.094179833017,
+    "sampling": 1239.7671428750036,
+    "compile": 1.4114874579827301,
+    "map": 5450.430832333048
+  },
+  "forward_solves": {
+    "sampling_phi_evals": 162,
+    "sampling_forward_solves": 162,
+    "sampling_adjoint_solves": 162,
+    "map_evaluations": 435,
+    "note": "one solve = all transmitters"
+  },
+  "ess_per_s": {
+    "min_over_phi_and_pixels": 0.016751895243783715,
+    "phi": 0.016751895243783715
+  },
+  "machine": {
+    "cpu_count": 16,
+    "load_avg_1min_at_start": 41.962890625,
+    "load_avg_1min_at_end": 16.146484375
+  },
+  "metrics": {
+    "err_model": {
+      "vacuum": 0.3318007968905459,
+      "map": 0.6447609450214242,
+      "posterior_mean": 0.6448198762498547
+    },
+    "err_chi": {
+      "vacuum": 1.0,
+      "map": 1.9432169876135568,
+      "posterior_mean": 1.9433945978814728
+    },
+    "err_data": {
+      "vacuum": 1.0,
+      "map": 0.3879648434390945,
+      "posterior_mean": 0.3880156254440449
+    }
+  },
+  "map": {
+    "success": false,
+    "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+    "nit": 400,
+    "nfev": 435,
+    "U": 39504.490068642735,
+    "phi": 38068.819836426985,
+    "grad_inf": 13.680904056360944,
+    "time_s": 5450.430832333048
+  },
+  "z_eps_r": {
+    "rms": 539.8250469308883,
+    "frac_abs_gt_2": 0.9849175347222222
+  },
+  "max_solver_residual_final_states": 9.959582766282879e-11,
+  "posterior_mean_eps_r_range": [
+    0.037804785622625084,
+    14.48107712644088
+  ],
+  "posterior_std_eps_r_range": [
+    9.566787370606947e-05,
+    0.022084999300020027
+  ]
+}

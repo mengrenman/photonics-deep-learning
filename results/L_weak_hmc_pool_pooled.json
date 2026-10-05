@@ -1,0 +1,12 @@
+{
+  "label": "L_weak_hmc_pool",
+  "runs": [
+    "L_weak_hmc_map",
+    "L_weak_hmc_over"
+  ],
+  "chains": 4,
+  "rhat_phi": 1.0017470826762267,
+  "rhat_pixels_max": 1.041760416898566,
+  "rhat_pixels_median": 1.0066619768312173,
+  "frac_pixels_rhat_lt_1.1": 1.0
+}

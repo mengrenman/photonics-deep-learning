@@ -1,0 +1,5 @@
+weak32      n= 32 side=2 P=64: Phi      0.9 ms, Phi+grad     20.2 ms (cold     36.1 ms); MAP 45 evals 1.9 s (43 ms/eval), Phi 2901, resid 3.6e-11
+moderate32  n= 32 side=2 P=64: Phi      0.9 ms, Phi+grad     29.0 ms (cold     51.8 ms); MAP 41 evals 2.2 s (53 ms/eval), Phi 8343, resid 9.9e-11
+book48      n= 48 side=5 P=96: Phi      1.6 ms, Phi+grad    294.7 ms (cold    579.8 ms); MAP 42 evals 19.8 s (470 ms/eval), Phi 496473, resid 9.9e-11
+book64      n= 64 side=5 P=128: Phi      2.4 ms, Phi+grad    445.7 ms (cold    862.9 ms); MAP 43 evals 30.1 s (699 ms/eval), Phi 502490, resid 1.0e-10
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/cost/cost.json

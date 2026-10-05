@@ -1,0 +1,15 @@
+grid n=48 side=5.0 (h=0.104); data grid n=96; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 13.6
+MAP: 300 iterations, 313 evaluations, 608.1 s, Phi 370902.2 (N data = 2400), |grad U|_inf 7.74e+02; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: mala, 2 chains x (40 warmup + 160 samples), thin 2, step0 1e-05, init map
+
+acceptance 0.000, final step 3.679e-07, Phi mean 374285.3 (MAP 370902.2, N data 2400)
+ESS of Phi nan, tau nan, min ESS over Phi and 5 pixels nan; ESS/s nan; max pixel R-hat inf
+err_model (eps_r, eq. 15.21): vacuum 0.3257, MAP 0.7052, posterior mean 0.7054
+err_chi (contrast-normalized): MAP 2.1652, posterior mean 2.1657
+err_data (eq. 15.22): MAP 0.3920, posterior mean 0.3929
+z-map of eps_r (mean - truth)/std: rms 5955.90, |z|>2 for 99% of pixels
+forward solves: 402 sampling + 313 MAP; max solver residual at the final states 9.32e-11 (tol 1e-10); wall 1372.6 s (sampling 748.6 s, compile 1.4 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/c_mala_map
+real 1383.60
+user 2733.10
+sys 761.73

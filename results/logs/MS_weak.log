@@ -1,0 +1,12 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom cylinder, max eps_r 1.50; pixels per wavelength in the densest medium on the data grid: 26.1
+reference MAP (from the prior mean): U 2385.801, Phi 2376.3, 816 iterations, 904 evaluations, 149.2 s
+start 0: U 2385.801 (dU -0.000), Phi 2376.4, rms dtheta 1.82e-06 (max 6.80e-06), 0.00 Laplace sd; 882 it, 962 evals, |grad U|_inf 4.9e-05
+start 1: U 2385.801 (dU -0.000), Phi 2376.4, rms dtheta 1.93e-06 (max 7.53e-06), 0.00 Laplace sd; 892 it, 988 evals, |grad U|_inf 4.6e-05
+start 2: U 2385.801 (dU +0.000), Phi 2376.4, rms dtheta 1.89e-06 (max 7.04e-06), 0.00 Laplace sd; 901 it, 995 evals, |grad U|_inf 6.1e-06
+start 3: U 2385.801 (dU +0.000), Phi 2376.3, rms dtheta 3.28e-06 (max 1.57e-05), 0.00 Laplace sd; 874 it, 954 evals, |grad U|_inf 7.7e-05
+start 4: U 2385.801 (dU -0.000), Phi 2376.4, rms dtheta 1.73e-06 (max 7.63e-06), 0.00 Laplace sd; 865 it, 949 evals, |grad U|_inf 9.6e-05
+start 5: U 2385.801 (dU -0.000), Phi 2376.3, rms dtheta 1.98e-06 (max 8.86e-06), 0.00 Laplace sd; 883 it, 956 evals, |grad U|_inf 3.4e-05
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/MS_weak/multistart.json
+real 1179.79
+user 1365.58
+sys 266.67

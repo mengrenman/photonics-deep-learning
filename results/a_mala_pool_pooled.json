@@ -1,0 +1,12 @@
+{
+  "label": "a_mala_pool",
+  "runs": [
+    "a_mala_map",
+    "a_mala_prior"
+  ],
+  "chains": 4,
+  "rhat_phi": 9.092743482951999,
+  "rhat_pixels_max": 156.29646907934907,
+  "rhat_pixels_median": 13.19723493296555,
+  "frac_pixels_rhat_lt_1.1": 0.0
+}

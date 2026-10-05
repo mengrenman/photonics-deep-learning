@@ -1,0 +1,15 @@
+grid n=32 side=2.0 (h=0.062); data grid n=64; 40 tx x 60 rx; phantom austria_fixed, max eps_r 2.00; pixels per wavelength in the densest medium on the data grid: 22.6
+MAP: 200 iterations, 211 evaluations, 67.2 s, Phi 2610.2 (N data = 2400), |grad U|_inf 9.43e+01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+sampling: pcn_langevin, 2 chains x (1000 warmup + 1000 samples), thin 2, step0 1e-08, init prior
+
+acceptance 0.663, final step 1.697e-07, Phi mean 504085.2 (MAP 2610.2, N data 2400)
+ESS of Phi 14.052209671107097, tau 142.32985771373504, min ESS over Phi and 5 pixels 13.963984615151382; ESS/s 0.008123258026615166; max pixel R-hat 8.123060226708192
+err_model (eps_r, eq. 15.21): vacuum 0.3182, MAP 0.1229, posterior mean 0.2127
+err_chi (contrast-normalized): MAP 0.3862, posterior mean 0.6685
+err_data (eq. 15.22): MAP 0.0111, posterior mean 0.3577
+z-map of eps_r (mean - truth)/std: rms 3.13, |z|>2 for 30% of pixels
+forward solves: 4002 sampling + 211 MAP; max solver residual at the final states 9.90e-11 (tol 1e-10); wall 1799.6 s (sampling 1719.0 s, compile 7.9 s)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/b_pcn_langevin_prior
+real 1814.60
+user 1272.13
+sys 382.78

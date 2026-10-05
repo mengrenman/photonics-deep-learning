@@ -1,0 +1,12 @@
+{
+  "label": "b_pcn_langevin_pool",
+  "runs": [
+    "b_pcn_langevin_map",
+    "b_pcn_langevin_prior"
+  ],
+  "chains": 4,
+  "rhat_phi": 7.1808094892716845,
+  "rhat_pixels_max": 89.14042630182486,
+  "rhat_pixels_median": 8.96729907453492,
+  "frac_pixels_rhat_lt_1.1": 0.0
+}
