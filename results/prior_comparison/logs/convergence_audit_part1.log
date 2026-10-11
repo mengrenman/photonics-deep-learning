@@ -1,0 +1,7 @@
+pc_matern            4x600  R-hat Phi classic 1.0018 rank 1.0022 (null AR(1) P>1.01 0.03);  pixel max classic 1.0092 rank 1.0221 (null q95 1.0370, 0 px > 1.05);  worst ESS sokal 883 bulk 774
+pc_gmrf              4x500  R-hat Phi classic 1.0327 rank 1.0330 (null AR(1) P>1.01 0.90);  pixel max classic 1.0906 rank 1.0898 (null q95 1.1206, 46 px > 1.05);  worst ESS sokal 127 bulk 33
+pc_qggmrf_sg0.1      4x600  R-hat Phi classic 1.0012 rank 1.0011 (null AR(1) P>1.01 0.02);  pixel max classic 1.0062 rank 1.0405 (null q95 1.0495, 0 px > 1.05);  worst ESS sokal 1242 bulk 1211
+pcs1_qggmrf_sg0.05   2x600  R-hat Phi classic 1.0097 rank 1.0097 (null AR(1) P>1.01 0.23);  pixel max classic 1.0104 rank 1.0604 (null q95 1.1143, 4 px > 1.05);  worst ESS sokal 609 bulk 626
+pcg1_qggmrf_sg0.05   3x300  R-hat Phi classic 1.0077 rank 1.0129 (null AR(1) P>1.01 0.17);  pixel max classic 1.0136 rank 1.0930 (null q95 1.1308, 15 px > 1.05);  worst ESS sokal 416 bulk 361
+pc_qggmrf_sg0.05_600draws 4x600  R-hat Phi classic 1.0103 rank 1.0113 (null AR(1) P>1.01 0.00);  pixel max classic 1.0061 rank 1.0522 (null q95 1.0743, 1 px > 1.05);  worst ESS sokal 1273 bulk 1098
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/convergence_audit.json

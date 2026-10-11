@@ -1,0 +1,4 @@
+physical Phi of the draws: mean 2507.6 (MAP 2470.9, N 2400); split R-hat 1.001; max pixel R-hat 1.007; worst-pixel ESS 892 -> CONVERGED
+err_model (eps_r): MAP 0.1323, posterior mean 0.1346; err_chi: MAP 0.4061, mean 0.4131; |z|>3 in 16.3% of pixels (edge share 0.80)
+features: gap_valley P=1.000, ring_hole P=1.000, ring_continuity P=1.000
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pcg1_qggmrf_sg0.05 (total 129 s)

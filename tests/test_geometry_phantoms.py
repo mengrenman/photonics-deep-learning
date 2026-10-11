@@ -232,3 +232,23 @@ def test_ch15_variant_later_shapes_overwrite():
     inner = cov_last == 1.0
     assert inner.any()
     np.testing.assert_allclose(chi[inner], val_last)
+
+
+def test_ch15_variant_eps_range_changes_only_the_permittivity_law():
+    """eps_range = (lo, hi) replaces U[1, 8]: the same seed gives the same shapes, and with lo = 1 the contrast scales
+    with hi - 1 (painter and max rules are both positively homogeneous in the contrast)."""
+    g = Grid(48, 5.0)
+    for overlap in ("painter", "max"):
+        base = ch15_austria_variant(np.random.default_rng(5), g, overlap)
+        explicit = ch15_austria_variant(np.random.default_rng(5), g, overlap, eps_range=(1.0, 8.0))
+        np.testing.assert_array_equal(base, explicit)  # the default is the book's [1, 8]
+        low = ch15_austria_variant(np.random.default_rng(5), g, overlap, eps_range=(1.0, 2.0))
+        np.testing.assert_allclose(7.0 * low, base, rtol=1e-12, atol=1e-12)
+        assert low.max() <= 1.0 + 1e-12 and low.min() >= 0.0  # eps_r <= 2: the colorbar of Fig. 15.9
+    # a range with lo > 1 shifts every shape's contrast up
+    shifted = ch15_austria_variant(np.random.default_rng(5), g, eps_range=(3.0, 3.0))
+    assert shifted.max() == pytest.approx(2.0)  # all shapes eps_r = 3 (painter: no overlap exceeds it)
+    with pytest.raises(ValueError):
+        ch15_austria_variant(np.random.default_rng(0), g, eps_range=(0.5, 2.0))
+    with pytest.raises(ValueError):
+        ch15_austria_variant(np.random.default_rng(0), g, eps_range=(3.0, 2.0))

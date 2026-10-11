@@ -1,0 +1,30 @@
+[
+  {
+    "name": "pc_matern",
+    "cmd": ["scripts/run_prior_comparison.py", "--n", "48", "--side", "2", "--eps-r", "2", "--snr", "30", "--seed", "0", "--chains", "4", "--warmup", "300", "--samples", "1000", "--prior", "matern", "--sigma", "0.5", "--ell", "0.4", "--nu", "1.5", "--out", "pc_matern"],
+    "device": "cpu",
+    "threads": 4,
+    "done_marker": "results/prior_comparison/pc_matern/summary.json"
+  },
+  {
+    "name": "pc_gmrf",
+    "cmd": ["scripts/run_prior_comparison.py", "--n", "48", "--side", "2", "--eps-r", "2", "--snr", "30", "--seed", "0", "--chains", "4", "--warmup", "300", "--samples", "1000", "--prior", "gmrf", "--sigma", "0.5", "--ell", "0.4", "--out", "pc_gmrf"],
+    "device": "cpu",
+    "threads": 4,
+    "done_marker": "results/prior_comparison/pc_gmrf/summary.json"
+  },
+  {
+    "name": "pc_qggmrf_sg0.05",
+    "cmd": ["scripts/run_prior_comparison.py", "--n", "48", "--side", "2", "--eps-r", "2", "--snr", "30", "--seed", "0", "--chains", "4", "--warmup", "300", "--samples", "1000", "--prior", "qggmrf", "--q", "1.2", "--T", "1", "--sigma-0", "1", "--sigma-g", "0.05", "--out", "pc_qggmrf_sg0.05"],
+    "device": "cpu",
+    "threads": 4,
+    "done_marker": "results/prior_comparison/pc_qggmrf_sg0.05/summary.json"
+  },
+  {
+    "name": "pc_qggmrf_sg0.1",
+    "cmd": ["scripts/run_prior_comparison.py", "--n", "48", "--side", "2", "--eps-r", "2", "--snr", "30", "--seed", "0", "--chains", "4", "--warmup", "300", "--samples", "1000", "--prior", "qggmrf", "--q", "1.2", "--T", "1", "--sigma-0", "1", "--sigma-g", "0.1", "--out", "pc_qggmrf_sg0.1"],
+    "device": "cpu",
+    "threads": 4,
+    "done_marker": "results/prior_comparison/pc_qggmrf_sg0.1/summary.json"
+  }
+]

@@ -1,0 +1,2 @@
+pcg1_matern          3x300  R-hat Phi classic 1.0061 rank 1.0058 (null AR(1) P>1.01 0.27);  pixel max classic 1.0196 rank 1.0479 (null q95 1.0860, 0 px > 1.05);  worst ESS sokal 291 bulk 237
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/convergence_audit.json

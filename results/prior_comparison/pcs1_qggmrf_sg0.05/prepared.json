@@ -1,0 +1,146 @@
+{
+  "args": {
+    "n": 48,
+    "side": 2.0,
+    "eps_r": 2.0,
+    "snr": 30.0,
+    "seed": 1,
+    "data_factor": 2,
+    "n_tx": 40,
+    "n_rx": 60,
+    "prior": "qggmrf",
+    "sigma": 0.5,
+    "ell": 0.4,
+    "nu": 1.5,
+    "mean": 0.0,
+    "q": 1.2,
+    "T": 1.0,
+    "sigma_g": 0.05,
+    "sigma_0": 1.0,
+    "mu": 0.0,
+    "start_maxiter": 100,
+    "map_maxiter": 1000,
+    "map_gtol": 1e-06,
+    "chains": 2,
+    "warmup": 300,
+    "samples": 1000,
+    "thin": 1,
+    "n_leapfrog": 10,
+    "jitter": 0.2,
+    "step0": 0.3,
+    "init_scale": 2.0,
+    "chain_seed": 1,
+    "verify_columns": 3,
+    "stage": "prepare",
+    "chain_id": null,
+    "segment": 0,
+    "mass_theta": null,
+    "start_theta": null,
+    "max_segments": null,
+    "prior_chains": 4,
+    "prior_warmup": 200,
+    "prior_samples": 600,
+    "tol": 1e-10,
+    "out": "pcs1_qggmrf_sg0.05"
+  },
+  "data": {
+    "d_obs_sha256": "903a53238c6ee06d3ffddda0d54a8d09715cafeb16972a478d651a26dfb6fd1f",
+    "noise_std": 0.00039227537566584975,
+    "n_data": 2400,
+    "data_grid_n": 96,
+    "snr_db": 30.0,
+    "seed": 1
+  },
+  "operating_point": {
+    "n_data": 2400,
+    "rel_model_error": 0.00850431661705651,
+    "rel_noise": 0.03162277660168381,
+    "model_to_noise": 0.2689301045311651,
+    "phi_truth": 2572.1736076199077,
+    "phi_clean": 2419.967744601009,
+    "phi_excess_sd": 3.1068891688021116
+  },
+  "prior_info": {
+    "method": "HMC on R alone in coordinates of the Hessian of R at the mean",
+    "theta_std": {
+      "mean": 0.056530586086369995,
+      "inside": 0.05192547383974827,
+      "outside": 0.05780694757379287,
+      "min": 0.04469692953861818,
+      "max": 0.09525677104847921
+    },
+    "eps_std": {
+      "mean": 0.056658652138419315,
+      "inside": 0.05201891755378813,
+      "outside": 0.057944609617529966,
+      "min": 0.04480652170939459,
+      "max": 0.09567696878528087
+    },
+    "theta_mean": {
+      "mean": -0.0002727740572650035,
+      "inside": -0.00026485001094848627,
+      "outside": -0.0002749703007008453,
+      "min": -0.0035217887860479963,
+      "max": 0.002114562720416775
+    },
+    "accept": 0.7270833333333333,
+    "step": [
+      0.5038324580294842,
+      0.5218440529052716,
+      0.5559599366144369,
+      0.49649912963399395
+    ],
+    "rhat_max": 1.004199037287499,
+    "ess_min": 1752.21943474702,
+    "chains": 4,
+    "warmup": 200,
+    "samples": 600,
+    "time_s": 176.9018989999313
+  },
+  "start": {
+    "maxiter": 100,
+    "nit": 100,
+    "nfev": 108,
+    "time_s": 46.892212165985256,
+    "phi": 3379.0986830792212,
+    "note": "whitened-coordinate Matern(0.5, 0.4, 1.5) MAP, theta = log eps_r of the result"
+  },
+  "map": {
+    "success": true,
+    "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "nit": 133,
+    "nfev": 144,
+    "U": 5159.333523280674,
+    "phi": 2460.9600133766344,
+    "R": 2698.373509904039,
+    "grad_inf": 0.00929415766691815,
+    "time_s": 63.04299037496094,
+    "phi_over_n_data": 1.0254000055735977,
+    "maxiter": 1000
+  },
+  "laplace": {
+    "time_fields_s": 0.9048600000096485,
+    "time_gn_s": 0.16492533299606293,
+    "time_prior_hessian_s": 0.005864624981768429,
+    "time_cholesky_s": 0.09571187500841916,
+    "time_total_s": 1.3678915000054985,
+    "asymmetry": 1.2316493113447274e-16,
+    "pivot_ratio_sq": 11.034243114893528,
+    "h_diag_min": 619.1442437044141,
+    "h_diag_max": 3692.1820740513085,
+    "n_solves": 100,
+    "jacobian_check_rel_err": 1.6998520238192202e-10,
+    "theta_std": {
+      "mean": 0.0358267968865797,
+      "inside": 0.045904525037677515,
+      "outside": 0.03303363498217343,
+      "min": 0.021969129674636025,
+      "max": 0.07275427652882381
+    }
+  },
+  "timings": {
+    "prior_std_s": 176.9021149999462,
+    "start_s": 46.892212165985256,
+    "setup_s": 3.349695833050646
+  }
+}

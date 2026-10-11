@@ -1,0 +1,57 @@
+{
+  "n": 48,
+  "side": 2.0,
+  "delta": 0.34657359027997264,
+  "matern": {
+    "method": "exact draws (4000)",
+    "gap_valley": 0.0605,
+    "ring_hole": 0.16525,
+    "ring_continuity": 0.0165,
+    "mcse": {
+      "gap_valley": 0.004873397172404481,
+      "ring_hole": 0.004871259248558494,
+      "ring_continuity": 0.0023979157616563595
+    },
+    "time_s": 3.3121216249419376
+  },
+  "gmrf": {
+    "method": "exact draws (4000)",
+    "gap_valley": 0.1165,
+    "ring_hole": 0.18825,
+    "ring_continuity": 0.0035,
+    "mcse": {
+      "gap_valley": 0.004663689526544408,
+      "ring_hole": 0.0017969882210706538,
+      "ring_continuity": 0.0011902380714238084
+    },
+    "time_s": 3.1285568749299273
+  },
+  "qggmrf_sg0.05": {
+    "method": "HMC on R alone, 4 x (200 + 600)",
+    "gap_valley": 0.0,
+    "ring_hole": 0.0,
+    "ring_continuity": 0.0,
+    "mcse": {
+      "gap_valley": 0.0,
+      "ring_hole": 0.0,
+      "ring_continuity": 0.0
+    },
+    "rhat_max": 1.0022619893496716,
+    "ess_min": 1371.6965290303012,
+    "time_s": 150.91115020797588
+  },
+  "qggmrf_sg0.1": {
+    "method": "HMC on R alone, 4 x (200 + 600)",
+    "gap_valley": 0.0,
+    "ring_hole": 0.0,
+    "ring_continuity": 0.0,
+    "mcse": {
+      "gap_valley": 0.0,
+      "ring_hole": 0.0,
+      "ring_continuity": 0.0
+    },
+    "rhat_max": 1.003305858831847,
+    "ess_min": 1980.507336547199,
+    "time_s": 140.4944700000342
+  }
+}

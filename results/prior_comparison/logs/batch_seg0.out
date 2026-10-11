@@ -1,0 +1,46 @@
+[batch_run 02:38:22] 14 job(s) to run, 0 skipped; cpu slots 10 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 02:38:22] START pg05_gmrf_c0_s0 (cpu0, unpinned) [1/14]
+[batch_run 02:38:22] START pg025_gmrf_c0_s0 (cpu1, unpinned) [2/14]
+[batch_run 02:38:22] START pc_matern_c0_s0 (cpu2, unpinned) [3/14]
+[batch_run 02:38:22] START pc_matern_c1_s0 (cpu3, unpinned) [4/14]
+[batch_run 02:38:22] START pc_matern_c2_s0 (cpu4, unpinned) [5/14]
+[batch_run 02:38:22] START pc_matern_c3_s0 (cpu5, unpinned) [6/14]
+[batch_run 02:38:22] START pc_qggmrf_sg0.05_c0_s0 (cpu6, unpinned) [7/14]
+[batch_run 02:38:22] START pc_qggmrf_sg0.05_c1_s0 (cpu7, unpinned) [8/14]
+[batch_run 02:38:22] START pc_qggmrf_sg0.05_c2_s0 (cpu8, unpinned) [9/14]
+[batch_run 02:38:22] START pc_qggmrf_sg0.05_c3_s0 (cpu9, unpinned) [10/14]
+[batch_run 02:51:35] DONE  pg025_gmrf_c0_s0 exit 0 in 793.4 s
+[batch_run 02:51:35] START pc_qggmrf_sg0.1_c0_s0 (cpu1, unpinned) [11/14]
+[batch_run 03:10:41] DONE  pg05_gmrf_c0_s0 exit 0 in 1938.8 s
+[batch_run 03:10:41] START pc_qggmrf_sg0.1_c1_s0 (cpu0, unpinned) [12/14]
+[batch_run 03:23:22] DONE  pc_qggmrf_sg0.05_c2_s0 exit 0 in 2699.6 s
+[batch_run 03:23:22] START pc_qggmrf_sg0.1_c2_s0 (cpu8, unpinned) [13/14]
+[batch_run 03:23:29] DONE  pc_qggmrf_sg0.05_c1_s0 exit 0 in 2706.7 s
+[batch_run 03:23:29] START pc_qggmrf_sg0.1_c3_s0 (cpu7, unpinned) [14/14]
+[batch_run 03:23:30] DONE  pc_qggmrf_sg0.05_c3_s0 exit 0 in 2708.2 s
+[batch_run 03:23:40] DONE  pc_qggmrf_sg0.05_c0_s0 exit 0 in 2717.8 s
+[batch_run 03:29:28] DONE  pc_matern_c1_s0 exit 0 in 3066.2 s
+[batch_run 03:31:30] DONE  pc_matern_c2_s0 exit 0 in 3187.7 s
+[batch_run 03:34:59] DONE  pc_qggmrf_sg0.1_c0_s0 exit 0 in 2604.1 s
+[batch_run 03:35:34] DONE  pc_matern_c0_s0 exit 0 in 3431.7 s
+[batch_run 03:37:16] DONE  pc_matern_c3_s0 exit 0 in 3534.0 s
+[batch_run 03:48:30] DONE  pc_qggmrf_sg0.1_c1_s0 exit 0 in 2268.9 s
+[batch_run 03:55:10] DONE  pc_qggmrf_sg0.1_c3_s0 exit 0 in 1901.2 s
+[batch_run 03:57:45] DONE  pc_qggmrf_sg0.1_c2_s0 exit 0 in 2063.7 s
+
+job                              status          wall s  exit
+pg025_gmrf_c0_s0                 ok               793.4     0
+pg05_gmrf_c0_s0                  ok              1938.8     0
+pc_qggmrf_sg0.05_c2_s0           ok              2699.6     0
+pc_qggmrf_sg0.05_c1_s0           ok              2706.7     0
+pc_qggmrf_sg0.05_c3_s0           ok              2708.2     0
+pc_qggmrf_sg0.05_c0_s0           ok              2717.8     0
+pc_matern_c1_s0                  ok              3066.2     0
+pc_matern_c2_s0                  ok              3187.7     0
+pc_qggmrf_sg0.1_c0_s0            ok              2604.1     0
+pc_matern_c0_s0                  ok              3431.7     0
+pc_matern_c3_s0                  ok              3534.0     0
+pc_qggmrf_sg0.1_c1_s0            ok              2268.9     0
+pc_qggmrf_sg0.1_c3_s0            ok              1901.2     0
+pc_qggmrf_sg0.1_c2_s0            ok              2063.7     0
+[batch_run 03:57:46] 14 ok, 0 not ok

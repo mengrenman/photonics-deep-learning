@@ -1,0 +1,4 @@
+physical Phi of the draws: mean 2434.7 (MAP 2378.4, N 2400); split R-hat 1.002; max pixel R-hat 1.009; worst-pixel ESS 883 -> CONVERGED
+err_model (eps_r): MAP 0.1260, posterior mean 0.1263; err_chi: MAP 0.3868, mean 0.3879; |z|>3 in 12.5% of pixels (edge share 0.88)
+features: gap_valley P=1.000, ring_hole P=0.984, ring_continuity P=1.000
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_matern (total 175 s)

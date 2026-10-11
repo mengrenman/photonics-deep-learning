@@ -1,0 +1,25 @@
+
+=== A. baseline generator, 1000 held-out in-family draws ===
+held-out: mean ||eps|| 257.5938862638673  vacuum-guess error ||chi||/||eps||: mean  73.89  [q05  57.23 med  76.17 q95  83.56]  min  30.73  max  85.85  frac<3.31%: 0.000  n=1000
+P=  100 R=20  span(T)      mean  34.18  [q05  24.73 med  33.75 q95  44.99]  min  16.23  max  57.20  frac<3.31%: 0.000  n=20000   sd of replicate means 0.0018878268123225415   [13s]
+                 span(T,1)    mean  33.98  [q05  24.49 med  33.58 q95  44.83]  min  15.82  max  56.85  frac<3.31%: 0.000  n=20000
+                 contrast bas mean  34.18  [q05  24.72 med  33.77 q95  44.98]  min  15.82  max  56.86  frac<3.31%: 0.000  n=20000
+                 nearest img  mean  62.13  [q05  50.84 med  62.73 q95  71.42]  min  29.36  max  80.67  frac<3.31%: 0.000  n=20000
+P=  200 R=10  span(T)      mean  27.77  [q05  19.90 med  27.16 q95  37.53]  min  13.75  max  51.24  frac<3.31%: 0.000  n=10000   sd of replicate means 0.0013446016510984134   [9s]
+                 span(T,1)    mean  27.67  [q05  19.74 med  27.05 q95  37.44]  min  13.61  max  51.22  frac<3.31%: 0.000  n=10000
+                 contrast bas mean  27.77  [q05  19.86 med  27.17 q95  37.53]  min  13.62  max  51.30  frac<3.31%: 0.000  n=10000
+                 nearest img  mean  60.30  [q05  48.94 med  60.83 q95  69.80]  min  33.27  max  77.97  frac<3.31%: 0.000  n=10000
+P=  500 R= 5  span(T)      mean  20.24  [q05  14.42 med  19.63 q95  28.00]  min  10.30  max  42.42  frac<3.31%: 0.000  n=5000   sd of replicate means 0.00032352533718022   [20s]
+                 span(T,1)    mean  20.20  [q05  14.36 med  19.60 q95  27.98]  min  10.22  max  42.37  frac<3.31%: 0.000  n=5000
+                 contrast bas mean  20.24  [q05  14.42 med  19.63 q95  28.05]  min  10.22  max  42.37  frac<3.31%: 0.000  n=5000
+                 nearest img  mean  57.34  [q05  46.32 med  57.77 q95  67.18]  min  31.37  max  73.94  frac<3.31%: 0.000  n=5000
+P= 1000 R= 2  span(T)      mean  15.31  [q05  10.88 med  14.81 q95  21.20]  min   8.00  max  34.11  frac<3.31%: 0.000  n=2000   sd of replicate means 4.2513825058275075e-05   [23s]
+                 span(T,1)    mean  15.30  [q05  10.86 med  14.79 q95  21.20]  min   7.97  max  34.11  frac<3.31%: 0.000  n=2000
+                 contrast bas mean  15.31  [q05  10.86 med  14.81 q95  21.20]  min   7.97  max  34.11  frac<3.31%: 0.000  n=2000
+                 nearest img  mean  55.32  [q05  43.37 med  55.76 q95  65.27]  min  29.02  max  71.58  frac<3.31%: 0.000  n=2000
+P= 2000 R= 1  span(T)      mean  10.82  [q05   7.55 med  10.49 q95  15.21]  min   4.91  max  24.80  frac<3.31%: 0.000  n=1000   sd of replicate means None   [25s]
+                 span(T,1)    mean  10.82  [q05   7.54 med  10.49 q95  15.20]  min   4.90  max  24.80  frac<3.31%: 0.000  n=1000
+                 contrast bas mean  10.82  [q05   7.57 med  10.49 q95  15.20]  min   4.90  max  24.80  frac<3.31%: 0.000  n=1000
+                 nearest img  mean  53.54  [q05  42.21 med  53.79 q95  63.78]  min  31.53  max  70.36  frac<3.31%: 0.000  n=1000
+P= 4000 R= 1  span(T)      mean   6.69  [q05   4.53 med   6.48 q95   9.49]  min   2.63  max  16.45  frac<3.31%: 0.003  n=1000   sd of replicate means None   [24s]
+python run_main.py A  1242.38s user 33.65s system 1110% cpu 1:54.92 total

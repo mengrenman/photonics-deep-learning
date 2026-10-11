@@ -1,0 +1,50 @@
+{
+  "threads": [
+    1,
+    4
+  ],
+  "problem_args": [
+    "--n",
+    "48",
+    "--side",
+    "2",
+    "--eps-r",
+    "2",
+    "--snr",
+    "30",
+    "--seed",
+    "0",
+    "--data-factor",
+    "2"
+  ],
+  "noise_std": 0.00039227537566584975,
+  "per_thread_count": {
+    "1": {
+      "d_obs_sha256": "efd5e84fa5f9a77f1309f34bb1a864e8bbeff3daef1cfe220624ad59a990b8bf",
+      "thread_env_seen_by_the_worker": {
+        "NPROC": "1",
+        "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "VECLIB_MAXIMUM_THREADS": "1",
+        "JAX_PLATFORMS": "cpu"
+      }
+    },
+    "4": {
+      "d_obs_sha256": "d1000a64d67044a0cb51868da8c55e45f0dca8c6bfd785580232baabf4f1a9c3",
+      "thread_env_seen_by_the_worker": {
+        "NPROC": "4",
+        "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true",
+        "OMP_NUM_THREADS": "2",
+        "OPENBLAS_NUM_THREADS": "2",
+        "MKL_NUM_THREADS": "2",
+        "VECLIB_MAXIMUM_THREADS": "2",
+        "JAX_PLATFORMS": "cpu"
+      }
+    }
+  },
+  "same_hash": false,
+  "max_abs_diff_over_noise_std": 6.486115089388395e-14,
+  "max_abs_diff_over_max_abs_d": 6.909063354159554e-16
+}

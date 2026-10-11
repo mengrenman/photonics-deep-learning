@@ -69,7 +69,15 @@ def austria_fixed(grid, eps_r):
     return chi
 
 
-def ch15_austria_variant(rng, grid):
+def paint_max(chi, cov, chi_shape):
+    """Return chi <- (1 - cov) * chi + cov * max(chi, chi_shape) (new array): the "max-overlap" counterpart of
+    ``paint``. Where a shape overlaps earlier shapes the larger contrast wins, so the result does not depend on
+    the painting order (up to the coverage blending of boundary pixels); where it overlaps only background
+    (chi = 0 <= chi_shape) it equals ``paint``. Valid for chi_shape >= 0 (eps_r >= 1)."""
+    return (1.0 - cov) * chi + cov * np.maximum(chi, chi_shape)
+
+
+def ch15_austria_variant(rng, grid, overlap="painter", eps_range=(1.0, 8.0)):
     """The book's random training model (Table 15.2, Fig. 15.8), as a contrast map.
 
     Two disks (radius in [0.1, 1], center in [-2, 2]^2), a ring (inner radius r3 in [0.1, 1], outer radius
@@ -81,30 +89,44 @@ def ch15_austria_variant(rng, grid):
     ``rng`` is a ``numpy.random.Generator``. Draw order per shape: size parameters, then center (x, y),
     then eps_r; so a given seed always gives the same phantom. r4 is drawn from U[max(0.2, r3), 2], which
     is the uniform law on [0.2, 2] conditioned on r4 > r3.
+
+    ``overlap`` is how overlapping shapes combine (the book does not say): ``"painter"`` (default) lets a later
+    shape overwrite earlier ones; ``"max"`` keeps the larger contrast (``paint_max``). The random stream is
+    identical for both, so the same seed gives the same shapes and permittivities under either rule.
+
+    ``eps_range = (lo, hi)`` is the law of each shape's eps_r, U[lo, hi] (default the book's Table 15.2, [1, 8]; the
+    colorbar of Fig. 15.9 only reaches 2). One uniform is drawn per shape whatever the range, so the same seed gives
+    the same shapes, and with lo = 1 the contrast of a (1, hi) phantom is (hi - 1) times that of a (1, 2) one.
     """
+    lo, hi = float(eps_range[0]), float(eps_range[1])
+    if not 1.0 <= lo <= hi:
+        raise ValueError("eps_range must satisfy 1 <= lo <= hi")
+    if overlap not in ("painter", "max"):
+        raise ValueError("overlap must be 'painter' or 'max'")
+    put = paint if overlap == "painter" else paint_max
     s = grid.side / 5.0
     cx0, cy0 = grid.center
     chi = np.zeros((grid.n, grid.n))
 
     def center_and_eps():
         x, y = rng.uniform(-2.0, 2.0, size=2)
-        return cx0 + s * x, cy0 + s * y, rng.uniform(1.0, 8.0)
+        return cx0 + s * x, cy0 + s * y, rng.uniform(lo, hi)
 
     for _ in range(2):
         radius = rng.uniform(0.1, 1.0)
         cx, cy, eps = center_and_eps()
-        chi = paint(chi, coverage(grid, _disk(cx, cy, s * radius)), eps - 1.0)
+        chi = put(chi, coverage(grid, _disk(cx, cy, s * radius)), eps - 1.0)
 
     r3 = rng.uniform(0.1, 1.0)
     r4 = rng.uniform(max(0.2, r3), 2.0)
     cx, cy, eps = center_and_eps()
-    chi = paint(chi, coverage(grid, _annulus(cx, cy, s * r3, s * r4)), eps - 1.0)
+    chi = put(chi, coverage(grid, _annulus(cx, cy, s * r3, s * r4)), eps - 1.0)
 
     l1, l2 = rng.uniform(0.1, 2.0, size=2)
     cx, cy, eps = center_and_eps()
-    chi = paint(chi, coverage(grid, _rectangle(cx, cy, s * l1, s * l2)), eps - 1.0)
+    chi = put(chi, coverage(grid, _rectangle(cx, cy, s * l1, s * l2)), eps - 1.0)
 
     l3 = rng.uniform(0.1, 2.0)
     cx, cy, eps = center_and_eps()
-    chi = paint(chi, coverage(grid, _rectangle(cx, cy, s * l3, s * l3)), eps - 1.0)
+    chi = put(chi, coverage(grid, _rectangle(cx, cy, s * l3, s * l3)), eps - 1.0)
     return chi

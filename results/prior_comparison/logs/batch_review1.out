@@ -1,0 +1,31 @@
+[batch_run 05:47:04] 9 job(s) to run, 0 skipped; cpu slots 9 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 05:47:04] START pcg1_matern_prepare (cpu0, unpinned) [1/9]
+[batch_run 05:47:04] START pc_matern_c0_s1 (cpu1, unpinned) [2/9]
+[batch_run 05:47:04] START pc_matern_c1_s1 (cpu2, unpinned) [3/9]
+[batch_run 05:47:04] START pc_matern_c2_s1 (cpu3, unpinned) [4/9]
+[batch_run 05:47:04] START pc_matern_c3_s1 (cpu4, unpinned) [5/9]
+[batch_run 05:47:04] START pc_qggmrf_sg0.05_c0_s1 (cpu5, unpinned) [6/9]
+[batch_run 05:47:04] START pc_qggmrf_sg0.05_c1_s1 (cpu6, unpinned) [7/9]
+[batch_run 05:47:04] START pc_qggmrf_sg0.05_c2_s1 (cpu7, unpinned) [8/9]
+[batch_run 05:47:04] START pc_qggmrf_sg0.05_c3_s1 (cpu8, unpinned) [9/9]
+[batch_run 05:50:12] DONE  pcg1_matern_prepare exit 0 in 187.3 s
+[batch_run 06:02:39] DONE  pc_qggmrf_sg0.05_c1_s1 exit 0 in 934.3 s
+[batch_run 06:02:42] DONE  pc_qggmrf_sg0.05_c2_s1 exit 0 in 937.9 s
+[batch_run 06:02:43] DONE  pc_qggmrf_sg0.05_c3_s1 exit 0 in 938.9 s
+[batch_run 06:02:45] DONE  pc_qggmrf_sg0.05_c0_s1 exit 0 in 940.4 s
+[batch_run 06:03:01] DONE  pc_matern_c0_s1 exit 0 in 956.7 s
+[batch_run 06:03:02] DONE  pc_matern_c3_s1 exit 0 in 957.2 s
+[batch_run 06:03:03] DONE  pc_matern_c2_s1 exit 0 in 958.2 s
+[batch_run 06:03:49] DONE  pc_matern_c1_s1 exit 0 in 1004.9 s
+
+job                              status          wall s  exit
+pcg1_matern_prepare              ok               187.3     0
+pc_qggmrf_sg0.05_c1_s1           ok               934.3     0
+pc_qggmrf_sg0.05_c2_s1           ok               937.9     0
+pc_qggmrf_sg0.05_c3_s1           ok               938.9     0
+pc_qggmrf_sg0.05_c0_s1           ok               940.4     0
+pc_matern_c0_s1                  ok               956.7     0
+pc_matern_c3_s1                  ok               957.2     0
+pc_matern_c2_s1                  ok               958.2     0
+pc_matern_c1_s1                  ok              1004.9     0
+[batch_run 06:03:50] 9 ok, 0 not ok

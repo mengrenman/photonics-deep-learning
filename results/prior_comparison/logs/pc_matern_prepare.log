@@ -1,0 +1,10 @@
+# batch_run 2026-10-11T02:34:30+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior matern --sigma 0.5 --ell 0.4 --nu 1.5 --out pc_matern --map-maxiter 1000 --stage prepare
+problem: austria_fixed eps_r 2.0, n=48 side=2.0 (h=0.0417), data grid 96, SNR 30.0 dB, seed 0; d_obs sha256 efd5e84fa5f9a77f...
+operating point: grid model error 0.85% of ||d|| against noise 3.16% (ratio 0.27); Phi(truth) 2578 (N = 2400)
+prior matern: std of theta (mean over pixels) 0.5
+smooth start: 100 iterations, 109 evaluations, 28.5 s; U 3686.4 (Phi 3638.9, R 47.5)
+MAP: 350 iterations, 366 evaluations, 90.2 s; U 2465.87 = Phi 2378.38 + R 87.50 (N = 2400); |grad U|_inf 5.86e-03; CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+Laplace mass: 1.07 s (fields 0.66, Gram 0.15, Cholesky 0.10); Jacobian check 1.4100053158493858e-10; Laplace std of theta 0.0380 to 0.0809
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_matern/prepared.json and prepared.npz (total 126 s)

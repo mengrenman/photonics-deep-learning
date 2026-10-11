@@ -216,6 +216,18 @@ class Forward:
         """
         return _solve_fields_jit(self.g_hat, self.u_inc, chi, u0, self._cfg)
 
+    def solve_rhs(self, chi, rhs, x0=None):
+        """Solve (I - G diag chi) x_b = rhs_b for a stack of right-hand sides ``rhs`` (B, n, n), complex.
+
+        The same operator and the same Krylov solver as ``solve_fields`` (whose right-hand sides are the
+        incident fields); ``x0`` is an optional warm start of shape (B, n, n). Each lane stops at ``tol`` relative
+        to its own ||rhs_b||. Used by ``jacobian`` with the receiver kernel rows as right-hand sides.
+        """
+        rhs = jnp.asarray(rhs, dtype=self.u_inc.dtype)
+        if rhs.ndim != 3 or rhs.shape[1:] != (self.n, self.n):
+            raise ValueError(f"rhs must have shape (B, {self.n}, {self.n}), got {rhs.shape}")
+        return _solve_fields_jit(self.g_hat, rhs, chi, x0, self._cfg)
+
     def scattered(self, chi, u):
         """Data d[t, r] = sum_m R[r, m] chi_m u_t,m, shape (Nt, Nr), from total fields u (Nt, n, n)."""
         return _scattered_jit(self.R, jnp.asarray(chi), u)

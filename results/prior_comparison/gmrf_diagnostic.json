@@ -1,0 +1,155 @@
+{
+  "chains": [
+    {
+      "chain": 0,
+      "segments": 2,
+      "draws": 500,
+      "phi_prime_first_step_of_each_segment": [
+        -5897.370225177944,
+        -30034.15824411076
+      ],
+      "phi_prime_last_step_of_each_segment": [
+        -30034.15824411076,
+        -49846.77482505797
+      ],
+      "half_zeta_sq_at_end_of_each_segment": [
+        32982.511807686205,
+        52844.30762698162
+      ],
+      "rms_theta_minus_map_first_draw": 0.18197963947583443,
+      "rms_theta_minus_map_last_draw": 0.22481655839321274,
+      "rms_first_half_mean_minus_second_half_mean": 0.04665691865718465,
+      "pixel_std_over_draws_mean": 0.18397148779989536,
+      "step": 0.061059332731243005,
+      "acceptance": 0.682
+    },
+    {
+      "chain": 1,
+      "segments": 2,
+      "draws": 500,
+      "phi_prime_first_step_of_each_segment": [
+        -10571.616770915422,
+        -32569.406092656624
+      ],
+      "phi_prime_last_step_of_each_segment": [
+        -32350.755170445707,
+        -49770.63661763205
+      ],
+      "half_zeta_sq_at_end_of_each_segment": [
+        35336.675969597214,
+        52755.68523566425
+      ],
+      "rms_theta_minus_map_first_draw": 0.1892097663156261,
+      "rms_theta_minus_map_last_draw": 0.22240744264118464,
+      "rms_first_half_mean_minus_second_half_mean": 0.05606990465446881,
+      "pixel_std_over_draws_mean": 0.18636693179107214,
+      "step": 0.07421759996212321,
+      "acceptance": 0.394
+    },
+    {
+      "chain": 2,
+      "segments": 2,
+      "draws": 500,
+      "phi_prime_first_step_of_each_segment": [
+        -8525.674694700989,
+        -31746.84394723604
+      ],
+      "phi_prime_last_step_of_each_segment": [
+        -31746.84394723604,
+        -49331.78632320698
+      ],
+      "half_zeta_sq_at_end_of_each_segment": [
+        34670.90336390043,
+        52315.71679885135
+      ],
+      "rms_theta_minus_map_first_draw": 0.18964747181069339,
+      "rms_theta_minus_map_last_draw": 0.22085774442010103,
+      "rms_first_half_mean_minus_second_half_mean": 0.05505993971821276,
+      "pixel_std_over_draws_mean": 0.1856518211876222,
+      "step": 0.07641536506812122,
+      "acceptance": 0.408
+    },
+    {
+      "chain": 3,
+      "segments": 2,
+      "draws": 500,
+      "phi_prime_first_step_of_each_segment": [
+        -6488.925994722434,
+        -31811.579747433872
+      ],
+      "phi_prime_last_step_of_each_segment": [
+        -31614.015339399783,
+        -55001.85122737194
+      ],
+      "half_zeta_sq_at_end_of_each_segment": [
+        34554.68832449033,
+        58012.92472605471
+      ],
+      "rms_theta_minus_map_first_draw": 0.1806107266078309,
+      "rms_theta_minus_map_last_draw": 0.23129669664356373,
+      "rms_first_half_mean_minus_second_half_mean": 0.048678360197744575,
+      "pixel_std_over_draws_mean": 0.18639376766746593,
+      "step": 0.06523166318466078,
+      "acceptance": 0.614
+    }
+  ],
+  "pilots": {
+    "pg025_gmrf": {
+      "step": 0.05754313463522806,
+      "acceptance": 0.8166666666666667,
+      "wall_s": 781.5469277499942,
+      "half_zeta_sq_at_end": 10374.26488580102,
+      "phi_prime_first_last": [
+        -732.1120317939594,
+        -7655.896088472426
+      ]
+    },
+    "pg05_gmrf": {
+      "step": 0.05810717310206889,
+      "acceptance": 0.7833333333333333,
+      "wall_s": 1927.106372792041,
+      "half_zeta_sq_at_end": 9393.319388330894,
+      "phi_prime_first_last": [
+        -62.68350084024996,
+        -6679.033876193239
+      ]
+    }
+  },
+  "stiffness_of_H_at_pilot_end_states": {
+    "map_mass": {
+      "state_pilot_end_0": {
+        "lambda_max": 274.64102654216134,
+        "lambda_min": 0.0036637779918149873
+      },
+      "state_pilot_end_1": {
+        "lambda_max": 261.67543313183796,
+        "lambda_min": 0.00383985338518741
+      }
+    },
+    "pilot_mean_mass": {
+      "state_pilot_end_0": {
+        "lambda_max": 8.296131046157372,
+        "lambda_min": 0.12070729891863251
+      },
+      "state_pilot_end_1": {
+        "lambda_max": 8.309614767180307,
+        "lambda_min": 0.12035176468394776
+      }
+    },
+    "pilot_end0_mass": {
+      "state_pilot_end_0": {
+        "lambda_max": 1.0000000000006102,
+        "lambda_min": 0.9999999999994356
+      },
+      "state_pilot_end_1": {
+        "lambda_max": 27.628997071603322,
+        "lambda_min": 0.036145921163559476
+      }
+    }
+  },
+  "pilot_ends_rms_distance": 0.01741108697077401,
+  "pilot_ends_rms_from_map": [
+    0.14892974166470585,
+    0.14567022750465541
+  ]
+}

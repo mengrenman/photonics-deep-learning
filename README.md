@@ -31,7 +31,9 @@ pytest tests/test_born_end_to_end.py -m "not slow" -v   # the key validation (ab
 
 Every test file is named after its module (`test_geometry_phantoms.py`, `test_greens.py`, `test_forward.py`,
 `test_gradients.py`, `test_priors.py`, `test_samplers.py`, `test_diagnostics.py`, `test_likelihood.py`,
-`test_inference.py`, `test_plotting.py`, `test_scripts.py`) plus `test_born_end_to_end.py`.
+`test_inference.py`, `test_plotting.py`, `test_scripts.py`) plus `test_born_end_to_end.py`, and, for milestone 4,
+`test_mrf.py`, `test_jacobian.py`, `test_thetaspace.py`, `test_features.py`, `test_prior_comparison_scripts.py`,
+`test_measure_theta_cost.py` and `test_span_test.py`.
 
 ## Scripts
 
@@ -44,6 +46,19 @@ Every test file is named after its module (`test_geometry_phantoms.py`, `test_gr
 | `scripts/map_multistart.py` | MAP from several prior-draw starts: one basin or several |
 | `scripts/analyze_run.py`, `scripts/make_tables.py` | Per-run metrics (misfit, ESS, R-hat, z-maps, Laplace reference std) and the Markdown tables / misfit figures in `results/tables/` and `results/figures/` |
 | `scripts/measure_cost.py`, `scripts/plot_gn_spectrum.py` | Cost per evaluation on the benchmark configurations; Gauss-Newton spectrum figure |
+| `scripts/run_prior_comparison.py` | Milestone 4 (DESIGN 11): ONE prior (`matern`, `gmrf`, `qggmrf`) on the shared moderate problem in theta = log eps_r: smooth start, L-BFGS-B MAP, dense Laplace mass from the exact reciprocity Jacobian, HMC in Laplace-whitened coordinates, convergence verdict, feature probabilities; writes `results/prior_comparison/<out>/` (`summary.json` with the d_obs hash and thread environment, `chains.npz`, `maps.png`); `--stage prepare / chain / finalize` splits it into one process per chain with continuation segments. Two runs have the same data if max abs(d_a - d_b) / s <= 1e-6; the hash alone is not the criterion (it depends on the XLA thread count) |
+| `scripts/make_prior_jobs.py` | Writes `batch_run.py` job files for the staged form of `run_prior_comparison.py` (`--stage prepare`, `chain` with `--segment` for extension, `finalize`): one single-thread process per chain, about 1.8x the throughput per thread of four threads per process (cost.json) |
+| `scripts/edge_analysis.py` | Bias, posterior std and z by signed distance to the object edge, an independent recomputation of the |z| statistics from the stored draws, and the |z| > 3 fraction of each chain on its own (`edge_analysis.json`, `edge_profile.png`) |
+| `scripts/convergence_audit.py` | Rank-normalized bulk / folded split R-hat, multi-chain bulk ESS and the AR(1) null spread of the R-hat statistics, per run, from the stored draws (`convergence_audit.json`) |
+| `scripts/prior_energy_audit.py` | Prior energy R and data misfit Phi at the truth, the MAP, the posterior mean and the draws, the same for Gaussian blurs of the truth, and the cost of a log 2 step as a jump or a ramp for the q-GGMRF family (`prior_energy.json`) |
+| `scripts/check_data_threads.py` | Builds d_obs at two XLA thread counts in subprocesses and compares hash and numbers (`data_thread_check.json`) |
+| `scripts/span_test.py` | Milestone 4 (DESIGN 11.4): the best-in-span lower bound for the book's NMM on held-out Table 15.2 draws and Fig. 15.9-like scenes, an independent second implementation, the P sweep, and the review variants (training eps_r range, clipping, a constant in the span, the metric); writes `results/span_test/`; `--variants-only` adds the variants to stored results |
+| `scripts/span_test_tables.py` | Prints the span-test report tables from `results/span_test/span_test.json` (no recomputation) |
+| `scripts/_threadcap.py` | Imported first by the standalone scripts: caps the BLAS / OpenMP thread variables at 2 before numpy is imported |
+| `scripts/prior_feature_baseline.py` | Prior probabilities of the three DESIGN 11.3 features, the baseline for the posterior probabilities (`prior_features.json`) |
+| `scripts/prior_comparison_tables.py` | Prints the report tables from the stored `summary.json` / `comparison.json` files (no recomputation) |
+| `scripts/compare_priors.py` | Reads several `run_prior_comparison.py` directories, refuses runs with different data, writes `comparison.json` and the mean / std, disagreement and feature-probability figures |
+| `scripts/measure_theta_cost.py` | Cost of U and its gradient, the Jacobian assembly, the Laplace mass and the MAP per prior, at n = 32 and 48 and 1 or 4 XLA threads, one process at a time |
 
 ```bash
 python scripts/born_exact_check.py                       # about 2.5 min
@@ -77,6 +92,12 @@ src/bayes_scatter/
                   physical_phi_of_draws, laplace_theta_variance, lognormal_center_shift
   validation.py   Born problem builder and sampler comparison shared by the test and the script
   plotting.py     plot_maps, plot_traces, plot_born_check
+  mrf.py          theta-space prior energies: QGGMRF (edge-preserving), GaussianEnergy (Matern / GMRF cropped to the DOI),
+                  WhitenedMap, sample_prior (HMC on R alone)
+  jacobian.py     exact dd/dchi and dd/dtheta by reciprocity (Nt + Nr solves), Gauss-Newton Hessian, jvp check
+  thetaspace.py   ThetaTarget (U = Phi + R), LaplaceMass (dense H, Cholesky), ZetaTarget (reparametrized potential), map_theta,
+                  smooth_start
+  features.py     pooled moments, edge mask, |z| statistics, disagreement, the DESIGN 11.3 feature probabilities
 ```
 
 ## Summary of the design

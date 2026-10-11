@@ -1,0 +1,23 @@
+review variants (eps_r law, clipping, constant, metric) ...
+  eps_r ~ U[1.0, 8.0]: 40 training sets of 100, done in 34 s
+  eps_r ~ U[1.0, 3.0]: 40 training sets of 100, done in 41 s
+  eps_r ~ U[1.0, 2.0]: 40 training sets of 100, done in 41 s
+variants at P = 100 (40 training sets, painter's rule); median [min] of the digitized scene / median [min] over the 8 named scenes
+  training eps_r U[1, 8]: empty scene 8.35, held-out median 33.63
+    test1: span 8.57 [7.36] / 9.10 [6.94];  span_const 3.71 [3.36] / 4.48 [3.19];  shift_clip 4.82 [4.31] / 5.22 [4.06];  const_clip 3.43 [3.12] / 4.19 [2.95]
+    test4: span 10.45 [9.14] / 10.71 [8.25];  span_const 7.10 [6.30] / 7.66 [4.40];  shift_clip 7.06 [6.09] / 7.68 [4.32];  const_clip 6.47 [5.80] / 7.04 [4.02]
+  training eps_r U[1, 3]: empty scene 3.17, held-out median 18.36
+    test1: span 4.58 [4.23] / 5.27 [4.04];  span_const 3.71 [3.36] / 4.48 [3.19];  shift_clip 3.66 [3.32] / 4.22 [3.20];  const_clip 3.43 [3.12] / 4.19 [2.95]
+    test4: span 7.62 [6.68] / 8.07 [4.92];  span_const 7.10 [6.30] / 7.66 [4.40];  shift_clip 6.22 [5.50] / 6.81 [3.81];  const_clip 6.47 [5.80] / 7.04 [4.02]
+  training eps_r U[1, 2]: empty scene 1.68, held-out median 10.91
+    test1: span 3.93 [3.59] / 4.69 [3.46];  span_const 3.71 [3.36] / 4.48 [3.19];  shift_clip 3.42 [3.09] / 4.02 [2.93];  const_clip 3.43 [3.12] / 4.19 [2.95]
+    test4: span 7.21 [6.35] / 7.77 [4.47];  span_const 7.10 [6.30] / 7.66 [4.40];  shift_clip 6.09 [5.45] / 6.73 [3.71];  const_clip 6.47 [5.80] / 7.04 [4.02]
+  best reading test1: digitized median 3.42 (shift_clip, eps 1-2); smallest value anywhere 2.93 (T1-g side by side, shift_clip, eps 1-2)
+  best reading test4: digitized median 6.09 (shift_clip, eps 1-2); smallest value anywhere 3.71 (T4-d small tight, shift_clip, eps 1-2)
+  Test #4 minus Test #1 (digitized medians) over all readings: 1.89 to 3.39 pp; book NMM: +0.020 pp (spread 0.049 pp)
+  squared-misfit reading worse than the vacuum guess for all BA/VBIM entries: True
+  held-out minimum [painter]: pooled min 9.86, easiest draw #13 (mean over sets 12.11), min without it 15.55; median 33.63, p05 25.18, p0.1 15.55
+  held-out minimum [independent_painter]: pooled min 14.17, easiest draw #802 (mean over sets 17.09), min without it 15.20; median 33.80, p05 24.84, p0.1 16.96
+  held-out minimum [max]: pooled min 14.69, easiest draw #180 (mean over sets 19.90), min without it 14.69; median 32.71, p05 24.48, p0.1 19.67
+  held-out minimum [independent_max]: pooled min 14.99, easiest draw #665 (mean over sets 17.62), min without it 15.49; median 32.79, p05 24.04, p0.1 17.39
+wrote the variants into /Users/mengren/Documents/new_projects/photonics-dl/results/span_test/span_test.json and span_test.npz (117 s)

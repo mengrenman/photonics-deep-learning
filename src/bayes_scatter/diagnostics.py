@@ -20,10 +20,17 @@ Conventions (docs/DESIGN.md, section 6). Everything here is post-processing in N
   of the Sokal ESS.
 * ``ess`` and ``mcse_mean`` take ONE chain. For several chains, add the ESS values (independent
   chains) and combine the per-chain MCSEs in quadrature.
+* Rank-based multi-chain diagnostics (Vehtari, Gelman, Simpson, Carpenter and Buerkner 2021, Bayesian
+  Analysis 16): ``rank_normalize``, ``split_rhat_rank`` (bulk and folded rank-normalized split R-hat) and
+  ``ess_bulk`` (multi-chain ESS from the between- and within-chain variances; unlike a sum of per-chain
+  Sokal ESS values it is small when the chains have not mixed). ``ar1_rhat_null`` simulates the spread of
+  split R-hat for chains that DO come from one distribution with a given integrated autocorrelation
+  time, the reference against which an R-hat of 1.01 to 1.05 is read.
 """
 
 import numpy as np
 from scipy import fft as _sfft
+from scipy import stats as _sstats
 
 
 def _time_first(x, axis):
@@ -127,3 +134,114 @@ def split_rhat(chains):
     var_plus = (n - 1) / n * within + between / n
     with np.errstate(invalid="ignore", divide="ignore"):
         return np.sqrt(var_plus / within)
+
+
+def rank_normalize(chains):
+    """Rank-normalize draws pooled over chains: z = Phi^-1((r - 3/8) / (S + 1/4)), r the average rank (ties share
+    their mean rank) of each draw among all S = M N draws of its component.
+
+    chains : array (M, N, ...). Returns an array of the same shape; any strictly monotone transform of the draws gives
+    the same output, and the output of a heavy-tailed component is standard normal in distribution.
+    """
+    x = np.asarray(chains, dtype=np.float64)
+    if x.ndim < 2:
+        raise ValueError("chains must have shape (n_chains, n_draws, ...)")
+    shape = x.shape
+    flat = x.reshape(shape[0] * shape[1], -1)
+    r = _sstats.rankdata(flat, axis=0, method="average")
+    return _sstats.norm.ppf((r - 0.375) / (flat.shape[0] + 0.25)).reshape(shape)
+
+
+def split_rhat_rank(chains):
+    """Rank-normalized split R-hat (Vehtari et al. 2021) per component.
+
+    Returns ``(bulk, folded, worst)``: ``bulk`` is ``split_rhat`` of the rank-normalized draws (sensitive to
+    differences in location), ``folded`` the same for the rank-normalized absolute deviation from the pooled median
+    (sensitive to differences in scale and tails, which the classic R-hat misses), ``worst`` their maximum, the number
+    to compare with 1.01 (the paper) or 1.05. chains : array (M, N, ...).
+    """
+    x = np.asarray(chains, dtype=np.float64)
+    bulk = split_rhat(rank_normalize(x))
+    med = np.median(x.reshape((-1,) + x.shape[2:]), axis=0)
+    folded = split_rhat(rank_normalize(np.abs(x - med)))
+    return bulk, folded, np.maximum(bulk, folded)
+
+
+def ess_bulk(chains, rank=True):
+    """Multi-chain effective sample size of the bulk (Vehtari et al. 2021; Stan's ``ess_bulk``), per component.
+
+    The M chains are split in halves (2M sequences of n = N // 2 draws); with W the mean within-sequence variance and
+    B / n the variance of the sequence means, var_plus = (n - 1) W / n + B / n and the autocorrelation at lag t is
+    rho(t) = 1 - (W - mean_k acov_k(t)) / var_plus (rho(0) = 1); the pair sums rho(2k) + rho(2k + 1) are cut at the first
+    non-positive one and made non-increasing (Geyer), tau = -1 + 2 sum of the pair sums, ESS = 2 M n / tau, floored
+    like ``ess`` (tau >= 1 / log10(2 M n)). ``rank=True`` rank-normalizes first (``rank_normalize``); chains that
+    have not mixed (large B) give a small ESS, which a sum of per-chain ESS values hides. chains : array (M, N, ...).
+    """
+    x = np.asarray(chains, dtype=np.float64)
+    if x.ndim < 2:
+        raise ValueError("chains must have shape (n_chains, n_draws, ...)")
+    if rank:
+        x = rank_normalize(x)
+    n = x.shape[1] // 2
+    if n < 4:
+        raise ValueError("need at least 8 draws per chain")
+    seq = np.concatenate([x[:, :n], x[:, x.shape[1] - n:]], axis=0)  # (K, n, ...)
+    k = seq.shape[0]
+    rho_k = autocorr(seq, axis=1)  # normalized by the biased variance of each sequence
+    acov = rho_k * seq.var(axis=1, keepdims=True)  # biased autocovariance, (K, n, ...)
+    within = seq.var(axis=1, ddof=1).mean(axis=0)
+    between_over_n = seq.mean(axis=1).var(axis=0, ddof=1)
+    var_plus = (n - 1) / n * within + between_over_n
+    with np.errstate(invalid="ignore", divide="ignore"):
+        rho = 1.0 - (within - acov.mean(axis=0)) / var_plus  # (n, ...)
+        rho[0] = 1.0
+        m = n // 2
+        gam = rho[0:2 * m:2] + rho[1:2 * m:2]
+        positive = np.cumprod(gam > 0.0, axis=0).astype(bool)
+        mono = np.where(positive, np.minimum.accumulate(gam, axis=0), 0.0)
+        tau = -1.0 + 2.0 * mono.sum(axis=0)
+        total = k * n
+        out = total / np.maximum(tau, 1.0 / max(np.log10(total), 1.0))
+    return np.where(var_plus > 0, out, np.nan)
+
+
+def ar1_rhat_null(n_chains, n_draws, tau, n_series=None, n_rep=200, seed=0, burn=None, rank=True):
+    """Distribution of split R-hat for chains that come from ONE stationary distribution.
+
+    Simulates ``n_rep`` replicates of ``n_chains`` independent AR(1) chains of ``n_draws`` draws, one AR(1) series per
+    component, with integrated autocorrelation time ``tau`` (rho = (tau - 1) / (tau + 1); tau >= 1). ``tau`` is a scalar
+    (then ``n_series`` components share it; default 1, which mimics the potential Phi) or an array with one tau per
+    component (``n_series`` is its length: pass the observed per-pixel taus to mimic the maximum over pixels; real
+    pixels are correlated, which this ignores, so the maximum is an upper-ish reference). Returns a dict of arrays over
+    the replicates: ``classic`` and ``rank`` (``split_rhat`` and the ``worst`` of ``split_rhat_rank``) of the first
+    component, and ``classic_max`` and ``rank_max`` (maxima over the components). ``rank=False`` skips the rank
+    statistics (NaN in ``rank`` and ``rank_max``; much faster). To judge a statistic of a transformed series
+    (the folded rank-normalized series, whose autocorrelation is larger than that of the draws), pass the tau of
+    THAT series: an AR(1) series is its own bulk and the null of a folded statistic is the classic R-hat of an AR(1)
+    series with the folded series' tau.
+    """
+    tau = np.asarray(tau, dtype=np.float64)
+    if tau.ndim == 0:
+        tau = np.full(1 if n_series is None else int(n_series), float(tau))
+    if np.any(tau < 1.0):
+        raise ValueError("tau must be >= 1")
+    rho = (tau - 1.0) / (tau + 1.0)
+    scale = np.sqrt(1.0 - rho**2)
+    burn = int(20 * tau.max()) + 20 if burn is None else int(burn)
+    rng = np.random.default_rng(seed)
+    out = {k: np.empty(n_rep) for k in ("classic", "rank", "classic_max", "rank_max")}
+    for i in range(n_rep):
+        e = rng.standard_normal((n_draws + burn, n_chains, tau.size))
+        x = np.empty_like(e)
+        x[0] = e[0]
+        for s in range(1, e.shape[0]):
+            x[s] = rho * x[s - 1] + scale * e[s]
+        x = np.moveaxis(x[burn:], 0, 1)  # (chains, draws, components)
+        c = split_rhat(x)
+        out["classic"][i], out["classic_max"][i] = c[0], np.nanmax(c)
+        if rank:
+            r = split_rhat_rank(x)[2]
+            out["rank"][i], out["rank_max"][i] = r[0], np.nanmax(r)
+        else:
+            out["rank"][i] = out["rank_max"][i] = np.nan
+    return out

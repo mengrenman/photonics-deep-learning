@@ -159,3 +159,67 @@ def test_ess_geyer_matches_ar1_and_iid_and_is_conservative_on_a_trend():
     t = np.arange(600)
     trend = 0.03 * t + np.random.default_rng(14).standard_normal(600)
     assert dg.ess_geyer(trend) < 30.0 and dg.ess_geyer(trend) <= dg.ess(trend) * 1.5
+
+
+# ---- rank-normalized R-hat, multi-chain bulk ESS, AR(1) null (Vehtari et al. 2021) ----
+
+
+def test_rank_normalize_is_invariant_to_monotone_maps_and_standard_normal():
+    rng = np.random.default_rng(0)
+    x = rng.standard_cauchy((3, 400, 2))  # heavy tails: the raw draws have no variance
+    z = dg.rank_normalize(x)
+    np.testing.assert_allclose(z, dg.rank_normalize(np.exp(np.arctan(x))))  # strictly monotone transform
+    assert z.shape == x.shape and abs(z.mean()) < 1e-9 and z.std() == pytest.approx(1.0, abs=0.02)
+    tied = dg.rank_normalize(np.zeros((2, 6)))  # all ties share the middle rank -> z = 0
+    np.testing.assert_allclose(tied, 0.0, atol=1e-12)
+    with pytest.raises(ValueError):
+        dg.rank_normalize(np.zeros(5))
+
+
+def test_rank_rhat_is_one_for_iid_chains_and_catches_what_the_classic_one_misses():
+    rng = np.random.default_rng(1)
+    same = rng.standard_normal((4, 500, 3))
+    bulk, folded, worst = dg.split_rhat_rank(same)
+    assert np.all(worst < 1.02) and np.all(np.abs(bulk - dg.split_rhat(same)) < 0.01)
+    # shifted means: both detect it
+    shifted = same + np.array([0.0, 0.5, 1.0, 1.5])[:, None, None]
+    assert np.all(dg.split_rhat_rank(shifted)[0] > 1.1) and np.all(dg.split_rhat(shifted) > 1.1)
+    # same mean, different scales: the classic R-hat sees nothing (it compares means to within-chain variance), the folded one does
+    scaled = same * np.array([0.3, 1.0, 1.0, 3.0])[:, None, None]
+    classic = dg.split_rhat(scaled)
+    bulk, folded, worst = dg.split_rhat_rank(scaled)
+    assert np.all(classic < 1.1) and np.all(folded > 1.3) and np.all(worst == np.maximum(bulk, folded))
+    # heavy tails: the classic R-hat is erratic, the rank version is not
+    assert np.all(dg.split_rhat_rank(rng.standard_cauchy((4, 500, 3)))[2] < 1.03)
+
+
+def test_ess_bulk_matches_iid_and_ar1_and_collapses_for_unmixed_chains():
+    rng = np.random.default_rng(2)
+    iid = rng.standard_normal((4, 600, 2))
+    assert dg.ess_bulk(iid) == pytest.approx(np.full(2, 4 * 600), rel=0.25)
+    phi = 0.8
+    tau = (1 + phi) / (1 - phi)  # 9
+    chains = np.stack([ar1(phi, 3000, n_series=2, seed=10 + c) for c in range(4)])  # (4, 3000, 2)
+    ess = dg.ess_bulk(chains)
+    assert ess == pytest.approx(np.full(2, 4 * 3000 / tau), rel=0.25)
+    assert dg.ess_bulk(chains, rank=False) == pytest.approx(np.full(2, 4 * 3000 / tau), rel=0.25)
+    # chains that sit at different places: the per-chain Sokal ESS (summed) stays large, the multi-chain one does not
+    stuck = chains + np.array([0.0, 4.0, 8.0, 12.0])[:, None, None]
+    summed = np.sum([dg.ess(c, axis=0) for c in stuck], axis=0)
+    assert np.all(summed > 400) and np.all(dg.ess_bulk(stuck) < 0.05 * summed)
+    with pytest.raises(ValueError):
+        dg.ess_bulk(np.zeros((2, 6)))
+
+
+def test_ar1_rhat_null_reproduces_the_known_spread_of_split_rhat():
+    iid = dg.ar1_rhat_null(4, 300, 1.0, n_rep=300, seed=3)
+    assert np.median(iid["classic"]) == pytest.approx(1.0, abs=0.004) and np.quantile(iid["classic"], 0.95) < 1.012
+    slow = dg.ar1_rhat_null(4, 300, 3.0, n_rep=300, seed=3)  # tau = 3: R-hat above 1.01 happens by chance
+    frac = float(np.mean(slow["classic"] > 1.01))
+    assert 0.1 < frac < 0.4 and np.mean(slow["classic"]) > np.mean(iid["classic"])
+    # the maximum over many components is larger, and per-component taus are accepted
+    many = dg.ar1_rhat_null(4, 300, np.linspace(1, 6, 300), n_rep=5, seed=3)
+    assert np.all(many["classic_max"] > 1.02) and many["classic_max"].shape == (5,)
+    assert np.all(many["rank_max"] >= many["rank"])
+    with pytest.raises(ValueError):
+        dg.ar1_rhat_null(4, 100, 0.5)

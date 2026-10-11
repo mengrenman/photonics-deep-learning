@@ -98,7 +98,10 @@ grid the common symmetry group is D₄.
   enforce r₄ > r₃, center ∈ [−2, 2]²), a rectangle (sides l₁, l₂ ∈ [0.1, 2]) and a square (side
   l₃ ∈ [0.1, 2]), centers ∈ [−2, 2]², each with ε_r ~ U[1, 8]. Painted in that order; later shapes
   overwrite earlier ones. (The book's table lists "y2" twice; the first is y₁.) Parameters scale with
-  `grid.side/5` so the variant also works on smaller DOIs.
+  `grid.side/5` so the variant also works on smaller DOIs. `ch15_austria_variant(rng, grid, overlap="painter",
+  eps_range=(1, 8))`: `overlap="max"` (`paint_max`: the larger contrast wins where shapes overlap) is the alternative the
+  book leaves open, `eps_range` the law of each shape's eps_r (the same seed gives the same shapes; the colorbar of
+  Fig. 15.9 only reaches 2).
 - `austria_fixed(grid, eps_r)`: a fixed test object of our own choosing (not from the book): two disks of
   radius 0.5 at (±0.9, 1.0) and a ring with radii 0.9 and 1.3 centered at (0, −0.8), all with relative
   permittivity eps_r, scaled by `grid.side/5`.
@@ -239,9 +242,17 @@ src/bayes_scatter/
   diagnostics.py  autocorr, tau_int, ess, mcse_mean, split_rhat
   inference.py    map_estimate, born_gaussian_posterior, error metrics
   plotting.py     maps and traces
+  mrf.py          theta-space prior energies (QGGMRF, GaussianEnergy), WhitenedMap, sample_prior          (milestone 4)
+  jacobian.py     exact Jacobian by reciprocity, Gauss-Newton Hessian                                    (milestone 4)
+  thetaspace.py   ThetaTarget, LaplaceMass, ZetaTarget, map_theta, smooth_start                          (milestone 4)
+  features.py     pooled / merged moments, edge mask, |z| statistics, the 11.3 features                   (milestone 4)
 scripts/          validate_forward.py, born_exact_check.py, run_posterior.py (+ analyze_run.py, make_tables.py,
                   measure_cost.py, plot_gn_spectrum.py); prototypes outside the ladder: run_posterior_laplace.py
-                  (Laplace-whitened sampling), map_multistart.py (MAP from several starts)
+                  (Laplace-whitened sampling), map_multistart.py (MAP from several starts);
+                  milestone 4: run_prior_comparison.py (+ make_prior_jobs, compare_priors, edge_analysis,
+                  convergence_audit, prior_energy_audit, prior_feature_baseline, prior_comparison_tables,
+                  gmrf_diagnostic, check_data_threads, measure_theta_cost) and span_test.py (+ span_test_tables); _threadcap.py is
+                  imported first by the standalone scripts (BLAS threads <= 2)
 tests/            one test file per module, plus end-to-end Born test
 ```
 
@@ -251,9 +262,11 @@ tests/            one test file per module, plus end-to-end Born test
   the Gram eigendecomposition at background, truth and MAP, and the count of data-constrained directions
   versus SNR. (The MCMC/BO judge reproduced 380/468/628/797 of 9,216 Born directions above
   1e-1/1e-2/1e-4/1e-6 σ₁ for the full book geometry; the Ewald-disk count is π(2/λ)²(5λ)² ≈ 314.)
-- **Span test** of the book's NMM: by eqs. 15.5–15.6 its output lies in the span of the 100 training
-  targets. Two independent replicates of the Table 15.2 generator give a best-in-span error of ≳ 10%,
-  against the reported 3.26–3.31%. An anomaly to reproduce, not yet a conclusion.
+- **Span test** of the book's NMM (done, §11.4): by eqs. 15.5–15.6 its output lies in the span of the 100 training
+  targets. Independent implementations of the Table 15.2 generator give a best-in-span error with median 34% and
+  0.1th percentile 15.5% on held-out draws at P = 100 (the minimum, 9.9–16%, is set by the single easiest draw and
+  is not quoted), and median 9.1% (Test #1-like) and 10.7% (Test #4-like) for Fig. 15.9-like scenes, against the
+  reported 3.26–3.31%. The cause is unknown (results/span_test/, results/SPAN_TEST.md).
 - Resolution audit: is sub-wavelength detail in the posterior, or only in the prior? Verdict by agreement
   across three priors (GMRF, smoothed TV via HMC, the book's 22-parameter scene family via tempered SMC).
 - Edge-preserving (Huber/TV-MRF) and learned score-based priors (plug-and-play Langevin).
@@ -265,3 +278,114 @@ tests/            one test file per module, plus end-to-end Born test
 - Resolution on an object manifold: pull back the Fisher metric DF*Σ⁻¹DF to parametrized object families
   and compare Cramér–Rao bounds for gap/size parameters with posterior widths (Ch. 15 Tests #4–#8).
 - Stable degrees of freedom of the receiver arc: spectrum of the aperture-limited concentration operator.
+
+## 11. Milestone 4: prior sensitivity (the edge question) and the span test
+
+### 11.1 Question
+
+Under the smooth Matérn prior, 10–13% of pixels of the moderate object miss the truth by more than 3σ, almost
+all within one pixel of an edge, and removing the grid error does not remove the ring (results/REPORT.md §7.2).
+Is the ring a property of the prior? And which features (the 0.32λ gap between the disks, the 0.16λ-thick ring,
+the ring's hole) are determined by the data, i.e. agreed on by structurally different priors (§8 step 7)?
+
+### 11.2 Sampling in θ-space with a dense Laplace mass matrix
+
+All priors in this milestone are energies on the n × n grid of θ = log ε_r (no padded torus):
+
+U(θ) = Φ(χ(θ)) + R(θ),  χ = e^θ − 1.
+
+- **Matérn / GMRF (cropped)**: R(θ) = ½ (θ − μ)ᵀ C_D⁻¹ (θ − μ), with C_D = `GaussianField.covariance_matrix()`,
+  the exact DOI marginal of the torus field of §3 (dense n² × n², Cholesky-factored once). Same prior as §3.
+- **q-GGMRF** (Thibault, Sauer, Bouman & Hsieh 2007; Bouman Ch. 8): edge-preserving,
+  R(θ) = Σ_{i~j} b_ij ρ(θ_i − θ_j) + ‖θ − μ‖²/(2σ₀²), over the 8-neighborhood inside the DOI (free boundary),
+  b = 1 for horizontal/vertical pairs and 1/√2 for diagonal pairs, with
+  ρ(Δ) = (|Δ|^p / (p σ_g^p)) · 1 / (1 + |Δ/(T σ_g)|^{p−q}),  p = 2, 1 ≤ q < 2.
+  Quadratic for |Δ| ≪ Tσ_g, growing like |Δ|^q beyond. Convex for 1 ≤ q ≤ 2. The weak anchor σ₀ makes the prior
+  proper. **Implementation must be autodiff-safe at Δ = 0**: write |Δ|^{p−q} as (Δ² + ε²)^{(p−q)/2} with
+  ε ~ 1e-12, or use a `jnp.where` guard. Test that gradient and Hessian-vector products are finite at Δ = 0.
+- **Laplace mass matrix**: H = H_GN + ∇²R at the MAP θ̂, with H_GN = (2/s²) Re(Jᴴ J), J = ∂d/∂θ (complex,
+  N_t N_r × n²) = (∂d/∂χ) diag(e^θ). Assemble J exactly, preferably by reciprocity (one extra solve per
+  receiver, using the receiver kernel row as the incident field). Verify columns against `jax.jvp`. H must be
+  SPD (Gauss–Newton is PSD, and the priors are convex); check with Cholesky.
+- **Reparametrization**: θ = θ̂ + L_H⁻ᵀ ζ with H = L_H L_Hᵀ. The samplers of §5 target exp(−Φ(ξ)) N(ξ; 0, I),
+  so feed them Φ'(ζ) = U(θ(ζ)) − ½‖ζ‖². This is exact for any fixed θ̂ and H (an affine change of variables).
+  Report the physical misfit Φ of the stored draws, never Φ' (§8 step 6).
+- **Sampler**: HMC in ζ (dual-averaging step size during warmup, jittered trajectory length), 4 chains started
+  from θ̂ + overdispersed Laplace draws (scale 2). Convergence: split R̂ ≤ 1.01 for Φ, max pixel R̂ ≤ 1.05,
+  worst-pixel ESS ≥ 200 (Sokal) pooled over chains. Chains that miss this are reported as unconverged and no
+  conclusion rests on them. Compare the MCMC pixel std with the Laplace std as a non-Gaussianity diagnostic.
+  These thresholds are within the noise at 300 to 600 draws per chain (an AR(1) null with τ ≈ 3 gives a classic R̂ of Φ
+  above 1.01 in 16–28% of runs), so also report the rank-normalized bulk and folded split R̂ with their AR(1) null
+  spread, the multi-chain bulk ESS and the per-chain |z| > 3 fractions (`scripts/convergence_audit.py`,
+  `scripts/edge_analysis.py`); the DESIGN flag "converged" stays the classic one.
+
+### 11.3 Experiment
+
+Moderate problem: austria_fixed, ε_r = 2, side 2 (disks of radius 0.2λ at (±0.36, 0.4), edge-to-edge gap
+0.32λ; ring radii 0.36λ and 0.52λ at (0, −0.32), thickness 0.16λ), inference grid n = 48 (grid error 0.27 of the
+noise, results/operating_points/moderate.json), data on n = 96, SNR 30 dB, **one data realization shared by all
+priors**. Priors: Matérn (σ 0.5, ℓ 0.4), GMRF (the §3 parameters used in results/), q-GGMRF with q = 1.2,
+T = 1, σ₀ = 1 and two values of σ_g (0.05 and 0.1, log-ε_r units per neighbor difference; the true edge jump
+is log 2 ≈ 0.69).
+
+Report per prior: physical Φ of the draws; posterior mean and std of θ and ε_r; prior std (by sampling the
+prior alone for q-GGMRF); |z| > 3 fraction and its share within one pixel of an edge; err_model, err_χ; the
+convergence numbers above. Report across priors: a pixelwise disagreement map
+|m_A − m_B| / √(s_A² + s_B²) > 2, and three feature probabilities with δ = log(2)/2:
+- **gap valley**: P(θ at the gap midpoint (0, 0.4) < min(θ at the two disk centers) − δ),
+- **ring hole**: P(θ at the ring center < mean θ over the annulus − δ),
+- **ring continuity**: P(θ at the four compass points of the annulus mid-radius all > δ).
+A feature is **data-determined** only if every converged posterior gives P > 0.95, or every one gives P < 0.05, AND the
+minimum of §8 step 7 is met: a converged Matérn and a converged GMRF are among them. Two settings of one family (the two
+q-GGMRF values of σ_g) are one prior, not two. Without the pair the verdict is **provisional**; if an unconverged run
+gives the other side of the threshold it is **not established** (`features.verdict`). A prior that cannot reach the
+feature amplitude (the q-GGMRF with marginal sd 0.057 against δ = 0.347 has prior P = 0) says nothing about structure.
+
+Concurrency on the M3 Max (12 performance cores): use scripts/batch_run.py. Never exceed 12 XLA threads in total.
+NPROC = 2 can deadlock XLA, so use T = 1 or T ≥ 4 per job. Measure the per-evaluation cost first.
+
+### 11.4 Span test of the book's NMM (Ch. 15, eqs. 15.1–15.6, Table 15.3)
+
+By eqs. 15.5–15.6, α̂ = T G_r⁺, so every NMM output o = α̂ g_r(·) lies in span(T), the span of the P = 100
+training permittivity images (96 × 96, 5λ DOI). The best output the NMM could possibly produce on a test scene m is
+therefore the least-squares projection of m onto span(T). Its error ‖Π_T m − m‖/‖m‖ (eq. 15.21, m = ε_r including
+background) lower-bounds the NMM's reported misfit. The book reports 3.26–3.31% for Tests #1–#4 (Table 15.3).
+Compute the bound for:
+(a) 1000 held-out draws from the Table 15.2 generator;
+(b) Fig. 15.9-like scenes: Test #1 is "the simple disk and the rectangle with the low contrasts" (ε_r ≤ 2); Test #4
+    is "three overlapped disks". The exact geometries are not given, so use several plausible instantiations and
+    report the range.
+Also report variants: the painter's rule vs. max-overlap, P = 100 vs. larger P, and nearest-training-image error.
+Two independent implementations must agree before any number is reported (§8 anomaly rule).
+Quote the median and low percentiles (5th, 0.1th from the tail scan), not the minimum: the minimum of 40 × 1000 values is
+the easiest value of ONE draw (9.9% in one implementation, 14–16% in the others; `heldout_min_diagnosis`).
+Anomaly triage: report which deviations from the literal reading of eqs. 15.1–15.6 were tested and which are ruled
+out or open: training eps_r law (U[1, 8], U[1, 3], U[1, 2]), a constant in the span, clipping to the colorbar after an
+oracle shift, the chi-normalized error, a squared misfit (contradicted by the book's BA and VBIM numbers). Anchor the
+conclusion on the scene where every reading fails (Test #4), not on the one where a reading comes close (Test #1).
+
+### 11.5 Execution notes (added after the run)
+
+- One value-and-gradient evaluation at n = 48 speeds up only 2.0 to 2.2 times from one to four XLA threads
+  (results/prior_comparison/cost.json), so four single-thread processes do about 1.8 times the work of one four-thread
+  process. The experiment therefore ran one chain per process (`scripts/run_prior_comparison.py --stage prepare / chain /
+  finalize`, job files from `scripts/make_prior_jobs.py`, `scripts/batch_run.py --threads 1`), with at most 10 threads
+  in total. A chain can be continued in segments (`--segment j`) from its final state with the frozen step size; the
+  moments of the segments are merged exactly (`features.merge_moments`).
+- Laplace mass at another point: `--mass-theta FILE.npy` rebuilds H = H_GN(theta_m) + Hess R at a chosen theta_m and
+  centers the chains there (exact, an affine change of variables); `--start-theta` replaces the overdispersed starts.
+  It was tried only for the GMRF prior, whose typical posterior state is far from its MAP: it cut the largest eigenvalue
+  of the local Hessian in the chain coordinates from about 270 to 8 at the pilot states (results/prior_comparison/
+  gmrf_diagnostic.json) but the chains kept drifting outward and the GMRF run stayed unconverged.
+
+### 11.6 Review follow-up (added after the review)
+
+- The edge ring is **not** shown to be independent of the prior: every prior tested prefers blurred edges (prior energy of
+  the truth against the MAP and the draws, results/prior_comparison/prior_energy.json); the q-GGMRF family is convex, so every
+  member prefers a ramp to a sharp step (Jensen). Whether a prior that does not penalize sharp edges (near total variation,
+  a non-convex potential, the shape family) removes the ring is untested.
+- Matérn was extended to 600 draws per chain and q-GGMRF σ_g = 0.05 to 900 (`--segment 1`, `2`; the 600-draw state missed
+  R̂ of Φ ≤ 1.01 by 0.0003 and is kept in `pc_qggmrf_sg0.05_600draws/`); a Matérn same-grid control (`pcg1_matern`, data on
+  the inference grid) pairs the q-GGMRF one, both at 3 × (300 + 600).
+- The d_obs hash is not reproducible across XLA thread counts; data equality is numerical (max |Δd| / s ≤ 1e-6).
+

@@ -168,7 +168,9 @@ def test_map_equals_exact_posterior_mean_in_the_born_linear_case(born):
     # optimizer tolerance: U is about 2400, so function values resolve only ~5e-13, which limits xi to ~1e-6
     assert np.linalg.norm(np.asarray(xi_map).ravel() - m) < 1e-5 * np.linalg.norm(m)
     np.testing.assert_allclose(chi_map, p.mean_chi, atol=1e-5 * np.abs(p.mean_chi).max())
-    assert info["grad_inf"] < 1e-5 and info["nfev"] >= info["nit"] > 0
+    # |grad U| ~ (posterior precision, up to ~300) x (resolved xi error, ~1e-6 x |m|): about 1e-5 at the stopping
+    # point, with the exact value set by summation order (it varies with the XLA thread count), so allow 1e-4
+    assert info["grad_inf"] < 1e-4 and info["nfev"] >= info["nit"] > 0
     # U decreased from the start and the reported U is the energy at the returned point
     assert info["U_history"][0] > info["U"] and info["U"] == pytest.approx(info["U_history"][-1], rel=1e-6)
     assert info["phi"] > 0 and info["time_s"] > 0

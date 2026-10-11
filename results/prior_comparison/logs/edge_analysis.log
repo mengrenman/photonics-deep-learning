@@ -1,0 +1,8 @@
+pc_matern            converged   |z|>3: summary 12.5% (per chain 12.2 to 12.6%), stored draws 12.5%, halves 12.2% / 12.3%, Laplace std 12.2%; edge band 49.4% vs far from edge 1.2%
+pc_gmrf              UNCONVERGED |z|>3: summary 0.4% (per chain 0.3 to 0.4%), stored draws 0.4%, halves 0.6% / 0.2%, Laplace std 0.0%; edge band 1.8% vs far from edge 0.1%
+pc_qggmrf_sg0.05     converged   |z|>3: summary 15.5% (per chain 15.6 to 15.7%), stored draws 15.5%, halves 15.7% / 15.7%, Laplace std 18.6%; edge band 54.0% vs far from edge 1.8%
+pc_qggmrf_sg0.1      converged   |z|>3: summary 5.8% (per chain 5.9 to 6.4%), stored draws 5.8%, halves 6.0% / 6.1%, Laplace std 5.8%; edge band 23.1% vs far from edge 0.6%
+pcs1_qggmrf_sg0.05   converged   |z|>3: summary 16.1% (per chain 16.1 to 16.2%), stored draws 16.1%, halves 16.2% / 16.4%, Laplace std 19.4%; edge band 55.4% vs far from edge 1.7%
+pcg1_qggmrf_sg0.05   converged   |z|>3: summary 16.3% (per chain 16.4 to 16.5%), stored draws 16.3%, halves 16.2% / 16.1%, Laplace std 19.1%; edge band 55.6% vs far from edge 1.8%
+pcg1_matern          converged   |z|>3: summary 12.3% (per chain 12.3 to 12.5%), stored draws 12.3%, halves 12.3% / 12.5%, Laplace std 12.3%; edge band 48.8% vs far from edge 1.1%
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/edge_analysis.json and edge_profile.png

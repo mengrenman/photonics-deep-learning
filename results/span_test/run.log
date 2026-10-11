@@ -1,0 +1,48 @@
+span test: Grid(96, 5), N = 9216, P sweep [25, 50, 100, 200, 400, 800, 1600, 3200], baseline P = 100, 40 replicates, 1000 held-out draws, threads <= 2
+  rule painter: sweep [25, 50, 100, 200, 400, 800, 1600, 3200] done in 420 s
+  rule max: sweep [25, 50, 100, 200, 400, 800, 1600, 3200] done in 434 s
+tail scan ...
+cross-check against the independent implementation ...
+  independent implementation: 40 training sets of 100, 1000 held-out draws
+  bridge 1 (QR vs gelsd / SVD): 3.61e-15 / 1.94e-15;  bridge 2 (scenes): image rel 4.34e-03, error 0.0329 pp
+  bridge 4 (same shapes, two rasterizers, A - B): painter images: max 0.595 pp, mean +0.076 pp (+0.22 %);  painter scenes: max 0.066 pp, mean +0.032 pp (+0.29 %);  max images: max 0.606 pp, mean +0.115 pp (+0.35 %);  max scenes: max 0.064 pp, mean +0.029 pp (+0.26 %)
+  independent draws: max |z| 1.93 over 14 comparisons;  agree = True
+[painter] (a) held-out draws; vacuum guess: median  75.45  p05  56.37  min  24.37  frac<=3.3% 0.0000  (n = 1000)
+  P =    25 span: median  48.38  p05  36.74  min  16.95  frac<=3.3% 0.0000  (n = 40000)   nearest median 68.46   span+1 median 47.57
+  P =    50 span: median  40.90  p05  30.83  min  12.95  frac<=3.3% 0.0000  (n = 40000)   nearest median 65.45   span+1 median 40.50
+  P =   100 span: median  33.63  p05  25.18  min   9.86  frac<=3.3% 0.0000  (n = 40000)   nearest median 62.87   span+1 median 33.44
+  P =   200 span: median  27.10  p05  20.19  min   8.22  frac<=3.3% 0.0000  (n = 20000)   nearest median 60.49   span+1 median 27.01
+  P =   400 span: median  21.32  p05  15.80  min   6.43  frac<=3.3% 0.0000  (n = 20000)   nearest median 58.31   span+1 median 21.28
+  P =   800 span: median  16.28  p05  11.99  min   5.45  frac<=3.3% 0.0000  (n = 10000)   nearest median 56.36   span+1 median 16.27
+  P =  1600 span: median  11.80  p05   8.60  min   4.19  frac<=3.3% 0.0000  (n = 3000)   nearest median 54.52   span+1 median 11.79
+  P =  3200 span: median   7.72  p05   5.46  min   2.92  frac<=3.3% 0.0010  (n = 3000)   nearest median 52.72   span+1 median 7.72
+  empty scene (m = 1) bound at P = 100: mean 8.35 %  (min 6.62, max 10.31)
+  tail scan (20000 draws x 3 sets): min 9.23  p0.1 15.54  p1 21.01  frac<=3.3% 0.00000  <=5% 0.00000  <=10% 0.00003
+  (b) test1         P = 100: median   9.10  p05   8.09  min   6.94  frac<=3.3% 0.0000  (n = 320)
+  (b) test4         P = 100: median  10.71  p05   9.28  min   8.25  frac<=3.3% 0.0000  (n = 320)
+  (b) test4_high    P = 100: median  30.36  p05  27.06  min  26.29  frac<=3.3% 0.0000  (n = 40)
+  (b) test1_jitter  P = 100: median  11.14  p05   8.48  min   6.77  frac<=3.3% 0.0000  (n = 8000)
+  (b) test4_jitter  P = 100: median  10.48  p05   8.74  min   6.97  frac<=3.3% 0.0000  (n = 8000)
+  binary-mask rasterization (implementation B, P = 100): held-out median  36.07  p05  26.94  min  14.70  frac<=3.3% 0.0000  (n = 10000)
+    test1 median   9.79  p05   8.74  min   8.23  frac<=3.3% 0.0000  (n = 80)
+    test4 median  11.50  p05  10.20  min   9.44  frac<=3.3% 0.0000  (n = 80)
+[max] (a) held-out draws; vacuum guess: median  76.42  p05  59.09  min  36.45  frac<=3.3% 0.0000  (n = 1000)
+  P =    25 span: median  47.66  p05  36.48  min  21.89  frac<=3.3% 0.0000  (n = 40000)   nearest median 68.65   span+1 median 46.87
+  P =    50 span: median  39.96  p05  30.14  min  15.92  frac<=3.3% 0.0000  (n = 40000)   nearest median 65.64   span+1 median 39.54
+  P =   100 span: median  32.71  p05  24.48  min  14.69  frac<=3.3% 0.0000  (n = 40000)   nearest median 62.84   span+1 median 32.53
+  P =   200 span: median  26.35  p05  19.61  min  13.22  frac<=3.3% 0.0000  (n = 20000)   nearest median 60.29   span+1 median 26.27
+  P =   400 span: median  20.76  p05  15.46  min  11.67  frac<=3.3% 0.0000  (n = 20000)   nearest median 58.08   span+1 median 20.72
+  P =   800 span: median  15.88  p05  11.81  min   8.75  frac<=3.3% 0.0000  (n = 10000)   nearest median 56.10   span+1 median 15.87
+  P =  1600 span: median  11.53  p05   8.52  min   6.61  frac<=3.3% 0.0000  (n = 3000)   nearest median 54.06   span+1 median 11.52
+  P =  3200 span: median   7.55  p05   5.52  min   3.93  frac<=3.3% 0.0000  (n = 3000)   nearest median 52.16   span+1 median 7.55
+  empty scene (m = 1) bound at P = 100: mean 8.54 %  (min 6.73, max 10.51)
+  tail scan (20000 draws x 3 sets): min 10.60  p0.1 16.37  p1 20.87  frac<=3.3% 0.00000  <=5% 0.00000  <=10% 0.00000
+  (b) test1         P = 100: median   9.36  p05   8.19  min   6.92  frac<=3.3% 0.0000  (n = 320)
+  (b) test4         P = 100: median  10.81  p05   9.33  min   8.34  frac<=3.3% 0.0000  (n = 320)
+  (b) test4_high    P = 100: median  30.31  p05  27.02  min  25.86  frac<=3.3% 0.0000  (n = 40)
+  (b) test1_jitter  P = 100: median  11.20  p05   8.61  min   6.80  frac<=3.3% 0.0000  (n = 8000)
+  (b) test4_jitter  P = 100: median  10.69  p05   8.97  min   7.13  frac<=3.3% 0.0000  (n = 8000)
+  binary-mask rasterization (implementation B, P = 100): held-out median  35.09  p05  26.10  min  15.46  frac<=3.3% 0.0000  (n = 10000)
+    test1 median   9.98  p05   8.90  min   8.53  frac<=3.3% 0.0000  (n = 80)
+    test4 median  11.66  p05  10.38  min   9.88  frac<=3.3% 0.0000  (n = 80)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/span_test/span_test.json (1138 s)

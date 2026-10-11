@@ -1,0 +1,5 @@
+# batch_run 2026-10-11T05:47:04+08:00 slot cpu6
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior qggmrf --q 1.2 --T 1 --sigma-0 1 --sigma-g 0.05 --out pc_qggmrf_sg0.05 --stage chain --chain-id 1 --segment 1 --samples 300
+chain 1 segment 1: HMC in zeta, 0 warmup + 300 samples, thin 1, 10 leapfrog steps, step0 0.2720, init scale 2.0
+done in 927 s (compile 2 s): acceptance 0.737, step 0.2720, |zeta|^2/2 at the end 2128, mean Phi' 4499.8

@@ -1,0 +1,13 @@
+........................................................................ [ 17%]
+........................................................................ [ 34%]
+........................................................................ [ 52%]
+........................................................................ [ 69%]
+........................................................................ [ 86%]
+.......................................................                  [100%]
+=============================== warnings summary ===============================
+tests/test_batch_run.py::test_ctrl_c_terminates_children_and_exits_130
+  /Users/mengren/anaconda3/envs/photonics-dl/lib/python3.12/subprocess.py:1885: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+    self.pid = _fork_exec(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+415 passed, 1 deselected, 1 warning in 321.88s (0:05:21)

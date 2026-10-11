@@ -1,0 +1,22 @@
+[batch_run 06:35:59] 6 job(s) to run, 0 skipped; cpu slots 6 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 06:35:59] START pcg1_matern_c0_s1 (cpu0, unpinned) [1/6]
+[batch_run 06:35:59] START pcg1_matern_c1_s1 (cpu1, unpinned) [2/6]
+[batch_run 06:35:59] START pcg1_matern_c2_s1 (cpu2, unpinned) [3/6]
+[batch_run 06:35:59] START pcg1_qggmrf_sg0.05_c0_s1 (cpu3, unpinned) [4/6]
+[batch_run 06:35:59] START pcg1_qggmrf_sg0.05_c1_s1 (cpu4, unpinned) [5/6]
+[batch_run 06:35:59] START pcg1_qggmrf_sg0.05_c2_s1 (cpu5, unpinned) [6/6]
+[batch_run 06:47:42] DONE  pcg1_qggmrf_sg0.05_c1_s1 exit 0 in 702.5 s
+[batch_run 06:47:45] DONE  pcg1_qggmrf_sg0.05_c0_s1 exit 0 in 705.6 s
+[batch_run 06:47:45] DONE  pcg1_qggmrf_sg0.05_c2_s1 exit 0 in 705.6 s
+[batch_run 06:48:11] DONE  pcg1_matern_c1_s1 exit 0 in 731.5 s
+[batch_run 06:48:12] DONE  pcg1_matern_c2_s1 exit 0 in 732.5 s
+[batch_run 06:49:43] DONE  pcg1_matern_c0_s1 exit 0 in 823.9 s
+
+job                              status          wall s  exit
+pcg1_qggmrf_sg0.05_c1_s1         ok               702.5     0
+pcg1_qggmrf_sg0.05_c0_s1         ok               705.6     0
+pcg1_qggmrf_sg0.05_c2_s1         ok               705.6     0
+pcg1_matern_c1_s1                ok               731.5     0
+pcg1_matern_c2_s1                ok               732.5     0
+pcg1_matern_c0_s1                ok               823.9     0
+[batch_run 06:49:44] 6 ok, 0 not ok

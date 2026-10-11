@@ -1,0 +1,3 @@
+threads 1: d_obs sha256 efd5e84fa5f9a77f
+threads 4: d_obs sha256 d1000a64d67044a0
+same hash across thread counts: False; max |d_T - d_1| / s = 6.49e-14; wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/data_thread_check.json

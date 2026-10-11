@@ -1,0 +1,13 @@
+[batch_run 06:05:28] 3 job(s) to run, 0 skipped; cpu slots 3 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 06:05:28] START pcg1_matern_c0_s0 (cpu0, unpinned) [1/3]
+[batch_run 06:05:28] START pcg1_matern_c1_s0 (cpu1, unpinned) [2/3]
+[batch_run 06:05:28] START pcg1_matern_c2_s0 (cpu2, unpinned) [3/3]
+[batch_run 06:32:25] DONE  pcg1_matern_c2_s0 exit 0 in 1616.5 s
+[batch_run 06:32:43] DONE  pcg1_matern_c1_s0 exit 0 in 1634.8 s
+[batch_run 06:33:39] DONE  pcg1_matern_c0_s0 exit 0 in 1690.7 s
+
+job                              status          wall s  exit
+pcg1_matern_c2_s0                ok              1616.5     0
+pcg1_matern_c1_s0                ok              1634.8     0
+pcg1_matern_c0_s0                ok              1690.7     0
+[batch_run 06:33:40] 3 ok, 0 not ok
