@@ -700,3 +700,59 @@ the adaptations, at most 10 XLA threads at any time).
   the edge analysis reports the bias of log E[eps_r] and the per-draw blur; the table of feature probabilities prints the chain range, not a standard error, for unconverged runs; the frozen arm of the adaptation negative control (`tests/test_adapt.py`)
   records 16 times as many trajectories (standard error of E x1^2 1.5 instead of 13) and asserts that a bias of the size the adaptation-on arm shows would stand out of it by at least 3 standard errors in every moment.
 - **Not done.** A second data realization for TV; the GMRF re-run above; a decision on the feature definition; the pair-noise mechanism for the ramp preference of the TV mean (stated as a possible mechanism only).
+
+## 13. Milestone 6: the resolution sweep
+
+### 13.1 Question
+
+Ch. 15 calls a reconstruction "super-resolved" when the image shows features below 0.25λ (p. 464). It supports this
+with single reconstructions of gaps from λ/4 down to λ/20 at 10–20 dB. Milestone 5 found that every pixel posterior
+mean equals the truth low-passed at about 3 cycles/λ. The question here is which gap widths the **data** determine,
+as a function of gap, contrast and SNR, and where pixel posteriors stop reflecting the data and start reflecting
+the prior. The two halves are kept apart:
+(a) **information**: Fisher information and Cramér–Rao bounds for a parametrized object family, with no pixel prior;
+(b) **pixel posteriors**: Laplace posteriors under the Matérn and TV(λ*) priors on the same data, scored with
+resolution-scale features, with MCMC spot checks.
+
+### 13.2 Object family and exact shape derivatives
+
+Two disks of common radius r (default 0.2λ) and common ε_r, centers (c_x ± (r + g/2), c_y), with edge-to-edge gap g.
+Parameters p = (g, r, ε_r, c_x, c_y) plus, for the asymmetric checks, the radius difference r₁ − r₂. χ(p) is rendered
+by fractional coverage. **∂χ/∂p is computed exactly from the boundary**, not by differencing the rendering:
+∂coverage_pix/∂(boundary displacement) = (∫_{boundary ∩ pixel} (displacement · n) ds)/h². Evaluate it by dense
+sampling of each circle, with points binned into pixels. Check it against finite differences of high-supersampling
+renderings. Then ∂d/∂p_k = J (∂χ/∂p_k), evaluated as a `jax.jvp` (no dense J at fine grids), and the Fisher matrix
+in the shape parameters is F = (2/s²) Re(D_pᴴ D_p), D_p = [∂d/∂p_k].
+
+- **CRB**: σ_CRB(g) = √(F⁻¹)_gg with nuisance parameters unknown; also report √(1/F_gg) with nuisances known.
+  Statistical resolution criterion (Smith 2005): g is resolvable when σ_CRB(g) ≤ g. F ∝ 1/s², so report the SNR
+  at which σ_CRB(g) = g, as a "required SNR vs gap" curve (power SNR as in §4).
+- **Born comparison**: the same F with the Born forward (u = u_inc). The ratio F_full/F_Born for g, as a function of
+  contrast, measures whether multiple scattering adds information about the gap.
+- **Symmetry check**: the antenna rings and the symmetric two-disk object are invariant under x → −x. Split the
+  parameters into the even irrep (g, r, ε_r, c_y) and the odd irrep (c_x, r₁ − r₂). F must be block-diagonal across
+  the two irreps to solver precision. Test it.
+- **Grid**: forward model on a fine grid (side 1.5λ, n ≥ 128, h ≤ 0.012λ, so the smallest gap spans ≥ 2 pixels).
+  Check CRB convergence between two grid sizes.
+
+Sweep: g ∈ {0.0125, 0.025, 0.05, 0.1, 0.15, 0.2, 0.25, 0.32, 0.5}λ, ε_r ∈ {1.1, 2, 4}, book antenna rings
+(40 transmitters at r = 4, 60 receivers at r = 4.5), SNR reference 30 dB.
+
+### 13.3 Pixel posteriors on the same objects
+
+Inference grid side 1.5λ, n = 64 (h ≈ 0.023λ), data from the n ≥ 128 grid at 30 dB (no inverse crime), log ε_r
+link, Matérn (σ 0.5, ℓ 0.4) and TV at λ* (re-choose λ* by the discrepancy rule for this geometry and state it). For
+each (g, ε_r): MAP, the dense Laplace covariance of §11.2, and the gap-valley probability. **Resolution-scale
+features (decision of 2026-10-12):** score a feature by averages over regions at the resolution scale, never single
+pixels. Gap valley: P(mean θ over the gap strip < min(mean θ over the two disk cores) − δ), δ = log(ε_r)/2. The gap
+strip is the pixels between the disks within the disk-height band; if the strip is narrower than one pixel, report
+"unrepresentable on this grid" instead of a probability. Report single-point values alongside, labeled. MCMC
+(Laplace-mass HMC, 4 chains) spot checks at two gaps (one resolvable, one not) and one contrast, to check the Laplace
+probabilities.
+
+### 13.4 Deliverables
+
+results/resolution/: crb.json (F, CRB, required SNR, Born ratios, symmetry-block residuals, grid-convergence check),
+laplace.json (per configuration: MAP, Φ_MAP, feature probabilities), MCMC spot-check summaries, and figures:
+σ_CRB/g vs g per contrast; required SNR vs g with the book's claimed operating points (gaps λ/20 to λ/4 at
+10–20 dB) marked; the pixel-posterior P(gap valley) vs g for both priors, overlaid on the Smith criterion.
