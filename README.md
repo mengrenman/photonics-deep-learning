@@ -33,7 +33,9 @@ Every test file is named after its module (`test_geometry_phantoms.py`, `test_gr
 `test_gradients.py`, `test_priors.py`, `test_samplers.py`, `test_diagnostics.py`, `test_likelihood.py`,
 `test_inference.py`, `test_plotting.py`, `test_scripts.py`) plus `test_born_end_to_end.py`, and, for milestone 4,
 `test_mrf.py`, `test_jacobian.py`, `test_thetaspace.py`, `test_features.py`, `test_prior_comparison_scripts.py`,
-`test_measure_theta_cost.py` and `test_span_test.py`.
+`test_measure_theta_cost.py` and `test_span_test.py`; for milestone 5, `test_adapt.py` (and the TV prior in `test_mrf.py`, the adapted
+runner, the lambda sweep, the re-adapted map, burn-in segments, the slow-mode and cross-run diagnostics in `test_prior_comparison_scripts.py`),
+`test_wait_then.py` and `test_segment_loop.py` (job gating and the per-chain segment loop); for its review follow-up, `test_m5_review.py` (low-pass reference, disk-averaged features, corrected independence checks, overdispersed starts, review batch).
 
 ## Scripts
 
@@ -46,9 +48,17 @@ Every test file is named after its module (`test_geometry_phantoms.py`, `test_gr
 | `scripts/map_multistart.py` | MAP from several prior-draw starts: one basin or several |
 | `scripts/analyze_run.py`, `scripts/make_tables.py` | Per-run metrics (misfit, ESS, R-hat, z-maps, Laplace reference std) and the Markdown tables / misfit figures in `results/tables/` and `results/figures/` |
 | `scripts/measure_cost.py`, `scripts/plot_gn_spectrum.py` | Cost per evaluation on the benchmark configurations; Gauss-Newton spectrum figure |
-| `scripts/run_prior_comparison.py` | Milestone 4 (DESIGN 11): ONE prior (`matern`, `gmrf`, `qggmrf`) on the shared moderate problem in theta = log eps_r: smooth start, L-BFGS-B MAP, dense Laplace mass from the exact reciprocity Jacobian, HMC in Laplace-whitened coordinates, convergence verdict, feature probabilities; writes `results/prior_comparison/<out>/` (`summary.json` with the d_obs hash and thread environment, `chains.npz`, `maps.png`); `--stage prepare / chain / finalize` splits it into one process per chain with continuation segments. Two runs have the same data if max abs(d_a - d_b) / s <= 1e-6; the hash alone is not the criterion (it depends on the XLA thread count) |
-| `scripts/make_prior_jobs.py` | Writes `batch_run.py` job files for the staged form of `run_prior_comparison.py` (`--stage prepare`, `chain` with `--segment` for extension, `finalize`): one single-thread process per chain, about 1.8x the throughput per thread of four threads per process (cost.json) |
-| `scripts/edge_analysis.py` | Bias, posterior std and z by signed distance to the object edge, an independent recomputation of the |z| statistics from the stored draws, and the |z| > 3 fraction of each chain on its own (`edge_analysis.json`, `edge_profile.png`) |
+| `scripts/run_prior_comparison.py` | Milestone 4 (DESIGN 11): ONE prior (`matern`, `gmrf`, `qggmrf`, and `tv`, the pseudo-Huber TV prior of milestone 5) on the shared moderate problem in theta = log eps_r: smooth start, L-BFGS-B MAP, dense Laplace mass from the exact reciprocity Jacobian, HMC in Laplace-whitened coordinates, convergence verdict, feature probabilities; writes `results/prior_comparison/<out>/` (`summary.json` with the d_obs hash and thread environment, `chains.npz`, `maps.png`); `--stage prepare / chain / finalize` splits it into one process per chain with continuation segments; `--adapt` (milestone 5, DESIGN 12.2) adds `--stage adapt` and samples in the coordinates of an affine map adapted in expanding warmup windows and frozen before recording (`adapted_map.npz`, `adaptation.json`). Two runs have the same data if max abs(d_a - d_b) / s <= 1e-6; the hash alone is not the criterion (it depends on the XLA thread count) |
+| `scripts/make_prior_jobs.py` | Writes `batch_run.py` job files for the staged form of `run_prior_comparison.py` (`--stage prepare`, `adapt`, `chain` with `--segment` for extension, `finalize`): one single-thread process per chain, about 1.8x the throughput per thread of four threads per process (cost.json). Milestone 5 prior names: `tv_lam<value>` and a `_adapt` suffix (`gmrf_adapt`, `tv_lam3.75_adapt`) |
+| `scripts/tv_lambda_sweep.py` | Milestone 5 (DESIGN 12.1): the milestone-4 MAP path for the pseudo-Huber TV prior at several lambda; Phi_MAP, R_MAP, the errors, convergence of the MAP and the MAP edge bias per lambda; lambda* by the discrepancy principle (`tv_lambda_sweep.json`, `.png`, `_maps.npz`; `--update` adds lambdas) |
+| `scripts/segment_loop.py` | Milestone 5: ONE chain's recorded segments of `run_prior_comparison.py --stage chain`, one process per segment (a segment is the checkpoint: a killed run loses at most the segment in flight; existing segment files are skipped; `--go` / `--stop` files start and end the loop between segments); one `batch_run.py` job per chain |
+| `scripts/make_m5_resume.py`, `scripts/make_m5_batch.py`, `scripts/wait_then.py` | Milestone 5 job files: the resume batch of 12 segment loops (adapted GMRF, TV at lambda* and 3 lambda*), the first batch (one process per chain and segment, gated by `wait_then.py` dependency / go / skip files), and the gate itself |
+| `scripts/check_chain_starts.py`, `scripts/milestone5_tables.py` | Physical Phi, R and U at the chain starts of an adapted run before the chains are launched; the Markdown tables specific to milestone 5 (lambda sweep, adaptation, sampler, edge statistics with per-chain bias) from the stored JSON files |
+| `scripts/make_m5_review_jobs.py`, `scripts/make_overdispersed_starts.py` | Milestone 5 review follow-up (DESIGN 12.6): ONE batch with two more TV posteriors (lambda = 1.25 and 8.5, chains from four different starts: truth, MAP, Matern mean, a rough GMRF draw) and an independent-start replication of lambda* in a new directory; the start maps and their TV prior energy (`starts.npy`, `starts.json`) |
+| `scripts/resolution_analysis.py`, `scripts/feature_scales.py`, `scripts/lambda_band.py` | Review follow-up analyses: bias and z of the posterior mean against the low-passed or cell-averaged truth (`bayes_scatter.resolution`); the three features at point and disk-averaged scales, per chain and per block, and for the Laplace approximation without MCMC; the edge statistics of the TV posterior as a function of lambda across the discrepancy band |
+| `scripts/equal_length_audit.py`, `scripts/start_drift_audit.py` | Convergence numbers at equal numbers of draws (and per gradient evaluation); block means of \|zeta\|^2 / 2 and the prior energy, and the recorded starts of every chain |
+| `scripts/m5_commands_as_run.md`, `scripts/m5_review_analysis.sh` | The commands that were actually run for milestone 5 (including the manual launches), and the analysis commands of the review follow-up |
+| `scripts/edge_analysis.py` | Bias, posterior std and z by signed distance to the object edge, an independent recomputation of the |z| statistics from the stored draws, the |z| > 3 fraction of each chain on its own, the bias of log E[eps_r] next to that of E[theta], and the per-draw blur at d = -1 (`edge_analysis.json`, `edge_profile.png`) |
 | `scripts/convergence_audit.py` | Rank-normalized bulk / folded split R-hat, multi-chain bulk ESS and the AR(1) null spread of the R-hat statistics, per run, from the stored draws (`convergence_audit.json`) |
 | `scripts/prior_energy_audit.py` | Prior energy R and data misfit Phi at the truth, the MAP, the posterior mean and the draws, the same for Gaussian blurs of the truth, and the cost of a log 2 step as a jump or a ramp for the q-GGMRF family (`prior_energy.json`) |
 | `scripts/check_data_threads.py` | Builds d_obs at two XLA thread counts in subprocesses and compares hash and numbers (`data_thread_check.json`) |
@@ -58,7 +68,7 @@ Every test file is named after its module (`test_geometry_phantoms.py`, `test_gr
 | `scripts/prior_feature_baseline.py` | Prior probabilities of the three DESIGN 11.3 features, the baseline for the posterior probabilities (`prior_features.json`) |
 | `scripts/prior_comparison_tables.py` | Prints the report tables from the stored `summary.json` / `comparison.json` files (no recomputation) |
 | `scripts/compare_priors.py` | Reads several `run_prior_comparison.py` directories, refuses runs with different data, writes `comparison.json` and the mean / std, disagreement and feature-probability figures |
-| `scripts/measure_theta_cost.py` | Cost of U and its gradient, the Jacobian assembly, the Laplace mass and the MAP per prior, at n = 32 and 48 and 1 or 4 XLA threads, one process at a time |
+| `scripts/measure_theta_cost.py` | Cost of U and its gradient, the Jacobian assembly, the Laplace mass and the MAP per prior (milestone 5: the TV prior, the adapted-map potential and one adaptation window update, `cost_tv.json`), at n = 32 and 48 and 1 or 4 XLA threads, one process at a time |
 
 ```bash
 python scripts/born_exact_check.py                       # about 2.5 min
@@ -92,12 +102,16 @@ src/bayes_scatter/
                   physical_phi_of_draws, laplace_theta_variance, lognormal_center_shift
   validation.py   Born problem builder and sampler comparison shared by the test and the script
   plotting.py     plot_maps, plot_traces, plot_born_check
-  mrf.py          theta-space prior energies: QGGMRF (edge-preserving), GaussianEnergy (Matern / GMRF cropped to the DOI),
-                  WhitenedMap, sample_prior (HMC on R alone)
+  mrf.py          theta-space prior energies: QGGMRF (edge-preserving), PseudoHuberTV (milestone 5), GaussianEnergy (Matern / GMRF
+                  cropped to the DOI), WhitenedMap, sample_prior (HMC on R alone)
+  adapt.py        milestone 5 (DESIGN 12.2): AffineMap, adapt_map (expanding-window map adaptation, dual-averaged step size,
+                  variable-length trajectories), update_map (shrinkage toward the Laplace covariance), sample_chain (frozen recording)
   jacobian.py     exact dd/dchi and dd/dtheta by reciprocity (Nt + Nr solves), Gauss-Newton Hessian, jvp check
   thetaspace.py   ThetaTarget (U = Phi + R), LaplaceMass (dense H, Cholesky), ZetaTarget (reparametrized potential), map_theta,
                   smooth_start
-  features.py     pooled moments, edge mask, |z| statistics, disagreement, the DESIGN 11.3 feature probabilities
+  features.py     pooled moments, edge mask, |z| statistics, disagreement, the DESIGN 11.3 feature probabilities (point values, or
+                  disk means of a given radius)
+  resolution.py   ideal circular low-pass and disk average of a map (the band-limited reference for the posterior mean), Pearson r
 ```
 
 ## Summary of the design

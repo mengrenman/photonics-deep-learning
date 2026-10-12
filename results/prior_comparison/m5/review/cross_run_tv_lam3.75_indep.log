@@ -1,0 +1,9 @@
+2 runs, chains [4, 2], last 200 draws: R-hat Phi 1.7009; the pooled chains are independent chains
+  all                     2304 px: R-hat max 8.658 (rank 1.770), 2106 above 1.05, bulk ESS min 9 median 22
+  edge_band_abs_d_le_1     498 px: R-hat max 7.861 (rank 1.684), 411 above 1.05, bulk ESS min 10 median 28
+  abs_d_le_2               824 px: R-hat max 7.861 (rank 1.684), 711 above 1.05, bulk ESS min 9 median 25
+  pc_tv_lam3.75_adapt      bias d=-1 0.190  d=+2 -0.120  sd d=-1 0.106  |z|>3 2.4%
+  pc_tv_lam3.75_indep      bias d=-1 0.178  d=+2 -0.180  sd d=-1 0.144  |z|>3 0.7%
+  pooled                   bias d=-1 0.186  d=+2 -0.140  sd d=-1 0.127  |z|>3 1.1%
+  features (gap valley, ring hole, ring continuity): pc_tv_lam3.75_adapt 1.000/1.000/1.000; pc_tv_lam3.75_indep 0.978/1.000/0.557; pooled 0.993/1.000/0.853
+wrote results/prior_comparison/m5/review/cross_run_tv_lam3.75_indep.json

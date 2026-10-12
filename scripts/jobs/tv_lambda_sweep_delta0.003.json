@@ -1,0 +1,4 @@
+[
+  {"name": "tv_lambda_sweep_delta0.003", "cmd": ["scripts/tv_lambda_sweep.py", "--lams", "1.25", "3.75", "11.25", "--delta", "0.003", "--out", "tv_lambda_sweep_delta0.003.json"],
+   "device": "cpu", "threads": 4, "done_marker": "results/prior_comparison/tv_lambda_sweep_delta0.003.json"}
+]

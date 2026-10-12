@@ -21,6 +21,13 @@ members of the family, per pair line (``mrf.rho``, b = 1). For a convex rho with
 every k (Jensen): every convex member of the family prefers a ramp to a sharp step; the ratio sharp / ramp is the size of
 the preference. The Gaussian priors are quadratic forms and prefer blur too (``blur``).
 
+Milestone 5 adds the pseudo-Huber TV prior (``mrf.PseudoHuberTV``) to the step-versus-ramp table (``TV_FAMILY``, ``step_cost_tv``:
+lam (sqrt(D^2 + delta^2) - delta) per pair line for delta = 0.01, 0.003, 0.001). A ramp of k equal increments saves about
+(k - 1) delta of the cost of the step (relative to D = log 2), so the step / 8-pixel-ramp ratio is 1.106 at delta = 0.01 (the DESIGN
+12.1 value, ``it should be within a few percent`` holds only for ramps of 2 pixels, 1.014), 1.031 at 0.003 and 1.010 at 0.001, against
+2.2 to 2.7 for the q-GGMRF settings of milestone 4. Runs with --prior tv are audited like the others (``audit_run`` rebuilds the
+prior from summary.json).
+
 Writes <dir>/prior_energy.json (or --out). One process; the forward solves are few (a handful per distinct data set).
 """
 
@@ -60,6 +67,8 @@ FAMILY = (("q-GGMRF q 1.2, T 1, sigma_g 0.05 (experiment)", 1.2, 1.0, 0.05),
           ("q 1.0, T 0.01, sigma_g 0.05 (total variation)", 1.0, 0.01, 0.05),
           ("q 1.5, T 1, sigma_g 0.05", 1.5, 1.0, 0.05))
 RAMPS = (2, 4, 8)
+TV_FAMILY = (("TV pseudo-Huber lam 1, delta 0.01 (DESIGN 12.1)", 1.0, 0.01), ("TV pseudo-Huber lam 1, delta 0.003", 1.0, 0.003),
+             ("TV pseudo-Huber lam 1, delta 0.001", 1.0, 0.001))
 
 
 def step_cost(q, T, sigma_g, jump=JUMP, ramps=RAMPS):
@@ -68,6 +77,17 @@ def step_cost(q, T, sigma_g, jump=JUMP, ramps=RAMPS):
     sharp / ramp_k}``. A ratio above 1 means the prior prefers the ramp."""
     f = lambda d: float(mrf.rho(jnp.asarray(d, dtype=jnp.float64), q, T, sigma_g))
     out = {"q": q, "T": T, "sigma_g": sigma_g, "jump": jump, "sharp": f(jump)}
+    for k in ramps:
+        out[f"ramp_{k}"] = k * f(jump / k)
+        out[f"ratio_{k}"] = out["sharp"] / out[f"ramp_{k}"]
+    return out
+
+
+def step_cost_tv(lam, delta, jump=JUMP, ramps=RAMPS):
+    """``step_cost`` for the pseudo-Huber potential lam (sqrt(D^2 + delta^2) - delta) (``mrf.pseudo_huber``, b = 1); the ratios do not
+    depend on lam."""
+    f = lambda d: lam * float(mrf.pseudo_huber(jnp.asarray(d, dtype=jnp.float64), delta))
+    out = {"lam": lam, "delta": delta, "jump": jump, "sharp": f(jump)}
     for k in ramps:
         out[f"ramp_{k}"] = k * f(jump / k)
         out[f"ratio_{k}"] = out["sharp"] / out[f"ramp_{k}"]
@@ -149,6 +169,7 @@ def main(argv=None):
               f"Phi truth {e['Phi']['truth']:7.1f} MAP {e['Phi']['map']:7.1f} draws {e['Phi']['draws_mean']:7.1f}  "
               f"R(blur 2px) {e['blur']['R'][-1]:9.1f}  ({time.time() - t0:.0f} s)")
     steps = [{"label": lab, **step_cost(q, T, sg)} for lab, q, T, sg in FAMILY]
+    steps += [{"label": lab, **step_cost_tv(lam, delta)} for lab, lam, delta in TV_FAMILY]
     out = {"runs": runs, "step_cost": steps, "jump": JUMP,
            "note": ("R = prior energy, Phi = data misfit, U = Phi + R; the posterior is exp(-U). The truth is the "
                     "coverage-averaged phantom on the inference grid. step_cost is per pair line (b = 1); ratio_k = sharp / ramp of k pixels.")}

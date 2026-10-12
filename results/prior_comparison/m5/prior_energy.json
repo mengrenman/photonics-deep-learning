@@ -1,0 +1,1069 @@
+{
+  "runs": {
+    "pc_matern": {
+      "run": "pc_matern",
+      "prior": "matern",
+      "converged": true,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 2400,
+      "R": {
+        "truth": 14685.52502342159,
+        "map": 87.49627212424117,
+        "map_in_summary": 87.49627212425843,
+        "draws_mean": 1180.7162871789196,
+        "draws_sd": 32.94524882337204,
+        "truth_minus_map": 14598.028751297348,
+        "truth_minus_draws_mean": 13504.80873624267,
+        "truth_above_draws_in_sd": 409.91673211046077
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2378.377051895697,
+        "draws_mean": 2434.7213135807556,
+        "draws_sd": 7.571008910204248,
+        "truth_minus_map": 199.75407261432383,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 17263.65614793161,
+        "map": 2465.8733240199385,
+        "truth_minus_map": 14797.782823911673
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          14685.52502342159,
+          4311.238114471969,
+          274.10070296142555,
+          79.55966418698559,
+          28.519767800213952
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 87.94092431141715,
+        "Phi": 2860.573991846454,
+        "R_truth_minus_mean": 14597.584099110172,
+        "Phi_mean_minus_truth": 282.4428673364332,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_qggmrf_sg0.05": {
+      "run": "pc_qggmrf_sg0.05",
+      "prior": "qggmrf",
+      "converged": true,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 3600,
+      "R": {
+        "truth": 4406.20237810877,
+        "map": 2718.8390450632814,
+        "map_in_summary": 2718.8390450632814,
+        "draws_mean": 3998.743817580013,
+        "draws_sd": 38.65134270990932,
+        "truth_minus_map": 1687.3633330454886,
+        "truth_minus_draws_mean": 407.45856052875706,
+        "truth_above_draws_in_sd": 10.541899244920513
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2474.316970702151,
+        "draws_mean": 2511.3649911516814,
+        "draws_sd": 12.976059636087786,
+        "truth_minus_map": 103.81415380786984,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 6984.333502618791,
+        "map": 5193.156015765433,
+        "truth_minus_map": 1791.1774868533575
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          4406.20237810877,
+          3769.5919329265926,
+          2801.192759108546,
+          2020.0702109737165,
+          1435.1294936703841
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 2755.199087542345,
+        "Phi": 2587.8273914119172,
+        "R_truth_minus_mean": 1651.0032905664252,
+        "Phi_mean_minus_truth": 9.696266901896252,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_qggmrf_sg0.1": {
+      "run": "pc_qggmrf_sg0.1",
+      "prior": "qggmrf",
+      "converged": true,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 2400,
+      "R": {
+        "truth": 1772.693003989376,
+        "map": 1060.6094109072935,
+        "map_in_summary": 1060.6094109072935,
+        "draws_mean": 2357.025068905785,
+        "draws_sd": 38.26976708366771,
+        "truth_minus_map": 712.0835930820824,
+        "truth_minus_draws_mean": -584.3320649164089,
+        "truth_above_draws_in_sd": -15.268764600497994
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2406.5159485817817,
+        "draws_mean": 2452.434943991969,
+        "draws_sd": 9.010190272337033,
+        "truth_minus_map": 171.6151759282393,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 4350.8241284993965,
+        "map": 3467.125359489075,
+        "truth_minus_map": 883.6987690103213
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          1772.693003989376,
+          1485.4092898360464,
+          1061.0732129034304,
+          745.2770517926423,
+          518.7860263529876
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 1079.9104720381022,
+        "Phi": 3499.8675490748956,
+        "R_truth_minus_mean": 692.7825319512738,
+        "Phi_mean_minus_truth": 921.7364245648746,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_gmrf": {
+      "run": "pc_gmrf",
+      "prior": "gmrf",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 2000,
+      "R": {
+        "truth": 89.08310983974474,
+        "map": 33.125442982618466,
+        "map_in_summary": 33.125442982618445,
+        "draws_mean": 524.7177597033149,
+        "draws_sd": 45.6977876630881,
+        "truth_minus_map": 55.95766685712627,
+        "truth_minus_draws_mean": -435.63464986357013,
+        "truth_above_draws_in_sd": -9.532948357923448
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2367.003120703525,
+        "draws_mean": 2427.682805146164,
+        "draws_sd": 8.38701818031335,
+        "truth_minus_map": 211.12800380649605,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 2667.214234349766,
+        "map": 2400.1285636861435,
+        "truth_minus_map": 267.0856706636224
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          89.08310983974474,
+          60.35178154675864,
+          30.815757601886165,
+          18.196598225211066,
+          11.18368917477345
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 122.05000860974263,
+        "Phi": 29887.61103347176,
+        "R_truth_minus_mean": -32.9668987699979,
+        "Phi_mean_minus_truth": 27309.479908961737,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_gmrf_adapt": {
+      "run": "pc_gmrf_adapt",
+      "prior": "gmrf",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 2400,
+      "R": {
+        "truth": 89.08310983974474,
+        "map": 33.125442982618466,
+        "map_in_summary": 33.125442982618445,
+        "draws_mean": 1085.0242056207505,
+        "draws_sd": 42.00642066231687,
+        "truth_minus_map": 55.95766685712627,
+        "truth_minus_draws_mean": -995.9410957810057,
+        "truth_above_draws_in_sd": -23.709258729450493
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2367.003120703525,
+        "draws_mean": 2429.6405729971957,
+        "draws_sd": 7.6430317975800035,
+        "truth_minus_map": 211.12800380649605,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 2667.214234349766,
+        "map": 2400.1285636861435,
+        "truth_minus_map": 267.0856706636224
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          89.08310983974474,
+          60.35178154675864,
+          30.815757601886165,
+          18.196598225211066,
+          11.18368917477345
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 34.847050622934745,
+        "Phi": 355550.7689216127,
+        "R_truth_minus_mean": 54.23605921680999,
+        "Phi_mean_minus_truth": 352972.6377971027,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_gmrf_adapt_burn2": {
+      "run": "pc_gmrf_adapt_burn2",
+      "prior": "gmrf",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 1600,
+      "R": {
+        "truth": 89.08310983974474,
+        "map": 33.125442982618466,
+        "map_in_summary": 33.125442982618445,
+        "draws_mean": 1101.7347687997994,
+        "draws_sd": 32.6769727020438,
+        "truth_minus_map": 55.95766685712627,
+        "truth_minus_draws_mean": -1012.6516589600546,
+        "truth_above_draws_in_sd": -30.98976359265734
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2367.003120703525,
+        "draws_mean": 2429.734679264942,
+        "draws_sd": 7.699621201238432,
+        "truth_minus_map": 211.12800380649605,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 2667.214234349766,
+        "map": 2400.1285636861435,
+        "truth_minus_map": 267.0856706636224
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          89.08310983974474,
+          60.35178154675864,
+          30.815757601886165,
+          18.196598225211066,
+          11.18368917477345
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 35.74238160713314,
+        "Phi": 376715.87789979065,
+        "R_truth_minus_mean": 53.340728232611596,
+        "Phi_mean_minus_truth": 374137.7467752806,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_gmrf_adapt2": {
+      "run": "pc_gmrf_adapt2",
+      "prior": "gmrf",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 800,
+      "R": {
+        "truth": 89.08310983974474,
+        "map": 33.125442982618466,
+        "map_in_summary": 33.125442982618445,
+        "draws_mean": 1046.7907785089328,
+        "draws_sd": 57.29089846851838,
+        "truth_minus_map": 55.95766685712627,
+        "truth_minus_draws_mean": -957.707668669188,
+        "truth_above_draws_in_sd": -16.716576179992238
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2367.003120703525,
+        "draws_mean": 2447.6952817524534,
+        "draws_sd": 10.967164570670784,
+        "truth_minus_map": 211.12800380649605,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 2667.214234349766,
+        "map": 2400.1285636861435,
+        "truth_minus_map": 267.0856706636224
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          89.08310983974474,
+          60.35178154675864,
+          30.815757601886165,
+          18.196598225211066,
+          11.18368917477345
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 41.38865556526764,
+        "Phi": 428812.2114280009,
+        "R_truth_minus_mean": 47.694454274477096,
+        "Phi_mean_minus_truth": 426234.08030349086,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_tv_lam3.75_adapt": {
+      "run": "pc_tv_lam3.75_adapt",
+      "prior": "tv",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 3200,
+      "R": {
+        "truth": 1334.599169284856,
+        "map": 1120.8088570943194,
+        "map_in_summary": 1120.8088570943194,
+        "draws_mean": 2859.616300507891,
+        "draws_sd": 42.81533462261017,
+        "truth_minus_map": 213.79031219053672,
+        "truth_minus_draws_mean": -1525.017131223035,
+        "truth_above_draws_in_sd": -35.61847979620122
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2399.4619759021507,
+        "draws_mean": 2442.2938165796663,
+        "draws_sd": 8.491740462254487,
+        "truth_minus_map": 178.66914860787028,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 3912.730293794877,
+        "map": 3520.27083299647,
+        "truth_minus_map": 392.459460798407
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          1334.599169284856,
+          1277.5170382408628,
+          1132.0018832980065,
+          932.6547321842788,
+          748.9156322847399
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 1321.6491367225276,
+        "Phi": 4813.511279822952,
+        "R_truth_minus_mean": 12.950032562328488,
+        "Phi_mean_minus_truth": 2235.380155312931,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_tv_lam3.75_adapt2": {
+      "run": "pc_tv_lam3.75_adapt2",
+      "prior": "tv",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 2000,
+      "R": {
+        "truth": 1334.599169284856,
+        "map": 1120.8088570943194,
+        "map_in_summary": 1120.8088570943194,
+        "draws_mean": 2811.018436777791,
+        "draws_sd": 61.74005324008091,
+        "truth_minus_map": 213.79031219053672,
+        "truth_minus_draws_mean": -1476.419267492935,
+        "truth_above_draws_in_sd": -23.91347577482264
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2399.4619759021507,
+        "draws_mean": 2441.405598537112,
+        "draws_sd": 8.273238772946916,
+        "truth_minus_map": 178.66914860787028,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 3912.730293794877,
+        "map": 3520.27083299647,
+        "truth_minus_map": 392.459460798407
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          1334.599169284856,
+          1277.5170382408628,
+          1132.0018832980065,
+          932.6547321842788,
+          748.9156322847399
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 1330.6970557793982,
+        "Phi": 4648.278910459095,
+        "R_truth_minus_mean": 3.902113505457919,
+        "Phi_mean_minus_truth": 2070.1477859490738,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_tv_lam11.25_adapt": {
+      "run": "pc_tv_lam11.25_adapt",
+      "prior": "tv",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 1600,
+      "R": {
+        "truth": 3821.784395205574,
+        "map": 3094.2693906783315,
+        "map_in_summary": 3094.2693906783315,
+        "draws_mean": 4713.740099173899,
+        "draws_sd": 41.47419375623141,
+        "truth_minus_map": 727.5150045272426,
+        "truth_minus_draws_mean": -891.9557039683245,
+        "truth_above_draws_in_sd": -21.50628193548211
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2457.8893733194386,
+        "draws_mean": 2494.1417670853207,
+        "draws_sd": 11.54999793172604,
+        "truth_minus_map": 120.24175119058236,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 6399.915519715595,
+        "map": 5552.15876399777,
+        "truth_minus_map": 847.756755717825
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          3821.784395205574,
+          3663.2558832104573,
+          3252.6173038197703,
+          2676.525769976538,
+          2143.059266170214
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 3349.8314610991542,
+        "Phi": 2611.519173333924,
+        "R_truth_minus_mean": 471.9529341064199,
+        "Phi_mean_minus_truth": 33.388048823902864,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_tv_lam11.25_adapt2": {
+      "run": "pc_tv_lam11.25_adapt2",
+      "prior": "tv",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 800,
+      "R": {
+        "truth": 3821.784395205574,
+        "map": 3094.2693906783315,
+        "map_in_summary": 3094.2693906783315,
+        "draws_mean": 4648.481863319146,
+        "draws_sd": 75.70661458840341,
+        "truth_minus_map": 727.5150045272426,
+        "truth_minus_draws_mean": -826.6974681135721,
+        "truth_above_draws_in_sd": -10.919752159148905
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2457.8893733194386,
+        "draws_mean": 2493.217205329857,
+        "draws_sd": 11.180560283290916,
+        "truth_minus_map": 120.24175119058236,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 6399.915519715595,
+        "map": 5552.15876399777,
+        "truth_minus_map": 847.756755717825
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          3821.784395205574,
+          3663.2558832104573,
+          3252.6173038197703,
+          2676.525769976538,
+          2143.059266170214
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 3358.7170911424096,
+        "Phi": 2597.1283611278436,
+        "R_truth_minus_mean": 463.06730406316456,
+        "Phi_mean_minus_truth": 18.997236617822637,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_tv_lam1.25_adapt": {
+      "run": "pc_tv_lam1.25_adapt",
+      "prior": "tv",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.26893010453116545
+      },
+      "draws": 400,
+      "R": {
+        "truth": 505.5374273112833,
+        "map": 441.69726481668397,
+        "map_in_summary": 441.69726481668397,
+        "draws_mean": 2284.937863166805,
+        "draws_sd": 307.63314343539565,
+        "truth_minus_map": 63.840162494599326,
+        "truth_minus_draws_mean": -1779.4004358555217,
+        "truth_above_draws_in_sd": -5.784163617692915
+      },
+      "Phi": {
+        "truth": 2578.1311245100205,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2381.4420487635994,
+        "draws_mean": 2430.5944587237063,
+        "draws_sd": 7.914148040042894,
+        "truth_minus_map": 196.68907574642117,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 3083.668551821304,
+        "map": 2823.139313580283,
+        "truth_minus_map": 260.5292382410206
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          505.5374273112833,
+          482.27075658433114,
+          425.13007645741845,
+          351.3643862535258,
+          284.2010876562486
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 734.7600442560175,
+        "Phi": 77809.15114051248,
+        "R_truth_minus_mean": -229.22261694473423,
+        "Phi_mean_minus_truth": 75231.02001600245,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_tv_lam8.5_adapt": {
+      "run": "pc_tv_lam8.5_adapt",
+      "prior": "tv",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.26893010453116545
+      },
+      "draws": 400,
+      "R": {
+        "truth": 2909.816479034644,
+        "map": 2379.141206803959,
+        "map_in_summary": 2379.141206803959,
+        "draws_mean": 5309.877587426405,
+        "draws_sd": 2258.4133845465753,
+        "truth_minus_map": 530.6752722306851,
+        "truth_minus_draws_mean": -2400.0611083917606,
+        "truth_above_draws_in_sd": -1.0627200161026429
+      },
+      "Phi": {
+        "truth": 2578.1311245100205,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2434.7173331672325,
+        "draws_mean": 2486.919320579993,
+        "draws_sd": 23.857338825578765,
+        "truth_minus_map": 143.41379134278804,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 5487.947603544664,
+        "map": 4813.858539971192,
+        "truth_minus_map": 674.0890635734727
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          2909.816479034644,
+          2788.4849733882725,
+          2475.058316295124,
+          2037.1063894527097,
+          1631.8732670788734
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 3543.5019919407264,
+        "Phi": 20213.797741261522,
+        "R_truth_minus_mean": -633.6855129060823,
+        "Phi_mean_minus_truth": 17635.6666167515,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    },
+    "pc_tv_lam3.75_indep": {
+      "run": "pc_tv_lam3.75_indep",
+      "prior": "tv",
+      "converged": false,
+      "data": {
+        "data_factor": 2,
+        "seed": 0,
+        "grid_error_over_noise": 0.2689301045311651
+      },
+      "draws": 400,
+      "R": {
+        "truth": 1334.599169284856,
+        "map": 1120.8088570943194,
+        "map_in_summary": 1120.8088570943194,
+        "draws_mean": 3840.957174940731,
+        "draws_sd": 994.8949911439879,
+        "truth_minus_map": 213.79031219053672,
+        "truth_minus_draws_mean": -2506.358005655875,
+        "truth_above_draws_in_sd": -2.519218639118807
+      },
+      "Phi": {
+        "truth": 2578.131124510021,
+        "noise_free_data": 2438.2309412828818,
+        "map": 2399.4619759021507,
+        "draws_mean": 2457.7023715699347,
+        "draws_sd": 17.75406444386931,
+        "truth_minus_map": 178.66914860787028,
+        "n_data": 2400
+      },
+      "U": {
+        "truth": 3912.730293794877,
+        "map": 3520.27083299647,
+        "truth_minus_map": 392.459460798407
+      },
+      "blur": {
+        "sigma_px": [
+          0.0,
+          0.5,
+          1.0,
+          1.5,
+          2.0
+        ],
+        "R": [
+          1334.599169284856,
+          1277.5170382408628,
+          1132.0018832980065,
+          932.6547321842788,
+          748.9156322847399
+        ],
+        "Phi": [
+          2578.1311245159654,
+          6328.397735320784,
+          35196.75751631736,
+          89229.29108674123,
+          160749.2226156729
+        ],
+        "Phi_note": "Phi of the isotropic Gaussian blur of the truth with this run's data (shared by the runs with the same data). The posterior does not blur isotropically: it moves only in directions the data barely constrain, see posterior_mean"
+      },
+      "posterior_mean": {
+        "R": 2139.6868310079053,
+        "Phi": 47295.912837202945,
+        "R_truth_minus_mean": -805.0876617230492,
+        "Phi_mean_minus_truth": 44717.78171269292,
+        "note": "the posterior-mean map: the data cost of moving from the truth to it against what the prior saves"
+      }
+    }
+  },
+  "step_cost": [
+    {
+      "label": "q-GGMRF q 1.2, T 1, sigma_g 0.05 (experiment)",
+      "q": 1.2,
+      "T": 1.0,
+      "sigma_g": 0.05,
+      "jump": 0.6931471805599453,
+      "sharp": 10.45169557258889,
+      "ramp_2": 8.420001889477518,
+      "ratio_2": 1.24129373244564,
+      "ramp_4": 6.487453760720001,
+      "ratio_4": 1.6110628234256459,
+      "ramp_8": 4.705836977259094,
+      "ratio_8": 2.221006724860337
+    },
+    {
+      "label": "q-GGMRF q 1.2, T 1, sigma_g 0.1 (experiment)",
+      "q": 1.2,
+      "T": 1.0,
+      "sigma_g": 0.1,
+      "jump": 0.6931471805599453,
+      "sharp": 4.210000944738759,
+      "ramp_2": 3.2437268803600006,
+      "ratio_2": 1.297890081384262,
+      "ramp_4": 2.352918488629547,
+      "ratio_4": 1.7892676542275234,
+      "ramp_8": 1.587424208852074,
+      "ratio_8": 2.6520957166094683
+    },
+    {
+      "label": "q 1.0, T 1, sigma_g 0.05",
+      "q": 1.0,
+      "T": 1.0,
+      "sigma_g": 0.05,
+      "jump": 0.6931471805599453,
+      "sharp": 6.465112517229635,
+      "ramp_2": 6.057551809980735,
+      "ratio_2": 1.0672814232603642,
+      "ramp_4": 5.37932632354041,
+      "ratio_4": 1.2018442697810927,
+      "ramp_8": 4.395135645614507,
+      "ratio_8": 1.4709699628225497
+    },
+    {
+      "label": "q 1.0, T sigma_g = log 2 (sigma_g 0.05)",
+      "q": 1.0,
+      "T": 13.862943611198904,
+      "sigma_g": 0.05,
+      "jump": 0.6931471805599453,
+      "sharp": 48.04530139182013,
+      "ramp_2": 32.03020092788009,
+      "ratio_2": 1.5,
+      "ramp_4": 19.218120556728053,
+      "ratio_4": 2.5,
+      "ramp_8": 10.676733642626695,
+      "ratio_8": 4.5
+    },
+    {
+      "label": "q 1.0, T 0.1, sigma_g 0.05 (near total variation)",
+      "q": 1.0,
+      "T": 0.1,
+      "sigma_g": 0.05,
+      "jump": 0.6931471805599453,
+      "sharp": 0.688182989628142,
+      "ramp_2": 0.6832893982958116,
+      "ratio_2": 1.0071618136393385,
+      "ramp_4": 0.6737080745954317,
+      "ratio_4": 1.0214854409180156,
+      "ramp_8": 0.6553295527253514,
+      "ratio_8": 1.05013269547537
+    },
+    {
+      "label": "q 1.0, T 0.01, sigma_g 0.05 (total variation)",
+      "q": 1.0,
+      "T": 0.01,
+      "sigma_g": 0.05,
+      "jump": 0.6931471805599453,
+      "sharp": 0.06926475409737219,
+      "ramp_2": 0.06921486211766156,
+      "ratio_2": 1.0007208275532762,
+      "ramp_4": 0.06911529347370632,
+      "ratio_4": 1.0021624826598288,
+      "ramp_8": 0.0689170131237286,
+      "ratio_8": 1.0050457928729337
+    },
+    {
+      "label": "q 1.5, T 1, sigma_g 0.05",
+      "q": 1.5,
+      "T": 1.0,
+      "sigma_g": 0.05,
+      "jump": 0.6931471805599453,
+      "sharp": 20.34396617893585,
+      "ramp_2": 13.225532205768358,
+      "ratio_2": 1.5382342171502759,
+      "ramp_4": 8.394688925126095,
+      "ratio_4": 2.423433001554643,
+      "ramp_8": 5.18537649631695,
+      "ratio_8": 3.923334437409837
+    },
+    {
+      "label": "TV pseudo-Huber lam 1, delta 0.01 (DESIGN 12.1)",
+      "lam": 1.0,
+      "delta": 0.01,
+      "jump": 0.6931471805599453,
+      "sharp": 0.6832193115589045,
+      "ramp_2": 0.6734356595374955,
+      "ratio_2": 1.0145279684597164,
+      "ramp_4": 0.6543003772994808,
+      "ratio_4": 1.04419825398662,
+      "ramp_8": 0.6177485320071991,
+      "ratio_8": 1.105982897828954
+    },
+    {
+      "label": "TV pseudo-Huber lam 1, delta 0.003",
+      "lam": 1.0,
+      "delta": 0.003,
+      "jump": 0.6931471805599453,
+      "sharp": 0.6901536726572265,
+      "ramp_2": 0.687173148584249,
+      "ratio_2": 1.0043373698159161,
+      "ramp_4": 0.6812510468208479,
+      "ratio_4": 1.0130680545416024,
+      "ramp_8": 0.6695625522749922,
+      "ratio_8": 1.0307530944080896
+    },
+    {
+      "label": "TV pseudo-Huber lam 1, delta 0.001",
+      "lam": 1.0,
+      "delta": 0.001,
+      "jump": 0.6931471805599453,
+      "sharp": 0.6921479019070903,
+      "ramp_2": 0.6911500659440215,
+      "ratio_2": 1.0014437327177361,
+      "ramp_4": 0.6891587220241849,
+      "ratio_4": 1.0043374331447559,
+      "ramp_8": 0.6851933452639324,
+      "ratio_8": 1.0101497726024748
+    }
+  ],
+  "jump": 0.6931471805599453,
+  "note": "R = prior energy, Phi = data misfit, U = Phi + R; the posterior is exp(-U). The truth is the coverage-averaged phantom on the inference grid. step_cost is per pair line (b = 1); ratio_k = sharp / ramp of k pixels."
+}

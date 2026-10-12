@@ -1,0 +1,4 @@
+physical Phi of the draws: mean 2429.5 (MAP 2367.0, N 2400); split R-hat 1.004; max pixel R-hat 1.079; worst-pixel ESS 122 -> UNCONVERGED: max pixel R-hat 1.079 > 1.05; worst-pixel ESS 122 < 200
+err_model (eps_r): MAP 0.1246, posterior mean 0.1288; err_chi: MAP 0.3825, mean 0.3954; |z|>3 in 0.0% of pixels (edge share nan)
+features: gap_valley P=0.938, ring_hole P=0.731, ring_continuity P=0.504
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt (total 193 s)

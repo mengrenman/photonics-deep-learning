@@ -1,0 +1,10 @@
+# batch_run 2026-10-12T03:03:11+08:00 slot cpu8
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/wait_then.py --file results/prior_comparison/pc_tv_lam8.5_adapt/prepared.npz -- python scripts/make_overdispersed_starts.py --run pc_tv_lam8.5_adapt --kinds truth map matern gmrf
+wait_then: waiting for files ['results/prior_comparison/pc_tv_lam8.5_adapt/prepared.npz'] meta-ok [] go None (skip None)
+wait_then: dependencies satisfied, running /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/make_overdispersed_starts.py --run pc_tv_lam8.5_adapt --kinds truth map matern gmrf
+chain 0: truth   R_TV    2909.8  pixel sd 0.252  (theta_true of pc_matern/chains.npz)
+chain 1: map     R_TV    2379.1  pixel sd 0.242  (pc_tv_lam8.5_adapt/prepared.npz theta_hat)
+chain 2: matern  R_TV    3252.8  pixel sd 0.239  (mean of the draws of pc_matern/chains.npz)
+chain 3: gmrf    R_TV   23090.3  pixel sd 0.417  (last draw of chain 0 of pc_gmrf_adapt/chains.npz)
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam8.5_adapt/starts.npy and starts.json

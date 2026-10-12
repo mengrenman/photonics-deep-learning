@@ -1,0 +1,56 @@
+batch_run: warning: 17 slots x 1 threads exceed the 16 logical CPUs of this machine: jobs will be oversubscribed
+[batch_run 03:03:11] 17 job(s) to run, 0 skipped; cpu slots 17 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 03:03:11] START m5v_prep_lam1.25 (cpu0, unpinned) [1/17]
+[batch_run 03:03:11] START m5v_starts_lam1.25 (cpu1, unpinned) [2/17]
+[batch_run 03:03:11] START m5v_adapt_lam1.25 (cpu2, unpinned) [3/17]
+[batch_run 03:03:11] START m5v_lam1.25_c0 (cpu3, unpinned) [4/17]
+[batch_run 03:03:11] START m5v_lam1.25_c1 (cpu4, unpinned) [5/17]
+[batch_run 03:03:11] START m5v_lam1.25_c2 (cpu5, unpinned) [6/17]
+[batch_run 03:03:11] START m5v_lam1.25_c3 (cpu6, unpinned) [7/17]
+[batch_run 03:03:11] START m5v_prep_lam8.5 (cpu7, unpinned) [8/17]
+[batch_run 03:03:11] START m5v_starts_lam8.5 (cpu8, unpinned) [9/17]
+[batch_run 03:03:11] START m5v_adapt_lam8.5 (cpu9, unpinned) [10/17]
+[batch_run 03:03:11] START m5v_lam8.5_c0 (cpu10, unpinned) [11/17]
+[batch_run 03:03:11] START m5v_lam8.5_c1 (cpu11, unpinned) [12/17]
+[batch_run 03:03:11] START m5v_lam8.5_c2 (cpu12, unpinned) [13/17]
+[batch_run 03:03:11] START m5v_lam8.5_c3 (cpu13, unpinned) [14/17]
+[batch_run 03:03:11] START m5v_indep_starts (cpu14, unpinned) [15/17]
+[batch_run 03:03:11] START m5v_indep_c0 (cpu15, unpinned) [16/17]
+[batch_run 03:03:11] START m5v_indep_c1 (cpu16, unpinned) [17/17]
+[batch_run 03:03:12] DONE  m5v_indep_starts exit 0 in 0.5 s
+[batch_run 03:06:40] DONE  m5v_prep_lam8.5 exit 0 in 209.3 s
+[batch_run 03:06:42] DONE  m5v_starts_lam8.5 exit 0 in 210.8 s
+[batch_run 03:09:15] DONE  m5v_prep_lam1.25 exit 0 in 363.6 s
+[batch_run 03:09:27] DONE  m5v_starts_lam1.25 exit 0 in 375.8 s
+[batch_run 03:26:41] DONE  m5v_adapt_lam8.5 exit 0 in 1410.3 s
+[batch_run 03:33:09] DONE  m5v_adapt_lam1.25 exit 0 in 1797.7 s
+[batch_run 04:01:25] DONE  m5v_lam8.5_c1 exit 0 in 3494.0 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam8.5_adapt/chain_1_seg2.npz does not exist; it will run again next time)
+[batch_run 04:06:50] DONE  m5v_indep_c0 exit 0 in 3819.2 s
+[batch_run 04:06:58] DONE  m5v_lam8.5_c2 exit 0 in 3826.9 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam8.5_adapt/chain_2_seg2.npz does not exist; it will run again next time)
+[batch_run 04:09:48] DONE  m5v_lam1.25_c1 exit 0 in 3996.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam1.25_adapt/chain_1_seg2.npz does not exist; it will run again next time)
+[batch_run 04:11:40] DONE  m5v_lam1.25_c2 exit 0 in 4109.3 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam1.25_adapt/chain_2_seg2.npz does not exist; it will run again next time)
+[batch_run 04:12:12] DONE  m5v_lam8.5_c0 exit 0 in 4140.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam8.5_adapt/chain_0_seg2.npz does not exist; it will run again next time)
+[batch_run 04:14:36] DONE  m5v_lam1.25_c0 exit 0 in 4285.2 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam1.25_adapt/chain_0_seg2.npz does not exist; it will run again next time)
+[batch_run 04:19:10] DONE  m5v_indep_c1 exit 0 in 4558.6 s
+[batch_run 04:21:45] DONE  m5v_lam8.5_c3 exit 0 in 4714.1 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam8.5_adapt/chain_3_seg2.npz does not exist; it will run again next time)
+[batch_run 04:28:20] DONE  m5v_lam1.25_c3 exit 0 in 5108.7 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam1.25_adapt/chain_3_seg2.npz does not exist; it will run again next time)
+
+job                              status          wall s  exit
+m5v_indep_starts                 ok                 0.5     0
+m5v_prep_lam8.5                  ok               209.3     0
+m5v_starts_lam8.5                ok               210.8     0
+m5v_prep_lam1.25                 ok               363.6     0
+m5v_starts_lam1.25               ok               375.8     0
+m5v_adapt_lam8.5                 ok              1410.3     0
+m5v_adapt_lam1.25                ok              1797.7     0
+m5v_lam8.5_c1                    ok              3494.0     0
+m5v_indep_c0                     ok              3819.2     0
+m5v_lam8.5_c2                    ok              3826.9     0
+m5v_lam1.25_c1                   ok              3996.8     0
+m5v_lam1.25_c2                   ok              4109.3     0
+m5v_lam8.5_c0                    ok              4140.8     0
+m5v_lam1.25_c0                   ok              4285.2     0
+m5v_indep_c1                     ok              4558.6     0
+m5v_lam8.5_c3                    ok              4714.1     0
+m5v_lam1.25_c3                   ok              5108.7     0
+[batch_run 04:28:20] 17 ok, 0 not ok

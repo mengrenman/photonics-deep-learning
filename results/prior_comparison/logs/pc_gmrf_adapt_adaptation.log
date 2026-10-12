@@ -1,0 +1,13 @@
+# batch_run 2026-10-11T16:16:21+08:00 slot cpu5
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "4", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4", "MKL_NUM_THREADS": "4", "VECLIB_MAXIMUM_THREADS": "4", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/wait_then.py --file results/prior_comparison/pc_gmrf_adapt/prepared.npz --meta-ok pc_gmrf_adapt_prepare -- python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior gmrf --sigma 0.5 --ell 0.4 --adapt --out pc_gmrf_adapt --adapt-init 50 --adapt-first-window 50 --adapt-windows 3 --adapt-growth 2 --adapt-final 100 --adapt-kappa-per-dim 0.25 --traj-length 1.5 --mass-theta results/prior_comparison/pc_gmrf_adapt/m4_end0.npy --adapt-start-scale 0 --stage adapt
+wait_then: waiting for files ['results/prior_comparison/pc_gmrf_adapt/prepared.npz'] meta-ok ['pc_gmrf_adapt_prepare'] go None (skip None)
+wait_then: dependencies satisfied, running /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior gmrf --sigma 0.5 --ell 0.4 --adapt --out pc_gmrf_adapt --adapt-init 50 --adapt-first-window 50 --adapt-windows 3 --adapt-growth 2 --adapt-final 100 --adapt-kappa-per-dim 0.25 --traj-length 1.5 --mass-theta results/prior_comparison/pc_gmrf_adapt/m4_end0.npy --adapt-start-scale 0 --stage adapt
+d_obs hash differs from the prepared run's but the arrays agree to 6.5e-14 of the noise std (round-off across thread counts); continuing
+adaptation: 500 trajectories ([('init', 50), ('window0', 50), ('window1', 100), ('window2', 200), ('final', 100)]), kappa = 576, trajectory length 1.5, target acceptance 0.8, start scale 0.0, initial map: Laplace at a custom theta
+  init       50 traj: accept 0.780, eps 0.0345, mean L 47.3, 362 s
+  window0    50 traj: accept 0.740, eps 0.0324, mean L 49.0, 463 s; map updated (weight 0.920, variance ratio median 0.945, update 0.6 s)
+  window1   100 traj: accept 0.760, eps 0.0226, mean L 57.1, 890 s; map updated (weight 0.852, variance ratio median 0.989, update 0.6 s)
+  window2   200 traj: accept 0.765, eps 0.0179, mean L 68.2, 2940 s; map updated (weight 0.742, variance ratio median 1.03, update 0.8 s)
+  final     100 traj: accept 0.790, eps 0.0148, mean L 67.4, 1437 s
+adapted map: eps 0.0148, L0 100, 30906 gradient evaluations, 6091 s; digest 555cc867a4a2ffb4; wrote adapted_map.npz and adaptation.json

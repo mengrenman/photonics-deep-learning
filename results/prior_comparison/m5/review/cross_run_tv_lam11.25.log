@@ -1,0 +1,9 @@
+2 runs, chains [4, 4], last 200 draws: R-hat Phi 1.0290; at least one run continues the chains of another (its chains start at the source's final states): the pool is the same chains in consecutive windows, a stationarity check, not an independent replication
+  all                     2304 px: R-hat max 1.536 (rank 1.344), 654 above 1.05, bulk ESS min 19 median 212
+  edge_band_abs_d_le_1     498 px: R-hat max 1.083 (rank 1.081), 19 above 1.05, bulk ESS min 74 median 560
+  abs_d_le_2               824 px: R-hat max 1.133 (rank 1.123), 57 above 1.05, bulk ESS min 46 median 441
+  pc_tv_lam11.25_adapt     bias d=-1 0.181  d=+2 -0.129  sd d=-1 0.063  |z|>3 12.5%
+  pc_tv_lam11.25_adapt2    bias d=-1 0.179  d=+2 -0.128  sd d=-1 0.062  |z|>3 12.9%
+  pooled                   bias d=-1 0.180  d=+2 -0.129  sd d=-1 0.063  |z|>3 12.6%
+  features (gap valley, ring hole, ring continuity): pc_tv_lam11.25_adapt 1.000/1.000/1.000; pc_tv_lam11.25_adapt2 1.000/1.000/1.000; pooled 1.000/1.000/1.000
+wrote results/prior_comparison/m5/cross_run_tv_lam11.25.json

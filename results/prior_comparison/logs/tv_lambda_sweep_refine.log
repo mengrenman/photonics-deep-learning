@@ -1,0 +1,7 @@
+# batch_run 2026-10-11T13:28:33+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "4", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4", "MKL_NUM_THREADS": "4", "VECLIB_MAXIMUM_THREADS": "4", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/tv_lambda_sweep.py --lams 3.75 --update
+problem: n=48 side=2.0 eps_r=2.0 snr=30.0 seed=0; N = 2400; d_obs sha256 d1000a64d67044a0...; data check 6.486115089388395e-14
+smooth start: 100 iterations, 13.2 s
+lambda 3.75: Phi_MAP 2399.5 (N 2400), R 1120.8, err_model 0.1204, err_chi 0.3697, |grad|inf 9.0e-03, 975 its / 1023 evals, 101 s; CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+lambda* = 3.75 (Phi_MAP 2399.5); interpolated crossing 3.8195331924378944; wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/tv_lambda_sweep.json

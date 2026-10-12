@@ -1,0 +1,5872 @@
+{
+  "pc_matern": {
+    "run": "pc_matern",
+    "converged": true,
+    "chains": 4,
+    "draws_per_chain": 600,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.98375,
+            "p_chain": [
+              0.99,
+              0.9766666666666667,
+              0.9816666666666667,
+              0.9866666666666667
+            ],
+            "chain_range": {
+              "min": 0.9766666666666667,
+              "max": 0.99
+            },
+            "blocks": [
+              0.99,
+              0.9725,
+              0.9975,
+              0.9775,
+              0.9675,
+              0.9975
+            ],
+            "block_range": {
+              "min": 0.9675,
+              "max": 0.9975
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.97625,
+            "p_chain": [
+              0.98,
+              0.975,
+              0.9733333333333334,
+              0.9766666666666667
+            ],
+            "chain_range": {
+              "min": 0.9733333333333334,
+              "max": 0.98
+            },
+            "blocks": [
+              0.9725,
+              0.965,
+              0.9925,
+              0.975,
+              0.965,
+              0.9875
+            ],
+            "block_range": {
+              "min": 0.965,
+              "max": 0.9925
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.9954166666666666,
+            "p_chain": [
+              0.9966666666666667,
+              0.9933333333333333,
+              0.9983333333333333,
+              0.9933333333333333
+            ],
+            "chain_range": {
+              "min": 0.9933333333333333,
+              "max": 0.9983333333333333
+            },
+            "blocks": [
+              1.0,
+              0.99,
+              1.0,
+              0.9975,
+              0.985,
+              1.0
+            ],
+            "block_range": {
+              "min": 0.985,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_qggmrf_sg0.05": {
+    "run": "pc_qggmrf_sg0.05",
+    "converged": true,
+    "chains": 4,
+    "draws_per_chain": 900,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_qggmrf_sg0.1": {
+    "run": "pc_qggmrf_sg0.1",
+    "converged": true,
+    "chains": 4,
+    "draws_per_chain": 600,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_gmrf": {
+    "run": "pc_gmrf",
+    "converged": false,
+    "chains": 4,
+    "draws_per_chain": 500,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.9955,
+            "p_chain": [
+              0.998,
+              0.984,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 0.984,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.9775
+            ],
+            "block_range": {
+              "min": 0.9775,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.9295,
+            "p_chain": [
+              0.962,
+              0.912,
+              0.932,
+              0.912
+            ],
+            "chain_range": {
+              "min": 0.912,
+              "max": 0.962
+            },
+            "blocks": [
+              0.99,
+              0.9575,
+              0.9275,
+              0.9125,
+              0.86
+            ],
+            "block_range": {
+              "min": 0.86,
+              "max": 0.99
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.988,
+            "p_chain": [
+              0.988,
+              0.994,
+              0.98,
+              0.99
+            ],
+            "chain_range": {
+              "min": 0.98,
+              "max": 0.994
+            },
+            "blocks": [
+              0.9975,
+              0.995,
+              1.0,
+              0.99,
+              0.9575
+            ],
+            "block_range": {
+              "min": 0.9575,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.989,
+            "p_chain": [
+              0.994,
+              1.0,
+              0.972,
+              0.99
+            ],
+            "chain_range": {
+              "min": 0.972,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              0.995,
+              1.0,
+              0.9975,
+              0.9525
+            ],
+            "block_range": {
+              "min": 0.9525,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.999,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.996
+            ],
+            "chain_range": {
+              "min": 0.996,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.995
+            ],
+            "block_range": {
+              "min": 0.995,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.9995,
+            "p_chain": [
+              0.998,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 0.998,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.9975
+            ],
+            "block_range": {
+              "min": 0.9975,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_gmrf_adapt": {
+    "run": "pc_gmrf_adapt",
+    "converged": false,
+    "chains": 4,
+    "draws_per_chain": 600,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.9204166666666667,
+            "p_chain": [
+              0.925,
+              0.8983333333333333,
+              0.9366666666666666,
+              0.9216666666666666
+            ],
+            "chain_range": {
+              "min": 0.8983333333333333,
+              "max": 0.9366666666666666
+            },
+            "blocks": [
+              0.9625,
+              0.9675,
+              0.885,
+              0.8925,
+              0.945,
+              0.87
+            ],
+            "block_range": {
+              "min": 0.87,
+              "max": 0.9675
+            }
+          },
+          "ring_hole": {
+            "p": 0.7125,
+            "p_chain": [
+              0.7466666666666667,
+              0.6683333333333333,
+              0.7516666666666667,
+              0.6833333333333333
+            ],
+            "chain_range": {
+              "min": 0.6683333333333333,
+              "max": 0.7516666666666667
+            },
+            "blocks": [
+              0.7225,
+              0.7275,
+              0.7425,
+              0.705,
+              0.695,
+              0.6825
+            ],
+            "block_range": {
+              "min": 0.6825,
+              "max": 0.7425
+            }
+          },
+          "ring_continuity": {
+            "p": 0.5008333333333334,
+            "p_chain": [
+              0.4866666666666667,
+              0.52,
+              0.5,
+              0.49666666666666665
+            ],
+            "chain_range": {
+              "min": 0.4866666666666667,
+              "max": 0.52
+            },
+            "blocks": [
+              0.5225,
+              0.5275,
+              0.4625,
+              0.51,
+              0.465,
+              0.5175
+            ],
+            "block_range": {
+              "min": 0.4625,
+              "max": 0.5275
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.9520833333333333,
+            "p_chain": [
+              0.9566666666666667,
+              0.9533333333333334,
+              0.945,
+              0.9533333333333334
+            ],
+            "chain_range": {
+              "min": 0.945,
+              "max": 0.9566666666666667
+            },
+            "blocks": [
+              0.975,
+              0.9875,
+              0.945,
+              0.935,
+              0.9675,
+              0.9025
+            ],
+            "block_range": {
+              "min": 0.9025,
+              "max": 0.9875
+            }
+          },
+          "ring_hole": {
+            "p": 0.69,
+            "p_chain": [
+              0.7316666666666667,
+              0.6483333333333333,
+              0.7133333333333334,
+              0.6666666666666666
+            ],
+            "chain_range": {
+              "min": 0.6483333333333333,
+              "max": 0.7316666666666667
+            },
+            "blocks": [
+              0.6825,
+              0.7325,
+              0.725,
+              0.6875,
+              0.6475,
+              0.665
+            ],
+            "block_range": {
+              "min": 0.6475,
+              "max": 0.7325
+            }
+          },
+          "ring_continuity": {
+            "p": 0.5333333333333333,
+            "p_chain": [
+              0.5133333333333333,
+              0.51,
+              0.5433333333333333,
+              0.5666666666666667
+            ],
+            "chain_range": {
+              "min": 0.51,
+              "max": 0.5666666666666667
+            },
+            "blocks": [
+              0.56,
+              0.5575,
+              0.53,
+              0.565,
+              0.465,
+              0.5225
+            ],
+            "block_range": {
+              "min": 0.465,
+              "max": 0.565
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.99375,
+            "p_chain": [
+              0.9966666666666667,
+              0.99,
+              0.99,
+              0.9983333333333333
+            ],
+            "chain_range": {
+              "min": 0.99,
+              "max": 0.9983333333333333
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              0.995,
+              0.9925,
+              0.9925,
+              0.9825
+            ],
+            "block_range": {
+              "min": 0.9825,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.80375,
+            "p_chain": [
+              0.835,
+              0.78,
+              0.8233333333333334,
+              0.7766666666666666
+            ],
+            "chain_range": {
+              "min": 0.7766666666666666,
+              "max": 0.835
+            },
+            "blocks": [
+              0.835,
+              0.8,
+              0.845,
+              0.7975,
+              0.7575,
+              0.7875
+            ],
+            "block_range": {
+              "min": 0.7575,
+              "max": 0.845
+            }
+          },
+          "ring_continuity": {
+            "p": 0.6233333333333333,
+            "p_chain": [
+              0.6183333333333333,
+              0.57,
+              0.6366666666666667,
+              0.6683333333333333
+            ],
+            "chain_range": {
+              "min": 0.57,
+              "max": 0.6683333333333333
+            },
+            "blocks": [
+              0.6425,
+              0.665,
+              0.67,
+              0.5875,
+              0.57,
+              0.605
+            ],
+            "block_range": {
+              "min": 0.57,
+              "max": 0.67
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.9995833333333334,
+            "p_chain": [
+              1.0,
+              1.0,
+              0.9983333333333333,
+              1.0
+            ],
+            "chain_range": {
+              "min": 0.9983333333333333,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.9975
+            ],
+            "block_range": {
+              "min": 0.9975,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.95375,
+            "p_chain": [
+              0.945,
+              0.9533333333333334,
+              0.97,
+              0.9466666666666667
+            ],
+            "chain_range": {
+              "min": 0.945,
+              "max": 0.97
+            },
+            "blocks": [
+              0.955,
+              0.9725,
+              0.96,
+              0.9475,
+              0.94,
+              0.9475
+            ],
+            "block_range": {
+              "min": 0.94,
+              "max": 0.9725
+            }
+          },
+          "ring_continuity": {
+            "p": 0.8404166666666667,
+            "p_chain": [
+              0.865,
+              0.8016666666666666,
+              0.8566666666666667,
+              0.8383333333333334
+            ],
+            "chain_range": {
+              "min": 0.8016666666666666,
+              "max": 0.865
+            },
+            "blocks": [
+              0.8875,
+              0.835,
+              0.8675,
+              0.7925,
+              0.86,
+              0.8
+            ],
+            "block_range": {
+              "min": 0.7925,
+              "max": 0.8875
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.9895833333333334,
+            "p_chain": [
+              0.985,
+              0.9916666666666667,
+              0.9933333333333333,
+              0.9883333333333333
+            ],
+            "chain_range": {
+              "min": 0.985,
+              "max": 0.9933333333333333
+            },
+            "blocks": [
+              0.995,
+              1.0,
+              0.99,
+              0.975,
+              0.9975,
+              0.98
+            ],
+            "block_range": {
+              "min": 0.975,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.8891666666666667,
+            "p_chain": [
+              0.905,
+              0.8583333333333333,
+              0.8866666666666667,
+              0.9066666666666666
+            ],
+            "chain_range": {
+              "min": 0.8583333333333333,
+              "max": 0.9066666666666666
+            },
+            "blocks": [
+              0.9375,
+              0.915,
+              0.94,
+              0.825,
+              0.8725,
+              0.845
+            ],
+            "block_range": {
+              "min": 0.825,
+              "max": 0.94
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.9616666666666667,
+            "p_chain": [
+              0.9783333333333334,
+              0.9316666666666666,
+              0.955,
+              0.9816666666666667
+            ],
+            "chain_range": {
+              "min": 0.9316666666666666,
+              "max": 0.9816666666666667
+            },
+            "blocks": [
+              0.995,
+              0.9775,
+              0.9625,
+              0.8925,
+              0.9875,
+              0.955
+            ],
+            "block_range": {
+              "min": 0.8925,
+              "max": 0.995
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.82875,
+            "p_chain": [
+              0.8283333333333334,
+              0.805,
+              0.7283333333333334,
+              0.9533333333333334
+            ],
+            "chain_range": {
+              "min": 0.7283333333333334,
+              "max": 0.9533333333333334
+            },
+            "blocks": [
+              0.905,
+              0.8675,
+              0.885,
+              0.7925,
+              0.7675,
+              0.755
+            ],
+            "block_range": {
+              "min": 0.755,
+              "max": 0.905
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_gmrf_adapt2": {
+    "run": "pc_gmrf_adapt2",
+    "converged": false,
+    "chains": 4,
+    "draws_per_chain": 200,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.9125,
+            "p_chain": [
+              0.93,
+              0.9,
+              0.93,
+              0.89
+            ],
+            "chain_range": {
+              "min": 0.89,
+              "max": 0.93
+            },
+            "blocks": [
+              0.925,
+              0.9
+            ],
+            "block_range": {
+              "min": 0.9,
+              "max": 0.925
+            }
+          },
+          "ring_hole": {
+            "p": 0.71125,
+            "p_chain": [
+              0.805,
+              0.68,
+              0.76,
+              0.6
+            ],
+            "chain_range": {
+              "min": 0.6,
+              "max": 0.805
+            },
+            "blocks": [
+              0.725,
+              0.6975
+            ],
+            "block_range": {
+              "min": 0.6975,
+              "max": 0.725
+            }
+          },
+          "ring_continuity": {
+            "p": 0.30375,
+            "p_chain": [
+              0.255,
+              0.405,
+              0.4,
+              0.155
+            ],
+            "chain_range": {
+              "min": 0.155,
+              "max": 0.405
+            },
+            "blocks": [
+              0.2525,
+              0.355
+            ],
+            "block_range": {
+              "min": 0.2525,
+              "max": 0.355
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.94,
+            "p_chain": [
+              0.94,
+              0.94,
+              0.96,
+              0.92
+            ],
+            "chain_range": {
+              "min": 0.92,
+              "max": 0.96
+            },
+            "blocks": [
+              0.95,
+              0.93
+            ],
+            "block_range": {
+              "min": 0.93,
+              "max": 0.95
+            }
+          },
+          "ring_hole": {
+            "p": 0.70875,
+            "p_chain": [
+              0.79,
+              0.65,
+              0.775,
+              0.62
+            ],
+            "chain_range": {
+              "min": 0.62,
+              "max": 0.79
+            },
+            "blocks": [
+              0.71,
+              0.7075
+            ],
+            "block_range": {
+              "min": 0.7075,
+              "max": 0.71
+            }
+          },
+          "ring_continuity": {
+            "p": 0.3375,
+            "p_chain": [
+              0.31,
+              0.36,
+              0.45,
+              0.23
+            ],
+            "chain_range": {
+              "min": 0.23,
+              "max": 0.45
+            },
+            "blocks": [
+              0.2925,
+              0.3825
+            ],
+            "block_range": {
+              "min": 0.2925,
+              "max": 0.3825
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.9775,
+            "p_chain": [
+              0.985,
+              0.985,
+              0.975,
+              0.965
+            ],
+            "chain_range": {
+              "min": 0.965,
+              "max": 0.985
+            },
+            "blocks": [
+              0.9825,
+              0.9725
+            ],
+            "block_range": {
+              "min": 0.9725,
+              "max": 0.9825
+            }
+          },
+          "ring_hole": {
+            "p": 0.775,
+            "p_chain": [
+              0.785,
+              0.795,
+              0.84,
+              0.68
+            ],
+            "chain_range": {
+              "min": 0.68,
+              "max": 0.84
+            },
+            "blocks": [
+              0.7825,
+              0.7675
+            ],
+            "block_range": {
+              "min": 0.7675,
+              "max": 0.7825
+            }
+          },
+          "ring_continuity": {
+            "p": 0.34875,
+            "p_chain": [
+              0.19,
+              0.41,
+              0.55,
+              0.245
+            ],
+            "chain_range": {
+              "min": 0.19,
+              "max": 0.55
+            },
+            "blocks": [
+              0.3,
+              0.3975
+            ],
+            "block_range": {
+              "min": 0.3,
+              "max": 0.3975
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.905,
+            "p_chain": [
+              0.94,
+              0.86,
+              0.905,
+              0.915
+            ],
+            "chain_range": {
+              "min": 0.86,
+              "max": 0.94
+            },
+            "blocks": [
+              0.9275,
+              0.8825
+            ],
+            "block_range": {
+              "min": 0.8825,
+              "max": 0.9275
+            }
+          },
+          "ring_continuity": {
+            "p": 0.46375,
+            "p_chain": [
+              0.26,
+              0.505,
+              0.685,
+              0.405
+            ],
+            "chain_range": {
+              "min": 0.26,
+              "max": 0.685
+            },
+            "blocks": [
+              0.435,
+              0.4925
+            ],
+            "block_range": {
+              "min": 0.435,
+              "max": 0.4925
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.95125,
+            "p_chain": [
+              0.955,
+              0.915,
+              0.95,
+              0.985
+            ],
+            "chain_range": {
+              "min": 0.915,
+              "max": 0.985
+            },
+            "blocks": [
+              0.9625,
+              0.94
+            ],
+            "block_range": {
+              "min": 0.94,
+              "max": 0.9625
+            }
+          },
+          "ring_continuity": {
+            "p": 0.53625,
+            "p_chain": [
+              0.245,
+              0.55,
+              0.765,
+              0.585
+            ],
+            "chain_range": {
+              "min": 0.245,
+              "max": 0.765
+            },
+            "blocks": [
+              0.495,
+              0.5775
+            ],
+            "block_range": {
+              "min": 0.495,
+              "max": 0.5775
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.685,
+            "p_chain": [
+              0.4,
+              0.665,
+              0.875,
+              0.8
+            ],
+            "chain_range": {
+              "min": 0.4,
+              "max": 0.875
+            },
+            "blocks": [
+              0.6775,
+              0.6925
+            ],
+            "block_range": {
+              "min": 0.6775,
+              "max": 0.6925
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.99625,
+            "p_chain": [
+              1.0,
+              0.985,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 0.985,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              0.9925
+            ],
+            "block_range": {
+              "min": 0.9925,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.64125,
+            "p_chain": [
+              0.51,
+              0.735,
+              0.44,
+              0.88
+            ],
+            "chain_range": {
+              "min": 0.44,
+              "max": 0.88
+            },
+            "blocks": [
+              0.6175,
+              0.665
+            ],
+            "block_range": {
+              "min": 0.6175,
+              "max": 0.665
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_tv_lam3.75_adapt": {
+    "run": "pc_tv_lam3.75_adapt",
+    "converged": false,
+    "chains": 4,
+    "draws_per_chain": 800,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.9996875,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.99875
+            ],
+            "chain_range": {
+              "min": 0.99875,
+              "max": 1.0
+            },
+            "blocks": [
+              0.9975,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 0.9975,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.998125,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.9925
+            ],
+            "chain_range": {
+              "min": 0.9925,
+              "max": 1.0
+            },
+            "blocks": [
+              0.985,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 0.985,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.9996875,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.99875
+            ],
+            "chain_range": {
+              "min": 0.99875,
+              "max": 1.0
+            },
+            "blocks": [
+              0.9975,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 0.9975,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.9996875,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.99875
+            ],
+            "chain_range": {
+              "min": 0.99875,
+              "max": 1.0
+            },
+            "blocks": [
+              0.9975,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 0.9975,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_tv_lam11.25_adapt": {
+    "run": "pc_tv_lam11.25_adapt",
+    "converged": false,
+    "chains": 4,
+    "draws_per_chain": 400,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_tv_lam1.25_adapt": {
+    "run": "pc_tv_lam1.25_adapt",
+    "converged": false,
+    "chains": 4,
+    "draws_per_chain": 100,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.895,
+            "p_chain": [
+              1.0,
+              0.99,
+              0.85,
+              0.74
+            ],
+            "chain_range": {
+              "min": 0.74,
+              "max": 1.0
+            },
+            "blocks": [
+              0.895
+            ],
+            "block_range": {
+              "min": 0.895,
+              "max": 0.895
+            }
+          },
+          "ring_continuity": {
+            "p": 0.7275,
+            "p_chain": [
+              0.82,
+              0.98,
+              0.96,
+              0.15
+            ],
+            "chain_range": {
+              "min": 0.15,
+              "max": 0.98
+            },
+            "blocks": [
+              0.7275
+            ],
+            "block_range": {
+              "min": 0.7275,
+              "max": 0.7275
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.8575,
+            "p_chain": [
+              1.0,
+              0.94,
+              0.79,
+              0.7
+            ],
+            "chain_range": {
+              "min": 0.7,
+              "max": 1.0
+            },
+            "blocks": [
+              0.8575
+            ],
+            "block_range": {
+              "min": 0.8575,
+              "max": 0.8575
+            }
+          },
+          "ring_continuity": {
+            "p": 0.735,
+            "p_chain": [
+              0.84,
+              1.0,
+              0.98,
+              0.12
+            ],
+            "chain_range": {
+              "min": 0.12,
+              "max": 1.0
+            },
+            "blocks": [
+              0.735
+            ],
+            "block_range": {
+              "min": 0.735,
+              "max": 0.735
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 0.9625,
+            "p_chain": [
+              1.0,
+              1.0,
+              0.98,
+              0.87
+            ],
+            "chain_range": {
+              "min": 0.87,
+              "max": 1.0
+            },
+            "blocks": [
+              0.9625
+            ],
+            "block_range": {
+              "min": 0.9625,
+              "max": 0.9625
+            }
+          },
+          "ring_continuity": {
+            "p": 0.755,
+            "p_chain": [
+              0.9,
+              1.0,
+              0.99,
+              0.13
+            ],
+            "chain_range": {
+              "min": 0.13,
+              "max": 1.0
+            },
+            "blocks": [
+              0.755
+            ],
+            "block_range": {
+              "min": 0.755,
+              "max": 0.755
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.82,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.28
+            ],
+            "chain_range": {
+              "min": 0.28,
+              "max": 1.0
+            },
+            "blocks": [
+              0.82
+            ],
+            "block_range": {
+              "min": 0.82,
+              "max": 0.82
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.875,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.5
+            ],
+            "chain_range": {
+              "min": 0.5,
+              "max": 1.0
+            },
+            "blocks": [
+              0.875
+            ],
+            "block_range": {
+              "min": 0.875,
+              "max": 0.875
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.9175,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.67
+            ],
+            "chain_range": {
+              "min": 0.67,
+              "max": 1.0
+            },
+            "blocks": [
+              0.9175
+            ],
+            "block_range": {
+              "min": 0.9175,
+              "max": 0.9175
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.995,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.98
+            ],
+            "chain_range": {
+              "min": 0.98,
+              "max": 1.0
+            },
+            "blocks": [
+              0.995
+            ],
+            "block_range": {
+              "min": 0.995,
+              "max": 0.995
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_tv_lam8.5_adapt": {
+    "run": "pc_tv_lam8.5_adapt",
+    "converged": false,
+    "chains": 4,
+    "draws_per_chain": 100,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.75,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "chain_range": {
+              "min": 0.0,
+              "max": 1.0
+            },
+            "blocks": [
+              0.75
+            ],
+            "block_range": {
+              "min": 0.75,
+              "max": 0.75
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.75,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "chain_range": {
+              "min": 0.0,
+              "max": 1.0
+            },
+            "blocks": [
+              0.75
+            ],
+            "block_range": {
+              "min": 0.75,
+              "max": 0.75
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.75,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "chain_range": {
+              "min": 0.0,
+              "max": 1.0
+            },
+            "blocks": [
+              0.75
+            ],
+            "block_range": {
+              "min": 0.75,
+              "max": 0.75
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.75,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "chain_range": {
+              "min": 0.0,
+              "max": 1.0
+            },
+            "blocks": [
+              0.75
+            ],
+            "block_range": {
+              "min": 0.75,
+              "max": 0.75
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.755,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.02
+            ],
+            "chain_range": {
+              "min": 0.02,
+              "max": 1.0
+            },
+            "blocks": [
+              0.755
+            ],
+            "block_range": {
+              "min": 0.755,
+              "max": 0.755
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.93,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.72
+            ],
+            "chain_range": {
+              "min": 0.72,
+              "max": 1.0
+            },
+            "blocks": [
+              0.93
+            ],
+            "block_range": {
+              "min": 0.93,
+              "max": 0.93
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.7975,
+            "p_chain": [
+              1.0,
+              1.0,
+              1.0,
+              0.19
+            ],
+            "chain_range": {
+              "min": 0.19,
+              "max": 1.0
+            },
+            "blocks": [
+              0.7975
+            ],
+            "block_range": {
+              "min": 0.7975,
+              "max": 0.7975
+            }
+          }
+        }
+      }
+    }
+  },
+  "pc_tv_lam3.75_indep": {
+    "run": "pc_tv_lam3.75_indep",
+    "converged": false,
+    "chains": 2,
+    "draws_per_chain": 200,
+    "radii": {
+      "0": {
+        "pixels_in_disk": 1,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.9775,
+            "p_chain": [
+              1.0,
+              0.955
+            ],
+            "chain_range": {
+              "min": 0.955,
+              "max": 1.0
+            },
+            "blocks": [
+              0.955,
+              1.0
+            ],
+            "block_range": {
+              "min": 0.955,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.5575,
+            "p_chain": [
+              0.995,
+              0.12
+            ],
+            "chain_range": {
+              "min": 0.12,
+              "max": 0.995
+            },
+            "blocks": [
+              0.595,
+              0.52
+            ],
+            "block_range": {
+              "min": 0.52,
+              "max": 0.595
+            }
+          }
+        }
+      },
+      "0.04": {
+        "pixels_in_disk": 2,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.98,
+            "p_chain": [
+              1.0,
+              0.96
+            ],
+            "chain_range": {
+              "min": 0.96,
+              "max": 1.0
+            },
+            "blocks": [
+              0.96,
+              1.0
+            ],
+            "block_range": {
+              "min": 0.96,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.555,
+            "p_chain": [
+              0.985,
+              0.125
+            ],
+            "chain_range": {
+              "min": 0.125,
+              "max": 0.985
+            },
+            "blocks": [
+              0.59,
+              0.52
+            ],
+            "block_range": {
+              "min": 0.52,
+              "max": 0.59
+            }
+          }
+        }
+      },
+      "0.06": {
+        "pixels_in_disk": 6,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.995,
+            "p_chain": [
+              1.0,
+              0.99
+            ],
+            "chain_range": {
+              "min": 0.99,
+              "max": 1.0
+            },
+            "blocks": [
+              0.99,
+              1.0
+            ],
+            "block_range": {
+              "min": 0.99,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.54,
+            "p_chain": [
+              0.985,
+              0.095
+            ],
+            "chain_range": {
+              "min": 0.095,
+              "max": 0.985
+            },
+            "blocks": [
+              0.575,
+              0.505
+            ],
+            "block_range": {
+              "min": 0.505,
+              "max": 0.575
+            }
+          }
+        }
+      },
+      "0.08": {
+        "pixels_in_disk": 12,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.5775,
+            "p_chain": [
+              1.0,
+              0.155
+            ],
+            "chain_range": {
+              "min": 0.155,
+              "max": 1.0
+            },
+            "blocks": [
+              0.655,
+              0.5
+            ],
+            "block_range": {
+              "min": 0.5,
+              "max": 0.655
+            }
+          }
+        }
+      },
+      "0.1": {
+        "pixels_in_disk": 16,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.605,
+            "p_chain": [
+              1.0,
+              0.21
+            ],
+            "chain_range": {
+              "min": 0.21,
+              "max": 1.0
+            },
+            "blocks": [
+              0.695,
+              0.515
+            ],
+            "block_range": {
+              "min": 0.515,
+              "max": 0.695
+            }
+          }
+        }
+      },
+      "0.12": {
+        "pixels_in_disk": 26,
+        "probabilities": {
+          "gap_valley": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.945,
+            "p_chain": [
+              1.0,
+              0.89
+            ],
+            "chain_range": {
+              "min": 0.89,
+              "max": 1.0
+            },
+            "blocks": [
+              0.99,
+              0.9
+            ],
+            "block_range": {
+              "min": 0.9,
+              "max": 0.99
+            }
+          }
+        }
+      },
+      "0.16": {
+        "pixels_in_disk": 46,
+        "probabilities": {
+          "gap_valley": {
+            "p": 0.795,
+            "p_chain": [
+              1.0,
+              0.59
+            ],
+            "chain_range": {
+              "min": 0.59,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              0.59
+            ],
+            "block_range": {
+              "min": 0.59,
+              "max": 1.0
+            }
+          },
+          "ring_hole": {
+            "p": 1.0,
+            "p_chain": [
+              1.0,
+              1.0
+            ],
+            "chain_range": {
+              "min": 1.0,
+              "max": 1.0
+            },
+            "blocks": [
+              1.0,
+              1.0
+            ],
+            "block_range": {
+              "min": 1.0,
+              "max": 1.0
+            }
+          },
+          "ring_continuity": {
+            "p": 0.9475,
+            "p_chain": [
+              1.0,
+              0.895
+            ],
+            "chain_range": {
+              "min": 0.895,
+              "max": 1.0
+            },
+            "blocks": [
+              0.92,
+              0.975
+            ],
+            "block_range": {
+              "min": 0.92,
+              "max": 0.975
+            }
+          }
+        }
+      }
+    }
+  }
+}

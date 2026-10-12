@@ -10,7 +10,9 @@ Everything works on theta = log eps_r maps of shape (n, n) ("ij" indexing, [i, j
 * ``austria_points`` and ``feature_probabilities``: the three feature probabilities of DESIGN 11.3 for the
   ``phantoms.austria_fixed`` object, computed on theta draws. The value of theta at a point is the bilinear
   interpolation of the four surrounding pixel-center values (``bilinear``), so the points need not sit on pixel
-  centers; it is linear in the draws, so a draw of the interpolated value is the interpolation of the draw.
+  centers; it is linear in the draws, so a draw of the interpolated value is the interpolation of the draw. With
+  ``radius`` > 0 it is the mean over the disk of that radius instead (``disk_mean``): the resolution-scale version of
+  the features (review of milestone 5, DESIGN 12.6).
 """
 
 from types import SimpleNamespace
@@ -128,31 +130,53 @@ def austria_points(grid):
         annulus=(rho > r_in) & (rho <= r_out))
 
 
-def feature_indicators(theta, grid, delta=DELTA):
+def disk_mean(theta, grid, x, y, radius):
+    """Mean of theta (..., n, n) over the pixels whose centers lie within ``radius`` of the point (x, y): (...). The disk must
+    contain at least one pixel center (radius of the order of the pixel size or more); a larger radius trades position for a lower
+    pixel-scale variance (``point_value`` with a radius is the resolution-scale version of a point feature)."""
+    X, Y = grid.centers()
+    mask = np.hypot(X - x, Y - y) <= radius
+    if not mask.any():
+        raise ValueError(f"no pixel center within {radius} of ({x}, {y})")
+    return np.asarray(theta)[..., mask].mean(axis=-1)
+
+
+def point_value(theta, grid, x, y, radius=0.0):
+    """theta at the point (x, y): the bilinear interpolation (``radius`` 0, the DESIGN 11.3 definition) or the mean over the disk of
+    that ``radius`` (wavelengths) about the point (``disk_mean``)."""
+    return bilinear(theta, grid, x, y) if radius <= 0.0 else disk_mean(theta, grid, x, y, radius)
+
+
+def feature_indicators(theta, grid, delta=DELTA, radius=0.0):
     """The three feature indicators on theta maps (..., n, n); returns a dict of boolean arrays of shape (...).
 
     * ``gap_valley``: theta at the gap midpoint < min(theta at the two disk centers) - delta;
     * ``ring_hole``: theta at the ring center < mean of theta over the annulus pixels - delta;
     * ``ring_continuity``: theta at all four compass points of the annulus mid-radius > delta.
+
+    "theta at a point" is the bilinear interpolation (``radius`` 0: DESIGN 11.3, a single-point value, which sees all the pixel-scale
+    variance of a rough posterior) or the mean over the disk of radius ``radius`` (wavelengths) about the point (resolution-scale
+    features: a disk of radius 0.08 lambda, half the ring thickness and well below the half wavelength, holds about ten pixels at
+    n = 48 on a 2-wavelength DOI).
     """
     pts = austria_points(grid)
     t = np.asarray(theta, dtype=np.float64)
-    gap = bilinear(t, grid, *pts.gap_mid)
-    disk_min = np.minimum(bilinear(t, grid, *pts.disk_centers[0]), bilinear(t, grid, *pts.disk_centers[1]))
+    gap = point_value(t, grid, *pts.gap_mid, radius)
+    disk_min = np.minimum(point_value(t, grid, *pts.disk_centers[0], radius), point_value(t, grid, *pts.disk_centers[1], radius))
     ring_mean = t[..., pts.annulus].mean(axis=-1)
-    compass = np.stack([bilinear(t, grid, *p) for p in pts.compass], axis=-1)
-    return {"gap_valley": gap < disk_min - delta, "ring_hole": bilinear(t, grid, *pts.ring_center) < ring_mean - delta,
+    compass = np.stack([point_value(t, grid, *p, radius) for p in pts.compass], axis=-1)
+    return {"gap_valley": gap < disk_min - delta, "ring_hole": point_value(t, grid, *pts.ring_center, radius) < ring_mean - delta,
             "ring_continuity": np.all(compass > delta, axis=-1)}
 
 
-def feature_probabilities(theta_draws, grid, delta=DELTA):
+def feature_probabilities(theta_draws, grid, delta=DELTA, radius=0.0):
     """Posterior probability of each feature from draws ``theta_draws`` (chains, N, n, n).
 
     Returns ``{feature: {"p": pooled probability, "p_chain": per-chain probabilities, "mcse": std of the chain
     estimates / sqrt(chains)}}`` (the chain-to-chain spread is the honest Monte Carlo error of a probability from
-    autocorrelated draws; with one chain ``mcse`` is NaN).
+    autocorrelated draws; with one chain ``mcse`` is NaN). ``radius`` as in ``feature_indicators`` (0: point values).
     """
-    ind = feature_indicators(theta_draws, grid, delta)
+    ind = feature_indicators(theta_draws, grid, delta, radius)
     out = {}
     for name, v in ind.items():
         per_chain = v.mean(axis=1)
@@ -170,8 +194,9 @@ def verdict(probabilities, converged, family=None, required_families=REQUIRED_FA
     """Classify a feature from its probability under several posteriors (DESIGN 11.3, 8.7).
 
     ``probabilities``: dict run name -> P; ``converged``: dict run name -> bool; ``family``: dict run name -> prior
-    family (``"matern"``, ``"gmrf"``, ``"qggmrf"``; default: every run is its own family). Different parameter settings
-    of one family (two q-GGMRF values of sigma_g) count as ONE prior: they are not structurally different priors.
+    family (``"matern"``, ``"gmrf"``, ``"qggmrf"``, ``"tv"``; default: every run is its own family). Different parameter settings
+    of one family (two q-GGMRF values of sigma_g, two TV weights lambda) count as ONE prior: they are not structurally different
+    priors.
     Only converged runs vote. The result is one of
 
     * ``"no verdict (fewer than 2 converged runs)"``;

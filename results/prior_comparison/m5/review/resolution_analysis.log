@@ -1,0 +1,12 @@
+low-pass of the truth at 3 cycles/wavelength: bias d=-1 +0.182, d=+2 -0.131, d=+4 +0.178, rms 0.107
+  pc_matern                  bias d=-1 +0.215 d=+2 -0.106 rms 0.115; corr with low-pass bias 0.93 (|d|<=3 0.97); |z|>3 vs truth 12.5% vs low-pass 0.2%
+  pc_qggmrf_sg0.05           bias d=-1 +0.208 d=+2 -0.125 rms 0.115; corr with low-pass bias 0.89 (|d|<=3 0.94); |z|>3 vs truth 15.5% vs low-pass 3.4%
+  pc_qggmrf_sg0.1            bias d=-1 +0.204 d=+2 -0.118 rms 0.113; corr with low-pass bias 0.90 (|d|<=3 0.95); |z|>3 vs truth 5.8% vs low-pass 0.5%
+  pc_gmrf                    bias d=-1 +0.177 d=+2 -0.112 rms 0.149; corr with low-pass bias 0.69 (|d|<=3 0.80); |z|>3 vs truth 0.4% vs low-pass 0.0%
+  pc_gmrf_adapt              bias d=-1 +0.134 d=+2 -0.154 rms 0.126; corr with low-pass bias 0.87 (|d|<=3 0.93); |z|>3 vs truth 0.0% vs low-pass 0.0%
+  pc_tv_lam3.75_adapt        bias d=-1 +0.189 d=+2 -0.120 rms 0.111; corr with low-pass bias 0.89 (|d|<=3 0.93); |z|>3 vs truth 2.2% vs low-pass 0.3%
+  pc_tv_lam11.25_adapt       bias d=-1 +0.180 d=+2 -0.129 rms 0.113; corr with low-pass bias 0.86 (|d|<=3 0.91); |z|>3 vs truth 12.5% vs low-pass 4.6%
+  pc_tv_lam1.25_adapt        bias d=-1 +0.160 d=+2 -0.124 rms 0.120; corr with low-pass bias 0.80 (|d|<=3 0.89); |z|>3 vs truth 0.0% vs low-pass 0.0%
+  pc_tv_lam8.5_adapt         bias d=-1 +0.178 d=+2 -0.141 rms 0.123; corr with low-pass bias 0.77 (|d|<=3 0.86); |z|>3 vs truth 1.7% vs low-pass 0.0%
+  pc_tv_lam3.75_indep        bias d=-1 +0.178 d=+2 -0.180 rms 0.164; corr with low-pass bias 0.62 (|d|<=3 0.74); |z|>3 vs truth 0.7% vs low-pass 0.0%
+wrote results/prior_comparison/m5/review/resolution_analysis.json

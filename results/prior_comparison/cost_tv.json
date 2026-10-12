@@ -1,0 +1,302 @@
+[
+  {
+    "n": 48,
+    "nproc": "1",
+    "omp": "1",
+    "cpu_count": 16,
+    "load_avg_before": 6.92041015625,
+    "reps": 7,
+    "n_tx": 40,
+    "n_rx": 60,
+    "side": 2.0,
+    "point": "theta of the truth (austria_fixed eps_r 2), warm start",
+    "per_evaluation": {
+      "phi": {
+        "median_s": 0.005407457938417792,
+        "min_s": 0.005231082905083895,
+        "reps": 7
+      },
+      "u_value_and_grad_matern": {
+        "median_s": 0.11577408306766301,
+        "min_s": 0.11319037503562868,
+        "reps": 7
+      },
+      "prior_value_and_grad_matern": {
+        "median_s": 0.002207458019256592,
+        "min_s": 0.0019318750128149986,
+        "reps": 7
+      },
+      "u_value_and_grad_qggmrf": {
+        "median_s": 0.11518170800991356,
+        "min_s": 0.11451404099352658,
+        "reps": 7
+      },
+      "prior_value_and_grad_qggmrf": {
+        "median_s": 0.0001883750082924962,
+        "min_s": 0.00018466694746166468,
+        "reps": 7
+      },
+      "u_value_and_grad_tv": {
+        "median_s": 0.11565408296883106,
+        "min_s": 0.11436441703699529,
+        "reps": 7
+      },
+      "prior_value_and_grad_tv": {
+        "median_s": 8.316710591316223e-05,
+        "min_s": 6.854196544736624e-05,
+        "reps": 7
+      },
+      "zeta_phi_fn_matern": {
+        "median_s": 0.1197732089785859,
+        "min_s": 0.11885075003374368,
+        "reps": 7
+      },
+      "zeta_phi_fn_tv": {
+        "median_s": 0.1270621670410037,
+        "min_s": 0.11748654092662036,
+        "reps": 7
+      },
+      "zeta_phi_fn_adapted_tv": {
+        "median_s": 0.11603362497407943,
+        "min_s": 0.11538929201196879,
+        "reps": 7
+      }
+    },
+    "jacobian": {
+      "fields": {
+        "median_s": 0.2662856250535697,
+        "min_s": 0.26563475001603365,
+        "reps": 7
+      },
+      "assemble_dense_J": {
+        "median_s": 0.01700916700065136,
+        "min_s": 0.016642249887809157,
+        "reps": 7
+      },
+      "gauss_newton_gram": {
+        "median_s": 0.09598987502977252,
+        "min_s": 0.09479366603773087,
+        "reps": 7
+      },
+      "dense_JhJ": {
+        "median_s": 1.2065230624866672,
+        "min_s": 1.1545467500109226,
+        "reps": 2
+      },
+      "dense_J_bytes": 88473600,
+      "n_solves": 100
+    },
+    "laplace_mass": {
+      "matern": {
+        "total_min_s": 0.4737915419973433,
+        "parts_of_fastest": {
+          "time_fields_s": 0.2679081669775769,
+          "time_gn_s": 0.10073658300098032,
+          "time_prior_hessian_s": 0.0007237909594550729,
+          "time_cholesky_s": 0.08142991608474404
+        },
+        "total_all_s": [
+          0.47638029197696596,
+          0.4737915419973433
+        ]
+      },
+      "qggmrf": {
+        "total_min_s": 0.4692822080105543,
+        "parts_of_fastest": {
+          "time_fields_s": 0.26356516603846103,
+          "time_gn_s": 0.10025524999946356,
+          "time_prior_hessian_s": 0.0018428750336170197,
+          "time_cholesky_s": 0.08086008299142122
+        },
+        "total_all_s": [
+          0.4692822080105543,
+          0.47057683300226927
+        ]
+      },
+      "tv": {
+        "total_min_s": 0.47629891603719443,
+        "parts_of_fastest": {
+          "time_fields_s": 0.2695156669942662,
+          "time_gn_s": 0.10069720807950944,
+          "time_prior_hessian_s": 0.0018570839893072844,
+          "time_cholesky_s": 0.08090070798061788
+        },
+        "total_all_s": [
+          0.4820106669794768,
+          0.47629891603719443
+        ]
+      }
+    },
+    "adaptation_window_update": {
+      "n_draws": 400,
+      "dim": 2304,
+      "kappa": 2304.0,
+      "total_min_s": 1.1030415830900893,
+      "total_median_s": 1.1032057495322078,
+      "parts_of_fastest": {
+        "time_sample_cov_s": 0.04924716707319021,
+        "time_laplace_s": 0.9484300001058728,
+        "time_mix_cholesky_s": 0.10015937499701977
+      },
+      "note": "time_laplace_s = Laplace mass at the new center (Nt + Nr solves, Gram product, Hessian, Cholesky) and its inverse H^-1 = L^-T L^-1 (two dense N^3 steps); the update happens once per window (4 to 5 per adaptation)"
+    },
+    "load_avg_after": 5.93896484375,
+    "threads": 1,
+    "env": {
+      "NPROC": "1",
+      "OMP_NUM_THREADS": "1",
+      "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false"
+    },
+    "worker_wall_s": 30.125035875011235
+  },
+  {
+    "n": 48,
+    "nproc": "4",
+    "omp": "2",
+    "cpu_count": 16,
+    "load_avg_before": 6.02392578125,
+    "reps": 7,
+    "n_tx": 40,
+    "n_rx": 60,
+    "side": 2.0,
+    "point": "theta of the truth (austria_fixed eps_r 2), warm start",
+    "per_evaluation": {
+      "phi": {
+        "median_s": 0.0018489999929443002,
+        "min_s": 0.0017359999474138021,
+        "reps": 7
+      },
+      "u_value_and_grad_matern": {
+        "median_s": 0.05857791693415493,
+        "min_s": 0.057860624976456165,
+        "reps": 7
+      },
+      "prior_value_and_grad_matern": {
+        "median_s": 0.0010382080217823386,
+        "min_s": 0.000934625044465065,
+        "reps": 7
+      },
+      "u_value_and_grad_qggmrf": {
+        "median_s": 0.057481458061374724,
+        "min_s": 0.05720908404327929,
+        "reps": 7
+      },
+      "prior_value_and_grad_qggmrf": {
+        "median_s": 0.00017566699534654617,
+        "min_s": 0.0001742909662425518,
+        "reps": 7
+      },
+      "u_value_and_grad_tv": {
+        "median_s": 0.05774279101751745,
+        "min_s": 0.05706724990159273,
+        "reps": 7
+      },
+      "prior_value_and_grad_tv": {
+        "median_s": 6.045796908438206e-05,
+        "min_s": 5.8959005400538445e-05,
+        "reps": 7
+      },
+      "zeta_phi_fn_matern": {
+        "median_s": 0.059171332977712154,
+        "min_s": 0.05817191698588431,
+        "reps": 7
+      },
+      "zeta_phi_fn_tv": {
+        "median_s": 0.05880195798818022,
+        "min_s": 0.058231874951161444,
+        "reps": 7
+      },
+      "zeta_phi_fn_adapted_tv": {
+        "median_s": 0.05845520808361471,
+        "min_s": 0.057555625098757446,
+        "reps": 7
+      }
+    },
+    "jacobian": {
+      "fields": {
+        "median_s": 0.13133024994749576,
+        "min_s": 0.13050612492952496,
+        "reps": 7
+      },
+      "assemble_dense_J": {
+        "median_s": 0.0076767499558627605,
+        "min_s": 0.007106916978955269,
+        "reps": 7
+      },
+      "gauss_newton_gram": {
+        "median_s": 0.027637333958409727,
+        "min_s": 0.02749612496700138,
+        "reps": 7
+      },
+      "dense_JhJ": {
+        "median_s": 0.2835646459716372,
+        "min_s": 0.2823067089775577,
+        "reps": 2
+      },
+      "dense_J_bytes": 88473600,
+      "n_solves": 100
+    },
+    "laplace_mass": {
+      "matern": {
+        "total_min_s": 0.21233791601844132,
+        "parts_of_fastest": {
+          "time_fields_s": 0.13034933304879814,
+          "time_gn_s": 0.027953915996477008,
+          "time_prior_hessian_s": 0.0007097090128809214,
+          "time_cholesky_s": 0.031033792067319155
+        },
+        "total_all_s": [
+          0.21233791601844132,
+          0.21342037501744926
+        ]
+      },
+      "qggmrf": {
+        "total_min_s": 0.21514633297920227,
+        "parts_of_fastest": {
+          "time_fields_s": 0.1318567079724744,
+          "time_gn_s": 0.02814824995584786,
+          "time_prior_hessian_s": 0.0009766670409590006,
+          "time_cholesky_s": 0.03152783401310444
+        },
+        "total_all_s": [
+          0.2167326669441536,
+          0.21514633297920227
+        ]
+      },
+      "tv": {
+        "total_min_s": 0.2146685840561986,
+        "parts_of_fastest": {
+          "time_fields_s": 0.1310229169903323,
+          "time_gn_s": 0.02804700005799532,
+          "time_prior_hessian_s": 0.0010310419602319598,
+          "time_cholesky_s": 0.03192195808514953
+        },
+        "total_all_s": [
+          0.21626695804297924,
+          0.2146685840561986
+        ]
+      }
+    },
+    "adaptation_window_update": {
+      "n_draws": 400,
+      "dim": 2304,
+      "kappa": 2304.0,
+      "total_min_s": 0.44446250004693866,
+      "total_median_s": 0.4544243330019526,
+      "parts_of_fastest": {
+        "time_sample_cov_s": 0.021293792058713734,
+        "time_laplace_s": 0.3618953750701621,
+        "time_mix_cholesky_s": 0.056002457975409925
+      },
+      "note": "time_laplace_s = Laplace mass at the new center (Nt + Nr solves, Gram product, Hessian, Cholesky) and its inverse H^-1 = L^-T L^-1 (two dense N^3 steps); the update happens once per window (4 to 5 per adaptation)"
+    },
+    "load_avg_after": 6.16064453125,
+    "threads": 4,
+    "env": {
+      "NPROC": "4",
+      "OMP_NUM_THREADS": "4",
+      "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true"
+    },
+    "worker_wall_s": 15.78731837507803
+  }
+]

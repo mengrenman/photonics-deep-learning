@@ -1,0 +1,10 @@
+# batch_run 2026-10-11T16:16:21+08:00 slot cpu2
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior gmrf --sigma 0.5 --ell 0.4 --adapt --out pc_gmrf_adapt --stage prepare
+problem: austria_fixed eps_r 2.0, n=48 side=2.0 (h=0.0417), data grid 96, SNR 30.0 dB, seed 0; d_obs sha256 efd5e84fa5f9a77f...
+operating point: grid model error 0.85% of ||d|| against noise 3.16% (ratio 0.27); Phi(truth) 2578 (N = 2400)
+prior gmrf: std of theta (mean over pixels) 0.5
+smooth start: 100 iterations, 109 evaluations, 30.6 s; U 3664.7 (Phi 3638.9, R 25.8)
+MAP: 400 iterations, 418 evaluations, 114.6 s; U 2400.14 = Phi 2366.99 + R 33.15 (N = 2400); |grad U|_inf 1.36e-01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+Laplace mass: 0.96 s (fields 0.58, Gram 0.14, Cholesky 0.09); Jacobian check 1.3988617855283225e-10; Laplace std of theta 0.2874 to 0.3710
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/prepared.json and prepared.npz (total 152 s)

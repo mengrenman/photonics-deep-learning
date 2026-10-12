@@ -1,0 +1,4 @@
+[
+  {"name": "tv_lambda_sweep_neighbors", "cmd": ["scripts/tv_lambda_sweep.py", "--lams", "1.25", "11.25", "--update"],
+   "device": "cpu", "threads": 4, "done_marker": "results/prior_comparison/logs/tv_lambda_sweep_neighbors.done"}
+]

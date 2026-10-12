@@ -1,0 +1,27 @@
+pc_tv_lam1.25_adapt: N/2 = 1152; R by block (mean over chains) [2239.0, 2287.0, 2300.0, 2313.0]
+  ring bias (d = -1) after 50 draws: per chain [0.159, 0.161, 0.166, 0.168], split R-hat of the ring bias 1.0296980658397856, of Phi 1.0000604945142364
+    chain 0: start 0.0, first draw 0.164, blocks [0.168, 0.16, 0.156, 0.162]
+    chain 1: start 0.09200364028168516, first draw 0.150, blocks [0.157, 0.162, 0.16, 0.161]
+    chain 2: start 0.2147567029002396, first draw 0.154, blocks [0.164, 0.157, 0.167, 0.164]
+    chain 3: start 0.11322178499094368, first draw 0.153, blocks [0.136, 0.147, 0.166, 0.17]
+  chain 0: |zeta|^2/2 first -> last block [5569.870864387066, 8534.557958161751]; R [2047.2291406693153, 2196.255226182248]; start: start-theta file
+  chain 1: |zeta|^2/2 first -> last block [3758.1263544493577, 5848.952719410499]; R [1978.3360982111349, 2131.8983462835754]; start: start-theta file
+  chain 2: |zeta|^2/2 first -> last block [5012.330200269526, 7531.637432027138]; R [2051.1362465364027, 2196.514124468984]; start: start-theta file
+  chain 3: |zeta|^2/2 first -> last block [65031.150938709965, 57763.265685705075]; R [2879.2099121735787, 2727.2254786860717]; start: start-theta file
+pc_tv_lam8.5_adapt: N/2 = 1152; R by block (mean over chains) [5931.0, 5400.0, 5106.0, 4801.0]
+  ring bias (d = -1) after 50 draws: per chain [0.185, 0.183, 0.185, 0.176], split R-hat of the ring bias 1.467733402973432, of Phi 2.3806208308361594
+    chain 0: start 0.0, first draw 0.128, blocks [0.141, 0.158, 0.18, 0.19]
+    chain 1: start 0.11548239699964798, first draw 0.182, blocks [0.185, 0.183, 0.182, 0.183]
+    chain 2: start 0.2147567029002396, first draw 0.173, blocks [0.184, 0.182, 0.188, 0.181]
+    chain 3: start 0.11322178499094368, first draw 0.178, blocks [0.178, 0.18, 0.18, 0.171]
+  chain 0: |zeta|^2/2 first -> last block [8811.439973676896, 3646.786190661124]; R [4362.981356294523, 4080.1697267007376]; start: start-theta file
+  chain 1: |zeta|^2/2 first -> last block [2608.3172438924585, 2702.468674978231]; R [4000.9160735912074, 4014.2489362816345]; start: start-theta file
+  chain 2: |zeta|^2/2 first -> last block [2966.3220416703844, 2711.0340203022315]; R [4081.410556883225, 4020.4490350221336]; start: start-theta file
+  chain 3: |zeta|^2/2 first -> last block [477315.8401841617, 352424.34177407826]; R [11280.079492641655, 7090.323646280814]; start: start-theta file
+pc_tv_lam3.75_indep: N/2 = 1152; R by block (mean over chains) [4388.0, 4107.0, 4008.0, 3844.0, 3713.0, 3637.0, 3567.0, 3464.0]
+  ring bias (d = -1) after 50 draws: per chain [0.192, 0.171], split R-hat of the ring bias 1.8057412501902657, of Phi 2.084059520855794
+    chain 0: start 0.0, first draw 0.170, blocks [0.165, 0.178, 0.186, 0.191, 0.19, 0.188, 0.196, 0.198]
+    chain 1: start 0.11322178499094368, first draw 0.160, blocks [0.156, 0.165, 0.165, 0.175, 0.178, 0.17, 0.171, 0.167]
+  chain 0: |zeta|^2/2 first -> last block [7380.236247139686, 4354.277410666199]; R [2980.4941127741454, 2846.4407562477736]; start: start-theta file
+  chain 1: |zeta|^2/2 first -> last block [357895.24570910475, 266676.9835234478]; R [5795.317744245057, 4080.7515138204926]; start: start-theta file
+wrote results/prior_comparison/m5/review/start_drift_new_runs.json

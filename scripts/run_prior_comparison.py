@@ -18,7 +18,8 @@ L_H^-T zeta, chains started from scale --init-scale overdispersed Laplace draws)
 
 Priors (--prior): ``matern`` and ``gmrf`` are the DOI marginals of the torus fields of DESIGN 3 (--sigma, --ell, --nu,
 --mean; Cholesky of the dense covariance, so n <= 59), ``qggmrf`` is the edge-preserving q-GGMRF (--q, --T, --sigma-g,
---sigma-0, --mu).
+--sigma-0, --mu) and ``tv`` is the pseudo-Huber total-variation prior of DESIGN 12.1 (--lam, --delta, --sigma-0, --mu; the
+same neighborhood and weights as the q-GGMRF). The prior std of ``qggmrf`` and ``tv`` comes from HMC on R alone.
 
 Writes results/prior_comparison/<out>/ (or an absolute --out):
   summary.json : arguments, d_obs hash, operating point, smooth start and MAP info, Laplace info, sampler info, the
@@ -62,6 +63,26 @@ or (n, n)) replaces the overdispersed starts, for instance by the end states of 
 segment files, so continuations and ``finalize`` follow the chains' own mass. The Laplace standard deviation in the
 summary is always that of the MAP.
 
+Adapted affine map (--adapt, DESIGN 12.2). For a posterior far from its Laplace approximation (the GMRF) the fixed Laplace map
+of the default path forces a tiny step and the chains drift. With ``--adapt`` the stages are
+
+  prepare   unchanged (data, MAP, Laplace mass);
+  adapt     ONE adaptation chain (``bayes_scatter.adapt.adapt_map``) from the Laplace map of the MAP (or of --mass-theta) started at
+            --adapt-start-scale N(0, I) in its coordinates: an initial step-size buffer, --adapt-windows expanding windows
+            (--adapt-first-window trajectories, multiplied by --adapt-growth) each ending in a map update (re-center at the window
+            mean, shrink the sample covariance toward the Laplace covariance at the new center, weight kappa / (n + kappa), kappa =
+            --adapt-kappa-per-dim * n^2), and a final step-size buffer; HMC with L uniform in [L0 / 2, 3 L0 / 2], L0 = round(--traj-length
+            / eps), eps by dual averaging toward --target-accept. Writes <out>/adapted_map.npz (center, Cholesky factor of the map
+            covariance, eps, trajectory length) and <out>/adaptation.json (the arguments, the history of every phase, timings);
+  chain     ONE chain, as before, but in the coordinates of the FROZEN adapted map, started at --init-scale N(0, I) in them around the
+            final state of the adaptation chain (--adapt-start final, the default: an actual visited state) or around the map center
+            (--adapt-start center: the mean of the last window, which for a non-Gaussian posterior need not be a probable state; in
+            the GMRF pilot every proposal from there was rejected), --warmup trajectories of dual averaging of eps only (map frozen;
+            rounded up to a multiple of --adapt-block), then --samples recorded ones with eps and the trajectory length frozen. Every recorded segment is therefore an
+            exact HMC chain for a fixed affine change of variables; segment files carry the digest of the map they used and finalize
+            refuses a mixture. --n-leapfrog and --jitter do not apply (the trajectory length is --traj-length, jittered in L);
+  finalize  unchanged (the summary gains an ``adaptation`` block; the adapted run is recognized from its segment files).
+
 Every stage takes the same problem, prior and chain arguments; ``chain`` and ``finalize`` refuse a prepared.json
 made with different data or prior arguments. The Laplace mass is rebuilt from theta_hat in each stage (about 0.5 s).
 
@@ -72,6 +93,7 @@ Example (the DESIGN 11.3 problem, one prior):
 import _threadcap  # noqa: F401  (caps the BLAS threads; must precede numpy)
 
 import argparse
+import dataclasses
 import functools
 import hashlib
 import json
@@ -85,6 +107,7 @@ import jax.numpy as jnp
 import numpy as np
 
 import bayes_scatter  # noqa: F401  (enables float64)
+from bayes_scatter import adapt as ad
 from bayes_scatter import diagnostics as dg
 from bayes_scatter import features as ft
 from bayes_scatter import inference as inf
@@ -120,7 +143,7 @@ def parse_args(argv=None):
     g.add_argument("--n-tx", type=int, default=40)
     g.add_argument("--n-rx", type=int, default=60)
     g = ap.add_argument_group("prior")
-    g.add_argument("--prior", choices=["matern", "gmrf", "qggmrf"], required=True)
+    g.add_argument("--prior", choices=["matern", "gmrf", "qggmrf", "tv"], required=True)
     g.add_argument("--sigma", type=float, default=0.5, help="matern/gmrf: prior std of theta = log eps_r")
     g.add_argument("--ell", type=float, default=0.4, help="matern/gmrf: correlation length in wavelengths")
     g.add_argument("--nu", type=float, default=1.5, help="matern smoothness")
@@ -128,8 +151,10 @@ def parse_args(argv=None):
     g.add_argument("--q", type=float, default=1.2, help="qggmrf: tail exponent in [1, 2)")
     g.add_argument("--T", type=float, default=1.0, help="qggmrf: transition at |Delta| = T sigma_g")
     g.add_argument("--sigma-g", type=float, default=0.1, help="qggmrf: neighbor difference scale (log eps_r units)")
-    g.add_argument("--sigma-0", type=float, default=1.0, help="qggmrf: weak anchor to the mean")
-    g.add_argument("--mu", type=float, default=0.0, help="qggmrf: prior mean of theta")
+    g.add_argument("--sigma-0", type=float, default=1.0, help="qggmrf/tv: weak anchor to the mean")
+    g.add_argument("--mu", type=float, default=0.0, help="qggmrf/tv: prior mean of theta")
+    g.add_argument("--lam", type=float, default=1.0, help="tv: total-variation weight per unit change of log eps_r")
+    g.add_argument("--delta", type=float, default=0.01, help="tv: pseudo-Huber width (log eps_r units)")
     g = ap.add_argument_group("MAP and sampler")
     g.add_argument("--start-maxiter", type=int, default=100, help="iterations of the smooth-prior MAP start")
     g.add_argument("--map-maxiter", type=int, default=400, help="L-BFGS-B iterations of the theta-space MAP")
@@ -145,7 +170,7 @@ def parse_args(argv=None):
     g.add_argument("--chain-seed", type=int, default=1, help="seed of the chain starts and the sampler")
     g.add_argument("--verify-columns", type=int, default=3, help="Jacobian columns checked against jax.jvp")
     g = ap.add_argument_group("staged execution (module docstring)")
-    g.add_argument("--stage", choices=["all", "prepare", "chain", "finalize"], default="all")
+    g.add_argument("--stage", choices=["all", "prepare", "adapt", "chain", "finalize"], default="all")
     g.add_argument("--chain-id", type=int, default=None, help="chain stage: which chain, 0 .. --chains - 1")
     g.add_argument("--segment", type=int, default=0,
                    help="chain stage: 0 starts the chain (--warmup + --samples); j > 0 continues segment j - 1 "
@@ -159,7 +184,31 @@ def parse_args(argv=None):
     g.add_argument("--max-segments", type=int, default=None,
                    help="finalize stage: use only the first K segments of every chain (default: all, which must "
                         "be the same number for every chain)")
-    g = ap.add_argument_group("prior-only sampling (qggmrf)")
+    g.add_argument("--skip-segments", type=int, default=0,
+                   help="finalize stage: discard the first K segments of every chain as burn-in (more warmup: they are counted in "
+                        "'warmup' and in the cost, not in the draws, the moments or the convergence numbers; default 0)")
+    g = ap.add_argument_group("adapted affine map (DESIGN 12.2; module docstring)")
+    g.add_argument("--adapt", action="store_true",
+                   help="sample in the coordinates of an affine map adapted in warmup and frozen before recording (stages adapt, "
+                        "chain, all; finalize recognizes the adapted segments)")
+    g.add_argument("--adapt-init", type=int, default=50, help="adapt: step-size-only trajectories before the first window")
+    g.add_argument("--adapt-first-window", type=int, default=50, help="adapt: trajectories in the first map-update window")
+    g.add_argument("--adapt-windows", type=int, default=4, help="adapt: number of map-update windows")
+    g.add_argument("--adapt-growth", type=float, default=2.0, help="adapt: window length multiplier (expanding windows)")
+    g.add_argument("--adapt-final", type=int, default=100, help="adapt: step-size-only trajectories after the last window")
+    g.add_argument("--adapt-block", type=int, default=25, help="adapt: trajectories per compiled block (phases are rounded up)")
+    g.add_argument("--adapt-kappa-per-dim", type=float, default=1.0,
+                   help="adapt: pseudo-count of the Laplace covariance in the map update, in units of n^2 draws")
+    g.add_argument("--adapt-start-scale", type=float, default=0.5,
+                   help="adapt: the adaptation chain starts at scale * N(0, I) in the coordinates of the Laplace map")
+    g.add_argument("--adapt-step0", type=float, default=0.3, help="adapt: first leapfrog step in whitened coordinates")
+    g.add_argument("--adapt-start", choices=["final", "center"], default="final",
+                   help="chain stage with --adapt: the --init-scale starts are around the final state of the adaptation chain "
+                        "(default) or around the center of the adapted map")
+    g.add_argument("--target-accept", type=float, default=0.8, help="dual-averaging target acceptance probability")
+    g.add_argument("--traj-length", type=float, default=1.75, help="L0 * eps in whitened units (DESIGN 12.2: 1.5 to 2)")
+    g.add_argument("--max-leapfrog", type=int, default=100, help="cap on L0 and on the longest trajectory")
+    g = ap.add_argument_group("prior-only sampling (qggmrf, tv)")
     g.add_argument("--prior-chains", type=int, default=4)
     g.add_argument("--prior-warmup", type=int, default=200)
     g.add_argument("--prior-samples", type=int, default=600, help="0 skips the prior-only run (std left empty)")
@@ -171,6 +220,12 @@ def parse_args(argv=None):
         ap.error("--q must be in [1, 2)")
     if args.stage == "chain" and (args.chain_id is None or not 0 <= args.chain_id < args.chains):
         ap.error("--stage chain needs --chain-id in 0 .. --chains - 1")
+    if args.stage == "adapt" and not args.adapt:
+        ap.error("--stage adapt needs --adapt")
+    if args.adapt and args.stage == "chain" and args.mass_theta is not None:
+        ap.error("--adapt chains take their coordinates from adapted_map.npz; --mass-theta belongs to --stage adapt")
+    if args.adapt and args.start_theta is not None and args.stage == "adapt":
+        ap.error("--start-theta applies to the chains, not to the adaptation chain (use --adapt-start-scale)")
     if args.segment < 0:
         ap.error("--segment must be >= 0")
     return args
@@ -216,6 +271,8 @@ def build_prior(args, grid):
     """The ``mrf`` prior of ``--prior`` on ``grid``."""
     if args.prior == "qggmrf":
         return mrf.QGGMRF(grid.n, q=args.q, T=args.T, sigma_g=args.sigma_g, sigma_0=args.sigma_0, mu=args.mu)
+    if args.prior == "tv":
+        return mrf.PseudoHuberTV(grid.n, lam=args.lam, delta=args.delta, sigma_0=args.sigma_0, mu=args.mu)
     field = GaussianField(grid, args.prior, sigma=args.sigma, ell=args.ell, nu=args.nu, mean=args.mean)
     return mrf.GaussianEnergy(field)
 
@@ -227,8 +284,8 @@ def map_stats(a, inside):
 
 
 def prior_summary(args, prior, grid, inside):
-    """Prior std of theta and eps_r: exact for the Gaussian fields, by HMC on R alone for the q-GGMRF."""
-    if args.prior != "qggmrf":
+    """Prior std of theta and eps_r: exact for the Gaussian fields, by HMC on R alone for the q-GGMRF and the TV prior."""
+    if args.prior not in ("qggmrf", "tv"):
         sd_map = prior.prior_std()
         sd = float(prior.field.sigma)
         mu = float(prior.field.mean.mean())
@@ -282,7 +339,7 @@ def convergence(phi_phys, theta):
 
 # Arguments that define the posterior; chain and finalize stages refuse a prepared.json that differs in any of them.
 POSTERIOR_ARGS = ("n", "side", "eps_r", "snr", "seed", "data_factor", "n_tx", "n_rx", "prior", "sigma", "ell", "nu",
-                  "mean", "q", "T", "sigma_g", "sigma_0", "mu", "tol")
+                  "mean", "q", "T", "sigma_g", "sigma_0", "mu", "tol", "lam", "delta")
 
 
 def build_context(args):
@@ -292,7 +349,8 @@ def build_context(args):
     prior = build_prior(args, grid)
     target = ts.ThetaTarget(prob.forward, prior, prob.d_obs, prob.s)
     return SimpleNamespace(args=args, prob=prob, grid=grid, prior=prior, target=target,
-                           inside=prob.chi_true > 1e-9, n_data=args.n_tx * args.n_rx)
+                           inside=prob.chi_true > 1e-9, n_data=args.n_tx * args.n_rx,
+                           potential=target.potential_flat())  # one flat-potential object: adapt compiles its block once
 
 
 def prepare(ctx):
@@ -368,7 +426,8 @@ def load_prepared(ctx, out_dir):
     """
     info = json.loads((out_dir / "prepared.json").read_text())
     stored = info["args"]
-    diff = {k: (stored[k], getattr(ctx.args, k)) for k in POSTERIOR_ARGS if stored[k] != getattr(ctx.args, k)}
+    # a prepared.json from before milestone 5 has no "lam" / "delta" (they only matter for --prior tv): skip absent keys
+    diff = {k: (stored[k], getattr(ctx.args, k)) for k in POSTERIOR_ARGS if k in stored and stored[k] != getattr(ctx.args, k)}
     if diff:
         raise SystemExit(f"{out_dir}/prepared.json was made with different data or prior arguments: {diff}")
     z = np.load(out_dir / "prepared.npz")
@@ -461,12 +520,12 @@ def run_segment(runner, args, chain_id, segment, prev=None, start_theta=None):
     k_init, keys = chain_streams(args)
     if segment == 0:
         if start_theta is None:
-            xi0 = runner.zt.overdispersed_starts(k_init, args.chains, args.init_scale)[chain_id]
+            xi0 = runner.zt.overdispersed_starts(k_init, args.chains, args.init_scale)[chain_id] + getattr(runner, "xi_ref", 0.0)
         else:
             st = np.asarray(start_theta, dtype=np.float64)
             xi0 = runner.zt.to_zeta(st if st.ndim == 2 else st[chain_id])
         return runner.run(keys[chain_id], xi0, runner.zt.initial_aux(), n_warmup=args.warmup, n_samples=args.samples,
-                          step0=args.step0)
+                          step0=getattr(runner, "eps0", args.step0))
     if prev is None:
         raise ValueError("a continuation segment needs the previous segment")
     return runner.run(jax.random.fold_in(keys[chain_id], segment), jnp.asarray(prev["xi"]), jnp.asarray(prev["aux"]),
@@ -489,7 +548,8 @@ def load_segment(path):
 
 def load_chain_segments(out_dir, args):
     """``[[segment dicts of chain 0], [chain 1], ...]`` from chain_<c>_seg<j>.npz (j = 0, 1, ... up to
-    ``--max-segments``). Exits unless every chain has the same, nonzero number of segments."""
+    ``--max-segments``), without the first ``--skip-segments`` of each (burn-in, ``discard_burn_in``). Exits unless every chain has
+    the same, nonzero number of segments."""
     per_chain = []
     for c in range(args.chains):
         segs, j = [], 0
@@ -501,7 +561,34 @@ def load_chain_segments(out_dir, args):
     if len(set(counts)) != 1 or counts[0] == 0:
         raise SystemExit(f"need the same nonzero number of segments for every chain, found {counts} "
                          f"(use --max-segments to drop the extras)")
+    if args.skip_segments:
+        if counts[0] <= args.skip_segments:
+            raise SystemExit(f"--skip-segments {args.skip_segments} leaves no segment (every chain has {counts[0]})")
+        per_chain = [discard_burn_in(segs, args.skip_segments) for segs in per_chain]
     return per_chain
+
+
+def discard_burn_in(segs, k):
+    """The segments of ONE chain without its first ``k``, which become burn-in of the first kept one: its ``n_warmup`` is the number of
+    trajectories of the dropped segments (warmup and recorded) plus its own, and their wall time, compile time and gradient evaluations
+    are added to its own, so that the cost of the run is still the cost of everything computed. The kept segments are exact continuations of
+    the dropped ones (same map, same frozen step), so they remain a valid chain; only the draws, the Welford moments and the convergence
+    numbers lose the transient. ``starts`` is carried over from segment 0. ``k`` = 0 returns ``segs`` unchanged."""
+    if k <= 0:
+        return segs
+    dropped, kept = segs[:k], [dict(s) for s in segs[k:]]
+    first = kept[0]
+    first["n_warmup"] = int(first["n_warmup"] + sum(s["n_warmup"] + s["n_samples"] for s in dropped))
+    for key in ("wall_s", "compile_s"):
+        first[key] = float(first[key] + sum(s[key] for s in dropped))
+    first["n_phi_evals"] = int(sum(segment_n_phi_evals(s) for s in segs[:k + 1]))
+    first["starts"] = f"{dropped[0].get('starts', '')} (first {k} segment{'s' if k > 1 else ''} discarded as burn-in)".strip()
+    return kept
+
+
+def segment_n_phi_evals(seg):
+    """Potential evaluations of one segment dict: the stored count, or (older files) that of fixed-length HMC."""
+    return seg["n_phi_evals"] if "n_phi_evals" in seg else inf.n_phi_evals("hmc", seg["n_warmup"], seg["n_samples"], seg["n_leapfrog"])
 
 
 def assemble_chains(per_chain, zt_legacy=None):
@@ -521,6 +608,9 @@ def assemble_chains(per_chain, zt_legacy=None):
     masses = [s["mass_theta"] for segs in per_chain for s in segs if "mass_theta" in s]
     if any(not np.array_equal(m, masses[0]) for m in masses):
         raise SystemExit("the segments were run with different mass centers")
+    digests = {s.get("adapt_digest") for segs in per_chain for s in segs}
+    if len(digests) != 1:
+        raise SystemExit(f"the segments were run with different adapted maps (or some without one): {sorted(map(str, digests))}")
     mom = [ft.merge_moments([s["mean"] for s in segs], [s["var"] for s in segs], [s["count"] for s in segs])
            for segs in per_chain]
     return {
@@ -536,8 +626,156 @@ def assemble_chains(per_chain, zt_legacy=None):
         "wall_s": np.array([sum(s["wall_s"] for s in segs) for segs in per_chain]),
         "compile_s": np.array([sum(s["compile_s"] for s in segs) for segs in per_chain]),
         "load_avg_1min": np.array([s["load_avg_1min_at_start"] for segs in per_chain for s in segs]),
-        "n_phi_evals": int(sum(inf.n_phi_evals("hmc", s["n_warmup"], s["n_samples"], s["n_leapfrog"])
-                               for s in per_chain[0]))}
+        "adapt_digest": digests.pop(),
+        "n_phi_evals": int(sum(segment_n_phi_evals(s) for s in per_chain[0])),
+        "n_leapfrog0": per_chain[0][0]["n_leapfrog"]}
+
+
+# ----------------------------------------------------------------------------------------------
+# Adapted affine map (stage adapt, and the chains that follow it)
+# ----------------------------------------------------------------------------------------------
+
+
+def adaptation_paths(out_dir):
+    """``(adapted_map.npz, adaptation.json)`` of a run directory."""
+    return out_dir / "adapted_map.npz", out_dir / "adaptation.json"
+
+
+def adapt_config(args):
+    """The ``adapt.AdaptConfig`` of the adaptation stage from the command line."""
+    return ad.AdaptConfig(init_buffer=args.adapt_init, first_window=args.adapt_first_window, n_windows=args.adapt_windows,
+                          growth=args.adapt_growth, final_buffer=args.adapt_final, block=args.adapt_block,
+                          target_accept=args.target_accept, traj_length=args.traj_length, max_leapfrog=args.max_leapfrog,
+                          kappa_per_dim=args.adapt_kappa_per_dim, step0=args.adapt_step0)
+
+
+def laplace_covariance_fn(target):
+    """``center (N,) -> H^-1 (N, N)``: the Laplace covariance at a center, H = H_GN + Hess R there (the shrinkage target of
+    ``adapt.update_map``; one Nt + Nr solve Jacobian, a Gram product and two dense N^3 steps)."""
+    n = target.n
+    return lambda c: ad.laplace_covariance(target.laplace_mass(np.asarray(c).reshape(n, n)).chol)
+
+
+def run_adaptation(ctx, prep, out_dir, mass_theta=None):
+    """The adaptation stage: adapts the affine map of one chain (module docstring), writes adapted_map.npz and adaptation.json in
+    ``out_dir`` and returns the ``adapt.AdaptResult``. The initial map is the Laplace map of the MAP (``prep.mass``), or of
+    ``mass_theta`` ((n, n); the Laplace mass is rebuilt there) when given."""
+    args, target, n = ctx.args, ctx.target, ctx.args.n
+    mass = prep.mass if mass_theta is None else target.laplace_mass(np.asarray(mass_theta, dtype=np.float64))
+    map0 = ad.AffineMap.from_precision_chol(mass.theta_hat, mass.chol)
+    key = jax.random.fold_in(jax.random.key(args.chain_seed), 10007)
+    k_start, k_run = jax.random.split(key)
+    theta0 = np.asarray(map0.to_theta(args.adapt_start_scale * jax.random.normal(k_start, (n, n), dtype=jnp.float64)))
+    cfg = adapt_config(args)
+    print(f"adaptation: {cfg.total_trajectories()} trajectories ({[(nm, nb * cfg.block) for nm, nb, _ in cfg.phases()]}), "
+          f"kappa = {cfg.kappa_for(n * n):g}, trajectory length {cfg.traj_length}, target acceptance {cfg.target_accept}, start scale "
+          f"{args.adapt_start_scale}, initial map: Laplace at "
+          f"{'the MAP' if mass_theta is None else 'a custom theta'}")
+
+    def progress(rec):
+        up = rec.get("update", {})
+        print(f"  {rec['phase']:8s} {rec['trajectories']:4d} traj: accept {rec['accept_mean']:.3f}, eps {rec['eps_end']:.4f}, "
+              f"mean L {rec['mean_leapfrog']:.1f}, {rec['time_s']:.0f} s" + (
+                  f"; map updated (weight {up['weight']:.3f}, variance ratio median {up['var_ratio_median']:.3g}, update "
+                  f"{up['time_s']:.1f} s)" if rec["updated"] else ("; " + rec["skipped"] if "skipped" in rec else "")))
+
+    res = ad.adapt_map(ctx.potential, k_run, theta0, target.initial_aux(), map0, laplace_covariance_fn(target), cfg,
+                       progress=progress)
+    path_map, path_json = adaptation_paths(out_dir)
+    res.map.save(path_map, eps=res.eps, traj_length=res.traj_length, max_leapfrog=res.max_leapfrog, theta_final=res.theta)
+    update_s = [h["update"]["time_s"] for h in res.history if h.get("updated")]
+    info = {"args": {k: v for k, v in vars(args).items() if k.startswith("adapt") or k in ("target_accept", "traj_length", "max_leapfrog",
+                                                                                   "chain_seed")},
+            "config": dataclasses.asdict(cfg), "kappa": cfg.kappa_for(n * n), "initial_map": "Laplace map of the MAP" if mass_theta is None
+            else "Laplace map at --mass-theta", "eps": res.eps, "traj_length": res.traj_length, "max_leapfrog": res.max_leapfrog,
+            "n_leapfrog0": res.n_leapfrog0, "map_digest": res.map.digest(), "n_grad_evals": res.n_grad_evals, "wall_s": res.wall_s,
+            "update_time_s": update_s, "history": res.history,
+            "note": "the map and eps are frozen before any recorded draw: a recorded segment is an exact HMC chain for the fixed map"}
+    path_json.write_text(json.dumps(info, indent=2, default=float))
+    print(f"adapted map: eps {res.eps:.4f}, L0 {res.n_leapfrog0}, {res.n_grad_evals} gradient evaluations, {res.wall_s:.0f} s; "
+          f"digest {info['map_digest'][:16]}; wrote {path_map.name} and {path_json.name}")
+    return res
+
+
+def load_adaptation(out_dir, n):
+    """``(AffineMap, info)`` of a run directory: the frozen map of adapted_map.npz with its center reshaped to (n, n), and the dict of
+    adaptation.json updated with the stored ``eps``, ``traj_length`` and ``max_leapfrog``. Exits if the stage adapt has not been run
+    or the map does not match the digest in adaptation.json."""
+    path_map, path_json = adaptation_paths(out_dir)
+    if not path_map.exists() or not path_json.exists():
+        raise SystemExit(f"{out_dir}: no adapted_map.npz / adaptation.json (run --stage adapt first)")
+    z = np.load(path_map)
+    amap = ad.AffineMap(z["center"].reshape(n, n), z["chol"])
+    info = json.loads(path_json.read_text())
+    if amap.digest() != info["map_digest"]:
+        raise SystemExit(f"{path_map} does not match the digest in {path_json.name}")
+    info.update({"eps": float(z["eps"]), "traj_length": float(z["traj_length"]), "max_leapfrog": int(z["max_leapfrog"]),
+                 "theta_final": z["theta_final"].reshape(n, n)})
+    return amap, info
+
+
+class AdaptedChainRunner:
+    """The chain runner of ``--adapt``: HMC in the coordinates of a frozen ``adapt.AffineMap`` with variable-length trajectories.
+
+    Same interface as ``ChainRunner`` (``run_segment`` drives either): ``zt`` is the ``ZetaTarget`` of the adapted map and ``run``
+    returns the same dict. Segment 0 first runs ``n_warmup`` trajectories (rounded up to a multiple of the block size) of dual
+    averaging of the step size ALONE (map frozen) from the adapted step ``eps0``, then ``n_samples`` recorded trajectories
+    (``adapt.sample_chain``, step, trajectory length and map frozen); a continuation has ``n_warmup = 0`` and keeps its step.
+    """
+
+    def __init__(self, ctx, amap, info, args):
+        self.ctx, self.amap, self.info, self.args = ctx, amap, info, args
+        self.zt = ctx.target.zeta_target_with_map(amap)
+        self.potential = ctx.potential
+        self.eps0, self.traj_length, self.max_leapfrog = info["eps"], info["traj_length"], info["max_leapfrog"]
+        # the starts of segment 0 are xi_ref + init_scale N(0, I): zeta of the adaptation chain's final state, or 0 (the map center)
+        self.xi_ref = amap.to_zeta(jnp.asarray(info["theta_final"])) if args.adapt_start == "final" else jnp.zeros(amap.shape)
+        self.digest = amap.digest()
+        self._compiled = {}
+
+    def _warmup(self, key, xi0, aux0, n_warmup):
+        """Dual averaging of eps with the map frozen: ``(eps, xi, aux, n_grad_evals, n_trajectories)`` (``n_warmup`` rounded up to a
+        whole number of blocks)."""
+        a = self.args
+        cfg = ad.AdaptConfig(init_buffer=n_warmup, n_windows=0, final_buffer=0, block=a.adapt_block, target_accept=a.target_accept,
+                             traj_length=self.traj_length, max_leapfrog=self.max_leapfrog, step0=self.eps0)
+        theta0 = np.asarray(self.amap.to_theta(jnp.asarray(xi0))).ravel()
+        res = ad.adapt_map(self.potential, key, theta0, aux0, self.amap, None, cfg)
+        return (res.eps, self.amap.to_zeta(jnp.asarray(res.theta.reshape(self.amap.shape))), res.aux, res.n_grad_evals,
+                cfg.total_trajectories())
+
+    def run(self, key, xi0, aux0, *, n_warmup, n_samples, step0):
+        zt, a = self.zt, self.args
+        k_warm, k_rec = jax.random.split(key)
+        n_warm_grad, n_warm = 0, 0
+        if n_warmup > 0:
+            eps, xi0, aux0, n_warm_grad, n_warm = self._warmup(k_warm, xi0, aux0, n_warmup)
+        else:
+            eps = float(step0)
+        sig = int(n_samples)
+        t0 = time.perf_counter()
+        if sig not in self._compiled:
+            def one(k, x, aux, e):
+                return ad.sample_chain(k, zt.phi_fn, x, aux, eps=e, traj_length=self.traj_length, max_leapfrog=self.max_leapfrog,
+                                       n_samples=sig, thin=a.thin, record_fn=zt.record)
+
+            self._compiled[sig] = jax.jit(one).lower(k_rec, jnp.asarray(xi0), aux0, jnp.asarray(eps, dtype=jnp.float64)).compile()
+            compile_s = time.perf_counter() - t0
+        else:
+            compile_s = 0.0
+        t0 = time.perf_counter()
+        res = jax.block_until_ready(self._compiled[sig](k_rec, jnp.asarray(xi0), aux0, jnp.asarray(eps, dtype=jnp.float64)))
+        wall_s = time.perf_counter() - t0
+        n_rec_grad = int(np.asarray(res["n_leapfrog"]).sum())
+        l0 = int(np.clip(round(self.traj_length / eps), 1, self.max_leapfrog))
+        return {"theta": np.asarray(res["samples"][:, 0]), "mean": np.asarray(res["mean"]), "var": np.asarray(res["var"]),
+                "theta_final": np.asarray(zt.to_theta(res["xi"])), "mass_theta": np.asarray(zt.center),
+                "count": int(n_samples), "phi_prime": np.asarray(res["phi"]), "accept": np.asarray(res["accept"]),
+                "step": float(eps), "xi": np.asarray(res["xi"]), "aux": np.asarray(res["aux"]), "wall_s": wall_s,
+                "compile_s": compile_s, "n_warmup": int(n_warm), "n_samples": sig, "step0": float(self.eps0 if n_warmup > 0 else step0),
+                "n_leapfrog": l0, "thin": int(a.thin), "load_avg_1min_at_start": os.getloadavg()[0],
+                "n_phi_evals": 1 + n_warm_grad + n_rec_grad, "adapt_digest": self.digest, "traj_length": float(self.traj_length),
+                "max_leapfrog": int(self.max_leapfrog), "mean_leapfrog": float(np.asarray(res["n_leapfrog"]).mean())}
 
 
 # ----------------------------------------------------------------------------------------------
@@ -597,6 +835,7 @@ def summarize(ctx, prep, ch, out_dir, t_start):
     print("features: " + ", ".join(f"{k} P={v['p']:.3f}" for k, v in feats.items()))
 
     n_seg = len(ch["segments"])
+    adapted = ch["adapt_digest"] is not None
     summary = {
         "args": vars(args),
         "data": info["data"],
@@ -605,12 +844,16 @@ def summarize(ctx, prep, ch, out_dir, t_start):
         "start": info["start"],
         "map": map_info,
         "laplace": info["laplace"],
-        "sampler": {"name": "hmc (zeta coordinates, theta = theta_hat + L_H^-T zeta)", "chains": args.chains,
+        "sampler": {"name": ("hmc (zeta coordinates of the adapted affine map theta = c + A zeta, A A^T = Sigma_hat, frozen before "
+                             "recording; L uniform in [L0/2, 3 L0/2])" if adapted
+                             else "hmc (zeta coordinates, theta = theta_hat + L_H^-T zeta)"), "chains": args.chains,
                     "warmup": ch["segments"][0][0], "samples": int(sum(s for _, s in ch["segments"])),
                     "segments": n_seg, "samples_per_segment": [int(s) for _, s in ch["segments"]], "thin": args.thin,
-                    "n_leapfrog": args.n_leapfrog, "jitter": args.jitter, "init_scale": args.init_scale,
-                    "step0": args.step0, "chain_seed": args.chain_seed,
-                    "mass": ("Laplace mass at the MAP" if mass_shift == 0.0 else
+                    "n_leapfrog": ch["n_leapfrog0"] if adapted else args.n_leapfrog,  # adapted: L0 of chain 0
+                    "jitter": "L uniform in [L0/2, 3 L0/2]" if adapted else args.jitter, "init_scale": args.init_scale,
+                    "step0": ch["adaptation"]["eps"] if adapted else args.step0, "chain_seed": args.chain_seed,
+                    "mass": (f"adapted affine map {ch['adapt_digest'][:16]} (center rms distance to the MAP {mass_shift:.4f})" if adapted
+                             else "Laplace mass at the MAP" if mass_shift == 0.0 else
                              f"Laplace mass at a custom theta (rms distance to the MAP {mass_shift:.4f})"),
                     "mass_theta_rms_from_map": mass_shift, "starts": ch["starts"],
                     "acceptance": {"mean": float(accept_c.mean()), "per_chain": accept_c.tolist()},
@@ -626,6 +869,10 @@ def summarize(ctx, prep, ch, out_dir, t_start):
                          "last_quarter_mean": float(phi_phys[:, -q1:].mean()), "every": args.thin,
                          "n_per_chain": int(phi_phys.shape[1]), "map_phi": map_info["phi"], "n_data": n_data},
         "convergence": conv,
+        **({"adaptation": {**{k: ch["adaptation"][k] for k in ("map_digest", "eps", "traj_length", "n_leapfrog0", "max_leapfrog", "kappa",
+                                                              "n_grad_evals", "wall_s", "update_time_s", "initial_map", "config",
+                                                              "history")},
+                           "files": "adapted_map.npz (center, Cholesky factor), adaptation.json (full history)"}} if adapted else {}),
         "posterior": {"theta_mean": map_stats(theta_mean, ctx.inside), "theta_std": map_stats(theta_std, ctx.inside),
                       "eps_mean": map_stats(eps_mean, ctx.inside), "eps_std": map_stats(eps_std, ctx.inside),
                       "mcmc_over_laplace_std": map_stats(ratio, ctx.inside),
@@ -654,7 +901,7 @@ def summarize(ctx, prep, ch, out_dir, t_start):
 
     # ---- figures ----
     title = f"{args.prior} " + ", ".join(f"{k}={v}" for k, v in prior.describe().items()
-                                         if k in ("sigma", "ell", "q", "T", "sigma_g", "sigma_0")) \
+                                         if k in ("sigma", "ell", "q", "T", "sigma_g", "sigma_0", "lam", "delta")) \
         + f", austria eps_r {args.eps_r:g}, n={n}, SNR {args.snr:g} dB"
     plot_maps(prob.theta_true, np.asarray(theta_hat), theta_mean, theta_std, grid, out_dir / "maps.png",
               quantity="log eps_r", title=title)
@@ -689,22 +936,36 @@ def main(argv=None):
         prep = load_prepared(ctx, out_dir)
     mass_theta = None if args.mass_theta is None else np.load(args.mass_theta)
     start_theta = None if args.start_theta is None else np.load(args.start_theta)
+    start_text = "start-theta file" if start_theta is not None else (
+        f"overdispersed draws (scale {args.init_scale}) around the {'final state of the adaptation chain' if args.adapt_start == 'final' else 'center'}"
+        f" of the adapted map" if args.adapt else f"overdispersed Laplace draws, scale {args.init_scale}")
+
+    if args.stage == "adapt":
+        return run_adaptation(ctx, prep, out_dir, mass_theta)
 
     if args.stage == "chain":
         prev = None if args.segment == 0 else load_segment(segment_path(out_dir, args.chain_id, args.segment - 1))
-        if prev is not None:  # a continuation follows the coordinates of its predecessor
-            prev_mass = prev.get("mass_theta")
-            if mass_theta is not None and (prev_mass is None or not np.array_equal(mass_theta, prev_mass)):
-                raise SystemExit("--mass-theta differs from the center the chain was started with")
-            mass_theta = None if prev_mass is None or np.array_equal(prev_mass, prep.theta_hat) else prev_mass
-        runner = ChainRunner(make_zeta_target(ctx, prep, mass_theta), args)
-        print(f"chain {args.chain_id} segment {args.segment}: HMC in zeta, "
-              f"{args.warmup if args.segment == 0 else 0} warmup + {args.samples} samples, thin {args.thin}, "
-              f"{args.n_leapfrog} leapfrog steps, step0 {args.step0 if prev is None else prev['step']:.4f}, init scale "
-              f"{args.init_scale}")
+        if args.adapt:
+            amap, ainfo = load_adaptation(out_dir, args.n)
+            if prev is not None and prev.get("adapt_digest") != amap.digest():
+                raise SystemExit("the previous segment was run with a different map than adapted_map.npz")
+            runner = AdaptedChainRunner(ctx, amap, ainfo, args)
+            print(f"chain {args.chain_id} segment {args.segment}: HMC in zeta of the adapted map {amap.digest()[:16]}, "
+                  f"{args.warmup if args.segment == 0 else 0} step-size warmup + {args.samples} samples, thin {args.thin}, trajectory "
+                  f"length {runner.traj_length}, step {runner.eps0 if prev is None else prev['step']:.4f}, init scale {args.init_scale}")
+        else:
+            if prev is not None:  # a continuation follows the coordinates of its predecessor
+                prev_mass = prev.get("mass_theta")
+                if mass_theta is not None and (prev_mass is None or not np.array_equal(mass_theta, prev_mass)):
+                    raise SystemExit("--mass-theta differs from the center the chain was started with")
+                mass_theta = None if prev_mass is None or np.array_equal(prev_mass, prep.theta_hat) else prev_mass
+            runner = ChainRunner(make_zeta_target(ctx, prep, mass_theta), args)
+            print(f"chain {args.chain_id} segment {args.segment}: HMC in zeta, "
+                  f"{args.warmup if args.segment == 0 else 0} warmup + {args.samples} samples, thin {args.thin}, "
+                  f"{args.n_leapfrog} leapfrog steps, step0 {args.step0 if prev is None else prev['step']:.4f}, init scale "
+                  f"{args.init_scale}")
         seg = run_segment(runner, args, args.chain_id, args.segment, prev, start_theta)
-        seg["starts"] = ("start-theta file" if start_theta is not None else f"overdispersed Laplace draws, scale {args.init_scale}") \
-            if args.segment == 0 else ""
+        seg["starts"] = start_text if args.segment == 0 else ""
         save_segment(segment_path(out_dir, args.chain_id, args.segment), seg)
         print(f"done in {seg['wall_s']:.0f} s (compile {seg['compile_s']:.0f} s): acceptance {seg['accept'].mean():.3f}, "
               f"step {seg['step']:.4f}, |zeta|^2/2 at the end {0.5 * float(np.sum(seg['xi'] ** 2)):.0f}, "
@@ -712,13 +973,19 @@ def main(argv=None):
         return seg
 
     if args.stage == "all":
-        runner = ChainRunner(make_zeta_target(ctx, prep, mass_theta), args)
-        print(f"sampling: HMC in zeta, {args.chains} chains x ({args.warmup} warmup + {args.samples} samples), thin "
-              f"{args.thin}, {args.n_leapfrog} leapfrog steps, step0 {args.step0}, init scale {args.init_scale}")
+        if args.adapt:
+            run_adaptation(ctx, prep, out_dir, mass_theta)
+            amap, ainfo = load_adaptation(out_dir, args.n)
+            runner = AdaptedChainRunner(ctx, amap, ainfo, args)
+            print(f"sampling: HMC in zeta of the adapted map, {args.chains} chains x ({args.warmup} step-size warmup + "
+                  f"{args.samples} samples), thin {args.thin}, trajectory length {runner.traj_length}, init scale {args.init_scale}")
+        else:
+            runner = ChainRunner(make_zeta_target(ctx, prep, mass_theta), args)
+            print(f"sampling: HMC in zeta, {args.chains} chains x ({args.warmup} warmup + {args.samples} samples), thin "
+                  f"{args.thin}, {args.n_leapfrog} leapfrog steps, step0 {args.step0}, init scale {args.init_scale}")
         per_chain = [[run_segment(runner, args, c, 0, start_theta=start_theta)] for c in range(args.chains)]
         for segs in per_chain:
-            segs[0]["starts"] = ("start-theta file" if start_theta is not None
-                                 else f"overdispersed Laplace draws, scale {args.init_scale}")
+            segs[0]["starts"] = start_text
         print(f"sampling done in {sum(s[0]['wall_s'] for s in per_chain):.0f} s: acceptance "
               f"{[round(float(s[0]['accept'].mean()), 3) for s in per_chain]}, final step "
               f"{[round(s[0]['step'], 3) for s in per_chain]}")
@@ -727,6 +994,11 @@ def main(argv=None):
     ch = assemble_chains(per_chain, zt_legacy=None if all("theta_final" in s for segs in per_chain for s in segs)
                          else ctx.target.zeta_target(prep.mass))
     ch["starts"] = per_chain[0][0].get("starts", "overdispersed Laplace draws, scale %g" % args.init_scale)
+    if ch["adapt_digest"] is not None:  # an adapted run: the map the segments used must be the one on disk
+        amap, ainfo = load_adaptation(out_dir, args.n)
+        if amap.digest() != ch["adapt_digest"]:
+            raise SystemExit("the segments were run with a map other than adapted_map.npz")
+        ch["adaptation"] = ainfo
     summary = summarize(ctx, prep, ch, out_dir, t_start)
     summary["timings"]["total_s"] = time.perf_counter() - t_start
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2, default=float))

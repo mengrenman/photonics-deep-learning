@@ -1,0 +1,40 @@
+[batch_run 22:58:54] 12 job(s) to run, 0 skipped; cpu slots 12 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 22:58:54] START m5r3_gmrf2_c0 (cpu0, unpinned) [1/12]
+[batch_run 22:58:54] START m5r3_gmrf2_c1 (cpu1, unpinned) [2/12]
+[batch_run 22:58:54] START m5r3_gmrf2_c2 (cpu2, unpinned) [3/12]
+[batch_run 22:58:54] START m5r3_gmrf2_c3 (cpu3, unpinned) [4/12]
+[batch_run 22:58:54] START m5r3_tvA2_c0 (cpu4, unpinned) [5/12]
+[batch_run 22:58:54] START m5r3_tvA2_c1 (cpu5, unpinned) [6/12]
+[batch_run 22:58:54] START m5r3_tvA2_c2 (cpu6, unpinned) [7/12]
+[batch_run 22:58:54] START m5r3_tvA2_c3 (cpu7, unpinned) [8/12]
+[batch_run 22:58:54] START m5r3_tvB2_c0 (cpu8, unpinned) [9/12]
+[batch_run 22:58:54] START m5r3_tvB2_c1 (cpu9, unpinned) [10/12]
+[batch_run 22:58:54] START m5r3_tvB2_c2 (cpu10, unpinned) [11/12]
+[batch_run 22:58:54] START m5r3_tvB2_c3 (cpu11, unpinned) [12/12]
+[batch_run 00:11:09] DONE  m5r3_tvA2_c1 exit 0 in 4334.9 s
+[batch_run 00:15:02] DONE  m5r3_tvA2_c3 exit 0 in 4567.9 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt2/chain_3_seg5.npz does not exist; it will run again next time)
+[batch_run 00:15:15] DONE  m5r3_tvA2_c0 exit 0 in 4581.1 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt2/chain_0_seg5.npz does not exist; it will run again next time)
+[batch_run 00:15:35] DONE  m5r3_tvA2_c2 exit 0 in 4600.9 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt2/chain_2_seg5.npz does not exist; it will run again next time)
+[batch_run 00:51:10] FAILED m5r3_gmrf2_c0 exit -15 in 6736.7 s
+[batch_run 00:51:10] FAILED m5r3_gmrf2_c1 exit -15 in 6736.7 s
+[batch_run 00:51:10] FAILED m5r3_gmrf2_c2 exit -15 in 6736.7 s
+[batch_run 00:51:10] FAILED m5r3_gmrf2_c3 exit -15 in 6736.7 s
+[batch_run 00:54:21] DONE  m5r3_tvB2_c3 exit 0 in 6926.7 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt2/chain_3_seg5.npz does not exist; it will run again next time)
+[batch_run 00:54:28] DONE  m5r3_tvB2_c2 exit 0 in 6933.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt2/chain_2_seg5.npz does not exist; it will run again next time)
+[batch_run 00:54:49] DONE  m5r3_tvB2_c1 exit 0 in 6954.6 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt2/chain_1_seg5.npz does not exist; it will run again next time)
+[batch_run 00:55:46] DONE  m5r3_tvB2_c0 exit 0 in 7012.6 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt2/chain_0_seg5.npz does not exist; it will run again next time)
+
+job                              status          wall s  exit
+m5r3_tvA2_c1                     ok              4334.9     0
+m5r3_tvA2_c3                     ok              4567.9     0
+m5r3_tvA2_c0                     ok              4581.1     0
+m5r3_tvA2_c2                     ok              4600.9     0
+m5r3_gmrf2_c0                    failed          6736.7   -15
+m5r3_gmrf2_c1                    failed          6736.7   -15
+m5r3_gmrf2_c2                    failed          6736.7   -15
+m5r3_gmrf2_c3                    failed          6736.7   -15
+m5r3_tvB2_c3                     ok              6926.7     0
+m5r3_tvB2_c2                     ok              6933.8     0
+m5r3_tvB2_c1                     ok              6954.6     0
+m5r3_tvB2_c0                     ok              7012.6     0
+[batch_run 00:55:47] 8 ok, 4 not ok

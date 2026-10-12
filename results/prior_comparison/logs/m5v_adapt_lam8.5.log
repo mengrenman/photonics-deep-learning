@@ -1,0 +1,11 @@
+# batch_run 2026-10-12T03:03:11+08:00 slot cpu9
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "4", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4", "MKL_NUM_THREADS": "4", "VECLIB_MAXIMUM_THREADS": "4", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/wait_then.py --file results/prior_comparison/pc_tv_lam8.5_adapt/prepared.npz -- python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior tv --lam 8.5 --delta 0.01 --sigma-0 1 --map-maxiter 4000 --adapt --out pc_tv_lam8.5_adapt --stage adapt --adapt-init 50 --adapt-first-window 50 --adapt-windows 2 --adapt-growth 2 --adapt-final 50 --adapt-kappa-per-dim 0.25 --traj-length 1.0
+wait_then: waiting for files ['results/prior_comparison/pc_tv_lam8.5_adapt/prepared.npz'] meta-ok [] go None (skip None)
+wait_then: dependencies satisfied, running /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior tv --lam 8.5 --delta 0.01 --sigma-0 1 --map-maxiter 4000 --adapt --out pc_tv_lam8.5_adapt --stage adapt --adapt-init 50 --adapt-first-window 50 --adapt-windows 2 --adapt-growth 2 --adapt-final 50 --adapt-kappa-per-dim 0.25 --traj-length 1.0
+adaptation: 250 trajectories ([('init', 50), ('window0', 50), ('window1', 100), ('final', 50)]), kappa = 576, trajectory length 1.0, target acceptance 0.8, start scale 0.5, initial map: Laplace at the MAP
+  init       50 traj: accept 0.780, eps 0.0497, mean L 27.9, 202 s
+  window0    50 traj: accept 0.780, eps 0.0495, mean L 26.5, 174 s; map updated (weight 0.920, variance ratio median 6.07, update 0.7 s)
+  window1   100 traj: accept 0.750, eps 0.0244, mean L 42.1, 557 s; map updated (weight 0.852, variance ratio median 0.672, update 0.7 s)
+  final      50 traj: accept 0.780, eps 0.0269, mean L 40.3, 264 s
+adapted map: eps 0.0269, L0 37, 8944 gradient evaluations, 1196 s; digest f9015dcdfb446b37; wrote adapted_map.npz and adaptation.json

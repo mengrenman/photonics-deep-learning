@@ -1,5 +1,7 @@
 # Milestone 4: prior comparison on the moderate problem (DESIGN 11.3)
 
+> **Note added after milestone 5** (results/M5_REPORT.md §0.2, §4): the reading below that the edge bias is "chosen by the prior" is superseded. The posterior-mean bias of every prior correlates 0.86 to 0.93 with the bias of the truth low-passed at about 3 cycles per wavelength, so it is the resolution limit of the data, common to all priors here; against the low-passed truth the |z| > 3 fractions fall to 0 to 5 %. The prior-energy numbers in §4 remain correct as statements about what each prior prefers.
+
 Revised after the independent review. Every number below is read from a file under results/prior_comparison (the file is named in each section). The tables are printed by `scripts/prior_comparison_tables.py` straight from `summary.json`, `comparison.json`, `prior_energy.json`, `convergence_audit.json` and `edge_analysis.json`. Per-run files are `pc_<prior>/summary.json` and `chains.npz`.
 
 ## 0. Result

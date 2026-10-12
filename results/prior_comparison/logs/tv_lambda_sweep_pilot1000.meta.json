@@ -1,0 +1,54 @@
+{
+  "name": "tv_lambda_sweep",
+  "status": "ok",
+  "device": "cpu",
+  "slot": 0,
+  "threads": 4,
+  "cmd": [
+    "/Users/mengren/anaconda3/envs/photonics-dl/bin/python",
+    "scripts/tv_lambda_sweep.py",
+    "--lams",
+    "0.3",
+    "1",
+    "3",
+    "10"
+  ],
+  "cmd_in_jobs_file": [
+    "scripts/tv_lambda_sweep.py",
+    "--lams",
+    "0.3",
+    "1",
+    "3",
+    "10"
+  ],
+  "cwd": "/Users/mengren/Documents/new_projects/photonics-dl",
+  "env": {
+    "JAX_PLATFORMS": "cpu",
+    "NPROC": "4",
+    "OMP_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "VECLIB_MAXIMUM_THREADS": "4",
+    "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "pinned": false,
+  "cores": null,
+  "host": {
+    "hostname": "mbp",
+    "system": "Darwin",
+    "release": "27.0.0",
+    "machine": "arm64",
+    "cpu_model": "Apple M3 Max",
+    "logical_cpus": 16,
+    "physical_cpus": 16,
+    "mem_total_bytes": 137438953472
+  },
+  "log": "/Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs/tv_lambda_sweep.log",
+  "done_marker": "/Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/tv_lambda_sweep.json",
+  "start": "2026-10-11T13:06:59+08:00",
+  "end": "2026-10-11T13:13:43+08:00",
+  "wall_s": 404.546,
+  "exit_code": 0,
+  "marker_present": true
+}

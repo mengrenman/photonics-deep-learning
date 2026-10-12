@@ -1,0 +1,25 @@
+pc_matern            R truth   14685.5  MAP      87.5  draws    1180.7 +- 32.9  Phi truth  2578.1 MAP  2378.4 draws  2434.7  R(blur 2px)      28.5  (4 s)
+pc_qggmrf_sg0.05     R truth    4406.2  MAP    2718.8  draws    3998.7 +- 38.7  Phi truth  2578.1 MAP  2474.3 draws  2511.4  R(blur 2px)    1435.1  (0 s)
+pc_qggmrf_sg0.1      R truth    1772.7  MAP    1060.6  draws    2357.0 +- 38.3  Phi truth  2578.1 MAP  2406.5 draws  2452.4  R(blur 2px)     518.8  (0 s)
+pc_gmrf              R truth      89.1  MAP      33.1  draws     524.7 +- 45.7  Phi truth  2578.1 MAP  2367.0 draws  2427.7  R(blur 2px)      11.2  (1 s)
+pc_gmrf_adapt        R truth      89.1  MAP      33.1  draws    1085.0 +- 42.0  Phi truth  2578.1 MAP  2367.0 draws  2429.6  R(blur 2px)      11.2  (1 s)
+pc_gmrf_adapt_burn2  R truth      89.1  MAP      33.1  draws    1101.7 +- 32.7  Phi truth  2578.1 MAP  2367.0 draws  2429.7  R(blur 2px)      11.2  (1 s)
+pc_gmrf_adapt2       R truth      89.1  MAP      33.1  draws    1046.8 +- 57.3  Phi truth  2578.1 MAP  2367.0 draws  2447.7  R(blur 2px)      11.2  (1 s)
+pc_tv_lam3.75_adapt  R truth    1334.6  MAP    1120.8  draws    2859.6 +- 42.8  Phi truth  2578.1 MAP  2399.5 draws  2442.3  R(blur 2px)     748.9  (0 s)
+pc_tv_lam3.75_adapt2 R truth    1334.6  MAP    1120.8  draws    2811.0 +- 61.7  Phi truth  2578.1 MAP  2399.5 draws  2441.4  R(blur 2px)     748.9  (0 s)
+pc_tv_lam11.25_adapt R truth    3821.8  MAP    3094.3  draws    4713.7 +- 41.5  Phi truth  2578.1 MAP  2457.9 draws  2494.1  R(blur 2px)    2143.1  (0 s)
+pc_tv_lam11.25_adapt2 R truth    3821.8  MAP    3094.3  draws    4648.5 +- 75.7  Phi truth  2578.1 MAP  2457.9 draws  2493.2  R(blur 2px)    2143.1  (0 s)
+pc_tv_lam1.25_adapt  R truth     505.5  MAP     441.7  draws    2284.9 +- 307.6  Phi truth  2578.1 MAP  2381.4 draws  2430.6  R(blur 2px)     284.2  (0 s)
+pc_tv_lam8.5_adapt   R truth    2909.8  MAP    2379.1  draws    5309.9 +- 2258.4  Phi truth  2578.1 MAP  2434.7 draws  2486.9  R(blur 2px)    1631.9  (0 s)
+pc_tv_lam3.75_indep  R truth    1334.6  MAP    1120.8  draws    3841.0 +- 994.9  Phi truth  2578.1 MAP  2399.5 draws  2457.7  R(blur 2px)     748.9  (0 s)
+  q-GGMRF q 1.2, T 1, sigma_g 0.05 (experiment)            sharp   10.45  ramp8    4.71  ratio 2.22
+  q-GGMRF q 1.2, T 1, sigma_g 0.1 (experiment)             sharp    4.21  ramp8    1.59  ratio 2.65
+  q 1.0, T 1, sigma_g 0.05                                 sharp    6.47  ramp8    4.40  ratio 1.47
+  q 1.0, T sigma_g = log 2 (sigma_g 0.05)                  sharp   48.05  ramp8   10.68  ratio 4.50
+  q 1.0, T 0.1, sigma_g 0.05 (near total variation)        sharp    0.69  ramp8    0.66  ratio 1.05
+  q 1.0, T 0.01, sigma_g 0.05 (total variation)            sharp    0.07  ramp8    0.07  ratio 1.01
+  q 1.5, T 1, sigma_g 0.05                                 sharp   20.34  ramp8    5.19  ratio 3.92
+  TV pseudo-Huber lam 1, delta 0.01 (DESIGN 12.1)          sharp    0.68  ramp8    0.62  ratio 1.11
+  TV pseudo-Huber lam 1, delta 0.003                       sharp    0.69  ramp8    0.67  ratio 1.03
+  TV pseudo-Huber lam 1, delta 0.001                       sharp    0.69  ramp8    0.69  ratio 1.01
+wrote results/prior_comparison/m5/prior_energy.json

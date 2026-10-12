@@ -170,6 +170,22 @@ def test_two_settings_of_one_prior_family_are_not_two_priors():
     assert ft.verdict(p, {**conv, "pc_matern": True}, family=FAMILY).startswith("provisional")
 
 
+def test_tv_is_a_family_of_its_own_and_two_weights_are_one_prior():
+    """Milestone 5: Matern + GMRF (the DESIGN minimum) + q-GGMRF + TV; two TV weights count once."""
+    fam = {**FAMILY, "pc_tv4": "tv", "pc_tv12": "tv", "pc_gmrf_adapt": "gmrf"}
+    conv = {"pc_matern": True, "pc_gmrf": False, "pc_gmrf_adapt": True, "pc_qg05": True, "pc_qg10": True, "pc_tv4": True,
+            "pc_tv12": True}
+    p = {k: 1.0 for k in conv}
+    assert ft.verdict(p, conv, family=fam) == "data-determined (present)"  # converged Matern and (adapted) GMRF are both there
+    v = ft.verdict(p, {**conv, "pc_gmrf_adapt": False}, family=fam)
+    assert v.startswith("provisional (present)") and "matern, qggmrf, tv" in v
+    only_tv = {"pc_tv4": True, "pc_tv12": True, "pc_matern": False, "pc_gmrf": False, "pc_gmrf_adapt": False, "pc_qg05": False,
+               "pc_qg10": False}
+    assert "agreed by tv only" in ft.verdict(p, only_tv, family=fam)
+    # a TV posterior that gives the other answer: the converged runs disagree
+    assert ft.verdict({**p, "pc_tv4": 0.0, "pc_tv12": 0.0}, conv, family=fam) == "not determined"
+
+
 def test_an_unconverged_run_that_disagrees_blocks_the_verdict():
     """Ring continuity of the milestone: converged runs say P = 1, the rough GMRF (unconverged, falling) says 0.93."""
     conv = {"pc_matern": True, "pc_gmrf": False, "pc_qg05": True, "pc_qg10": True}

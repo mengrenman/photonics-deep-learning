@@ -1,0 +1,40 @@
+[
+  {
+    "name": "pilot_tv_lam3.75_adapt_adaptation",
+    "cmd": [
+      "scripts/run_prior_comparison.py",
+      "--n",
+      "48",
+      "--side",
+      "2",
+      "--eps-r",
+      "2",
+      "--snr",
+      "30",
+      "--seed",
+      "0",
+      "--chains",
+      "4",
+      "--prior",
+      "tv",
+      "--lam",
+      "3.75",
+      "--delta",
+      "0.01",
+      "--sigma-0",
+      "1",
+      "--adapt",
+      "--out",
+      "pilot_tv_lam3.75_adapt",
+      "--chains",
+      "2",
+      "--prior-samples",
+      "0",
+      "--stage",
+      "adapt"
+    ],
+    "device": "cpu",
+    "threads": 4,
+    "done_marker": "results/prior_comparison/pilot_tv_lam3.75_adapt/adaptation.json"
+  }
+]

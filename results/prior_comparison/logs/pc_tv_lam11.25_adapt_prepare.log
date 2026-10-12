@@ -1,0 +1,10 @@
+# batch_run 2026-10-11T16:16:21+08:00 slot cpu1
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior tv --lam 11.25 --delta 0.01 --sigma-0 1 --map-maxiter 4000 --adapt --out pc_tv_lam11.25_adapt --stage prepare
+problem: austria_fixed eps_r 2.0, n=48 side=2.0 (h=0.0417), data grid 96, SNR 30.0 dB, seed 0; d_obs sha256 efd5e84fa5f9a77f...
+operating point: grid model error 0.85% of ||d|| against noise 3.16% (ratio 0.27); Phi(truth) 2578 (N = 2400)
+prior tv: std of theta (mean over pixels) 0.04660238054443185
+smooth start: 100 iterations, 109 evaluations, 29.7 s; U 7686.1 (Phi 3638.9, R 4047.1)
+MAP: 691 iterations, 735 evaluations, 166.1 s; U 5552.16 = Phi 2457.89 + R 3094.27 (N = 2400); |grad U|_inf 3.93e-03; CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+Laplace mass: 1.16 s (fields 0.74, Gram 0.16, Cholesky 0.10); Jacobian check 1.1640439239371981e-10; Laplace std of theta 0.0124 to 0.4724
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/prepared.json and prepared.npz (total 309 s)

@@ -1,0 +1,18 @@
+# batch_run 2026-10-12T00:56:02+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/segment_loop.py --out-dir results/prior_comparison/pc_gmrf_adapt --chain-id 0 --first 0 --last 12 --samples 100 --warmup 50 --stop scripts/jobs/stop/gmrf -- --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior gmrf --sigma 0.5 --ell 0.4 --adapt --out pc_gmrf_adapt --start-theta results/prior_comparison/pc_gmrf_adapt/m4_ends.npy
+segment_loop: chain 0, segments 0..12, pending [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+segment_loop: 2026-10-12T00:56:02+0800 starting chain 0 segment 3
+chain 0 segment 3: HMC in zeta of the adapted map 555cc867a4a2ffb4, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.5, step 0.0169, init scale 2.0
+done in 1564 s (compile 2 s): acceptance 0.800, step 0.0169, |zeta|^2/2 at the end 4369, mean Phi' -1235.4
+segment_loop: segment 3 done in 1571 s
+segment_loop: 2026-10-12T01:22:13+0800 starting chain 0 segment 4
+chain 0 segment 4: HMC in zeta of the adapted map 555cc867a4a2ffb4, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.5, step 0.0169, init scale 2.0
+done in 1573 s (compile 1 s): acceptance 0.810, step 0.0169, |zeta|^2/2 at the end 5793, mean Phi' -1773.3
+segment_loop: segment 4 done in 1580 s
+segment_loop: 2026-10-12T01:48:32+0800 starting chain 0 segment 5
+chain 0 segment 5: HMC in zeta of the adapted map 555cc867a4a2ffb4, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.5, step 0.0169, init scale 2.0
+done in 1521 s (compile 1 s): acceptance 0.820, step 0.0169, |zeta|^2/2 at the end 6039, mean Phi' -2289.2
+segment_loop: segment 5 done in 1528 s
+segment_loop: 2026-10-12T02:14:00+0800 starting chain 0 segment 6
+chain 0 segment 6: HMC in zeta of the adapted map 555cc867a4a2ffb4, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.5, step 0.0169, init scale 2.0

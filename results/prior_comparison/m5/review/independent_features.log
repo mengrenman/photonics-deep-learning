@@ -1,0 +1,15 @@
+pc_matern                independent 1.0000 0.9838 1.0000   summary 1.0000 0.9838 1.0000   max diff 0.0e+00; independent-points continuity: Gaussian 1.000, empirical marginals 1.000; max |corr| of compass values 0.09
+pc_qggmrf_sg0.05         independent 1.0000 1.0000 1.0000   summary 1.0000 1.0000 1.0000   max diff 0.0e+00; independent-points continuity: Gaussian 1.000, empirical marginals 1.000; max |corr| of compass values 0.07
+pc_qggmrf_sg0.1          independent 1.0000 1.0000 1.0000   summary 1.0000 1.0000 1.0000   max diff 0.0e+00; independent-points continuity: Gaussian 1.000, empirical marginals 1.000; max |corr| of compass values 0.05
+pc_gmrf                  independent 1.0000 0.9955 0.9295   summary 1.0000 0.9955 0.9295   max diff 0.0e+00; independent-points continuity: Gaussian 0.939, empirical marginals 0.930; max |corr| of compass values 0.05
+pc_gmrf_adapt            independent 0.9204 0.7125 0.5008   summary 0.9204 0.7125 0.5008   max diff 0.0e+00; independent-points continuity: Gaussian 0.516, empirical marginals 0.502; max |corr| of compass values 0.05
+pc_gmrf_adapt_burn2      independent 0.8981 0.7063 0.4888   summary 0.8981 0.7063 0.4888   max diff 0.0e+00; independent-points continuity: Gaussian 0.504, empirical marginals 0.491; max |corr| of compass values 0.08
+pc_gmrf_adapt2           independent 0.9125 0.7113 0.3038   summary 0.9125 0.7113 0.3038   max diff 0.0e+00; independent-points continuity: Gaussian 0.327, empirical marginals 0.329; max |corr| of compass values 0.19
+pc_tv_lam3.75_adapt      independent 1.0000 1.0000 0.9997   summary 1.0000 1.0000 0.9997   max diff 0.0e+00; independent-points continuity: Gaussian 1.000, empirical marginals 1.000; max |corr| of compass values 0.11
+pc_tv_lam3.75_adapt2     independent 1.0000 1.0000 1.0000   summary 1.0000 1.0000 1.0000   max diff 0.0e+00; independent-points continuity: Gaussian 1.000, empirical marginals 1.000; max |corr| of compass values 0.02
+pc_tv_lam11.25_adapt     independent 1.0000 1.0000 1.0000   summary 1.0000 1.0000 1.0000   max diff 0.0e+00; independent-points continuity: Gaussian 1.000, empirical marginals 1.000; max |corr| of compass values 0.07
+pc_tv_lam11.25_adapt2    independent 1.0000 1.0000 1.0000   summary 1.0000 1.0000 1.0000   max diff 0.0e+00; independent-points continuity: Gaussian 1.000, empirical marginals 1.000; max |corr| of compass values 0.07
+pc_tv_lam1.25_adapt      independent 1.0000 0.8950 0.7275   summary 1.0000 0.8950 0.7275   max diff 0.0e+00; independent-points continuity: Gaussian 0.677, empirical marginals 0.641; max |corr| of compass values 0.56
+pc_tv_lam8.5_adapt       independent 1.0000 1.0000 0.7500   summary 1.0000 1.0000 0.7500   max diff 0.0e+00; independent-points continuity: Gaussian 0.694, empirical marginals 0.526; max |corr| of compass values 0.94
+pc_tv_lam3.75_indep      independent 0.9775 1.0000 0.5575   summary 0.9775 1.0000 0.5575   max diff 0.0e+00; independent-points continuity: Gaussian 0.599, empirical marginals 0.500; max |corr| of compass values 0.68
+wrote results/prior_comparison/m5/independent_features.json

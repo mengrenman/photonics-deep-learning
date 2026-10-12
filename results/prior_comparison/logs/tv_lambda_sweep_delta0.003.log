@@ -1,0 +1,9 @@
+# batch_run 2026-10-11T15:54:30+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "4", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4", "MKL_NUM_THREADS": "4", "VECLIB_MAXIMUM_THREADS": "4", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/tv_lambda_sweep.py --lams 1.25 3.75 11.25 --delta 0.003 --out tv_lambda_sweep_delta0.003.json
+problem: n=48 side=2.0 eps_r=2.0 snr=30.0 seed=0; N = 2400; d_obs sha256 d1000a64d67044a0...; data check 6.486115089388395e-14
+smooth start: 100 iterations, 13.6 s
+lambda 1.25: Phi_MAP 2382.6 (N 2400), R 462.5, err_model 0.1048, err_chi 0.3217, |grad|inf 5.5e-03, 1242 its / 1290 evals, 127 s; CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+lambda 3.75: Phi_MAP 2402.7 (N 2400), R 1177.8, err_model 0.1136, err_chi 0.3488, |grad|inf 5.5e-03, 1056 its / 1114 evals, 111 s; CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+lambda 11.25: Phi_MAP 2458.8 (N 2400), R 3265.9, err_model 0.1267, err_chi 0.3892, |grad|inf 6.3e-03, 742 its / 773 evals, 83 s; CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+lambda* = 3.75 (Phi_MAP 2402.7); interpolated crossing 3.2371627273474144; wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/tv_lambda_sweep_delta0.003.json

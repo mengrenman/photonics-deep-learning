@@ -1,0 +1,14 @@
+# batch_run 2026-10-12T03:03:11+08:00 slot cpu15
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/wait_then.py --file results/prior_comparison/pc_tv_lam3.75_indep/starts.npy -- python scripts/segment_loop.py --out-dir results/prior_comparison/pc_tv_lam3.75_indep --chain-id 0 --first 0 --last 1 --samples 100 --warmup 50 --stop scripts/jobs/stop/m5v -- --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 2 --prior tv --lam 3.75 --delta 0.01 --sigma-0 1 --map-maxiter 4000 --adapt --out pc_tv_lam3.75_indep --start-theta results/prior_comparison/pc_tv_lam3.75_indep/starts.npy
+wait_then: waiting for files ['results/prior_comparison/pc_tv_lam3.75_indep/starts.npy'] meta-ok [] go None (skip None)
+wait_then: dependencies satisfied, running /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/segment_loop.py --out-dir results/prior_comparison/pc_tv_lam3.75_indep --chain-id 0 --first 0 --last 1 --samples 100 --warmup 50 --stop scripts/jobs/stop/m5v -- --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 2 --prior tv --lam 3.75 --delta 0.01 --sigma-0 1 --map-maxiter 4000 --adapt --out pc_tv_lam3.75_indep --start-theta results/prior_comparison/pc_tv_lam3.75_indep/starts.npy
+segment_loop: chain 0, segments 0..1, pending [0, 1]
+segment_loop: 2026-10-12T03:03:26+0800 starting chain 0 segment 0
+chain 0 segment 0: HMC in zeta of the adapted map a71befbbbccc469f, 50 step-size warmup + 100 samples, thin 1, trajectory length 1.0, step 0.0269, init scale 2.0
+done in 1347 s (compile 1 s): acceptance 0.860, step 0.0214, |zeta|^2/2 at the end 5485, mean Phi' -1090.4
+segment_loop: segment 0 done in 2000 s
+segment_loop: 2026-10-12T03:36:46+0800 starting chain 0 segment 1
+chain 0 segment 1: HMC in zeta of the adapted map a71befbbbccc469f, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.0, step 0.0214, init scale 2.0
+done in 1796 s (compile 2 s): acceptance 0.900, step 0.0214, |zeta|^2/2 at the end 4225, mean Phi' 522.2
+segment_loop: segment 1 done in 1804 s

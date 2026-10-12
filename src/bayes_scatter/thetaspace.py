@@ -238,6 +238,21 @@ class ThetaTarget:
         """``ZetaTarget`` in the coordinates theta = center + L_H^-T zeta (default center ``mass.theta_hat``)."""
         return ZetaTarget(self, mass, center)
 
+    def zeta_target_with_map(self, wmap):
+        """``ZetaTarget`` in the coordinates of any affine map ``wmap`` (``adapt.AffineMap``, or ``mrf.WhitenedMap``): theta =
+        wmap.to_theta(zeta). The map is a constant of the target, so the chain is an exact HMC chain for U (module docstring)."""
+        return ZetaTarget(self, None, wmap=wmap)
+
+    def potential_flat(self):
+        """The flat potential ``(theta (N,), aux) -> (U, grad U (N,), aux)`` that ``adapt`` works with."""
+        pg, shape = self._potential_and_grad, (self.n, self.n)
+
+        def potential(theta, aux):
+            u_val, g, aux_new = pg(theta.reshape(shape), aux)
+            return u_val, g.ravel(), aux_new
+
+        return potential
+
     def reparametrized_phi_fn(self, mass, center=None):
         """The callable ``(zeta, aux) -> (Phi', grad Phi', aux_new)`` of ``zeta_target(mass, center)``, for the
         samplers of ``samplers`` (Phi'(zeta) = U(theta(zeta)) - |zeta|^2/2; module docstring)."""
@@ -251,14 +266,19 @@ class ZetaTarget:
     ``(Phi', grad Phi', aux_new)`` with Phi'(zeta) = U(theta(zeta)) - |zeta|^2 / 2 (module docstring). The sampler's
     own trace is Phi', not the data misfit. ``record(zeta)`` stacks theta and eps_r = 1 + chi(theta), shape
     (2, n, n), so the Welford moments of a run give both. ``use_born`` is copied from the target.
+
+    ``wmap`` (an ``adapt.AffineMap`` or any object with ``center``, ``to_theta``, ``to_zeta`` and ``grad_to_zeta`` acting on
+    (n, n) arrays) replaces the Laplace map: the coordinates are then theta = wmap.to_theta(zeta) and ``mass`` is not needed (None).
     """
 
-    def __init__(self, target, mass, center=None):
+    def __init__(self, target, mass, center=None, wmap=None):
         self.target = target
         self.mass = mass
         self.use_born = target.use_born
-        center = mass.theta_hat if center is None else center
-        self.wmap = WhitenedMap(center, mass.chol)
+        if wmap is None:
+            center = mass.theta_hat if center is None else center
+            wmap = WhitenedMap(center, mass.chol)
+        self.wmap = wmap
         self.center = self.wmap.center
         self.shape = (target.n, target.n)
         wmap, tgt = self.wmap, target

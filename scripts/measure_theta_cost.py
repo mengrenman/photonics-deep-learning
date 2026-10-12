@@ -21,7 +21,12 @@ truth with a converged warm start, times (median and minimum of ``--reps`` repet
     matrix from the fields), ``gauss_newton_gram`` (H_GN by the Hadamard product of two Gram matrices), ``dense_JhJ``
     (H_GN from the dense J, for comparison), ``laplace_mass_total`` and its parts (Cholesky included);
   * with ``--map`` the MAP of each prior (smooth start, then L-BFGS-B in theta): iterations, evaluations, seconds, and
-    the Laplace mass build time at the MAP.
+    the Laplace mass build time at the MAP;
+  * milestone 5: the pseudo-Huber TV prior (``--tv-lam``; the cost does not depend on lambda) joins the priors above, its
+    Laplace mass is timed, ``zeta_phi_fn_adapted_tv`` is the potential in the coordinates of an adapted ``adapt.AffineMap`` (two
+    dense matrix-vector products instead of two triangular solves) and ``adaptation_window_update`` times one map update
+    (``adapt.update_map``: sample covariance of ``--window-draws`` draws, the Laplace covariance at the new center, the mixture and
+    its Cholesky factor) with its parts.
 
 Timings are wall-clock on a shared machine: every record carries the 1-minute load average before and after. Use the
 minimum, which is robust against other processes, as the cost of an idle machine, and the median as the typical one.
@@ -61,6 +66,7 @@ def worker(args):
     import numpy as np
 
     import bayes_scatter  # noqa: F401
+    from bayes_scatter import adapt as ad
     from bayes_scatter import jacobian as jb
     from bayes_scatter import mrf
     from bayes_scatter import thetaspace as ts
@@ -71,7 +77,8 @@ def worker(args):
                           prior="matern", sigma=0.5, ell=0.4, nu=1.5, mean=0.0)
     prob = rpc.build_data(cfg)
     grid, fwd, s = prob.setup.grid, prob.forward, prob.s
-    priors = {"matern": rpc.build_prior(cfg, grid), "qggmrf": mrf.QGGMRF(args.n, q=1.2, T=1.0, sigma_g=0.1, sigma_0=1.0)}
+    priors = {"matern": rpc.build_prior(cfg, grid), "qggmrf": mrf.QGGMRF(args.n, q=1.2, T=1.0, sigma_g=0.1, sigma_0=1.0),
+              "tv": mrf.PseudoHuberTV(args.n, lam=getattr(args, "tv_lam", 4.0), delta=0.01, sigma_0=1.0)}
     targets = {k: ts.ThetaTarget(fwd, p, prob.d_obs, s) for k, p in priors.items()}
     theta = jnp.asarray(prob.theta_true)
     _, _, aux = targets["matern"].potential_and_grad(theta, targets["matern"].initial_aux())  # converged warm start
@@ -110,6 +117,30 @@ def worker(args):
     zt = targets["matern"].zeta_target(mass)
     z = zt.to_zeta(theta)
     out["per_evaluation"]["zeta_phi_fn_matern"] = timed(lambda: zt.phi_fn(z, aux), r)
+    mass_tv = targets["tv"].laplace_mass(theta)
+    zt_tv = targets["tv"].zeta_target(mass_tv)
+    z_tv = zt_tv.to_zeta(theta)
+    out["per_evaluation"]["zeta_phi_fn_tv"] = timed(lambda: zt_tv.phi_fn(z_tv, aux), r)
+    amap = ad.AffineMap.from_precision_chol(np.asarray(theta), mass_tv.chol)
+    zt_ad = targets["tv"].zeta_target_with_map(amap)
+    z_ad = zt_ad.to_zeta(theta)
+    out["per_evaluation"]["zeta_phi_fn_adapted_tv"] = timed(lambda: zt_ad.phi_fn(z_ad, aux), r)
+
+    # one adaptation window update (adapt.update_map) with the real Laplace covariance at the new center
+    n_w = int(getattr(args, "window_draws", 400))
+    rng = np.random.default_rng(0)
+    draws = np.asarray(theta).ravel()[None, :] + 0.05 * rng.standard_normal((n_w, args.n * args.n))
+    lap_fn = rpc.laplace_covariance_fn(targets["tv"])
+    kappa = float(args.n * args.n)
+    ad.update_map(draws, lap_fn, kappa, prev=amap)  # warm-up (compiles the Jacobian path)
+    ups = [ad.update_map(draws, lap_fn, kappa, prev=amap)[1] for _ in range(max(2, r // 3))]
+    best = min(ups, key=lambda i: i["time_s"])
+    out["adaptation_window_update"] = {
+        "n_draws": n_w, "dim": args.n * args.n, "kappa": kappa, "total_min_s": best["time_s"],
+        "total_median_s": float(np.median([i["time_s"] for i in ups])),
+        "parts_of_fastest": {k: best[k] for k in ("time_sample_cov_s", "time_laplace_s", "time_mix_cholesky_s")},
+        "note": "time_laplace_s = Laplace mass at the new center (Nt + Nr solves, Gram product, Hessian, Cholesky) and its inverse "
+                "H^-1 = L^-T L^-1 (two dense N^3 steps); the update happens once per window (4 to 5 per adaptation)"}
 
     if args.map:
         runs = {}
@@ -143,7 +174,8 @@ def driver(args):
     for n in args.ns:
         for threads in args.threads:
             env = {**os.environ, **br.cpu_job_env(threads, os.environ.get("XLA_FLAGS"))}
-            cmd = [sys.executable, str(Path(__file__).resolve()), "--worker", "--n", str(n), "--reps", str(args.reps)]
+            cmd = [sys.executable, str(Path(__file__).resolve()), "--worker", "--n", str(n), "--reps", str(args.reps),
+                   "--tv-lam", str(args.tv_lam), "--window-draws", str(args.window_draws)]
             if args.map_n == n and threads == max(args.threads):
                 cmd.append("--map")
             print(f"n={n} threads={threads}: {' '.join(cmd[2:])}", flush=True)
@@ -159,7 +191,8 @@ def driver(args):
             results.append(rec)
             pe = rec["per_evaluation"]
             print(f"  value+grad of U (min): matern {pe['u_value_and_grad_matern']['min_s']:.4f} s, qggmrf "
-                  f"{pe['u_value_and_grad_qggmrf']['min_s']:.4f} s; load {rec['load_avg_before']:.1f} -> "
+                  f"{pe['u_value_and_grad_qggmrf']['min_s']:.4f} s, tv {pe['u_value_and_grad_tv']['min_s']:.4f} s; one adaptation "
+                  f"window update {rec['adaptation_window_update']['total_min_s']:.2f} s; load {rec['load_avg_before']:.1f} -> "
                   f"{rec['load_avg_after']:.1f}", flush=True)
     out = Path(args.out) if Path(args.out).is_absolute() else RESULTS / args.out
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -173,6 +206,8 @@ def main(argv=None):
     ap.add_argument("--n", type=int, default=48, help="worker: grid size")
     ap.add_argument("--reps", type=int, default=7)
     ap.add_argument("--map", action="store_true", help="worker: also run the MAP of four priors")
+    ap.add_argument("--tv-lam", type=float, default=4.0, help="worker: lambda of the TV prior (cost is independent of it)")
+    ap.add_argument("--window-draws", type=int, default=400, help="worker: draws in the adaptation window that is timed")
     ap.add_argument("--ns", type=int, nargs="+", default=[32, 48])
     ap.add_argument("--threads", type=int, nargs="+", default=[1, 4], help="XLA threads per worker (1 or >= 4)")
     ap.add_argument("--map-n", type=int, default=48, help="driver: grid size at which the MAP is also measured")

@@ -1,0 +1,7 @@
+problem: austria_fixed eps_r 2.0, n=48 side=2.0 (h=0.0417), data grid 96, SNR 30.0 dB, seed 0; d_obs sha256 efd5e84fa5f9a77f...
+operating point: grid model error 0.85% of ||d|| against noise 3.16% (ratio 0.27); Phi(truth) 2578 (N = 2400)
+prior gmrf: std of theta (mean over pixels) 0.5
+smooth start: 100 iterations, 109 evaluations, 30.1 s; U 3664.7 (Phi 3638.9, R 25.8)
+MAP: 702 iterations, 734 evaluations, 174.1 s; U 2400.13 = Phi 2367.00 + R 33.13 (N = 2400); |grad U|_inf 9.07e-03; CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH
+Laplace mass: 1.27 s (fields 0.77, Gram 0.18, Cholesky 0.13); Jacobian check 1.3898930884835656e-10; Laplace std of theta 0.2874 to 0.3711
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/prepared.json and prepared.npz (total 212 s)

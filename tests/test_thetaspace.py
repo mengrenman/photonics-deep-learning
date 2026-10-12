@@ -8,6 +8,7 @@ import jax.numpy as jnp
 import numpy as np
 import pytest
 
+from bayes_scatter import adapt as ad
 from bayes_scatter import inference as inf
 from bayes_scatter import jacobian as jb
 from bayes_scatter import mrf
@@ -266,3 +267,64 @@ def test_hmc_in_zeta_recovers_the_exact_posterior_and_a_broken_target_fails(gaus
                                   gauss["mean"], np.diag(gauss["cov"]))
     assert not _agrees(bad)
     assert bad["z_mean_rms"] > 5.0 and bad["z_var_rms"] > 5.0
+
+
+# ---------------------------------------------------------------------------------------------
+# Milestone 5: ZetaTarget in the coordinates of an arbitrary affine map (adapt.AffineMap)
+# ---------------------------------------------------------------------------------------------
+
+
+def test_zeta_target_with_an_affine_map_is_u_of_theta_and_flat_potential_matches(prob):
+    t = prob["targets"]["qggmrf"]
+    rng = np.random.default_rng(21)
+    A = rng.standard_normal((N_PIX, N_PIX))
+    cov = 0.01 * (A @ A.T + N_PIX * np.eye(N_PIX))
+    amap = ad.AffineMap.from_covariance(np.asarray(prob["theta0"]), cov)
+    zt = t.zeta_target_with_map(amap)
+    aux = t.initial_aux()
+    assert zt.mass is None and zt.center.shape == (6, 6) and zt.wmap is amap
+    z = jnp.asarray(0.6 * rng.standard_normal((6, 6)))
+    phi_p, g_z, _ = zt.phi_fn(z, aux)
+    theta = zt.to_theta(z)
+    np.testing.assert_allclose(float(phi_p) + 0.5 * float(jnp.sum(z * z)), float(t.potential(theta, aux)[0]), rtol=1e-12)
+    np.testing.assert_allclose(np.asarray(zt.to_zeta(theta)), np.asarray(z), atol=1e-10)
+    auto = jax.grad(lambda zz: t.potential(zt.to_theta(zz), aux)[0] - 0.5 * jnp.sum(zz * zz))(z)
+    np.testing.assert_allclose(np.asarray(g_z), np.asarray(auto), rtol=1e-8, atol=1e-8)
+    np.testing.assert_allclose(np.asarray(zt.record(z)[0]), np.asarray(theta), rtol=1e-13)
+    # the flat potential of adapt: same value, the gradient raveled
+    u_flat, g_flat, _ = t.potential_flat()(theta.ravel(), aux)
+    u_ref, g_ref, _ = t.potential_and_grad(theta, aux)
+    np.testing.assert_allclose(float(u_flat), float(u_ref), rtol=1e-13)
+    np.testing.assert_allclose(np.asarray(g_flat), np.asarray(g_ref).ravel(), rtol=1e-12)
+    # the same map through adapt.zeta_phi_fn gives the same sampler potential and gradient
+    phi_flat = ad.zeta_phi_fn(t.potential_flat(), amap.center.ravel(), amap.chol)
+    p2, g2, _ = phi_flat(z.ravel(), aux)
+    np.testing.assert_allclose(float(p2), float(phi_p), rtol=1e-12)
+    np.testing.assert_allclose(np.asarray(g2), np.asarray(g_z).ravel(), rtol=1e-9, atol=1e-9)
+
+
+def test_exact_posterior_map_makes_the_zeta_potential_flat_and_a_wrong_map_still_samples_the_exact_posterior(gauss):
+    """Linear-Gaussian problem: the map with the exact posterior mean and covariance gives Phi' = const (zeta ~ N(0, I) exactly);
+    a distorted, off-center map gives the same posterior from adapt.sample_chain (variable-length HMC), whatever the map."""
+    tgt = gauss["target"]
+    exact = ad.AffineMap.from_covariance(gauss["mean"].reshape(6, 6), gauss["cov"])
+    zt = tgt.zeta_target_with_map(exact)
+    aux = tgt.initial_aux()
+    z = jnp.asarray(np.random.default_rng(22).standard_normal((6, 6)))
+    p0 = float(zt.phi_fn(jnp.zeros((6, 6)), aux)[0])
+    p1, g1, _ = zt.phi_fn(z, aux)
+    np.testing.assert_allclose(float(p1), p0, rtol=1e-9, atol=1e-7)  # U(mean + A z) = U_min + |z|^2/2: Phi' is constant
+    np.testing.assert_allclose(np.asarray(g1), 0.0, atol=1e-6)
+    sd = np.sqrt(np.diag(gauss["cov"]))
+    theta_off = gauss["mean"] + 3.0 * sd * np.random.default_rng(13).standard_normal(N_PIX)
+    mass = _distorted_mass(gauss, theta_off.reshape(6, 6))
+    wrong = ad.AffineMap.from_covariance(theta_off.reshape(6, 6), np.linalg.inv(mass.H))
+    ztw = tgt.zeta_target_with_map(wrong)
+    run = jax.jit(lambda k, x0: ad.sample_chain(k, ztw.phi_fn, x0, aux, eps=0.3, traj_length=1.75, max_leapfrog=40, n_samples=3000,
+                                                record_fn=ztw.record))
+    keys = jax.random.split(jax.random.key(31), 4)
+    starts = 1.5 * jax.random.normal(jax.random.key(32), (4, 6, 6), dtype=jnp.float64)
+    outs = [run(keys[c], starts[c]) for c in range(4)]
+    th = np.stack([np.asarray(o["samples"][:, 0]) for o in outs]).reshape(4, -1, N_PIX)
+    cmp = inf.compare_to_gaussian(th, gauss["mean"], np.diag(gauss["cov"]))
+    assert _agrees(cmp)

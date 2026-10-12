@@ -13,7 +13,13 @@ For each run of scripts/run_prior_comparison.py (summary.json and chains.npz mus
   * bins the bias (mean - truth), the posterior std and z by the signed distance to the object boundary in pixels
     (Euclidean distance rounded to pixels, positive inside the object, negative outside; +-1 are the pixels next to the
     boundary, the "ring");
-  * reports the signed bias sums of the edge band (blur: negative inside, positive outside).
+  * reports the signed bias sums of the edge band (blur: negative inside, positive outside);
+  * reports the bias of log E[eps_r] (the log of the posterior mean of the permittivity, Welford mean of eps_r over all steps) next to the
+    bias of E[theta] = E[log eps_r], by distance. They differ by about sd^2 / 2 (Jensen) where the posterior is wide: the posterior mean of
+    theta of a rough posterior is lower than the log of the mean permittivity, so a comparison of E[theta] biases across priors whose posterior
+    sd differs (the adapted GMRF, sd 0.34, against Matern, sd 0.06) is not like-for-like; the log E[eps_r] bias is the one to compare;
+  * reports, per posterior draw, the mean of theta over the pixels at d = -1 (its mean and sd across draws: the blur is in each draw, not only
+    in the average) and quantiles of the pixel values at d = -1 pooled over draws.
 
 Writes <out>/edge_analysis.json and <out>/edge_profile.png.
 """
@@ -82,13 +88,37 @@ def analyze(run, base):
                                             truth, chi_true)
     dist = signed_distance(chi_true)
     bias, zz = mean - truth, (mean - truth) / std
+    chain_bias = theta.mean(axis=1) - truth  # (chains, n, n): each chain's own posterior-mean bias
     prof = {}
     for b in BINS:
         m = dist == b
         if m.any():
+            per = [float(chain_bias[c][m].mean()) for c in range(chains)]
             prof[str(b)] = {"pixels": int(m.sum()), "bias": float(bias[m].mean()), "abs_bias": float(np.abs(bias[m]).mean()),
-                            "std": float(std[m].mean()), "z": float(zz[m].mean()), "frac_abs_z_gt_3": float((np.abs(zz[m]) > 3).mean())}
+                            "std": float(std[m].mean()), "z": float(zz[m].mean()), "frac_abs_z_gt_3": float((np.abs(zz[m]) > 3).mean()),
+                            # the bias of each chain's own mean in this bin: its spread is the Monte Carlo error of "bias"
+                            "bias_per_chain": per,
+                            "bias_mc_error": float(np.std(per, ddof=1) / np.sqrt(chains)) if chains > 1 else float("nan")}
     out["profile_by_signed_distance_to_edge_px"] = prof
+    log_bias = np.log(w_mean[1]) - truth  # bias of log E[eps_r]
+    far_bg = np.abs(dist) >= 8
+    out["log_mean_eps_bias"] = {
+        "by_distance": {str(b): float(log_bias[dist == b].mean()) for b in BINS if (dist == b).any()},
+        "bias_d-1": float(log_bias[dist == -1].mean()), "bias_d+2": float(log_bias[dist == 2].mean()),
+        "theta_bias_d-1": float(bias[dist == -1].mean()), "theta_bias_d+2": float(bias[dist == 2].mean()),
+        "mean_log_eps_minus_theta_mean_far_background": float((log_bias - bias)[far_bg & (dist < 0)].mean()) if (far_bg & (dist < 0)).any() else None,
+        "half_variance_far_background": float((0.5 * std**2)[far_bg & (dist < 0)].mean()) if (far_bg & (dist < 0)).any() else None,
+        "note": "log E[eps_r] - theta_true; E[theta] - theta_true is 'profile_by_signed_distance_to_edge_px'. The two differ by ~ sd^2 / 2."}
+    ring = dist == -1
+    draw_ring = theta[:, :, ring].mean(axis=-1) - truth[ring].mean()  # (chains, N): bias of the ring-pixel mean of every draw
+    vals = theta[:, :, ring].ravel()
+    out["per_draw_edge_blur"] = {
+        "pixels_at_d-1": int(ring.sum()), "mean_over_pixels_of_draw_bias_d-1": float(draw_ring.mean()),
+        "sd_across_draws": float(draw_ring.std(ddof=1)), "min_over_draws": float(draw_ring.min()), "max_over_draws": float(draw_ring.max()),
+        "pixel_value_quantiles_d-1": {q: float(np.quantile(vals, float(q))) for q in ("0.01", "0.25", "0.5", "0.75", "0.99")},
+        "frac_pixel_values_above_0.6_d-1": float((vals > 0.6).mean()), "true_edge_jump_log2": float(np.log(2.0)),
+        "note": "mean over the d = -1 pixels of theta - truth, per draw: if the average blurred sharp edges at random positions the draws "
+                "would show a bimodal pixel distribution (values near 0 and near log 2) and a large draw-to-draw spread of this mean"}
     band = np.abs(dist) == 1
     out["edge_band"] = {"pixels": int(band.sum()), "frac_of_doi": float(band.mean()),
                         "frac_abs_z_gt_3": float((np.abs(zz[band]) > 3).mean()),
@@ -122,7 +152,7 @@ def main(argv=None):
     fig = Figure(figsize=(11, 3.4), layout="constrained")
     ax = fig.subplots(1, 3)
     xs = BINS
-    main_runs = [r for r in profs if r in DEFAULT_RUNS[:4]] or list(profs)  # the robustness controls are in the JSON only
+    main_runs = [r for r in profs if r not in DEFAULT_RUNS[4:]] or list(profs)  # the robustness controls are in the JSON only
     for r in main_runs:
         prof = profs[r]
         lab = r.replace("pc_", "") + ("" if res[r]["converged"] else " (unconverged)")

@@ -1,0 +1,2 @@
+# manual launch 2026-10-11T20:39:31+08:00 (extension, not through batch_run)
+chain 3 segment 1: HMC in zeta of the adapted map 59c6b7a16b226a96, 0 step-size warmup + 400 samples, thin 1, trajectory length 1.0, step 0.0231, init scale 2.0

@@ -147,6 +147,27 @@ def staged(tmp_path_factory):
     return {"root": root, "one": one, "staged": st, "first_segment": fin, "common": common}
 
 
+def test_skip_segments_discards_the_first_segments_as_burn_in_and_keeps_the_cost(staged, tmp_path):
+    full = json.loads((staged["staged"] / "summary.json").read_text())
+    d = tmp_path / "skip1"
+    shutil.copytree(staged["staged"], d)
+    rpc.main(staged["common"] + ["--stage", "finalize", "--skip-segments", "1", "--out", str(d)])
+    s = json.loads((d / "summary.json").read_text())
+    z_full, z = np.load(staged["staged"] / "chains.npz"), np.load(d / "chains.npz")
+    assert z["theta"].shape[1] == 20 and z_full["theta"].shape[1] == 40
+    np.testing.assert_array_equal(z["theta"], z_full["theta"][:, 20:])  # the draws of segment 1 only
+    assert s["sampler"]["segments"] == 1 and s["sampler"]["samples"] == 20 and s["sampler"]["samples_per_segment"] == [20]
+    assert s["sampler"]["warmup"] == full["sampler"]["warmup"] + 20  # the dropped recorded draws count as warmup
+    assert "discarded as burn-in" in s["sampler"]["starts"] and s["sampler"]["starts"].startswith(full["sampler"]["starts"])
+    np.testing.assert_allclose(s["sampler"]["wall_s_per_chain"], full["sampler"]["wall_s_per_chain"])  # nothing computed is forgotten
+    assert s["sampler"]["n_phi_evals_per_chain"] == full["sampler"]["n_phi_evals_per_chain"]
+    # the Welford moments follow the kept draws
+    np.testing.assert_allclose(z["welford_mean"][:, 0], z["theta"].mean(axis=1), atol=1e-6)  # the stored draws are float32
+    with pytest.raises(SystemExit, match="leaves no segment"):
+        rpc.main(staged["common"] + ["--stage", "finalize", "--skip-segments", "2", "--out", str(d)])
+    assert rpc.discard_burn_in([{"a": 1}], 0) == [{"a": 1}]
+
+
 def test_staged_run_with_one_segment_reproduces_the_single_process_run(staged):
     a, b = np.load(staged["one"] / "chains.npz"), np.load(staged["first_segment"] / "chains.npz")
     for key in ("theta", "phi_physical", "welford_mean", "welford_var", "accept", "step", "theta_hat"):
@@ -370,7 +391,8 @@ def test_thread_cap_is_imported_before_numpy_in_every_standalone_script():
     heavy = {"numpy", "scipy", "jax", "matplotlib", "bayes_scatter"}
     checked = []
     for name in ("run_prior_comparison", "compare_priors", "edge_analysis", "convergence_audit", "prior_energy_audit",
-                 "check_data_threads", "span_test"):
+                 "check_data_threads", "span_test", "tv_lambda_sweep", "resolution_analysis", "feature_scales", "lambda_band",
+                 "equal_length_audit", "start_drift_audit", "make_overdispersed_starts", "cross_run_check", "check_features_independent"):
         tree = ast.parse((SCRIPTS / f"{name}.py").read_text())
         first_heavy = first_cap = None
         for i, node in enumerate(tree.body):
@@ -389,7 +411,7 @@ def test_thread_cap_is_imported_before_numpy_in_every_standalone_script():
         else:
             assert first_cap is not None and first_heavy is not None and first_cap < first_heavy, name
         checked.append(name)
-    assert len(checked) == 7
+    assert len(checked) == 16
     import _threadcap
 
     import os
@@ -490,6 +512,10 @@ def test_edge_analysis_reports_the_chain_to_chain_spread_of_the_miscoverage_frac
     pc = res["qg"]["z_per_chain_frac_abs_z_gt_3"]
     assert len(pc["values"]) == 2 and pc["min"] <= pc["max"] and pc["sd"] >= 0.0
     assert pc["mc_error_of_pooled"] == pytest.approx(pc["sd"] / np.sqrt(2))
+    # the bias of each bin is the mean of the chains' own biases (equal draws per chain), with their spread as its Monte Carlo error
+    for b in res["qg"]["profile_by_signed_distance_to_edge_px"].values():
+        assert len(b["bias_per_chain"]) == 2 and np.mean(b["bias_per_chain"]) == pytest.approx(b["bias"], abs=1e-9)
+        assert b["bias_mc_error"] == pytest.approx(np.std(b["bias_per_chain"], ddof=1) / np.sqrt(2))
 
 
 def test_check_data_threads_compares_arrays_in_noise_units():
@@ -541,3 +567,427 @@ def test_convergence_audit_update_keeps_the_entries_of_other_runs(runs, tmp_path
     assert json.loads(out.read_text()).keys() == {"qg", "mat"}
     ca.main(["mat", "--dir", str(runs["root"]), "--null-reps", "3", "--out", str(out)])  # without --update: replaced
     assert json.loads(out.read_text()).keys() == {"mat"}
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Milestone 5: the pseudo-Huber TV prior in the runner, the lambda sweep, and the adapted affine map (DESIGN 12)
+# ---------------------------------------------------------------------------------------------------------------
+
+ADAPT_TINY = ["--adapt", "--adapt-init", "10", "--adapt-first-window", "10", "--adapt-windows", "2", "--adapt-final", "10",
+              "--adapt-block", "5"]
+
+
+@pytest.fixture(scope="module")
+def tv_run(tmp_path_factory):
+    root = tmp_path_factory.mktemp("tv")
+    rpc.main(TINY + ["--prior", "tv", "--lam", "3", "--delta", "0.01", "--out", str(root / "tv")])
+    return root
+
+
+def test_the_runner_registers_the_tv_prior_and_records_its_parameters(tv_run):
+    d = tv_run / "tv"
+    s = json.loads((d / "summary.json").read_text())
+    assert s["prior"]["kind"] == "tv" and s["prior"]["lam"] == 3.0 and s["prior"]["delta"] == 0.01
+    assert s["prior"]["prior_summary"]["method"].startswith("HMC")  # prior std by HMC on R alone, as for the q-GGMRF
+    assert s["args"]["lam"] == 3.0 and s["laplace"]["jacobian_check_rel_err"] < 1e-8
+    assert s["sampler"]["max_solver_residual_final_states"] < 1e-8 and np.isfinite(s["phi_physical"]["mean"])
+    assert "adaptation" not in s and s["sampler"]["name"].startswith("hmc (zeta coordinates, theta = theta_hat")  # default path
+    prob = rpc.build_data(rpc.parse_args(TINY + ["--prior", "tv", "--out", "x"]))
+    assert prob.sha == s["data"]["d_obs_sha256"]  # the data do not depend on the prior
+    args = rpc.parse_args(TINY + ["--prior", "tv", "--lam", "3", "--sigma-0", "0.5", "--mu", "0.1", "--out", "x"])
+    prior = rpc.build_prior(args, rpc.build_context(args).grid)
+    assert prior.describe()["sigma_0"] == 0.5 and float(prior.mean.mean()) == pytest.approx(0.1)
+    with pytest.raises(SystemExit):
+        rpc.parse_args(TINY + ["--prior", "tv", "--stage", "adapt", "--out", "x"])  # --stage adapt needs --adapt
+
+
+def test_a_prepared_json_from_before_milestone_5_is_still_accepted(tv_run, tmp_path):
+    """load_prepared compares the posterior-defining arguments; the milestone-4 files have no lam / delta."""
+    d = tmp_path / "prep"
+    rpc.main(TINY + ["--prior", "matern", "--stage", "prepare", "--out", str(d)])
+    info = json.loads((d / "prepared.json").read_text())
+    del info["args"]["lam"], info["args"]["delta"]
+    (d / "prepared.json").write_text(json.dumps(info))
+    ctx = rpc.build_context(rpc.parse_args(TINY + ["--prior", "matern", "--stage", "chain", "--chain-id", "0", "--out", str(d)]))
+    rpc.load_prepared(ctx, d)
+    info["args"]["sigma"] = 0.7
+    (d / "prepared.json").write_text(json.dumps(info))
+    with pytest.raises(SystemExit, match="different data or prior arguments"):
+        rpc.load_prepared(ctx, d)
+
+
+def test_prior_energy_audit_covers_the_tv_run_and_the_tv_step_over_ramp_rows(tv_run, tmp_path):
+    import prior_energy_audit as pea
+
+    res = pea.main(["tv", "--dir", str(tv_run), "--out", str(tmp_path / "energy.json")])
+    e = res["runs"]["tv"]
+    assert e["prior"] == "tv" and e["R"]["map"] == pytest.approx(e["R"]["map_in_summary"], rel=1e-10)
+    assert e["R"]["truth_minus_map"] == pytest.approx(e["R"]["truth"] - e["R"]["map"])
+    steps = {st["label"]: st for st in res["step_cost"]}
+    tv = [steps[lab] for lab, _, _ in pea.TV_FAMILY]
+    for st in tv:
+        assert st["sharp"] >= st["ramp_2"] >= st["ramp_4"] >= st["ramp_8"] > 0 and all(st[f"ratio_{k}"] >= 1.0 for k in pea.RAMPS)
+    # the DESIGN 12.1 ratio at delta = 0.01 is 1.106 for the 8-pixel ramp (1.014 for 2 pixels), not 'a few percent'
+    assert tv[0]["ratio_8"] == pytest.approx(1.106, abs=0.002) and tv[0]["ratio_2"] == pytest.approx(1.0145, abs=0.001)
+    assert tv[1]["ratio_8"] == pytest.approx(1.031, abs=0.002) and tv[2]["ratio_8"] == pytest.approx(1.010, abs=0.001)
+    q = steps["q-GGMRF q 1.2, T 1, sigma_g 0.05 (experiment)"]
+    assert q["ratio_8"] > 2.0 > 1.2 > tv[0]["ratio_8"]
+    # lam scales the cost, not the ratio
+    assert pea.step_cost_tv(5.0, 0.01)["sharp"] == pytest.approx(5.0 * pea.step_cost_tv(1.0, 0.01)["sharp"])
+    assert pea.step_cost_tv(5.0, 0.01)["ratio_8"] == pytest.approx(pea.step_cost_tv(1.0, 0.01)["ratio_8"])
+
+
+def test_tv_lambda_sweep_runs_the_map_path_per_lambda_and_picks_the_discrepancy_value(tmp_path):
+    import tv_lambda_sweep as sw
+
+    common = ["--n", "8", "--n-tx", "6", "--n-rx", "8", "--start-maxiter", "10", "--map-maxiter", "40", "--reference-run", "none",
+              "--dir", str(tmp_path)]
+    out = sw.main(common + ["--lams", "0.3", "3"])
+    assert set(out["runs"]) == {"0.3", "3.0"} and out["problem"]["n_data"] == 48
+    for r in out["runs"].values():
+        assert r["phi"] > 0 and r["R"] > 0 and r["U"] == pytest.approx(r["phi"] + r["R"])
+        assert r["nit"] > 0 and r["nfev"] >= r["nit"] and np.isfinite(r["grad_inf"]) and r["time_s"] > 0
+        assert r["err_model"] > 0 and r["err_chi"] > 0 and 0.0 <= r["pairs_below_delta"] <= 1.0 and r["tv"] > 0
+        assert set(r["u_convergence"]) >= {"u_end", "u_drop_last_10pct", "nfev"} and r["u_convergence"]["u_drop_last_10pct"] >= 0
+        assert r["laplace_theta_std"]["inside"] > 0
+    # a larger lambda costs more prior energy and fits the data less
+    assert out["runs"]["3.0"]["R"] > out["runs"]["0.3"]["R"] and out["runs"]["3.0"]["phi"] > out["runs"]["0.3"]["phi"]
+    star = out["lambda_star"]
+    assert star["lam"] == min(out["runs"].values(), key=lambda r: abs(r["phi"] - 48))["lam"]
+    assert (tmp_path / "tv_lambda_sweep.json").exists() and (tmp_path / "tv_lambda_sweep_maps.npz").exists()
+    assert (tmp_path / "tv_lambda_sweep.png").exists()
+    assert np.load(tmp_path / "tv_lambda_sweep_maps.npz")["theta_hat_lam3.0"].shape == (8, 8)
+    # --update keeps the lambdas that are there and re-chooses lambda* over all of them
+    out2 = sw.main(common + ["--lams", "1", "--update"])
+    assert set(out2["runs"]) == {"0.3", "1.0", "3.0"} and out2["runs"]["3.0"]["phi"] == out["runs"]["3.0"]["phi"]
+    out3 = sw.main(common + ["--lams", "1"])  # without --update the file is replaced
+    assert set(out3["runs"]) == {"1.0"}
+
+
+def test_choose_lambda_star_is_the_closest_phi_to_n_and_interpolates_the_crossing():
+    import tv_lambda_sweep as sw
+
+    runs = {"1.0": {"lam": 1.0, "phi": 2379.0}, "3.0": {"lam": 3.0, "phi": 2394.0}, "10.0": {"lam": 10.0, "phi": 2447.0}}
+    star, crossing = sw.choose_lambda_star(runs, 2400)
+    assert star["lam"] == 3.0 and crossing == pytest.approx(np.exp(np.log(3.0) + (6.0 / 53.0) * np.log(10.0 / 3.0)))
+    runs["4.5"] = {"lam": 4.5, "phi": 2405.0}
+    star, _ = sw.choose_lambda_star(runs, 2400)
+    assert star["lam"] == 4.5  # |5| < |6|
+    assert sw.choose_lambda_star({"1.0": {"lam": 1.0, "phi": 2390.0}}, 2400)[1] is None  # no crossing in the sweep
+    edge = np.zeros((8, 8))
+    edge[2:5, 2:5] = 1.0
+    th = np.zeros((8, 8))
+    th[2:5, 2:5] = 0.5
+    th[1, 3] = 0.2  # a pixel just outside
+    b = sw.edge_bias(th, np.zeros((8, 8)), edge)
+    assert b["-1"] == pytest.approx(0.2 / np.sum(sw.ea.signed_distance(edge) == -1)) and b["1"] == pytest.approx(0.5)
+
+
+@pytest.fixture(scope="module")
+def adapted(tmp_path_factory):
+    """The tiny TV problem run with --adapt in stages: prepare, adapt, 2 chains x 2 segments, finalize; and in one process (all)."""
+    root = tmp_path_factory.mktemp("adapted")
+    common = TINY + ["--prior", "tv", "--lam", "3"] + ADAPT_TINY
+    st = root / "staged"
+    rpc.main(common + ["--stage", "prepare", "--out", str(st)])
+    rpc.main(common + ["--stage", "adapt", "--out", str(st)])
+    for seg in (0, 1):
+        for c in (0, 1):
+            rpc.main(common + ["--stage", "chain", "--chain-id", str(c), "--segment", str(seg), "--out", str(st)])
+    fin = root / "first_segment"
+    shutil.copytree(st, fin)
+    rpc.main(common + ["--stage", "finalize", "--max-segments", "1", "--out", str(fin)])
+    rpc.main(common + ["--stage", "finalize", "--out", str(st)])
+    one = root / "one"
+    rpc.main(common + ["--out", str(one)])
+    return {"root": root, "staged": st, "first_segment": fin, "one": one, "common": common}
+
+
+def test_readapt_builds_a_new_run_from_the_recorded_draws_and_it_can_be_sampled(adapted, tmp_path):
+    import readapt_map as rm
+
+    src = adapted["staged"]
+    dst = adapted["root"] / "readapted"
+    common = adapted["common"]
+    up = rm.main(["--from", str(src), "--to", str(dst), "--kappa-per-dim", "1.0", "--"] + common)
+    assert up["n_draws"] == 2 * 40 and up["weight"] == pytest.approx(64 / (80 + 64))  # 2 chains x (2 x 20) draws, kappa = N = 64
+    amap_old, info_old = rpc.load_adaptation(src, 8)
+    amap, info = rpc.load_adaptation(dst, 8)
+    assert amap.digest() != amap_old.digest() and info["map_digest"] == amap.digest() and info["source_run"] == src.name
+    assert [h["phase"] for h in info["history"]] == ["init", "window0", "window1", "final", "readapt"]
+    assert info["history"][-1]["map_digest_before"] == amap_old.digest()[:16] and info["eps"] == info_old["eps"]
+    starts = np.load(dst / "starts.npy")
+    assert starts.shape == (2, 8, 8)
+    for c in (0, 1):  # the starts are the chains' final states
+        np.testing.assert_allclose(starts[c], rpc.load_segment(rpc.segment_path(src, c, 1))["theta_final"])
+    # the new map is the source's window mean and the mixture: its center is the pooled mean of the draws
+    draws = np.concatenate([np.concatenate([rpc.load_segment(rpc.segment_path(src, c, j))["theta"] for j in (0, 1)]).reshape(-1, 64)
+                            for c in (0, 1)])
+    np.testing.assert_allclose(np.asarray(amap.center_np).ravel(), draws.mean(axis=0), atol=1e-10)
+    # an ordinary adapted run from here on: chains start at the stored states, the segment carries the NEW digest, the old run is intact
+    for c in (0, 1):
+        rpc.main(common + ["--stage", "chain", "--chain-id", str(c), "--segment", "0", "--start-theta", str(dst / "starts.npy"),
+                           "--out", str(dst)])
+    seg = rpc.load_segment(rpc.segment_path(dst, 0, 0))
+    assert seg["adapt_digest"] == amap.digest() and rpc.load_segment(rpc.segment_path(src, 0, 0))["adapt_digest"] == amap_old.digest()
+    s = rpc.main(common + ["--stage", "finalize", "--out", str(dst)])
+    assert s["sampler"]["segments"] == 1 and s["sampler"]["starts"] == "start-theta file"
+    with pytest.raises(SystemExit, match="already holds segment files"):
+        rm.main(["--from", str(src), "--to", str(dst), "--"] + common)
+
+
+def test_adapt_stage_writes_the_frozen_map_and_the_history(adapted):
+    d = adapted["staged"]
+    info = json.loads((d / "adaptation.json").read_text())
+    z = np.load(d / "adapted_map.npz")
+    assert set(z.files) == {"center", "chol", "eps", "traj_length", "max_leapfrog", "theta_final"}
+    N = 64
+    assert z["chol"].shape == (N, N) and np.allclose(z["chol"], np.tril(z["chol"])) and np.all(np.diag(z["chol"]) > 0)
+    amap, ainfo = rpc.load_adaptation(d, 8)
+    assert amap.digest() == info["map_digest"] and amap.shape == (8, 8) and ainfo["eps"] == pytest.approx(float(z["eps"]))
+    assert [h["phase"] for h in info["history"]] == ["init", "window0", "window1", "final"]
+    assert [h["updated"] for h in info["history"]] == [False, True, True, False]
+    assert info["history"][-1]["map_digest_before"] == info["map_digest"][:16]  # frozen before anything is recorded
+    assert info["kappa"] == N and info["config"]["traj_length"] == 1.75 and info["config"]["target_accept"] == 0.8
+    assert all(u > 0 for u in info["update_time_s"]) and len(info["update_time_s"]) == 2
+    up = info["history"][1]["update"]
+    assert up["weight"] == pytest.approx(N / (10 + N)) and up["n_draws"] == 10
+    assert info["n_grad_evals"] > 0 and info["eps"] > 0 and info["n_leapfrog0"] >= 1
+    # the map is a valid Cholesky factor of a positive definite covariance, centered inside the DOI's range of theta
+    assert np.linalg.eigvalsh(amap.covariance).min() > 0 and np.abs(z["center"]).max() < 3.0
+
+
+def test_adapted_segments_carry_the_map_digest_and_continue_with_the_frozen_step(adapted):
+    d = adapted["staged"]
+    digest = json.loads((d / "adaptation.json").read_text())["map_digest"]
+    segs = {(c, j): rpc.load_segment(rpc.segment_path(d, c, j)) for c in (0, 1) for j in (0, 1)}
+    for (c, j), s in segs.items():
+        assert s["adapt_digest"] == digest and s["n_phi_evals"] > 0 and s["traj_length"] == 1.75
+        assert s["mean_leapfrog"] >= 1 and s["theta"].shape == (20, 8, 8) and s["mean"].shape == (2, 8, 8)
+        np.testing.assert_allclose(s["mass_theta"], np.load(d / "adapted_map.npz")["center"].reshape(8, 8))
+    assert segs[(0, 0)]["n_warmup"] == 10 and segs[(0, 1)]["n_warmup"] == 0
+    assert segs[(0, 1)]["step"] == pytest.approx(segs[(0, 0)]["step"])  # the step is frozen in a continuation
+    assert segs[(0, 0)]["step"] != segs[(1, 0)]["step"]  # each chain adapts its own step (the map is shared)
+    assert not np.allclose(segs[(0, 0)]["theta"], segs[(0, 1)]["theta"])
+    # a recorded segment is a deterministic function of (map, step, key, start): running the same segment again reproduces it
+    again = adapted["root"] / "again"
+    shutil.copytree(d, again)
+    rpc.segment_path(again, 0, 0).unlink()
+    rpc.main(adapted["common"] + ["--stage", "chain", "--chain-id", "0", "--segment", "0", "--out", str(again)])
+    new = rpc.load_segment(rpc.segment_path(again, 0, 0))
+    np.testing.assert_allclose(new["theta"], segs[(0, 0)]["theta"], rtol=1e-9, atol=1e-10)
+    assert new["step"] == pytest.approx(segs[(0, 0)]["step"], rel=1e-9) and new["n_phi_evals"] == segs[(0, 0)]["n_phi_evals"]
+
+
+def test_adapted_summary_has_the_adaptation_block_and_counts_the_gradient_evaluations(adapted):
+    s = json.loads((adapted["staged"] / "summary.json").read_text())
+    info = json.loads((adapted["staged"] / "adaptation.json").read_text())
+    assert "adapted affine map" in s["sampler"]["name"] and s["sampler"]["segments"] == 2 and s["sampler"]["samples"] == 40
+    assert s["sampler"]["jitter"].startswith("L uniform") and s["sampler"]["mass"].startswith("adapted affine map")
+    assert s["adaptation"]["map_digest"] == info["map_digest"] and len(s["adaptation"]["history"]) == 4
+    assert s["sampler"]["step0"] == pytest.approx(info["eps"])
+    segs = [rpc.load_segment(rpc.segment_path(adapted["staged"], 0, j)) for j in (0, 1)]
+    assert s["sampler"]["n_phi_evals_per_chain"] == sum(x["n_phi_evals"] for x in segs)
+    assert s["sampler"]["max_solver_residual_final_states"] < 1e-8
+    z = np.load(adapted["staged"] / "chains.npz")
+    assert z["theta"].shape == (2, 40, 8, 8) and np.all(np.isfinite(z["phi_physical"]))
+    assert 0.0 < s["sampler"]["acceptance"]["mean"] <= 1.0
+    # the physical misfit is that of the stored draws, not the sampler's Phi'
+    assert not np.allclose(z["phi_prime"], z["phi_physical"])
+
+
+def test_adapted_chains_start_around_the_final_state_of_the_adaptation_chain_unless_told_to_use_the_center(adapted):
+    """The GMRF pilot: every proposal from the map center (a window mean, not a visited state) was rejected."""
+    d = adapted["staged"]
+    z = np.load(d / "adapted_map.npz")
+    args = rpc.parse_args(adapted["common"] + ["--stage", "chain", "--chain-id", "0", "--out", str(d)])
+    ctx = rpc.build_context(args)
+    amap, info = rpc.load_adaptation(d, 8)
+    np.testing.assert_allclose(info["theta_final"].ravel(), z["theta_final"])
+    seen = {}
+
+    class Capture:  # records the start that run_segment hands to the runner
+        def __init__(self, runner):
+            self.zt, self.eps0, self.xi_ref = runner.zt, runner.eps0, runner.xi_ref
+
+        def run(self, key, xi0, aux0, **kw):
+            seen["xi0"] = np.asarray(xi0)
+            return {}
+
+    final = rpc.AdaptedChainRunner(ctx, amap, info, args)
+    np.testing.assert_allclose(np.asarray(amap.to_theta(final.xi_ref)).ravel(), z["theta_final"], atol=1e-10)
+    rpc.run_segment(Capture(final), args, 0, 0)
+    k_init, _ = rpc.chain_streams(args)
+    scatter = np.asarray(final.zt.overdispersed_starts(k_init, args.chains, args.init_scale)[0])
+    np.testing.assert_allclose(seen["xi0"], np.asarray(final.xi_ref) + scatter, atol=1e-12)
+    center = rpc.AdaptedChainRunner(ctx, amap, info, rpc.parse_args(adapted["common"] + ["--adapt-start", "center", "--stage", "chain",
+                                                                                           "--chain-id", "0", "--out", str(d)]))
+    assert np.all(np.asarray(center.xi_ref) == 0.0)
+    rpc.run_segment(Capture(center), args, 0, 0)  # run_segment reads xi_ref from the runner it is given
+    np.testing.assert_allclose(seen["xi0"], scatter, atol=1e-12)
+    assert "final state of the adaptation chain" in json.loads((d / "summary.json").read_text())["sampler"]["starts"]
+
+
+def test_one_process_run_with_adapt_equals_the_staged_run_and_refuses_a_mixed_or_foreign_map(adapted, tmp_path):
+    a, b = np.load(adapted["one"] / "chains.npz"), np.load(adapted["first_segment"] / "chains.npz")
+    for key in ("theta", "phi_physical", "welford_mean", "welford_var", "accept", "step", "theta_hat"):
+        np.testing.assert_allclose(b[key], a[key], rtol=1e-8, atol=1e-9, err_msg=key)
+    assert json.loads((adapted["one"] / "adaptation.json").read_text())["map_digest"] == \
+        json.loads((adapted["staged"] / "adaptation.json").read_text())["map_digest"]
+    # finalize refuses segments run with different maps
+    mixed = tmp_path / "mixed"
+    shutil.copytree(adapted["staged"], mixed)
+    seg = rpc.load_segment(rpc.segment_path(mixed, 1, 1))
+    seg["adapt_digest"] = "0" * 64
+    rpc.save_segment(rpc.segment_path(mixed, 1, 1), seg)
+    with pytest.raises(SystemExit, match="different adapted maps"):
+        rpc.main(adapted["common"] + ["--stage", "finalize", "--out", str(mixed)])
+    # a map file that was edited after the segments were written no longer matches its digest
+    edited = tmp_path / "edited"
+    shutil.copytree(adapted["staged"], edited)
+    z = dict(np.load(edited / "adapted_map.npz"))
+    z["center"] = z["center"] + 1e-6
+    np.savez(edited / "adapted_map.npz", **z)
+    with pytest.raises(SystemExit, match="does not match the digest"):
+        rpc.main(adapted["common"] + ["--stage", "chain", "--chain-id", "0", "--segment", "1", "--out", str(edited)])
+    missing = tmp_path / "missing"
+    rpc.main(adapted["common"] + ["--stage", "prepare", "--out", str(missing)])
+    with pytest.raises(SystemExit, match="run --stage adapt first"):
+        rpc.main(adapted["common"] + ["--stage", "chain", "--chain-id", "0", "--out", str(missing)])
+
+
+def test_make_prior_jobs_builds_tv_and_adapted_jobs_in_new_run_directories(tmp_path):
+    import make_prior_jobs as mj
+
+    assert mj.prior_args("tv_lam4.5") == ["--prior", "tv", "--lam", "4.5", "--delta", "0.01", "--sigma-0", "1", "--map-maxiter", "4000"]
+    assert mj.prior_args("gmrf_adapt")[-1] == "--adapt" and mj.prior_args("gmrf_adapt")[:-1] == mj.prior_args("gmrf")
+    assert mj.prior_args("tv_lam1.5_adapt")[-1] == "--adapt"
+    for bad in ("tv_lam", "tv_lamx", "foo", "matern_adapt2"):
+        with pytest.raises(ValueError):
+            mj.prior_args(bad)
+    js = mj.jobs("adapt", ["matern", "gmrf_adapt", "tv_lam4.5_adapt"], 0, 300, 400, 1, [], {})
+    assert [j["name"] for j in js] == ["pc_gmrf_adapt_adaptation", "pc_tv_lam4.5_adapt_adaptation"]  # only adapted priors adapt
+    assert all("--stage" in j["cmd"] and "adapt" in j["cmd"][j["cmd"].index("--stage") + 1] for j in js)
+    assert js[1]["done_marker"] == "results/prior_comparison/pc_tv_lam4.5_adapt/adaptation.json"
+    chains = mj.jobs("chain", ["tv_lam4.5_adapt"], 0, 300, 400, 1, [], {})
+    assert [j["name"] for j in chains] == [f"pc_tv_lam4.5_adapt_c{c}_s0" for c in range(4)] and "--adapt" in chains[0]["cmd"]
+    out = tmp_path / "jobs.json"
+    mj.main(["prepare", "--priors", "tv_lam3", "--out", str(out)])
+    assert json.loads(out.read_text())[0]["name"] == "pc_tv_lam3_prepare"
+    with pytest.raises(SystemExit):
+        mj.main(["prepare", "--priors", "bogus", "--out", str(out)])
+
+
+def test_cross_run_check_pools_the_chains_of_runs_of_one_target(adapted, tmp_path):
+    import cross_run_check as crc
+
+    # the staged run and the single-process run of the same tiny problem use the same data and the same adapted map
+    res = crc.main([adapted["staged"].name, adapted["one"].name, "--dir", str(adapted["root"]), "--out", str(tmp_path / "x.json")])
+    assert res["chains_per_run"] == [2, 2] and res["draws_used_per_chain"] == 20  # the smaller run has 20 draws per chain (staged: 2 x 20)
+    p = res["pooled"]
+    assert p["all"]["pixels"] == 64 and 0 < p["edge_band_abs_d_le_1"]["pixels"] <= p["abs_d_le_2"]["pixels"] <= 64
+    assert np.isfinite(p["all"]["rhat_max"]) and np.isfinite(res["rhat_phi"]) and set(res["features_pooled"]) == set(res["features_per_run"][adapted["one"].name])
+    assert (tmp_path / "x.json").exists()
+    with pytest.raises(SystemExit, match="smallest number of draws"):
+        crc.cross_check(adapted["root"], [adapted["staged"].name, adapted["one"].name], last=1000)
+
+
+def test_slow_modes_reports_the_covariance_of_zeta_in_the_map_coordinates(adapted, tmp_path):
+    import slow_modes as sm
+
+    res = sm.main([adapted["staged"].name, "--dir", str(adapted["root"]), "--top", "3", "--out", str(tmp_path / "s.json"),
+                   "--figure", str(tmp_path / "pca.png")])
+    assert (tmp_path / "pca.png").stat().st_size > 1000
+    e = res[adapted["staged"].name]
+    assert e["chains"] == 2 and e["draws_per_chain"] == 40 and e["dim"] == 64
+    ev = e["eigenvalues_top"]
+    assert len(ev) == 3 and ev[0] >= ev[1] >= ev[2] > 0 and len(e["directions"]) == 3
+    # the trace of the covariance of zeta is the sum of the eigenvalues: variance per coordinate x N, and |zeta - mean|^2 / 2 averages to half of it
+    # (the covariance of the pooled draws, denominator C S - 1 against the mean over draws of the squared deviation: equal up to that factor)
+    assert e["mean_half_sq_dev"] == pytest.approx(0.5 * e["variance_per_coordinate"] * 64 * (2 * 40 - 1) / (2 * 40), rel=1e-9)
+    Z, _ = sm.zeta_draws(adapted["staged"], skip_segments=1)
+    assert Z.shape == (2, 20, 64)
+    with pytest.raises(SystemExit, match="leaves no segment"):
+        sm.zeta_draws(adapted["staged"], skip_segments=2)
+    # a direction's projection of an exactly-whitened Gaussian has variance one and eigenvalues near one
+    rng = np.random.default_rng(0)
+    g = sm.slow_mode_report(rng.standard_normal((4, 500, 10)), top=2)
+    assert 0.8 < g["eigenvalues_top"][0] < 1.5 and g["directions"][0]["split_rhat"] < 1.05
+    drift = rng.standard_normal((4, 500, 10))
+    drift[:, :, 0] += np.linspace(0, 20, 500)  # a drifting direction: large eigenvalue, split R-hat well above one
+    r = sm.slow_mode_report(drift, top=1)
+    assert r["eigenvalues_top"][0] > 20 and r["directions"][0]["split_rhat"] > 1.2
+
+
+def test_independent_feature_check_agrees_with_the_feature_code(runs, tmp_path):
+    import check_features_independent as cfi
+
+    res = cfi.main(["qg", "mat", "--dir", str(runs["root"]), "--out", str(tmp_path / "f.json")])
+    for name in ("qg", "mat"):
+        assert res[name]["max_abs_difference"] < 1e-9  # the same probabilities from another implementation of the interpolation
+    assert res["qg"]["annulus_pixels"] > 0
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Review follow-up of milestone 5 (DESIGN 12.6): continuations are not independent chains; windows; Laplace features
+# ---------------------------------------------------------------------------------------------------------------
+
+
+def test_cross_run_check_knows_that_a_readapted_run_continues_the_same_chains(adapted, tmp_path):
+    """The milestone-5 report pooled `pc_*_adapt` with `pc_*_adapt2` as 'eight chains'; the chains of the second run START at the final states of the
+    first run's chains, so the pool is four chains in two windows (review). The script must say so, from the run directories."""
+    import cross_run_check as crc
+    import readapt_map as rm
+
+    src = adapted["staged"]
+    dst = adapted["root"] / "readapted_for_relations"
+    rm.main(["--from", str(src), "--to", str(dst), "--"] + adapted["common"])
+    for c in (0, 1):
+        rpc.main(adapted["common"] + ["--stage", "chain", "--chain-id", str(c), "--segment", "0", "--start-theta", str(dst / "starts.npy"),
+                                      "--samples", "20", "--out", str(dst)])
+    rpc.main(adapted["common"] + ["--stage", "finalize", "--samples", "20", "--out", str(dst)])
+    rel = crc.relations(adapted["root"], [src.name, dst.name])
+    assert rel[src.name] == {"continues": None}
+    assert rel[dst.name]["continues"] == src.name and rel[dst.name]["max_abs_start_minus_source_final"] == 0.0
+    res = crc.cross_check(adapted["root"], [src.name, dst.name], last=20)
+    assert res["chains_independent"] is False and "stationarity check" in res["interpretation"]
+    assert res["relations"][dst.name]["continues"] == src.name
+    # two runs that are not continuations of each other are independent samplers
+    ind = crc.cross_check(adapted["root"], [adapted["staged"].name, adapted["one"].name], last=20)
+    assert ind["chains_independent"] is True and ind["interpretation"] == "the pooled chains are independent chains"
+    assert crc.final_states(adapted["root"], src.name).shape == (2, 8, 8)
+
+
+def test_convergence_audit_windows_compare_runs_at_equal_length(runs):
+    import convergence_audit as ca
+
+    base = runs["root"]
+    full = ca.audit_run("qg", base, 3)
+    win = ca.audit_run("qg", base, 3, first=5, draws=12)
+    assert full["draws_per_chain"] == 20 and full["window"] == [0, 20]
+    assert win["draws_per_chain"] == 12 and win["window"] == [5, 17]
+    z = np.load(base / "qg" / "chains.npz")
+    from bayes_scatter import diagnostics as dg
+
+    th = z["theta"][:, 5:17].astype(np.float64).reshape(2, 12, -1)
+    assert win["classic"]["rhat_pixel_max"] == pytest.approx(float(np.nanmax(dg.split_rhat(th))))
+    assert sum(v for k, v in win["rank_normalized"]["flagged_by_region"].items() if not k.startswith("outside_d_m")) == \
+        win["rank_normalized"]["pixels_worst_above_1.05"]
+    with pytest.raises(SystemExit, match="not within"):
+        ca.audit_run("qg", base, 3, first=15, draws=12)
+    with pytest.raises(SystemExit, match="at least 8"):
+        ca.audit_run("qg", base, 3, first=0, draws=4)
+
+
+def test_laplace_features_come_from_exact_gaussian_draws_without_mcmc(adapted):
+    import feature_scales as fs
+
+    out = fs.laplace_analysis(adapted["staged"].name, adapted["root"], [0.0, 0.5], 4000, seed=3)
+    assert out["draws"] == 4000 and set(out["radii"]) == {"0", "0.5"}
+    for pr in out["radii"].values():
+        assert set(pr) == set(fs.FEATURES) and all(0.0 <= v <= 1.0 for v in pr.values())
+    # the draws have the Laplace covariance: their mean pixel sd is the MAP's Laplace sd (H^-1 diagonal) within Monte Carlo error
+    args = rpc.parse_args(adapted["common"] + ["--out", "x"])
+    ctx = rpc.build_context(args)
+    prep = rpc.load_prepared(ctx, adapted["staged"])
+    assert out["laplace_pixel_sd_mean"] == pytest.approx(float(prep.mass.theta_std().mean()), rel=0.03)

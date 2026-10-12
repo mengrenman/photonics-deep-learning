@@ -12,6 +12,8 @@ hyperparameters as a plain dict. All methods are jitted and take/return JAX arra
 
 * ``QGGMRF`` : the edge-preserving q-generalized Gaussian MRF of Thibault, Sauer, Bouman and Hsieh (2007) with
   p = 2, eight neighbors, free boundary.
+* ``PseudoHuberTV`` : the pseudo-Huber total-variation prior (docs/DESIGN.md section 12.1), same neighborhood and
+  weights as the q-GGMRF, convex, with a (nearly) linear pair potential so that a sharp step costs about the same as a ramp.
 * ``GaussianEnergy`` : R(theta) = 1/2 (theta - mu)^T C_D^-1 (theta - mu) with C_D =
   ``GaussianField.covariance_matrix()``, the exact DOI marginal of the torus field, so a Matern or GMRF
   prior of docs/DESIGN.md section 3 cropped to the DOI.
@@ -128,6 +130,24 @@ def neighbor_pairs(n):
     return np.concatenate(ii), np.concatenate(jj), np.concatenate(bb)
 
 
+def pairwise_hessian(pairs, w, n, sigma_0):
+    """Dense Hessian (n^2, n^2) of sum_{{i,j}} f_ij(theta_i - theta_j) + |theta|^2 / (2 sigma_0^2).
+
+    ``pairs`` = ``neighbor_pairs(n)`` and ``w`` (number of pairs,) the second derivatives f_ij''(theta_i - theta_j) (weight
+    b_ij included): H = sum_pairs w (e_i - e_j)(e_i - e_j)^T + I / sigma_0^2, the weighted graph Laplacian plus the anchor.
+    Shared by ``QGGMRF`` and ``PseudoHuberTV``.
+    """
+    i, j, _ = pairs
+    N = n * n
+    H = np.zeros((N, N))
+    np.add.at(H, (i, i), w)
+    np.add.at(H, (j, j), w)
+    np.add.at(H, (i, j), -w)
+    np.add.at(H, (j, i), -w)
+    H[np.diag_indices(N)] += 1.0 / sigma_0**2
+    return H
+
+
 class QGGMRF(ThetaPrior):
     """q-generalized Gaussian MRF (Thibault, Sauer, Bouman and Hsieh 2007; Bouman, Ch. 8), p = 2.
 
@@ -177,16 +197,79 @@ class QGGMRF(ThetaPrior):
     def hessian(self, theta):
         """Dense Hessian (n^2, n^2): closed form, exact up to the SMOOTH_EPS regularization of rho."""
         theta = self._check(theta)
-        w = np.asarray(self._weights(theta))
-        i, j, _ = self._pairs
-        N = self.n * self.n
-        H = np.zeros((N, N))
-        np.add.at(H, (i, i), w)
-        np.add.at(H, (j, j), w)
-        np.add.at(H, (i, j), -w)
-        np.add.at(H, (j, i), -w)
-        H[np.diag_indices(N)] += 1.0 / self.sigma_0**2
-        return H
+        return pairwise_hessian(self._pairs, np.asarray(self._weights(theta)), self.n, self.sigma_0)
+
+
+# ----------------------------------------------------------------------------------------------
+# Pseudo-Huber total variation
+# ----------------------------------------------------------------------------------------------
+
+
+def pseudo_huber(delta, eps):
+    """The pseudo-Huber function sqrt(D^2 + eps^2) - eps, elementwise, evaluated as D^2 / (sqrt(D^2 + eps^2) + eps).
+
+    The two forms are equal; the second has no cancellation for |D| << eps (the first loses all digits below
+    |D| ~ 1e-8 eps) and is smooth at D = 0 for eps > 0 (value 0, derivative 0, second derivative 1/eps).
+    It is quadratic, D^2 / (2 eps), for |D| << eps and |D| - eps + eps^2 / (2 |D|) + ... for |D| >> eps.
+    """
+    return delta * delta / (jnp.sqrt(delta * delta + eps * eps) + eps)
+
+
+def pseudo_huber_second_derivative(delta, eps):
+    """d^2/dD^2 of ``pseudo_huber`` = eps^2 / (D^2 + eps^2)^(3/2), in (0, 1/eps], elementwise."""
+    return eps**2 / (delta * delta + eps * eps) ** 1.5
+
+
+class PseudoHuberTV(ThetaPrior):
+    """Pseudo-Huber total-variation prior (docs/DESIGN.md section 12.1), same neighborhood and weights as ``QGGMRF``.
+
+        R(theta) = lam sum_{{i,j}} b_ij (sqrt(D_ij^2 + delta^2) - delta) + |theta - mu|^2 / (2 sigma_0^2),
+        D_ij = theta_i - theta_j,
+
+    the sum over the unordered 8-neighbor pairs of the DOI with free boundary (``neighbor_pairs``: b = 1 horizontal and
+    vertical, 1/sqrt(2) diagonal; each pair once). Convex (a sum of convex functions of linear forms), smooth for
+    delta > 0, with pair Hessian lam b delta^2 / (D^2 + delta^2)^(3/2) in (0, lam b / delta], so ``hessian`` is
+    >= I / sigma_0^2 and the Laplace mass of ``thetaspace`` stays symmetric positive definite.
+
+    For |D| >> delta the pair cost is lam (|D| - delta): total variation with weight lam, for which a step costs the same
+    as any monotone ramp of the same height. At finite delta a ramp of k equal increments D / k is cheaper than the step by
+    about (k - 1) delta lam per pair line (first order in delta / D), so the step-over-ramp cost ratio is
+    1 + (k - 1) delta / D + O(delta^2): 1.10 for k = 8, D = log 2, delta = 0.01 (see ``scripts/prior_energy_audit.py``;
+    1.03 needs delta ~ 0.003 and 1.01 delta ~ 0.001). Units: lam is the TV weight per unit change of theta = log eps_r, delta
+    the width of the quadratic core in the same units, sigma_0 the weak anchor to the mean ``mu`` (scalar or (n, n)).
+    The pair value uses ``pseudo_huber`` (no cancellation at small D). ``hvp`` is by autodiff, ``hessian`` in closed form.
+    """
+
+    def __init__(self, n, lam=1.0, delta=0.01, sigma_0=1.0, mu=0.0):
+        if not (lam > 0 and delta > 0 and sigma_0 > 0):
+            raise ValueError("lam, delta and sigma_0 must be positive")
+        self.n = int(n)
+        self.lam, self.delta, self.sigma_0 = float(lam), float(delta), float(sigma_0)
+        self.mean = _as_mean(mu, self.n)
+        i, j, b = neighbor_pairs(self.n)
+        self._i, self._j, self._b = jnp.asarray(i), jnp.asarray(j), jnp.asarray(b)
+        self._pairs = (i, j, b)
+        lam_, d_ = self.lam, self.delta
+        self._weights = jax.jit(lambda theta: lam_ * self._b * pseudo_huber_second_derivative(
+            theta.ravel()[self._i] - theta.ravel()[self._j], d_))
+        self._setup_jit()
+
+    def _energy(self, theta):
+        t = theta.ravel()
+        d = t[self._i] - t[self._j]
+        anchor = jnp.sum((theta - self.mean) ** 2) / (2.0 * self.sigma_0**2)
+        return self.lam * jnp.sum(self._b * pseudo_huber(d, self.delta)) + anchor
+
+    def describe(self):
+        return {"kind": "tv", "n": self.n, "lam": self.lam, "delta": self.delta, "sigma_0": self.sigma_0,
+                "mu": float(np.mean(np.asarray(self.mean))), "neighborhood": 8, "boundary": "free",
+                "pairs": "unordered, each pair once", "potential": "lam b (sqrt(D^2 + delta^2) - delta)"}
+
+    def hessian(self, theta):
+        """Dense Hessian (n^2, n^2) in closed form: sum_pairs lam b delta^2 / (D^2 + delta^2)^(3/2) (e_i - e_j)(e_i - e_j)^T
+        + I / sigma_0^2."""
+        theta = self._check(theta)
+        return pairwise_hessian(self._pairs, np.asarray(self._weights(theta)), self.n, self.sigma_0)
 
 
 # ----------------------------------------------------------------------------------------------

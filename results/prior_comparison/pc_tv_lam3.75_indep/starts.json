@@ -1,0 +1,28 @@
+{
+  "lam": 3.75,
+  "delta": 0.01,
+  "sigma_0": 1.0,
+  "mu": 0.0,
+  "starts": [
+    {
+      "chain": 0,
+      "kind": "truth",
+      "source": "theta_true of pc_matern/chains.npz",
+      "tv_prior_energy": 1334.599169284856,
+      "tv_term": 1243.592612960359,
+      "theta_min": 0.0,
+      "theta_max": 0.6931471805599453,
+      "theta_pixel_std": 0.2524760992517851
+    },
+    {
+      "chain": 1,
+      "kind": "gmrf",
+      "source": "last draw of chain 0 of pc_gmrf_adapt/chains.npz",
+      "tv_prior_energy": 10301.831877407178,
+      "tv_term": 10096.12332853512,
+      "theta_min": -1.194697618484497,
+      "theta_max": 1.5101392269134521,
+      "theta_pixel_std": 0.41711410134357463
+    }
+  ]
+}

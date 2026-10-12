@@ -1,0 +1,16 @@
+[batch_run 00:56:02] 4 job(s) to run, 0 skipped; cpu slots 4 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 00:56:02] START m5r4_gmrf_c0 (cpu0, unpinned) [1/4]
+[batch_run 00:56:02] START m5r4_gmrf_c1 (cpu1, unpinned) [2/4]
+[batch_run 00:56:02] START m5r4_gmrf_c2 (cpu2, unpinned) [3/4]
+[batch_run 00:56:02] START m5r4_gmrf_c3 (cpu3, unpinned) [4/4]
+[batch_run 02:14:46] FAILED m5r4_gmrf_c0 exit -15 in 4724.1 s
+[batch_run 02:14:46] FAILED m5r4_gmrf_c1 exit -15 in 4724.1 s
+[batch_run 02:14:46] FAILED m5r4_gmrf_c2 exit -15 in 4724.1 s
+[batch_run 02:14:46] FAILED m5r4_gmrf_c3 exit -15 in 4724.1 s
+
+job                              status          wall s  exit
+m5r4_gmrf_c0                     failed          4724.1   -15
+m5r4_gmrf_c1                     failed          4724.1   -15
+m5r4_gmrf_c2                     failed          4724.1   -15
+m5r4_gmrf_c3                     failed          4724.1   -15
+[batch_run 02:14:46] 0 ok, 4 not ok

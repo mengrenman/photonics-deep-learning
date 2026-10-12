@@ -1,0 +1,9 @@
+2 runs, chains [4, 4], last 200 draws: R-hat Phi 1.4121; at least one run continues the chains of another (its chains start at the source's final states): the pool is the same chains in consecutive windows, a stationarity check, not an independent replication
+  all                     2304 px: R-hat max 1.356 (rank 1.304), 527 above 1.05, bulk ESS min 20 median 295
+  edge_band_abs_d_le_1     498 px: R-hat max 1.173 (rank 1.166), 106 above 1.05, bulk ESS min 34 median 293
+  abs_d_le_2               824 px: R-hat max 1.309 (rank 1.304), 200 above 1.05, bulk ESS min 20 median 287
+  pc_gmrf_adapt            bias d=-1 0.127  d=+2 -0.157  sd d=-1 0.346  |z|>3 0.0%
+  pc_gmrf_adapt2           bias d=-1 0.130  d=+2 -0.164  sd d=-1 0.347  |z|>3 0.0%
+  pooled                   bias d=-1 0.129  d=+2 -0.160  sd d=-1 0.348  |z|>3 0.0%
+  features (gap valley, ring hole, ring continuity): pc_gmrf_adapt 0.907/0.689/0.491; pc_gmrf_adapt2 0.912/0.711/0.304; pooled 0.910/0.700/0.398
+wrote results/prior_comparison/m5/cross_run_gmrf.json

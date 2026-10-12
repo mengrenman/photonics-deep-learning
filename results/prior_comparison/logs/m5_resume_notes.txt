@@ -1,0 +1,24 @@
+TV A chains stopped (SIGSTOP) at 21:34 to give the GMRF the machine: per-gradient cost 0.27 s -> 0.15 s with them stopped (time_grad.py)
+22:59 batch 2 stopped (SIGTERM) after GMRF seg 2; re-adapted maps pc_gmrf_adapt2 / pc_tv_lam3.75_adapt2 / pc_tv_lam11.25_adapt2 via scripts/readapt_map.py; batch 3 launched (gmrf2 + tvA2)
+00:04 stop file for tvA2 created (TV lambda* re-adapted: 400 draws not better than the first map's 800: max R-hat 1.32, ESS 60); to give GMRF2 the machine
+00:15 go file tvB2 created (TV 3 lambda* re-adapted, to run about 3 segments)
+# Per-gradient wall time of the GMRF potential (one value-and-gradient of U at the milestone-4 end state of chain 0, one XLA thread, 15 calls after
+# compile; scratch benchmark launched while the batch ran, so each number includes the benchmark process itself). seconds: min / median / max
+# 21:23  4 GMRF chains + 4 TV chains running (load average 45, other sessions busy): 0.223 / 0.280 / 0.326
+# 21:33  same, load 35:                                                                0.234 / 0.271 / 0.291
+# 21:34  TV chains stopped (SIGSTOP), 4 GMRF chains only:                              0.141 / 0.153 / 0.166
+# 21:46  TV chains resumed at nice 20:                                                 0.218 / 0.238 / 0.264
+# 21:48  TV chains stopped again:                                                      0.139 / 0.143 / 0.150
+# 22:17  load 6.7, TV stopped:                                                         0.137 / 0.145 / 0.149
+# 22:19  load 7.6, TV resumed at nice 20:                                              0.205 / 0.221 / 0.263
+# => aggregate throughput (processes / median time) 5 / 0.145 = 34.5 per s against 9 / 0.22 = 41 per s: nine processes give 19 % more than five
+#    and slow every process by 50 %; nice does not help. The TV chains of the first batch were therefore stopped (SIGSTOP) from 21:34 to 22:59
+#    so that the GMRF, the priority of milestone 5, got the machine.
+# GMRF first map, recorded draws (progress from the segment files): |zeta|^2/2 of the draws kept rising (chain 0: 3082, 3560, ... 4357 over 300
+# draws); PCA of zeta over the pooled 4 x 200 draws (first two segments): top eigenvalues 910, 740, 600, 330, 220, ... (the map assumed 1)
+# -> scripts/readapt_map.py. The benchmark and PCA scripts were scratch scripts (not in the repository); stiffness of the old and new map at the
+# chain end states by power iteration (largest eigenvalue of the zeta Hessian, finite-difference Hessian-vector products): GMRF old 3937 / 4475,
+# new 5295 / 5019 (chains 0 / 2, after segment 2); TV lambda* old 285 / 355, new 151 / 154; TV 3 lambda* old 343 / 380, new 242 / 228.
+00:51 GMRF2 (re-adapted map) stopped after 200 draws: R-hat worse than the first map at the same draws (max 1.62 vs 1.14), top zeta eigenvalues unchanged in the new coordinates; the first-map chains (R-hat 1.08 at 300 draws) are resumed instead (batch 4). stop file for tvB2 created.
+01:23 first-map GMRF resumed (batch 4); at 400 draws max R-hat 1.073, worst Sokal ESS 173; stop file removed so that segment 5 starts right after segment 4 unless killed
+02:14 first-map GMRF stopped at 600 draws per chain (segment 6 killed after it had run about 1 minute): max pixel R-hat 1.064, worst Sokal ESS 231, bulk ESS 58

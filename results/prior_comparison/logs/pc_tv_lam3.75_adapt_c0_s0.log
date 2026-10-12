@@ -1,0 +1,5 @@
+# batch_run 2026-10-11T16:16:21+08:00 slot cpu6
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/wait_then.py --file results/prior_comparison/pc_tv_lam3.75_adapt/adaptation.json --go scripts/jobs/go/tvA_seg0 --skip scripts/jobs/skip/tvA_seg0 -- python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior tv --lam 3.75 --delta 0.01 --sigma-0 1 --map-maxiter 4000 --adapt --out pc_tv_lam3.75_adapt --init-scale 1.0 --stage chain --chain-id 0 --segment 0 --samples 400 --warmup 50
+wait_then: waiting for files ['results/prior_comparison/pc_tv_lam3.75_adapt/adaptation.json'] meta-ok [] go scripts/jobs/go/tvA_seg0 (skip scripts/jobs/skip/tvA_seg0)
+wait_then: skip file exists, not running

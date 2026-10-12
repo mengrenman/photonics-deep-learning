@@ -1,0 +1,380 @@
+{
+  "pc_matern": {
+    "gap_valley": 1.0,
+    "ring_hole": 0.98375,
+    "ring_continuity": 1.0,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.9999997535652698,
+    "compass_marginals_gaussian": [
+      0.9999999978927674,
+      0.9999997638892626,
+      0.9999999917832376,
+      0.9999999999999998
+    ],
+    "ring_continuity_empirical_marginals_product": 1.0,
+    "compass_marginals_empirical": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "compass_max_abs_correlation": 0.08596013605782962,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 0.98375,
+      "ring_continuity": 1.0
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_qggmrf_sg0.05": {
+    "gap_valley": 1.0,
+    "ring_hole": 1.0,
+    "ring_continuity": 1.0,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.9999999999999915,
+    "compass_marginals_gaussian": [
+      1.0,
+      0.9999999999999915,
+      1.0,
+      1.0
+    ],
+    "ring_continuity_empirical_marginals_product": 1.0,
+    "compass_marginals_empirical": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "compass_max_abs_correlation": 0.06801359901082778,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 1.0,
+      "ring_continuity": 1.0
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_qggmrf_sg0.1": {
+    "gap_valley": 1.0,
+    "ring_hole": 1.0,
+    "ring_continuity": 1.0,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.9999977152062381,
+    "compass_marginals_gaussian": [
+      0.9999993176463493,
+      0.9999986368928478,
+      0.9999997606659528,
+      0.9999999999996686
+    ],
+    "ring_continuity_empirical_marginals_product": 1.0,
+    "compass_marginals_empirical": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "compass_max_abs_correlation": 0.051569525489626934,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 1.0,
+      "ring_continuity": 1.0
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_gmrf": {
+    "gap_valley": 1.0,
+    "ring_hole": 0.9955,
+    "ring_continuity": 0.9295,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.9390060359097261,
+    "compass_marginals_gaussian": [
+      0.9419003898677686,
+      0.9987301946008864,
+      0.9981946263628877,
+      0.9999999990348292
+    ],
+    "ring_continuity_empirical_marginals_product": 0.9297025,
+    "compass_marginals_empirical": [
+      0.9325,
+      0.997,
+      1.0,
+      1.0
+    ],
+    "compass_max_abs_correlation": 0.049408901568864294,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 0.9955,
+      "ring_continuity": 0.9295
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_gmrf_adapt": {
+    "gap_valley": 0.9204166666666667,
+    "ring_hole": 0.7125,
+    "ring_continuity": 0.5008333333333334,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.5158399127239889,
+    "compass_marginals_gaussian": [
+      0.7803782025518511,
+      0.8504498142348518,
+      0.8418390437650829,
+      0.9232770861427299
+    ],
+    "ring_continuity_empirical_marginals_product": 0.5017155032307942,
+    "compass_marginals_empirical": [
+      0.77125,
+      0.8408333333333333,
+      0.8420833333333333,
+      0.91875
+    ],
+    "compass_max_abs_correlation": 0.05332966867297457,
+    "summary": {
+      "gap_valley": 0.9204166666666667,
+      "ring_hole": 0.7125,
+      "ring_continuity": 0.5008333333333334
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_gmrf_adapt_burn2": {
+    "gap_valley": 0.898125,
+    "ring_hole": 0.70625,
+    "ring_continuity": 0.48875,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.5036826625415224,
+    "compass_marginals_gaussian": [
+      0.7773667525109692,
+      0.8525476894570481,
+      0.8217511934750827,
+      0.9248515200220278
+    ],
+    "ring_continuity_empirical_marginals_product": 0.49097763427001945,
+    "compass_marginals_empirical": [
+      0.76625,
+      0.845625,
+      0.8225,
+      0.92125
+    ],
+    "compass_max_abs_correlation": 0.08425411316831433,
+    "summary": {
+      "gap_valley": 0.898125,
+      "ring_hole": 0.70625,
+      "ring_continuity": 0.48875
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_gmrf_adapt2": {
+    "gap_valley": 0.9125,
+    "ring_hole": 0.71125,
+    "ring_continuity": 0.30375,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.32705482020176985,
+    "compass_marginals_gaussian": [
+      0.7197364562997857,
+      0.7381956270073461,
+      0.6682558588331932,
+      0.921155203602289
+    ],
+    "ring_continuity_empirical_marginals_product": 0.3285269689453125,
+    "compass_marginals_empirical": [
+      0.71375,
+      0.7375,
+      0.70125,
+      0.89
+    ],
+    "compass_max_abs_correlation": 0.19251476619791658,
+    "summary": {
+      "gap_valley": 0.9125,
+      "ring_hole": 0.71125,
+      "ring_continuity": 0.30375
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_tv_lam3.75_adapt": {
+    "gap_valley": 1.0,
+    "ring_hole": 1.0,
+    "ring_continuity": 0.9996875,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.9998972650595055,
+    "compass_marginals_gaussian": [
+      0.999983564610518,
+      0.9999382632794115,
+      0.999975435435817,
+      0.9999999987987297
+    ],
+    "ring_continuity_empirical_marginals_product": 0.9996875,
+    "compass_marginals_empirical": [
+      1.0,
+      0.9996875,
+      1.0,
+      1.0
+    ],
+    "compass_max_abs_correlation": 0.11475203143334425,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 1.0,
+      "ring_continuity": 0.9996875
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_tv_lam3.75_adapt2": {
+    "gap_valley": 1.0,
+    "ring_hole": 1.0,
+    "ring_continuity": 1.0,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.9999073435002488,
+    "compass_marginals_gaussian": [
+      0.9999622263102754,
+      0.9999677079553366,
+      0.99997741376417,
+      0.999999992667504
+    ],
+    "ring_continuity_empirical_marginals_product": 1.0,
+    "compass_marginals_empirical": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "compass_max_abs_correlation": 0.022399804378794873,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 1.0,
+      "ring_continuity": 1.0
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_tv_lam11.25_adapt": {
+    "gap_valley": 1.0,
+    "ring_hole": 1.0,
+    "ring_continuity": 1.0,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.9999999999999999,
+    "compass_marginals_gaussian": [
+      1.0,
+      0.9999999999999999,
+      1.0,
+      1.0
+    ],
+    "ring_continuity_empirical_marginals_product": 1.0,
+    "compass_marginals_empirical": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "compass_max_abs_correlation": 0.07232074461562063,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 1.0,
+      "ring_continuity": 1.0
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_tv_lam11.25_adapt2": {
+    "gap_valley": 1.0,
+    "ring_hole": 1.0,
+    "ring_continuity": 1.0,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 1.0,
+    "compass_marginals_gaussian": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "ring_continuity_empirical_marginals_product": 1.0,
+    "compass_marginals_empirical": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "compass_max_abs_correlation": 0.06845632404891117,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 1.0,
+      "ring_continuity": 1.0
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_tv_lam1.25_adapt": {
+    "gap_valley": 1.0,
+    "ring_hole": 0.895,
+    "ring_continuity": 0.7275,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.6772913746833672,
+    "compass_marginals_gaussian": [
+      0.7820822509140368,
+      0.9367192772377896,
+      0.9532500479191097,
+      0.969855027422432
+    ],
+    "ring_continuity_empirical_marginals_product": 0.640875457578125,
+    "compass_marginals_empirical": [
+      0.7925,
+      0.9275,
+      0.9325,
+      0.935
+    ],
+    "compass_max_abs_correlation": 0.5610022600821607,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 0.895,
+      "ring_continuity": 0.7275
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_tv_lam8.5_adapt": {
+    "gap_valley": 1.0,
+    "ring_hole": 1.0,
+    "ring_continuity": 0.75,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.6938935936174249,
+    "compass_marginals_gaussian": [
+      0.8176509174030087,
+      0.9130837900329571,
+      0.984349847318617,
+      0.9442018313183271
+    ],
+    "ring_continuity_empirical_marginals_product": 0.525916125,
+    "compass_marginals_empirical": [
+      0.75,
+      0.8475,
+      0.985,
+      0.84
+    ],
+    "compass_max_abs_correlation": 0.9429759128571797,
+    "summary": {
+      "gap_valley": 1.0,
+      "ring_hole": 1.0,
+      "ring_continuity": 0.75
+    },
+    "max_abs_difference": 0.0
+  },
+  "pc_tv_lam3.75_indep": {
+    "gap_valley": 0.9775,
+    "ring_hole": 1.0,
+    "ring_continuity": 0.5575,
+    "annulus_pixels": 250,
+    "ring_continuity_gaussian_independent_points": 0.599320954701701,
+    "compass_marginals_gaussian": [
+      0.8876570826538854,
+      0.7005650738195007,
+      0.9690761441361574,
+      0.9945070251159022
+    ],
+    "ring_continuity_empirical_marginals_product": 0.4995933769531251,
+    "compass_marginals_empirical": [
+      0.845,
+      0.6125,
+      0.9775,
+      0.9875
+    ],
+    "compass_max_abs_correlation": 0.6771790498082768,
+    "summary": {
+      "gap_valley": 0.9775,
+      "ring_hole": 1.0,
+      "ring_continuity": 0.5575
+    },
+    "max_abs_difference": 0.0
+  }
+}

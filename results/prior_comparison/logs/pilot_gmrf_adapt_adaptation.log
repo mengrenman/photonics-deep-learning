@@ -1,0 +1,11 @@
+# batch_run 2026-10-11T14:10:24+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "4", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4", "MKL_NUM_THREADS": "4", "VECLIB_MAXIMUM_THREADS": "4", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior gmrf --sigma 0.5 --ell 0.4 --adapt --out pilot_gmrf_adapt --chains 2 --prior-samples 0 --adapt-init 25 --adapt-first-window 25 --adapt-windows 3 --adapt-final 50 --stage adapt
+WARNING: d_obs differs from the prepared run's in its SHA-256 and prepared.npz has no d_obs to compare (made before d_obs was stored); the data may differ by round-off or more
+adaptation: 250 trajectories ([('init', 25), ('window0', 25), ('window1', 50), ('window2', 100), ('final', 50)]), kappa = 2304, trajectory length 1.75, target acceptance 0.8, start scale 0.5, initial map: Laplace at the MAP
+  init       25 traj: accept 0.800, eps 0.0392, mean L 47.6, 290 s
+  window0    25 traj: accept 0.720, eps 0.0330, mean L 52.7, 264 s; map updated (weight 0.989, variance ratio median 0.994, update 0.9 s)
+  window1    50 traj: accept 0.760, eps 0.0204, mean L 60.7, 658 s; map updated (weight 0.979, variance ratio median 0.998, update 0.6 s)
+  window2   100 traj: accept 0.780, eps 0.0184, mean L 66.5, 1117 s; map updated (weight 0.958, variance ratio median 1, update 0.6 s)
+  final      50 traj: accept 0.760, eps 0.0168, mean L 67.3, 526 s
+adapted map: eps 0.0168, L0 100, 15561 gradient evaluations, 2856 s; digest 8d66e53753bbbe1c; wrote adapted_map.npz and adaptation.json

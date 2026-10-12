@@ -1,0 +1,31 @@
+pc_gmrf_adapt: N/2 = 1152; R by block (mean over chains) [1035.0, 1068.0, 1081.0, 1105.0, 1107.0, 1114.0]
+  ring bias (d = -1) after 50 draws: per chain [0.135, 0.131, 0.13, 0.137], split R-hat of the ring bias 1.029981781323091, of Phi 1.0002254228364087
+    chain 0: start None, first draw 0.177, blocks [0.139, 0.145, 0.144, 0.134, 0.126, 0.131]
+    chain 1: start None, first draw 0.115, blocks [0.134, 0.139, 0.141, 0.122, 0.124, 0.129]
+    chain 2: start None, first draw 0.165, blocks [0.138, 0.132, 0.136, 0.128, 0.129, 0.124]
+    chain 3: start None, first draw 0.119, blocks [0.146, 0.146, 0.139, 0.139, 0.135, 0.121]
+  chain 0: |zeta|^2/2 first -> last block [3677.4451933848554, 5816.761301992687]; R [1025.3134562017601, 1098.3640152292094]; start: start-theta file
+  chain 1: |zeta|^2/2 first -> last block [3406.6469612549995, 7469.123081274816]; R [1047.3045617128505, 1126.5640331239501]; start: start-theta file
+  chain 2: |zeta|^2/2 first -> last block [3991.354546111846, 9273.730669792418]; R [1050.367420188974, 1136.6538947357853]; start: start-theta file
+  chain 3: |zeta|^2/2 first -> last block [3554.7666205161404, 6792.896853083599]; R [1018.3088432943707, 1096.0487049431295]; start: start-theta file
+pc_tv_lam3.75_adapt: N/2 = 1152; R by block (mean over chains) [2844.0, 2849.0, 2874.0, 2880.0, 2858.0, 2849.0, 2866.0, 2856.0]
+  ring bias (d = -1) after 50 draws: per chain [0.19, 0.189, 0.19, 0.189], split R-hat of the ring bias 1.0075374422824022, of Phi 1.0037924543216816
+    chain 0: start None, first draw 0.184, blocks [0.188, 0.188, 0.19, 0.189, 0.192, 0.188, 0.19, 0.193]
+    chain 1: start None, first draw 0.186, blocks [0.187, 0.186, 0.188, 0.188, 0.19, 0.187, 0.19, 0.192]
+    chain 2: start None, first draw 0.190, blocks [0.191, 0.185, 0.192, 0.194, 0.193, 0.191, 0.188, 0.187]
+    chain 3: start None, first draw 0.171, blocks [0.191, 0.19, 0.192, 0.187, 0.19, 0.189, 0.185, 0.191]
+  chain 0: |zeta|^2/2 first -> last block [3750.5516223546942, 4000.231583360473]; R [2848.430037449729, 2861.2014324057154]; start: overdispersed draws (scale 0.5) around the final state of the adaptation chain of the adap
+  chain 1: |zeta|^2/2 first -> last block [3653.244446799783, 3982.315186300877]; R [2826.261158984087, 2873.23393727802]; start: overdispersed draws (scale 0.5) around the final state of the adaptation chain of the adap
+  chain 2: |zeta|^2/2 first -> last block [4000.787412925434, 3829.9602813441325]; R [2854.2232191859202, 2845.856477167557]; start: overdispersed draws (scale 0.5) around the final state of the adaptation chain of the adap
+  chain 3: |zeta|^2/2 first -> last block [3865.584382636813, 3906.4381110890886]; R [2846.9832773399003, 2845.018967739599]; start: overdispersed draws (scale 0.5) around the final state of the adaptation chain of the adap
+pc_tv_lam11.25_adapt: N/2 = 1152; R by block (mean over chains) [4709.0, 4710.0, 4714.0, 4723.0]
+  ring bias (d = -1) after 50 draws: per chain [0.18, 0.18, 0.18, 0.181], split R-hat of the ring bias 1.0042377972323302, of Phi 1.0007316088948146
+    chain 0: start None, first draw 0.176, blocks [0.182, 0.179, 0.18, 0.18]
+    chain 1: start None, first draw 0.179, blocks [0.18, 0.179, 0.181, 0.18]
+    chain 2: start None, first draw 0.189, blocks [0.179, 0.18, 0.18, 0.18]
+    chain 3: start None, first draw 0.177, blocks [0.181, 0.18, 0.181, 0.182]
+  chain 0: |zeta|^2/2 first -> last block [2528.465205726813, 2478.097064642039]; R [4716.372997237948, 4710.9783072035525]; start: overdispersed draws (scale 0.5) around the final state of the adaptation chain of the adap
+  chain 1: |zeta|^2/2 first -> last block [2485.6694094774916, 2531.483965452215]; R [4711.9546317804015, 4718.400259654644]; start: overdispersed draws (scale 0.5) around the final state of the adaptation chain of the adap
+  chain 2: |zeta|^2/2 first -> last block [2489.7477369600556, 2579.8867205608176]; R [4707.854234023263, 4734.735462312098]; start: overdispersed draws (scale 0.5) around the final state of the adaptation chain of the adap
+  chain 3: |zeta|^2/2 first -> last block [2457.4390735201737, 2550.978673879044]; R [4700.275794722854, 4726.212977352154]; start: overdispersed draws (scale 0.5) around the final state of the adaptation chain of the adap
+wrote results/prior_comparison/m5/review/start_drift.json

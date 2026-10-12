@@ -1,0 +1,9 @@
+# batch_run 2026-10-11T15:36:20+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior gmrf --sigma 0.5 --ell 0.4 --adapt --out pilot_gmrf_adapt --chains 2 --prior-samples 0 --adapt-init 25 --adapt-first-window 25 --adapt-windows 3 --adapt-final 50 --stage finalize
+/Users/mengren/Documents/new_projects/photonics-dl/scripts/run_prior_comparison.py:313: RuntimeWarning: All-NaN slice encountered
+  "ess_pixel_min_geyer": float(np.nanmin(ess_geyer)),
+physical Phi of the draws: mean 216754.4 (MAP 2367.0, N 2400); split R-hat inf; max pixel R-hat inf; worst-pixel ESS nan -> UNCONVERGED: split R-hat of Phi inf > 1.01; max pixel R-hat inf > 1.05; worst-pixel ESS nan < 200
+err_model (eps_r): MAP 0.1246, posterior mean 0.1457; err_chi: MAP 0.3825, mean 0.4472; |z|>3 in 68.1% of pixels (edge share 0.28)
+features: gap_valley P=1.000, ring_hole P=1.000, ring_continuity P=1.000
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pilot_gmrf_adapt (total 7 s)

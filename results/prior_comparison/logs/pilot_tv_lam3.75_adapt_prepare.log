@@ -1,0 +1,10 @@
+# batch_run 2026-10-11T13:34:28+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "4", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4", "MKL_NUM_THREADS": "4", "VECLIB_MAXIMUM_THREADS": "4", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior tv --lam 3.75 --delta 0.01 --sigma-0 1 --adapt --out pilot_tv_lam3.75_adapt --chains 2 --prior-samples 0 --stage prepare
+problem: austria_fixed eps_r 2.0, n=48 side=2.0 (h=0.0417), data grid 96, SNR 30.0 dB, seed 0; d_obs sha256 d1000a64d67044a0...
+operating point: grid model error 0.85% of ||d|| against noise 3.16% (ratio 0.27); Phi(truth) 2578 (N = 2400)
+prior tv: std of theta (mean over pixels) None
+smooth start: 100 iterations, 109 evaluations, 14.1 s; U 5046.6 (Phi 3638.9, R 1407.7)
+MAP: 400 iterations, 415 evaluations, 44.3 s; U 3520.39 = Phi 2399.55 + R 1120.83 (N = 2400); |grad U|_inf 5.89e-01; STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT
+Laplace mass: 0.74 s (fields 0.45, Gram 0.09, Cholesky 0.05); Jacobian check 1.0711544148837408e-10; Laplace std of theta 0.0213 to 0.6379
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pilot_tv_lam3.75_adapt/prepared.json and prepared.npz (total 62 s)

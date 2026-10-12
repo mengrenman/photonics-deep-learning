@@ -1,0 +1,1248 @@
+{
+  "pc_matern": {
+    "run": "pc_matern",
+    "chains": 4,
+    "draws_per_chain": 600,
+    "window": [
+      0,
+      600
+    ],
+    "converged_design": true,
+    "summary_rhat_phi": 1.0018323238286846,
+    "summary_rhat_pixel_max": 1.0091907722800353,
+    "classic": {
+      "rhat_phi": 1.0018323238286846,
+      "rhat_pixel_max": 1.0091907726758362,
+      "rhat_pixel_max_edge_pixels": 1.0078572608820997,
+      "rhat_pixel_max_non_edge_pixels": 1.0091907726758362
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0021561932880096,
+        "folded": 1.001009626945854,
+        "worst": 1.0021561932880096
+      },
+      "pixel_max_bulk": 1.009076147035424,
+      "pixel_max_folded": 1.0220806949934158,
+      "pixel_max_worst": 1.0220806949934158,
+      "pixels_worst_above_1.01": 170,
+      "pixels_worst_above_1.05": 0,
+      "pixels_worst_above_1.05_within_1px_of_edge": 0,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 0,
+        "within_1px_of_edge": 0,
+        "outside_d_-3_to_-2": 0,
+        "outside_d_le_-4": 0,
+        "outside_d_min": null,
+        "outside_d_max": null
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": null,
+      "chain_sd_ratio_median_over_pixels_above_1.05": null,
+      "chain_sd_ratio_median_all_pixels": 1.1174907100740794,
+      "tau_folded_median": 3.504436726331838,
+      "tau_bulk_median": 1.4077334234296635
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 883.433707243016,
+      "worst_pixel_geyer_summed": 905.6631876017319,
+      "worst_pixel_bulk_multichain": 773.945759000946,
+      "median_pixel_bulk_multichain": 1694.372490937979,
+      "phi_bulk_multichain": 698.2257904217511,
+      "phi_sokal_summed": 765.8954112373237,
+      "total_draws": 2400,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 3.396840600449666,
+      "pixel_median": 1.41460772776423,
+      "pixel_max": 3.010831538493191
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0032285043966944,
+        1.0084965960895045
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0037837351448,
+        1.0078891263138987
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.03333333333333333,
+      "p_null_classic_rhat_phi_at_least_observed": 0.7333333333333333,
+      "p_null_rank_rhat_phi_at_least_observed": 0.85,
+      "pixel_max_classic_median_q95": [
+        1.0093865161290951,
+        1.0126102602832352
+      ],
+      "pixel_max_rank_median_q95": [
+        1.0292749661589657,
+        1.036971436607188
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.65,
+      "p_null_pixel_max_rank_at_least_observed": 0.95,
+      "observed_pixel_max_rank_exceeds_null_q95": false
+    },
+    "time_s": 9.080593824386597
+  },
+  "pc_qggmrf_sg0.05": {
+    "run": "pc_qggmrf_sg0.05",
+    "chains": 4,
+    "draws_per_chain": 900,
+    "window": [
+      0,
+      900
+    ],
+    "converged_design": true,
+    "summary_rhat_phi": 1.0028017969746517,
+    "summary_rhat_pixel_max": 1.0045853313328104,
+    "classic": {
+      "rhat_phi": 1.0028017969746517,
+      "rhat_pixel_max": 1.004585331466119,
+      "rhat_pixel_max_edge_pixels": 1.0019863657417478,
+      "rhat_pixel_max_non_edge_pixels": 1.004585331466119
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0022240273447585,
+        "folded": 1.010587644034024,
+        "worst": 1.010587644034024
+      },
+      "pixel_max_bulk": 1.0045010405618613,
+      "pixel_max_folded": 1.0249179465988758,
+      "pixel_max_worst": 1.0249179465988758,
+      "pixels_worst_above_1.01": 127,
+      "pixels_worst_above_1.05": 0,
+      "pixels_worst_above_1.05_within_1px_of_edge": 0,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 0,
+        "within_1px_of_edge": 0,
+        "outside_d_-3_to_-2": 0,
+        "outside_d_le_-4": 0,
+        "outside_d_min": null,
+        "outside_d_max": null
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": null,
+      "chain_sd_ratio_median_over_pixels_above_1.05": null,
+      "chain_sd_ratio_median_all_pixels": 1.1057985723869577,
+      "tau_folded_median": 3.913842944590473,
+      "tau_bulk_median": 1.0
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 2142.2886427670965,
+      "worst_pixel_geyer_summed": 2070.4014681269823,
+      "worst_pixel_bulk_multichain": 1967.8883850537666,
+      "median_pixel_bulk_multichain": 3968.2958031500084,
+      "phi_bulk_multichain": 1242.5832994534778,
+      "phi_sokal_summed": 1307.7072313609478,
+      "total_draws": 3600,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 2.8288048418167038,
+      "pixel_median": 1.0,
+      "pixel_max": 1.8430780799577127
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0016536165276486,
+        1.004680013382311
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.004370988231743,
+        1.0099186822355108
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.0,
+      "p_null_classic_rhat_phi_at_least_observed": 0.25,
+      "p_null_rank_rhat_phi_at_least_observed": 0.05,
+      "pixel_max_classic_median_q95": [
+        1.0041347930910993,
+        1.00480129149186
+      ],
+      "pixel_max_rank_median_q95": [
+        1.0284630999462734,
+        1.0388989493928418
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.2,
+      "p_null_pixel_max_rank_at_least_observed": 0.75,
+      "observed_pixel_max_rank_exceeds_null_q95": false
+    },
+    "time_s": 13.970386266708374
+  },
+  "pc_qggmrf_sg0.1": {
+    "run": "pc_qggmrf_sg0.1",
+    "chains": 4,
+    "draws_per_chain": 600,
+    "window": [
+      0,
+      600
+    ],
+    "converged_design": true,
+    "summary_rhat_phi": 1.0011747984522608,
+    "summary_rhat_pixel_max": 1.0062090790505982,
+    "classic": {
+      "rhat_phi": 1.0011747984522608,
+      "rhat_pixel_max": 1.0062090792915557,
+      "rhat_pixel_max_edge_pixels": 1.0036263262093879,
+      "rhat_pixel_max_non_edge_pixels": 1.0062090792915557
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0011367564883304,
+        "folded": 1.0005348193504862,
+        "worst": 1.0011367564883304
+      },
+      "pixel_max_bulk": 1.006365713970499,
+      "pixel_max_folded": 1.0405088090966634,
+      "pixel_max_worst": 1.0405088090966634,
+      "pixels_worst_above_1.01": 275,
+      "pixels_worst_above_1.05": 0,
+      "pixels_worst_above_1.05_within_1px_of_edge": 0,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 0,
+        "within_1px_of_edge": 0,
+        "outside_d_-3_to_-2": 0,
+        "outside_d_le_-4": 0,
+        "outside_d_min": null,
+        "outside_d_max": null
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": null,
+      "chain_sd_ratio_median_over_pixels_above_1.05": null,
+      "chain_sd_ratio_median_all_pixels": 1.1258739941785438,
+      "tau_folded_median": 3.437112359635829,
+      "tau_bulk_median": 1.0055092338467282
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 1241.5137614791447,
+      "worst_pixel_geyer_summed": 1232.8214850897032,
+      "worst_pixel_bulk_multichain": 1211.1041154747008,
+      "median_pixel_bulk_multichain": 2371.5160760797553,
+      "phi_bulk_multichain": 678.9889010868523,
+      "phi_sokal_summed": 784.630621896322,
+      "total_draws": 2400,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 3.241679248770071,
+      "pixel_median": 1.0164377276142358,
+      "pixel_max": 2.02583083965985
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0031718680968447,
+        1.0080206467808068
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0049796545692589,
+        1.0107896562444967
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.016666666666666666,
+      "p_null_classic_rhat_phi_at_least_observed": 0.8166666666666667,
+      "p_null_rank_rhat_phi_at_least_observed": 0.9666666666666667,
+      "pixel_max_classic_median_q95": [
+        1.0064689400129436,
+        1.0084875517562162
+      ],
+      "pixel_max_rank_median_q95": [
+        1.0414403558682186,
+        1.049521266187399
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.6,
+      "p_null_pixel_max_rank_at_least_observed": 0.65,
+      "observed_pixel_max_rank_exceeds_null_q95": false
+    },
+    "time_s": 9.550049066543579
+  },
+  "pc_gmrf": {
+    "run": "pc_gmrf",
+    "chains": 4,
+    "draws_per_chain": 500,
+    "window": [
+      0,
+      500
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 1.0326627526912775,
+    "summary_rhat_pixel_max": 1.0906390642252544,
+    "classic": {
+      "rhat_phi": 1.0326627526912775,
+      "rhat_pixel_max": 1.0906390633194574,
+      "rhat_pixel_max_edge_pixels": 1.065249077945413,
+      "rhat_pixel_max_non_edge_pixels": 1.0906390633194574
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.033014911596652,
+        "folded": 1.0016595870868719,
+        "worst": 1.033014911596652
+      },
+      "pixel_max_bulk": 1.089766203444117,
+      "pixel_max_folded": 1.075418782908879,
+      "pixel_max_worst": 1.089766203444117,
+      "pixels_worst_above_1.01": 1989,
+      "pixels_worst_above_1.05": 46,
+      "pixels_worst_above_1.05_within_1px_of_edge": 3,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 2,
+        "within_1px_of_edge": 2,
+        "outside_d_-3_to_-2": 5,
+        "outside_d_le_-4": 37,
+        "outside_d_min": -16,
+        "outside_d_max": -2
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 1.6775625404836167,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.3229702569224497,
+      "chain_sd_ratio_median_all_pixels": 1.2014306400521075,
+      "tau_folded_median": 4.85682349899014,
+      "tau_bulk_median": 6.820339355477692
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 127.17052566263348,
+      "worst_pixel_geyer_summed": 131.0236511254995,
+      "worst_pixel_bulk_multichain": 33.48589079810461,
+      "median_pixel_bulk_multichain": 263.7544882521346,
+      "phi_bulk_multichain": 150.2953121167086,
+      "phi_sokal_summed": 203.24937959616958,
+      "total_draws": 2000,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 13.165253534356651,
+      "pixel_median": 6.914442987460987,
+      "pixel_max": 21.15555848947343
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.02085169684758,
+        1.0455419129501706
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0191380612481273,
+        1.039689846803949
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.9,
+      "p_null_classic_rhat_phi_at_least_observed": 0.21666666666666667,
+      "p_null_rank_rhat_phi_at_least_observed": 0.15,
+      "pixel_max_classic_median_q95": [
+        1.0889989762307022,
+        1.1233973627597311
+      ],
+      "pixel_max_rank_median_q95": [
+        1.0902457367783038,
+        1.120642444915533
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.5,
+      "p_null_pixel_max_rank_at_least_observed": 0.5,
+      "observed_pixel_max_rank_exceeds_null_q95": false
+    },
+    "time_s": 9.593467950820923
+  },
+  "pc_gmrf_adapt": {
+    "run": "pc_gmrf_adapt",
+    "chains": 4,
+    "draws_per_chain": 600,
+    "window": [
+      0,
+      600
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 1.0002203251436623,
+    "summary_rhat_pixel_max": 1.0642782039107468,
+    "classic": {
+      "rhat_phi": 1.0002203251436623,
+      "rhat_pixel_max": 1.0642782039400582,
+      "rhat_pixel_max_edge_pixels": 1.0523399923719958,
+      "rhat_pixel_max_non_edge_pixels": 1.0642782039400582
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0002707684878487,
+        "folded": 1.0000666863785932,
+        "worst": 1.0002707684878487
+      },
+      "pixel_max_bulk": 1.0623844521856778,
+      "pixel_max_folded": 1.0599068621522447,
+      "pixel_max_worst": 1.0623844521856778,
+      "pixels_worst_above_1.01": 905,
+      "pixels_worst_above_1.05": 7,
+      "pixels_worst_above_1.05_within_1px_of_edge": 3,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 5,
+        "within_1px_of_edge": 0,
+        "outside_d_-3_to_-2": 1,
+        "outside_d_le_-4": 1,
+        "outside_d_min": -7,
+        "outside_d_max": -2
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 1.6313372913701139,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.3635203346874394,
+      "chain_sd_ratio_median_all_pixels": 1.1739960317051725,
+      "tau_folded_median": 2.3531161810032506,
+      "tau_bulk_median": 4.04122491216213
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 231.13981160071398,
+      "worst_pixel_geyer_summed": 216.02201444586984,
+      "worst_pixel_bulk_multichain": 57.89260035906903,
+      "median_pixel_bulk_multichain": 575.9699304493831,
+      "phi_bulk_multichain": 918.5738555785347,
+      "phi_sokal_summed": 1169.5016233738772,
+      "total_draws": 2400,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 2.10250069360692,
+      "pixel_median": 4.064916799276327,
+      "pixel_max": 16.419186670617083
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.001293924826228,
+        1.0045226601018842
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0018924759969856,
+        1.0051048832222926
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.0,
+      "p_null_classic_rhat_phi_at_least_observed": 0.8666666666666667,
+      "p_null_rank_rhat_phi_at_least_observed": 0.9,
+      "pixel_max_classic_median_q95": [
+        1.0467077611841589,
+        1.0712363667578777
+      ],
+      "pixel_max_rank_median_q95": [
+        1.0483013823166698,
+        1.091312685940354
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.1,
+      "p_null_pixel_max_rank_at_least_observed": 0.2,
+      "observed_pixel_max_rank_exceeds_null_q95": false
+    },
+    "time_s": 10.404859066009521
+  },
+  "pc_gmrf_adapt_burn2": {
+    "run": "pc_gmrf_adapt_burn2",
+    "chains": 4,
+    "draws_per_chain": 400,
+    "window": [
+      0,
+      400
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 1.0004905288586787,
+    "summary_rhat_pixel_max": 1.089991485124559,
+    "classic": {
+      "rhat_phi": 1.0004905288586787,
+      "rhat_pixel_max": 1.089991485568679,
+      "rhat_pixel_max_edge_pixels": 1.0847347156201552,
+      "rhat_pixel_max_non_edge_pixels": 1.089991485568679
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0005660576793596,
+        "folded": 1.0030705491726983,
+        "worst": 1.0030705491726983
+      },
+      "pixel_max_bulk": 1.0874824184339547,
+      "pixel_max_folded": 1.0838023976111804,
+      "pixel_max_worst": 1.0874824184339547,
+      "pixels_worst_above_1.01": 1434,
+      "pixels_worst_above_1.05": 24,
+      "pixels_worst_above_1.05_within_1px_of_edge": 10,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 13,
+        "within_1px_of_edge": 3,
+        "outside_d_-3_to_-2": 1,
+        "outside_d_le_-4": 7,
+        "outside_d_min": -10,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 1.8268350172638188,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.3628369223402752,
+      "chain_sd_ratio_median_all_pixels": 1.2155141067450066,
+      "tau_folded_median": 2.310625709503915,
+      "tau_bulk_median": 4.022109946592429
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 153.5531968506049,
+      "worst_pixel_geyer_summed": 146.71542373433326,
+      "worst_pixel_bulk_multichain": 37.77218284924504,
+      "median_pixel_bulk_multichain": 372.94254815371374,
+      "phi_bulk_multichain": 625.2164365530352,
+      "phi_sokal_summed": 835.6619756754507,
+      "total_draws": 1600,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 2.0467775027524806,
+      "pixel_median": 4.05378941485673,
+      "pixel_max": 12.466658091986426
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0023005881056721,
+        1.0057271282186488
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.002889698031852,
+        1.0062753036726064
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.0,
+      "p_null_classic_rhat_phi_at_least_observed": 0.8166666666666667,
+      "p_null_rank_rhat_phi_at_least_observed": 0.4166666666666667,
+      "pixel_max_classic_median_q95": [
+        1.0587656211001133,
+        1.0834938000630765
+      ],
+      "pixel_max_rank_median_q95": [
+        1.065458717415913,
+        1.0741742735885556
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.05,
+      "p_null_pixel_max_rank_at_least_observed": 0.0,
+      "observed_pixel_max_rank_exceeds_null_q95": true
+    },
+    "time_s": 7.269186735153198
+  },
+  "pc_gmrf_adapt2": {
+    "run": "pc_gmrf_adapt2",
+    "chains": 4,
+    "draws_per_chain": 200,
+    "window": [
+      0,
+      200
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 1.031817915839846,
+    "summary_rhat_pixel_max": 1.6231350844576071,
+    "classic": {
+      "rhat_phi": 1.031817915839846,
+      "rhat_pixel_max": 1.6231350843868817,
+      "rhat_pixel_max_edge_pixels": 1.5798643336906353,
+      "rhat_pixel_max_non_edge_pixels": 1.6231350843868817
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0325470159595522,
+        "folded": 1.001052305585099,
+        "worst": 1.0325470159595522
+      },
+      "pixel_max_bulk": 1.5400759237541617,
+      "pixel_max_folded": 1.3094317700673597,
+      "pixel_max_worst": 1.5400759237541617,
+      "pixels_worst_above_1.01": 2070,
+      "pixels_worst_above_1.05": 766,
+      "pixels_worst_above_1.05_within_1px_of_edge": 192,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 120,
+        "within_1px_of_edge": 166,
+        "outside_d_-3_to_-2": 92,
+        "outside_d_le_-4": 388,
+        "outside_d_min": -16,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 2.8270882895033336,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.3991853222250978,
+      "chain_sd_ratio_median_all_pixels": 1.262274696457281,
+      "tau_folded_median": 2.518633413290984,
+      "tau_bulk_median": 4.469871866958233
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 52.128106174672055,
+      "worst_pixel_geyer_summed": 37.360886704637664,
+      "worst_pixel_bulk_multichain": 7.15187282392709,
+      "median_pixel_bulk_multichain": 138.96170168293327,
+      "phi_bulk_multichain": 121.18952275785287,
+      "phi_sokal_summed": 349.8040752902005,
+      "total_draws": 800,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 3.5019754526574816,
+      "pixel_median": 4.497710589993698,
+      "pixel_max": 16.946186382457327
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0123383081115112,
+        1.0254105012010803
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.009733332903307,
+        1.026938177993628
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.6166666666666667,
+      "p_null_classic_rhat_phi_at_least_observed": 0.03333333333333333,
+      "p_null_rank_rhat_phi_at_least_observed": 0.0,
+      "pixel_max_classic_median_q95": [
+        1.1689347830697425,
+        1.2098502260912192
+      ],
+      "pixel_max_rank_median_q95": [
+        1.1722115537415672,
+        1.2223945737790953
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.0,
+      "p_null_pixel_max_rank_at_least_observed": 0.0,
+      "observed_pixel_max_rank_exceeds_null_q95": true
+    },
+    "time_s": 4.634967088699341
+  },
+  "pc_tv_lam3.75_adapt": {
+    "run": "pc_tv_lam3.75_adapt",
+    "chains": 4,
+    "draws_per_chain": 800,
+    "window": [
+      0,
+      800
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 1.0037220406697764,
+    "summary_rhat_pixel_max": 1.3188032204651956,
+    "classic": {
+      "rhat_phi": 1.0037220406697764,
+      "rhat_pixel_max": 1.3188032163928078,
+      "rhat_pixel_max_edge_pixels": 1.0952196966667782,
+      "rhat_pixel_max_non_edge_pixels": 1.3188032163928078
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0039122767496016,
+        "folded": 1.0018323227510328,
+        "worst": 1.0039122767496016
+      },
+      "pixel_max_bulk": 1.1862645140981536,
+      "pixel_max_folded": 1.1326556935951422,
+      "pixel_max_worst": 1.1862645140981536,
+      "pixels_worst_above_1.01": 1288,
+      "pixels_worst_above_1.05": 72,
+      "pixels_worst_above_1.05_within_1px_of_edge": 6,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 10,
+        "within_1px_of_edge": 4,
+        "outside_d_-3_to_-2": 7,
+        "outside_d_le_-4": 51,
+        "outside_d_min": -16,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 2.344964269623952,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.2882762171667594,
+      "chain_sd_ratio_median_all_pixels": 1.1483746061678075,
+      "tau_folded_median": 4.4277053745754795,
+      "tau_bulk_median": 10.53412073793798
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 98.40230854216522,
+      "worst_pixel_geyer_summed": 87.38337499612152,
+      "worst_pixel_bulk_multichain": 14.872049497016748,
+      "median_pixel_bulk_multichain": 272.36237738840316,
+      "phi_bulk_multichain": 811.6613158857755,
+      "phi_sokal_summed": 891.6275765500363,
+      "total_draws": 3200,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 3.953542951558252,
+      "pixel_median": 10.651808053471601,
+      "pixel_max": 35.951107557289845
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0030511632028372,
+        1.007987130361441
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0038622373845763,
+        1.008502831206367
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.016666666666666666,
+      "p_null_classic_rhat_phi_at_least_observed": 0.4666666666666667,
+      "p_null_rank_rhat_phi_at_least_observed": 0.48333333333333334,
+      "pixel_max_classic_median_q95": [
+        1.0998834221268377,
+        1.1333120255465268
+      ],
+      "pixel_max_rank_median_q95": [
+        1.1006385723555567,
+        1.1279406222030612
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.0,
+      "p_null_pixel_max_rank_at_least_observed": 0.0,
+      "observed_pixel_max_rank_exceeds_null_q95": true
+    },
+    "time_s": 15.733109951019287
+  },
+  "pc_tv_lam3.75_adapt2": {
+    "run": "pc_tv_lam3.75_adapt2",
+    "chains": 4,
+    "draws_per_chain": 500,
+    "window": [
+      0,
+      500
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 1.0106914778285898,
+    "summary_rhat_pixel_max": 1.2018925950440347,
+    "classic": {
+      "rhat_phi": 1.0106914778285898,
+      "rhat_pixel_max": 1.2018925950283996,
+      "rhat_pixel_max_edge_pixels": 1.0728920696602697,
+      "rhat_pixel_max_non_edge_pixels": 1.2018925950283996
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.010206527712463,
+        "folded": 1.0003627902550867,
+        "worst": 1.010206527712463
+      },
+      "pixel_max_bulk": 1.1579343951593135,
+      "pixel_max_folded": 1.1110016685953894,
+      "pixel_max_worst": 1.1579343951593135,
+      "pixels_worst_above_1.01": 1600,
+      "pixels_worst_above_1.05": 246,
+      "pixels_worst_above_1.05_within_1px_of_edge": 4,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 10,
+        "within_1px_of_edge": 1,
+        "outside_d_-3_to_-2": 10,
+        "outside_d_le_-4": 225,
+        "outside_d_min": -16,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 3.6238759218677523,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.2972766217817582,
+      "chain_sd_ratio_median_all_pixels": 1.1743686914204114,
+      "tau_folded_median": 3.7568730667815666,
+      "tau_bulk_median": 9.063169692809693
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 68.46259270378957,
+      "worst_pixel_geyer_summed": 60.74413134073629,
+      "worst_pixel_bulk_multichain": 19.87032611899345,
+      "median_pixel_bulk_multichain": 192.31170510580148,
+      "phi_bulk_multichain": 577.4121658433289,
+      "phi_sokal_summed": 677.2418652241342,
+      "total_draws": 2000,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 4.6910263503775065,
+      "pixel_median": 9.149792002949667,
+      "pixel_max": 31.812733439053968
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0063634235038172,
+        1.0142192944600519
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0063536505745878,
+        1.0143624657529848
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.23333333333333334,
+      "p_null_classic_rhat_phi_at_least_observed": 0.18333333333333332,
+      "p_null_rank_rhat_phi_at_least_observed": 0.2,
+      "pixel_max_classic_median_q95": [
+        1.1272565526475917,
+        1.1655858304424498
+      ],
+      "pixel_max_rank_median_q95": [
+        1.1438985127746055,
+        1.181275471804591
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.0,
+      "p_null_pixel_max_rank_at_least_observed": 0.3,
+      "observed_pixel_max_rank_exceeds_null_q95": false
+    },
+    "time_s": 10.630349159240723
+  },
+  "pc_tv_lam11.25_adapt": {
+    "run": "pc_tv_lam11.25_adapt",
+    "chains": 4,
+    "draws_per_chain": 400,
+    "window": [
+      0,
+      400
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 1.0008008129675423,
+    "summary_rhat_pixel_max": 1.1421070498588497,
+    "classic": {
+      "rhat_phi": 1.0008008129675423,
+      "rhat_pixel_max": 1.1421070504157333,
+      "rhat_pixel_max_edge_pixels": 1.0812404899936865,
+      "rhat_pixel_max_non_edge_pixels": 1.1421070504157333
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0007222652131476,
+        "folded": 1.0044123699114889,
+        "worst": 1.0044123699114889
+      },
+      "pixel_max_bulk": 1.1307945226250615,
+      "pixel_max_folded": 1.0480511579006389,
+      "pixel_max_worst": 1.1307945226250615,
+      "pixels_worst_above_1.01": 1554,
+      "pixels_worst_above_1.05": 111,
+      "pixels_worst_above_1.05_within_1px_of_edge": 3,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 2,
+        "within_1px_of_edge": 3,
+        "outside_d_-3_to_-2": 10,
+        "outside_d_le_-4": 96,
+        "outside_d_min": -16,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 1.8447730810971064,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.2676266413415875,
+      "chain_sd_ratio_median_all_pixels": 1.1751215585135468,
+      "tau_folded_median": 3.160563214692327,
+      "tau_bulk_median": 6.665436513357114
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 75.16813525380712,
+      "worst_pixel_geyer_summed": 72.00620102577896,
+      "worst_pixel_bulk_multichain": 21.719311231627962,
+      "median_pixel_bulk_multichain": 208.98792496228816,
+      "phi_bulk_multichain": 383.0583082785175,
+      "phi_sokal_summed": 471.3001822782734,
+      "total_draws": 1600,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 3.5239074630490013,
+      "pixel_median": 6.715046838324607,
+      "pixel_max": 25.548708565710477
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0070513311494813,
+        1.0121142216300354
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0056206932780123,
+        1.013674779017829
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.2833333333333333,
+      "p_null_classic_rhat_phi_at_least_observed": 0.9166666666666666,
+      "p_null_rank_rhat_phi_at_least_observed": 0.6,
+      "pixel_max_classic_median_q95": [
+        1.1084802442158583,
+        1.158201755887523
+      ],
+      "pixel_max_rank_median_q95": [
+        1.117494132475693,
+        1.1918883541492016
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.15,
+      "p_null_pixel_max_rank_at_least_observed": 0.25,
+      "observed_pixel_max_rank_exceeds_null_q95": false
+    },
+    "time_s": 8.473489046096802
+  },
+  "pc_tv_lam11.25_adapt2": {
+    "run": "pc_tv_lam11.25_adapt2",
+    "chains": 4,
+    "draws_per_chain": 200,
+    "window": [
+      0,
+      200
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 1.0604620642919556,
+    "summary_rhat_pixel_max": 1.6353828050146633,
+    "classic": {
+      "rhat_phi": 1.0604620642919556,
+      "rhat_pixel_max": 1.6353828067498055,
+      "rhat_pixel_max_edge_pixels": 1.1009128136548718,
+      "rhat_pixel_max_non_edge_pixels": 1.6353828067498055
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.0601077497228362,
+        "folded": 1.0043147956896048,
+        "worst": 1.0601077497228362
+      },
+      "pixel_max_bulk": 1.5008944940871103,
+      "pixel_max_folded": 1.255350842775964,
+      "pixel_max_worst": 1.5008944940871103,
+      "pixels_worst_above_1.01": 1878,
+      "pixels_worst_above_1.05": 597,
+      "pixels_worst_above_1.05_within_1px_of_edge": 22,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 21,
+        "within_1px_of_edge": 12,
+        "outside_d_-3_to_-2": 36,
+        "outside_d_le_-4": 528,
+        "outside_d_min": -16,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 5.514071791954982,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.3537326584929592,
+      "chain_sd_ratio_median_all_pixels": 1.2264851380691248,
+      "tau_folded_median": 2.589248171308169,
+      "tau_bulk_median": 5.262265535764496
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 48.10938015387431,
+      "worst_pixel_geyer_summed": 28.87550593259371,
+      "worst_pixel_bulk_multichain": 7.469607628437995,
+      "median_pixel_bulk_multichain": 120.57088219143725,
+      "phi_bulk_multichain": 82.46120459433021,
+      "phi_sokal_summed": 184.09741536867418,
+      "total_draws": 800,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 5.549939259885816,
+      "pixel_median": 5.303018686111814,
+      "pixel_max": 17.88242214974803
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.01976418751055,
+        1.053525424401723
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0245482831305144,
+        1.0489616827524522
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.8,
+      "p_null_classic_rhat_phi_at_least_observed": 0.03333333333333333,
+      "p_null_rank_rhat_phi_at_least_observed": 0.016666666666666666,
+      "pixel_max_classic_median_q95": [
+        1.1756684009688891,
+        1.2446761570015716
+      ],
+      "pixel_max_rank_median_q95": [
+        1.1758247950120524,
+        1.2398785106116172
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.0,
+      "p_null_pixel_max_rank_at_least_observed": 0.0,
+      "observed_pixel_max_rank_exceeds_null_q95": true
+    },
+    "time_s": 5.30157995223999
+  },
+  "pc_tv_lam1.25_adapt": {
+    "run": "pc_tv_lam1.25_adapt",
+    "chains": 4,
+    "draws_per_chain": 100,
+    "window": [
+      0,
+      100
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 0.9986779155800823,
+    "summary_rhat_pixel_max": 2.9088464648824113,
+    "classic": {
+      "rhat_phi": 0.9986779155800823,
+      "rhat_pixel_max": 2.9088464559777174,
+      "rhat_pixel_max_edge_pixels": 2.5125816560669234,
+      "rhat_pixel_max_non_edge_pixels": 2.9088464559777174
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 0.9993256096364647,
+        "folded": 1.01006809725958,
+        "worst": 1.01006809725958
+      },
+      "pixel_max_bulk": 2.17072016630404,
+      "pixel_max_folded": 1.6258370590495685,
+      "pixel_max_worst": 2.17072016630404,
+      "pixels_worst_above_1.01": 2279,
+      "pixels_worst_above_1.05": 1822,
+      "pixels_worst_above_1.05_within_1px_of_edge": 359,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 209,
+        "within_1px_of_edge": 317,
+        "outside_d_-3_to_-2": 260,
+        "outside_d_le_-4": 1036,
+        "outside_d_min": -16,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 4.874111434214199,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.5602776195629904,
+      "chain_sd_ratio_median_all_pixels": 1.5343889809795366,
+      "tau_folded_median": 2.559774654027944,
+      "tau_bulk_median": 4.432140126540446
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 36.10252978161275,
+      "worst_pixel_geyer_summed": 20.667282635176445,
+      "worst_pixel_bulk_multichain": 5.235557556009732,
+      "median_pixel_bulk_multichain": 26.622150405885744,
+      "phi_bulk_multichain": 236.78004464161575,
+      "phi_sokal_summed": 334.97718371946723,
+      "total_draws": 400,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 1.5496049891302248,
+      "pixel_median": 4.454244871374991,
+      "pixel_max": 11.204634874441494
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.004971768150113,
+        1.018661725925243
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0058260968340775,
+        1.0191751203052113
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.2833333333333333,
+      "p_null_classic_rhat_phi_at_least_observed": 0.7166666666666667,
+      "p_null_rank_rhat_phi_at_least_observed": 0.3333333333333333,
+      "pixel_max_classic_median_q95": [
+        1.259572668882588,
+        1.3029846450837326
+      ],
+      "pixel_max_rank_median_q95": [
+        1.2586391112139919,
+        1.34661182778674
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.0,
+      "p_null_pixel_max_rank_at_least_observed": 0.0,
+      "observed_pixel_max_rank_exceeds_null_q95": true
+    },
+    "time_s": 1.7182800769805908
+  },
+  "pc_tv_lam8.5_adapt": {
+    "run": "pc_tv_lam8.5_adapt",
+    "chains": 4,
+    "draws_per_chain": 100,
+    "window": [
+      0,
+      100
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 2.340530046114906,
+    "summary_rhat_pixel_max": 16.062971876323545,
+    "classic": {
+      "rhat_phi": 2.340530046114906,
+      "rhat_pixel_max": 16.0629722610864,
+      "rhat_pixel_max_edge_pixels": 10.628186040406154,
+      "rhat_pixel_max_non_edge_pixels": 16.0629722610864
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.5759683051868636,
+        "folded": 1.5446149800197908,
+        "worst": 1.5759683051868636
+      },
+      "pixel_max_bulk": 2.855082903956671,
+      "pixel_max_folded": 2.006547306153764,
+      "pixel_max_worst": 2.855082903956671,
+      "pixels_worst_above_1.01": 2303,
+      "pixels_worst_above_1.05": 2267,
+      "pixels_worst_above_1.05_within_1px_of_edge": 522,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 249,
+        "within_1px_of_edge": 480,
+        "outside_d_-3_to_-2": 319,
+        "outside_d_le_-4": 1219,
+        "outside_d_min": -16,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 10.16665008424913,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 2.0055003218496172,
+      "chain_sd_ratio_median_all_pixels": 1.986023912994277,
+      "tau_folded_median": 4.0458290923004885,
+      "tau_bulk_median": 5.649193096085933
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 31.917089667306353,
+      "worst_pixel_geyer_summed": 18.06743283966612,
+      "worst_pixel_bulk_multichain": 4.6231758528010936,
+      "median_pixel_bulk_multichain": 7.779246744910895,
+      "phi_bulk_multichain": 6.934159834074953,
+      "phi_sokal_summed": 126.10614153049755,
+      "total_draws": 400,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 3.641185693559784,
+      "pixel_median": 5.821775719930659,
+      "pixel_max": 12.619293508079567
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.0221223233950913,
+        1.0567858481993329
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.024797016422113,
+        1.055899473661991
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.8666666666666667,
+      "p_null_classic_rhat_phi_at_least_observed": 0.0,
+      "p_null_rank_rhat_phi_at_least_observed": 0.0,
+      "pixel_max_classic_median_q95": [
+        1.279512253116207,
+        1.3450499253018606
+      ],
+      "pixel_max_rank_median_q95": [
+        1.2704604925191965,
+        1.3096843833453677
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.0,
+      "p_null_pixel_max_rank_at_least_observed": 0.0,
+      "observed_pixel_max_rank_exceeds_null_q95": true
+    },
+    "time_s": 1.8378269672393799
+  },
+  "pc_tv_lam3.75_indep": {
+    "run": "pc_tv_lam3.75_indep",
+    "chains": 2,
+    "draws_per_chain": 200,
+    "window": [
+      0,
+      200
+    ],
+    "converged_design": false,
+    "summary_rhat_phi": 2.0131724567998694,
+    "summary_rhat_pixel_max": 14.641633285213567,
+    "classic": {
+      "rhat_phi": 2.0131724567998694,
+      "rhat_pixel_max": 14.641633216101784,
+      "rhat_pixel_max_edge_pixels": 11.853223565347431,
+      "rhat_pixel_max_non_edge_pixels": 14.641633216101784
+    },
+    "rank_normalized": {
+      "phi": {
+        "bulk": 1.8331911652483275,
+        "folded": 1.1929714177309827,
+        "worst": 1.8331911652483275
+      },
+      "pixel_max_bulk": 2.5122313742611735,
+      "pixel_max_folded": 1.7818294226675226,
+      "pixel_max_worst": 2.5122313742611735,
+      "pixels_worst_above_1.01": 2296,
+      "pixels_worst_above_1.05": 2177,
+      "pixels_worst_above_1.05_within_1px_of_edge": 505,
+      "edge_pixels": 536,
+      "pixels": 2304,
+      "flagged_by_region": {
+        "inside_object_d_ge_2": 247,
+        "within_1px_of_edge": 455,
+        "outside_d_-3_to_-2": 304,
+        "outside_d_le_-4": 1171,
+        "outside_d_min": -16,
+        "outside_d_max": -1
+      },
+      "chain_sd_ratio_max_over_pixels_above_1.05": 8.196055654403922,
+      "chain_sd_ratio_median_over_pixels_above_1.05": 1.414112704112502,
+      "chain_sd_ratio_median_all_pixels": 1.395137240089194,
+      "tau_folded_median": 7.342903567359082,
+      "tau_bulk_median": 11.095371189157898
+    },
+    "ess": {
+      "worst_pixel_sokal_summed": 15.561905904777397,
+      "worst_pixel_geyer_summed": 8.025532767162955,
+      "worst_pixel_bulk_multichain": 2.413478237222933,
+      "median_pixel_bulk_multichain": 4.807006543146521,
+      "phi_bulk_multichain": 2.984379001352003,
+      "phi_sokal_summed": 124.28811877015906,
+      "total_draws": 400,
+      "design_threshold": 200.0
+    },
+    "tau": {
+      "phi": 11.25083677206808,
+      "pixel_median": 11.469835932577094,
+      "pixel_max": 25.74437510472164
+    },
+    "null_ar1": {
+      "note": "chains drawn from ONE distribution: independent AR(1) series with the observed integrated autocorrelation time of the series each statistic is computed from (classic: the draws; rank-normalized bulk and folded: the rank-normalized draws and |draw - median|); pixels treated as independent",
+      "reps_phi": 60,
+      "reps_pixels": 20,
+      "phi_classic_rhat_median_q95": [
+        1.04664382478768,
+        1.1586685528435465
+      ],
+      "phi_rank_rhat_median_q95": [
+        1.0675929999035372,
+        1.1264100113581108
+      ],
+      "p_classic_rhat_phi_above_1.01": 0.9,
+      "p_null_classic_rhat_phi_at_least_observed": 0.0,
+      "p_null_rank_rhat_phi_at_least_observed": 0.0,
+      "pixel_max_classic_median_q95": [
+        1.5247923553582687,
+        1.6569816391372045
+      ],
+      "pixel_max_rank_median_q95": [
+        1.5419276270226918,
+        1.6193509643541093
+      ],
+      "p_null_pixel_max_classic_at_least_observed": 0.0,
+      "p_null_pixel_max_rank_at_least_observed": 0.0,
+      "observed_pixel_max_rank_exceeds_null_q95": true
+    },
+    "time_s": 2.971954822540283
+  }
+}

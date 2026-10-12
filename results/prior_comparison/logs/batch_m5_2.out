@@ -1,0 +1,41 @@
+[batch_run 21:14:35] 12 job(s) to run, 0 skipped; cpu slots 12 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 21:14:35] START m5r_gmrf_c0 (cpu0, unpinned) [1/12]
+[batch_run 21:14:35] START m5r_gmrf_c1 (cpu1, unpinned) [2/12]
+[batch_run 21:14:35] START m5r_gmrf_c2 (cpu2, unpinned) [3/12]
+[batch_run 21:14:35] START m5r_gmrf_c3 (cpu3, unpinned) [4/12]
+[batch_run 21:14:35] START m5r_tvA_c0 (cpu4, unpinned) [5/12]
+[batch_run 21:14:35] START m5r_tvA_c1 (cpu5, unpinned) [6/12]
+[batch_run 21:14:35] START m5r_tvA_c2 (cpu6, unpinned) [7/12]
+[batch_run 21:14:35] START m5r_tvA_c3 (cpu7, unpinned) [8/12]
+[batch_run 21:14:35] START m5r_tvB_c0 (cpu8, unpinned) [9/12]
+[batch_run 21:14:35] START m5r_tvB_c1 (cpu9, unpinned) [10/12]
+[batch_run 21:14:35] START m5r_tvB_c2 (cpu10, unpinned) [11/12]
+[batch_run 21:14:35] START m5r_tvB_c3 (cpu11, unpinned) [12/12]
+[batch_run 22:56:14] DONE  m5r_gmrf_c2 exit 0 in 6098.7 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_2_seg9.npz does not exist; it will run again next time)
+[batch_run 22:56:27] DONE  m5r_gmrf_c1 exit 0 in 6111.3 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_1_seg9.npz does not exist; it will run again next time)
+[batch_run 22:56:58] DONE  m5r_gmrf_c3 exit 0 in 6143.1 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_3_seg9.npz does not exist; it will run again next time)
+[batch_run 22:57:48] DONE  m5r_gmrf_c0 exit 0 in 6192.6 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_0_seg9.npz does not exist; it will run again next time)
+[batch_run 22:58:39] interrupted: terminating 8 running job(s)
+[batch_run 22:58:39] INTERRUPTED m5r_tvA_c0 exit -15 in 6243.5 s
+[batch_run 22:58:39] INTERRUPTED m5r_tvA_c1 exit -15 in 6243.5 s
+[batch_run 22:58:39] INTERRUPTED m5r_tvA_c2 exit -15 in 6243.5 s
+[batch_run 22:58:39] INTERRUPTED m5r_tvA_c3 exit -15 in 6243.5 s
+[batch_run 22:58:39] INTERRUPTED m5r_tvB_c0 exit -15 in 6243.5 s
+[batch_run 22:58:39] INTERRUPTED m5r_tvB_c1 exit -15 in 6243.5 s
+[batch_run 22:58:39] INTERRUPTED m5r_tvB_c2 exit -15 in 6243.5 s
+[batch_run 22:58:39] INTERRUPTED m5r_tvB_c3 exit -15 in 6243.5 s
+
+job                              status          wall s  exit
+m5r_gmrf_c2                      ok              6098.7     0
+m5r_gmrf_c1                      ok              6111.3     0
+m5r_gmrf_c3                      ok              6143.1     0
+m5r_gmrf_c0                      ok              6192.6     0
+m5r_tvA_c0                       interrupted     6243.5   -15
+m5r_tvA_c1                       interrupted     6243.5   -15
+m5r_tvA_c2                       interrupted     6243.5   -15
+m5r_tvA_c3                       interrupted     6243.5   -15
+m5r_tvB_c0                       interrupted     6243.5   -15
+m5r_tvB_c1                       interrupted     6243.5   -15
+m5r_tvB_c2                       interrupted     6243.5   -15
+m5r_tvB_c3                       interrupted     6243.5   -15
+[batch_run 22:58:39] 4 ok, 8 not ok; interrupted

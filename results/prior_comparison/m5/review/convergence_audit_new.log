@@ -1,0 +1,4 @@
+pc_tv_lam1.25_adapt  4x100  R-hat Phi classic 0.9987 rank 1.0101 (null AR(1) P>1.01 0.28);  pixel max classic 2.9088 rank 2.1707 (null q95 1.3466, 1822 px > 1.05);  worst ESS sokal 36 bulk 5
+pc_tv_lam8.5_adapt   4x100  R-hat Phi classic 2.3405 rank 1.5760 (null AR(1) P>1.01 0.87);  pixel max classic 16.0630 rank 2.8551 (null q95 1.3097, 2267 px > 1.05);  worst ESS sokal 32 bulk 5
+pc_tv_lam3.75_indep  2x200  R-hat Phi classic 2.0132 rank 1.8332 (null AR(1) P>1.01 0.90);  pixel max classic 14.6416 rank 2.5122 (null q95 1.6194, 2177 px > 1.05);  worst ESS sokal 16 bulk 2
+wrote results/prior_comparison/m5/convergence_audit.json

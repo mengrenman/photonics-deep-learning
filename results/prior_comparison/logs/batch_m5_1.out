@@ -1,0 +1,95 @@
+batch_run: warning: 40 slots x 1 threads exceed the 16 logical CPUs of this machine: jobs will be oversubscribed
+[batch_run 16:16:21] 30 job(s) to run, 0 skipped; cpu slots 40 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/logs
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_prepare (cpu0, unpinned) [1/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_prepare (cpu1, unpinned) [2/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_prepare (cpu2, unpinned) [3/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_adaptation (cpu3, unpinned) [4/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_adaptation (cpu4, unpinned) [5/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_adaptation (cpu5, unpinned) [6/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_c0_s0 (cpu6, unpinned) [7/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_c1_s0 (cpu7, unpinned) [8/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_c2_s0 (cpu8, unpinned) [9/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_c3_s0 (cpu9, unpinned) [10/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_c0_s1 (cpu10, unpinned) [11/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_c1_s1 (cpu11, unpinned) [12/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_c2_s1 (cpu12, unpinned) [13/30]
+[batch_run 16:16:21] START pc_tv_lam3.75_adapt_c3_s1 (cpu13, unpinned) [14/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_c0_s0 (cpu14, unpinned) [15/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_c1_s0 (cpu15, unpinned) [16/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_c0_s1 (cpu16, unpinned) [17/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_c1_s1 (cpu17, unpinned) [18/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_c2_s0 (cpu18, unpinned) [19/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_c3_s0 (cpu19, unpinned) [20/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_c2_s1 (cpu20, unpinned) [21/30]
+[batch_run 16:16:21] START pc_tv_lam11.25_adapt_c3_s1 (cpu21, unpinned) [22/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_c0_s0 (cpu22, unpinned) [23/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_c1_s0 (cpu23, unpinned) [24/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_c2_s0 (cpu24, unpinned) [25/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_c3_s0 (cpu25, unpinned) [26/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_c0_s1 (cpu26, unpinned) [27/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_c1_s1 (cpu27, unpinned) [28/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_c2_s1 (cpu28, unpinned) [29/30]
+[batch_run 16:16:21] START pc_gmrf_adapt_c3_s1 (cpu29, unpinned) [30/30]
+[batch_run 16:18:54] DONE  pc_gmrf_adapt_prepare exit 0 in 153.0 s
+[batch_run 16:21:31] DONE  pc_tv_lam11.25_adapt_prepare exit 0 in 310.6 s
+[batch_run 16:22:34] DONE  pc_tv_lam3.75_adapt_prepare exit 0 in 373.1 s
+[batch_run 16:58:24] DONE  pc_tv_lam11.25_adapt_adaptation exit 0 in 2522.9 s
+[batch_run 16:59:16] DONE  pc_tv_lam3.75_adapt_adaptation exit 0 in 2574.8 s
+[batch_run 17:00:22] DONE  pc_tv_lam3.75_adapt_c0_s0 exit 0 in 2641.4 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt/chain_0_seg0.npz does not exist; it will run again next time)
+[batch_run 17:00:22] DONE  pc_tv_lam3.75_adapt_c1_s0 exit 0 in 2641.4 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt/chain_1_seg0.npz does not exist; it will run again next time)
+[batch_run 17:00:22] DONE  pc_tv_lam3.75_adapt_c2_s0 exit 0 in 2641.4 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt/chain_2_seg0.npz does not exist; it will run again next time)
+[batch_run 17:00:22] DONE  pc_tv_lam3.75_adapt_c3_s0 exit 0 in 2641.4 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt/chain_3_seg0.npz does not exist; it will run again next time)
+[batch_run 17:00:22] DONE  pc_tv_lam11.25_adapt_c0_s0 exit 0 in 2641.4 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/chain_0_seg0.npz does not exist; it will run again next time)
+[batch_run 17:00:22] DONE  pc_tv_lam11.25_adapt_c1_s0 exit 0 in 2641.4 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/chain_1_seg0.npz does not exist; it will run again next time)
+[batch_run 17:00:22] DONE  pc_tv_lam11.25_adapt_c2_s0 exit 0 in 2641.4 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/chain_2_seg0.npz does not exist; it will run again next time)
+[batch_run 17:00:22] DONE  pc_tv_lam11.25_adapt_c3_s0 exit 0 in 2641.4 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/chain_3_seg0.npz does not exist; it will run again next time)
+[batch_run 18:00:42] DONE  pc_gmrf_adapt_adaptation exit 0 in 6261.0 s
+[batch_run 18:09:39] DONE  pc_gmrf_adapt_c0_s0 exit 0 in 6798.2 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_0_seg0.npz does not exist; it will run again next time)
+[batch_run 18:09:39] DONE  pc_gmrf_adapt_c1_s0 exit 0 in 6798.2 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_1_seg0.npz does not exist; it will run again next time)
+[batch_run 18:09:39] DONE  pc_gmrf_adapt_c2_s0 exit 0 in 6798.2 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_2_seg0.npz does not exist; it will run again next time)
+[batch_run 18:09:39] DONE  pc_gmrf_adapt_c3_s0 exit 0 in 6798.2 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_3_seg0.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_tv_lam3.75_adapt_c0_s1 exit 0 in 8899.9 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt/chain_0_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_tv_lam3.75_adapt_c1_s1 exit 0 in 8899.9 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt/chain_1_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_tv_lam3.75_adapt_c2_s1 exit 0 in 8899.9 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt/chain_2_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_tv_lam3.75_adapt_c3_s1 exit 0 in 8899.9 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam3.75_adapt/chain_3_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_tv_lam11.25_adapt_c0_s1 exit 0 in 8899.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/chain_0_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_tv_lam11.25_adapt_c1_s1 exit 0 in 8899.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/chain_1_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_tv_lam11.25_adapt_c2_s1 exit 0 in 8899.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/chain_2_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_tv_lam11.25_adapt_c3_s1 exit 0 in 8899.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_tv_lam11.25_adapt/chain_3_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_gmrf_adapt_c0_s1 exit 0 in 8899.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_0_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_gmrf_adapt_c1_s1 exit 0 in 8899.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_1_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_gmrf_adapt_c2_s1 exit 0 in 8899.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_2_seg1.npz does not exist; it will run again next time)
+[batch_run 18:44:41] DONE  pc_gmrf_adapt_c3_s1 exit 0 in 8899.8 s (WARNING: exited 0 but /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pc_gmrf_adapt/chain_3_seg1.npz does not exist; it will run again next time)
+
+job                              status          wall s  exit
+pc_gmrf_adapt_prepare            ok               153.0     0
+pc_tv_lam11.25_adapt_prepare     ok               310.6     0
+pc_tv_lam3.75_adapt_prepare      ok               373.1     0
+pc_tv_lam11.25_adapt_adaptation  ok              2522.9     0
+pc_tv_lam3.75_adapt_adaptation   ok              2574.8     0
+pc_tv_lam3.75_adapt_c0_s0        ok              2641.4     0
+pc_tv_lam3.75_adapt_c1_s0        ok              2641.4     0
+pc_tv_lam3.75_adapt_c2_s0        ok              2641.4     0
+pc_tv_lam3.75_adapt_c3_s0        ok              2641.4     0
+pc_tv_lam11.25_adapt_c0_s0       ok              2641.4     0
+pc_tv_lam11.25_adapt_c1_s0       ok              2641.4     0
+pc_tv_lam11.25_adapt_c2_s0       ok              2641.4     0
+pc_tv_lam11.25_adapt_c3_s0       ok              2641.4     0
+pc_gmrf_adapt_adaptation         ok              6261.0     0
+pc_gmrf_adapt_c0_s0              ok              6798.2     0
+pc_gmrf_adapt_c1_s0              ok              6798.2     0
+pc_gmrf_adapt_c2_s0              ok              6798.2     0
+pc_gmrf_adapt_c3_s0              ok              6798.2     0
+pc_tv_lam3.75_adapt_c0_s1        ok              8899.9     0
+pc_tv_lam3.75_adapt_c1_s1        ok              8899.9     0
+pc_tv_lam3.75_adapt_c2_s1        ok              8899.9     0
+pc_tv_lam3.75_adapt_c3_s1        ok              8899.9     0
+pc_tv_lam11.25_adapt_c0_s1       ok              8899.8     0
+pc_tv_lam11.25_adapt_c1_s1       ok              8899.8     0
+pc_tv_lam11.25_adapt_c2_s1       ok              8899.8     0
+pc_tv_lam11.25_adapt_c3_s1       ok              8899.8     0
+pc_gmrf_adapt_c0_s1              ok              8899.8     0
+pc_gmrf_adapt_c1_s1              ok              8899.8     0
+pc_gmrf_adapt_c2_s1              ok              8899.8     0
+pc_gmrf_adapt_c3_s1              ok              8899.8     0
+[batch_run 18:44:41] 30 ok, 0 not ok

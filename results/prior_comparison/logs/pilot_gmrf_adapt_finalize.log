@@ -1,0 +1,7 @@
+# batch_run 2026-10-11T15:53:32+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior gmrf --sigma 0.5 --ell 0.4 --adapt --out pilot_gmrf_adapt --chains 2 --prior-samples 0 --adapt-init 25 --adapt-first-window 25 --adapt-windows 3 --adapt-final 50 --stage finalize
+physical Phi of the draws: mean 2429.8 (MAP 2367.0, N 2400); split R-hat 1.007; max pixel R-hat 2.323; worst-pixel ESS 17 -> UNCONVERGED: max pixel R-hat 2.323 > 1.05; worst-pixel ESS 17 < 200
+err_model (eps_r): MAP 0.1246, posterior mean 0.1658; err_chi: MAP 0.3825, mean 0.5090; |z|>3 in 0.0% of pixels (edge share nan)
+features: gap_valley P=0.950, ring_hole P=0.550, ring_continuity P=0.750
+wrote /Users/mengren/Documents/new_projects/photonics-dl/results/prior_comparison/pilot_gmrf_adapt (total 9 s)

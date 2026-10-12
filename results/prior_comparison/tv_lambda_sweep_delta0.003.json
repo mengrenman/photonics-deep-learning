@@ -1,0 +1,180 @@
+{
+  "problem": {
+    "n": 48,
+    "side": 2.0,
+    "eps_r": 2.0,
+    "snr_db": 30.0,
+    "seed": 0,
+    "data_factor": 2,
+    "n_tx": 40,
+    "n_rx": 60,
+    "n_data": 2400,
+    "noise_std": 0.00039227537566584975,
+    "tol": 1e-10,
+    "phi_truth": 2578.1311245100205,
+    "phi_clean": 2438.2309412828818,
+    "model_to_noise": 0.26893010453116545,
+    "data_check": {
+      "reference_run": "pc_matern",
+      "d_obs_sha256": "d1000a64d67044a0cb51868da8c55e45f0dca8c6bfd785580232baabf4f1a9c3",
+      "max_abs_diff_over_noise_std": 6.486115089388395e-14,
+      "tolerance": 1e-06
+    }
+  },
+  "prior": {
+    "kind": "tv",
+    "delta": 0.003,
+    "sigma_0": 1.0,
+    "mu": 0.0,
+    "form": "lam sum_pairs b (sqrt(D^2 + delta^2) - delta) + |theta - mu|^2 / (2 sigma_0^2), 8 neighbors"
+  },
+  "map": {
+    "start": "thetaspace.smooth_start, maxiter 100, shared by every lambda",
+    "start_nit": 100,
+    "start_time_s": 13.631845250027254,
+    "optimizer": "thetaspace.map_theta (L-BFGS-B)",
+    "maxiter": 4000,
+    "gtol": 1e-06
+  },
+  "runs": {
+    "1.25": {
+      "lam": 1.25,
+      "phi": 2382.606191969614,
+      "R": 462.5431497097255,
+      "U": 2845.1493416793396,
+      "n_data": 2400,
+      "phi_over_n_data": 0.9927525799873391,
+      "grad_inf": 0.005463982179132284,
+      "nit": 1242,
+      "nfev": 1290,
+      "success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "time_s": 126.97697412490379,
+      "err_model": 0.10477772939433672,
+      "err_chi": 0.3216946481140853,
+      "err_data": 0.004892798708502168,
+      "tv": 312.5796691996457,
+      "tv_truth": 342.5900002137453,
+      "pairs_below_delta": 0.4829787234042553,
+      "u_convergence": {
+        "u_at_25pct": 2846.13516088474,
+        "u_at_50pct": 2845.3541258651603,
+        "u_at_75pct": 2845.151112606531,
+        "u_at_90pct": 2845.149464801464,
+        "u_end": 2845.1493414573047,
+        "u_drop_last_10pct": 0.00012334415941950283,
+        "nfev": 1290
+      },
+      "edge_bias": {
+        "-1": 0.07422480488770425,
+        "1": 0.007137571363866936,
+        "2": -0.06485270515172306
+      },
+      "laplace_theta_std": {
+        "mean": 0.06532004934689802,
+        "inside": 0.1074193026066753,
+        "outside": 0.053651741902392115,
+        "min": 0.02086679612514546,
+        "max": 0.8544715803577584
+      },
+      "laplace_pivot_ratio_sq": 729.3701330277731
+    },
+    "3.75": {
+      "lam": 3.75,
+      "phi": 2402.688139400837,
+      "R": 1177.8110220902772,
+      "U": 3580.499161491114,
+      "n_data": 2400,
+      "phi_over_n_data": 1.001120058083682,
+      "grad_inf": 0.005469364446485713,
+      "nit": 1056,
+      "nfev": 1114,
+      "success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "time_s": 111.02622050000355,
+      "err_model": 0.1136123692166323,
+      "err_chi": 0.34881927054364603,
+      "err_data": 0.00513045985259853,
+      "tv": 303.01528328440804,
+      "tv_truth": 342.5900002137453,
+      "pairs_below_delta": 0.5262038073908175,
+      "u_convergence": {
+        "u_at_25pct": 3582.1499028001726,
+        "u_at_50pct": 3580.5482309317763,
+        "u_at_75pct": 3580.500032318761,
+        "u_at_90pct": 3580.499205580137,
+        "u_end": 3580.49916113495,
+        "u_drop_last_10pct": 4.444518708623946e-05,
+        "nfev": 1114
+      },
+      "edge_bias": {
+        "-1": 0.08030094163604,
+        "1": 0.0183301771199607,
+        "2": -0.07570797975401056
+      },
+      "laplace_theta_std": {
+        "mean": 0.035636132673000816,
+        "inside": 0.0592501015529172,
+        "outside": 0.02909124107657166,
+        "min": 0.012063038816660902,
+        "max": 0.6184189797634364
+      },
+      "laplace_pivot_ratio_sq": 606.7978728793084
+    },
+    "11.25": {
+      "lam": 11.25,
+      "phi": 2458.755333965922,
+      "R": 3265.891991599666,
+      "U": 5724.647325565588,
+      "n_data": 2400,
+      "phi_over_n_data": 1.0244813891524676,
+      "grad_inf": 0.0063229300639751525,
+      "nit": 742,
+      "nfev": 773,
+      "success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "time_s": 83.40562045807019,
+      "err_model": 0.12674845370642512,
+      "err_chi": 0.38915043730940724,
+      "err_data": 0.006647667361917109,
+      "tv": 294.5459133338734,
+      "tv_truth": 342.5900002137453,
+      "pairs_below_delta": 0.5463605823068309,
+      "u_convergence": {
+        "u_at_25pct": 5727.417551761292,
+        "u_at_50pct": 5724.715318263677,
+        "u_at_75pct": 5724.6479969021475,
+        "u_at_90pct": 5724.647372432909,
+        "u_end": 5724.647325460748,
+        "u_drop_last_10pct": 4.6972160816949327e-05,
+        "nfev": 773
+      },
+      "edge_bias": {
+        "-1": 0.10311712949277878,
+        "1": 0.017670223710981606,
+        "2": -0.08934826054151687
+      },
+      "laplace_theta_std": {
+        "mean": 0.02208990237313919,
+        "inside": 0.030330272565026847,
+        "outside": 0.019805986022837733,
+        "min": 0.0072563667375400084,
+        "max": 0.57968822745885
+      },
+      "laplace_pivot_ratio_sq": 1683.2448960588067
+    }
+  },
+  "lambda_star": {
+    "lam": 3.75,
+    "phi_map": 2402.688139400837,
+    "n_data": 2400,
+    "criterion": "swept lambda with Phi_MAP closest to N (Morozov discrepancy principle; a MAP heuristic)",
+    "crossing_lam_interpolated": 3.2371627273474144,
+    "swept": [
+      1.25,
+      3.75,
+      11.25
+    ]
+  },
+  "wall_s": 338.84662224992644
+}

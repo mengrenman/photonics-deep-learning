@@ -1,6 +1,7 @@
 """Convergence audit of the prior-comparison runs from their stored draws: rank-normalized R-hat, multi-chain ESS, null spread.
 
     python scripts/convergence_audit.py [RUN ...] [--dir results/prior_comparison] [--null-reps 60] [--out FILE.json] [--update]
+        [--first S] [--draws K]
 
 The DESIGN 11.2 criteria (classic split R-hat of Phi <= 1.01, max pixel R-hat <= 1.05, worst-pixel Sokal ESS >= 200) are
 met by margins of the size of the noise at 300 to 600 draws per chain: with an integrated autocorrelation time of 3 to 4 a
@@ -19,6 +20,13 @@ reads chains.npz of every run (thinned theta draws and the physical Phi of the d
     (its own tau) and for the maximum over pixels (the observed per-pixel taus; pixels are treated as independent), with
     the probability that the null gives a statistic at least as large as the observed one.
 
+  * where the slow pixels are: the pixels whose rank-normalized R-hat exceeds 1.05 by region (inside the object, within one pixel of the edge,
+    2 to 3 pixels outside, 4 or more pixels outside: ``edge_analysis.signed_distance``) and the range of the signed distance of those outside.
+
+``--first S --draws K`` audit only the draws S to S + K - 1 of every chain (default: all). Use it to compare runs AT EQUAL LENGTH and chain age:
+the R-hat and ESS of a run depend on how many draws they are computed from (the max pixel R-hat of the TV chains at lambda* was 1.745 at 500 draws
+and 1.319 at 800), so the first map and a re-adapted map must be compared on the same number of draws (milestone-5 review).
+
 Writes <dir>/convergence_audit.json (or --out). Single process, at most 2 BLAS threads.
 """
 
@@ -34,6 +42,7 @@ import numpy as np
 import bayes_scatter  # noqa: F401
 from bayes_scatter import diagnostics as dg
 from bayes_scatter import features as ft
+from edge_analysis import signed_distance
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_RUNS = ["pc_matern", "pc_gmrf", "pc_qggmrf_sg0.05", "pc_qggmrf_sg0.1", "pcs1_qggmrf_sg0.05", "pcg1_qggmrf_sg0.05",
@@ -72,15 +81,31 @@ def null_worst(chains, n_draws, st, reps, seed):
     return np.maximum(nb["classic"], nf["classic"]), np.maximum(nb["classic_max"], nf["classic_max"])
 
 
-def audit_run(name, base, null_reps, seed=0):
-    """Audit one run directory ``base / name``; returns a JSON-serializable dict."""
+def flagged_by_region(flagged, dist):
+    """Where the flagged pixels are: ``flagged`` (n, n) bool, ``dist`` the signed distance to the object edge in pixels (+ inside).
+    Returns counts inside the object, within one pixel of the edge (|d| = 1, both sides), 2 to 3 pixels outside, 4 or more pixels outside,
+    and the min and max signed distance of the flagged pixels outside the object (None if there are none). The |d| = 1 outside pixels count
+    in 'within_1px' only, so the four counts add to ``flagged.sum()``."""
+    outside = flagged & (dist < 0)
+    return {"inside_object_d_ge_2": int((flagged & (dist >= 2)).sum()), "within_1px_of_edge": int((flagged & (np.abs(dist) == 1)).sum()),
+            "outside_d_-3_to_-2": int((flagged & (dist <= -2) & (dist >= -3)).sum()), "outside_d_le_-4": int((flagged & (dist <= -4)).sum()),
+            "outside_d_min": int(dist[outside].min()) if outside.any() else None, "outside_d_max": int(dist[outside].max()) if outside.any() else None}
+
+
+def audit_run(name, base, null_reps, seed=0, first=0, draws=None):
+    """Audit one run directory ``base / name`` (the draws ``first`` to ``first + draws - 1`` of every chain; default all); returns a
+    JSON-serializable dict."""
     d = base / name
     summary = json.loads((d / "summary.json").read_text())
     z = np.load(d / "chains.npz")
     theta = z["theta"].astype(np.float64)  # (chains, N, n, n)
+    phi = z["phi_physical"].astype(np.float64)
+    stop = theta.shape[1] if draws is None else first + draws
+    if first < 0 or stop > theta.shape[1] or stop - first < 8:
+        raise SystemExit(f"{name}: draws {first}..{stop - 1} are not within the {theta.shape[1]} stored draws per chain (at least 8 needed)")
+    theta, phi = theta[:, first:stop], phi[:, first:stop]
     chains, n_draws, n = theta.shape[0], theta.shape[1], theta.shape[2]
     flat = theta.reshape(chains, n_draws, -1)
-    phi = z["phi_physical"].astype(np.float64)
     edge = ft.edge_mask(z["chi_true"]).ravel()
     t0 = time.time()
 
@@ -92,7 +117,8 @@ def audit_run(name, base, null_reps, seed=0):
     sd_chain = flat.std(axis=1, ddof=1)  # (chains, pixels)
     sd_ratio = sd_chain.max(axis=0) / sd_chain.min(axis=0)
     flagged = rank_pix > 1.05
-    out = {"run": name, "chains": int(chains), "draws_per_chain": int(n_draws), "converged_design": bool(summary["convergence"]["converged"]),
+    out = {"run": name, "chains": int(chains), "draws_per_chain": int(n_draws), "window": [int(first), int(stop)],
+           "converged_design": bool(summary["convergence"]["converged"]),
            "summary_rhat_phi": summary["convergence"]["rhat_phi"], "summary_rhat_pixel_max": summary["convergence"]["rhat_pixel_max"],
            "classic": {"rhat_phi": classic_phi, "rhat_pixel_max": float(np.nanmax(classic_pix)),
                        "rhat_pixel_max_edge_pixels": float(np.nanmax(classic_pix[edge])),
@@ -104,6 +130,7 @@ def audit_run(name, base, null_reps, seed=0):
                                "pixels_worst_above_1.05": int(flagged.sum()),
                                "pixels_worst_above_1.05_within_1px_of_edge": int(np.sum(flagged & edge)),
                                "edge_pixels": int(edge.sum()), "pixels": int(edge.size),
+                               "flagged_by_region": flagged_by_region(flagged.reshape(n, n), signed_distance(z["chi_true"])),
                                "chain_sd_ratio_max_over_pixels_above_1.05": float(sd_ratio[flagged].max()) if flagged.any() else None,
                                "chain_sd_ratio_median_over_pixels_above_1.05": float(np.median(sd_ratio[flagged])) if flagged.any() else None,
                                "chain_sd_ratio_median_all_pixels": float(np.median(sd_ratio)),
@@ -149,12 +176,14 @@ def main(argv=None):
     ap.add_argument("--out", default=None, help="default <dir>/convergence_audit.json")
     ap.add_argument("--null-reps", type=int, default=60, help="AR(1) replicates for Phi (a third as many for the pixel maximum)")
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--first", type=int, default=0, help="first draw (per chain) of the audited window")
+    ap.add_argument("--draws", type=int, default=None, help="number of draws per chain in the window (default: to the end)")
     ap.add_argument("--update", action="store_true", help="keep the entries of the existing output file for runs not listed")
     args = ap.parse_args(argv)
     base = Path(args.dir)
     res = {}
     for r in args.runs:
-        res[r] = audit_run(r, base, args.null_reps, args.seed)
+        res[r] = audit_run(r, base, args.null_reps, args.seed, args.first, args.draws)
         e = res[r]
         print(f"{r:20s} {e['chains']}x{e['draws_per_chain']}  R-hat Phi classic {e['classic']['rhat_phi']:.4f} rank {e['rank_normalized']['phi']['worst']:.4f} "
               f"(null AR(1) P>1.01 {e['null_ar1']['p_classic_rhat_phi_above_1.01']:.2f});  pixel max classic {e['classic']['rhat_pixel_max']:.4f} "

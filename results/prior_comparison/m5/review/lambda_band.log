@@ -1,0 +1,19 @@
+band N +- sqrt(N) = 2351 to 2449; crossings: phi_map=N 3.819603297952281, phi_map=phi_clean 8.464415700121704, phi_map=N-sqrtN None, phi_map=N+sqrtN 10.205858597767088, phi_map=phi_truth None
+lambda   0.30: Phi_MAP 2372.0 (in band), TV kept 100.0%, R(truth)-R(MAP) 14.3 (TV part 0.0), MAP bias d=-1 0.109
+lambda   1.00: Phi_MAP 2379.4 (in band), TV kept 94.3%, R(truth)-R(MAP) 50.1 (TV part 19.6), MAP bias d=-1 0.094
+lambda   1.25: Phi_MAP 2381.4 (in band), TV kept 93.5%, R(truth)-R(MAP) 63.8 (TV part 28.0), MAP bias d=-1 0.092
+lambda   2.00: Phi_MAP 2387.1 (in band), TV kept 92.1%, R(truth)-R(MAP) 106.9 (TV part 54.1), MAP bias d=-1 0.094
+lambda   3.00: Phi_MAP 2394.2 (in band), TV kept 91.0%, R(truth)-R(MAP) 167.1 (TV part 92.0), MAP bias d=-1 0.097
+lambda   3.75: Phi_MAP 2399.5 (in band), TV kept 90.5%, R(truth)-R(MAP) 213.8 (TV part 122.3), MAP bias d=-1 0.100
+lambda   4.50: Phi_MAP 2404.8 (in band), TV kept 90.0%, R(truth)-R(MAP) 261.6 (TV part 153.8), MAP bias d=-1 0.102
+lambda  10.00: Phi_MAP 2447.1 (in band), TV kept 88.0%, R(truth)-R(MAP) 637.0 (TV part 410.2), MAP bias d=-1 0.120
+lambda  11.25: Phi_MAP 2457.9 (OUT of band), TV kept 87.7%, R(truth)-R(MAP) 727.5 (TV part 473.8), MAP bias d=-1 0.124
+posterior pc_tv_lam1.25_adapt                                          lambda 1.25: bias d=-1 0.160 (log E eps 0.185), sd 0.226, |z|>3 d=-1 0.0% pooled 0.0% (vs low-pass 0.0%)
+posterior pc_tv_lam1.25_adapt without the rough-start chains [3], firs lambda 1.25: bias d=-1 0.162 (log E eps 0.183), sd 0.207, |z|>3 d=-1 0.0% pooled 0.0% (vs low-pass 0.0%)
+posterior pc_tv_lam3.75_adapt                                          lambda 3.75: bias d=-1 0.189 (log E eps 0.195), sd 0.106, |z|>3 d=-1 7.7% pooled 2.2% (vs low-pass 0.3%)
+posterior pc_tv_lam3.75_indep                                          lambda 3.75: bias d=-1 0.178 (log E eps 0.189), sd 0.144, |z|>3 d=-1 1.6% pooled 0.7% (vs low-pass 0.0%)
+posterior pc_tv_lam3.75_indep without the rough-start chains [1], firs lambda 3.75: bias d=-1 0.192 (log E eps 0.197), sd 0.106, |z|>3 d=-1 10.1% pooled 3.5% (vs low-pass 0.3%)
+posterior pc_tv_lam8.5_adapt                                           lambda 8.5: bias d=-1 0.178 (log E eps 0.187), sd 0.120, |z|>3 d=-1 6.0% pooled 1.7% (vs low-pass 0.0%)
+posterior pc_tv_lam8.5_adapt without the rough-start chains [3], first lambda 8.5: bias d=-1 0.184 (log E eps 0.187), sd 0.073, |z|>3 d=-1 26.6% pooled 8.4% (vs low-pass 2.0%)
+posterior pc_tv_lam11.25_adapt                                         lambda 11.25: bias d=-1 0.180 (log E eps 0.183), sd 0.063, |z|>3 d=-1 32.7% pooled 12.5% (vs low-pass 4.6%)
+wrote results/prior_comparison/m5/review/lambda_band.json

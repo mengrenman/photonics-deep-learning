@@ -1,0 +1,14 @@
+# batch_run 2026-10-11T22:58:54+08:00 slot cpu3
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/segment_loop.py --out-dir results/prior_comparison/pc_gmrf_adapt2 --chain-id 3 --first 0 --last 19 --samples 100 --warmup 50 --stop scripts/jobs/stop/gmrf2 -- --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior gmrf --sigma 0.5 --ell 0.4 --adapt --out pc_gmrf_adapt2 --start-theta results/prior_comparison/pc_gmrf_adapt2/starts.npy
+segment_loop: chain 3, segments 0..19, pending [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+segment_loop: 2026-10-11T22:58:54+0800 starting chain 3 segment 0
+chain 3 segment 0: HMC in zeta of the adapted map 2e6e5e38258594ca, 50 step-size warmup + 100 samples, thin 1, trajectory length 1.5, step 0.0148, init scale 2.0
+done in 2588 s (compile 2 s): acceptance 0.810, step 0.0137, |zeta|^2/2 at the end 3582, mean Phi' 768.9
+segment_loop: segment 0 done in 4149 s
+segment_loop: 2026-10-12T00:08:03+0800 starting chain 3 segment 1
+chain 3 segment 1: HMC in zeta of the adapted map 2e6e5e38258594ca, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.5, step 0.0137, init scale 2.0
+done in 2295 s (compile 2 s): acceptance 0.820, step 0.0137, |zeta|^2/2 at the end 3521, mean Phi' -448.1
+segment_loop: segment 1 done in 2304 s
+segment_loop: 2026-10-12T00:46:27+0800 starting chain 3 segment 2
+chain 3 segment 2: HMC in zeta of the adapted map 2e6e5e38258594ca, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.5, step 0.0137, init scale 2.0

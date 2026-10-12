@@ -1,0 +1,195 @@
+{
+  "spec": [
+    {
+      "label": "TV lambda* first map",
+      "run": "pc_tv_lam3.75_adapt",
+      "window": [
+        0,
+        500
+      ],
+      "chains": 4,
+      "draws_per_chain": 500,
+      "rhat_pixel_max_classic": 1.7450191235938708,
+      "rhat_pixel_max_rank": 1.3373961831870564,
+      "pixels_above_1.05_rank": 324,
+      "ess_worst_sokal": 69.62470378974285,
+      "ess_worst_bulk": 9.858319726861684,
+      "rhat_phi_classic": 1.003421422639308,
+      "mean_leapfrog_per_trajectory": 36.962375,
+      "gradients_per_chain": 18481.1875,
+      "bulk_ess_per_1000_gradients_all_chains": 0.1333561456327101
+    },
+    {
+      "label": "TV lambda* first map, later window",
+      "run": "pc_tv_lam3.75_adapt",
+      "window": [
+        300,
+        800
+      ],
+      "chains": 4,
+      "draws_per_chain": 500,
+      "rhat_pixel_max_classic": 1.483127173989126,
+      "rhat_pixel_max_rank": 1.2776170386599441,
+      "pixels_above_1.05_rank": 288,
+      "ess_worst_sokal": 67.58281471960916,
+      "ess_worst_bulk": 11.613545689142557,
+      "rhat_phi_classic": 1.0046585822528964,
+      "mean_leapfrog_per_trajectory": 37.23950000000001,
+      "gradients_per_chain": 18619.750000000004,
+      "bulk_ess_per_1000_gradients_all_chains": 0.1559304728734617
+    },
+    {
+      "label": "TV lambda* re-adapted",
+      "run": "pc_tv_lam3.75_adapt2",
+      "window": [
+        0,
+        500
+      ],
+      "chains": 4,
+      "draws_per_chain": 500,
+      "rhat_pixel_max_classic": 1.2018925950283996,
+      "rhat_pixel_max_rank": 1.1579343951593135,
+      "pixels_above_1.05_rank": 246,
+      "ess_worst_sokal": 68.46259270378957,
+      "ess_worst_bulk": 19.87032611899345,
+      "rhat_phi_classic": 1.0106914778285898,
+      "mean_leapfrog_per_trajectory": 25.439500000000002,
+      "gradients_per_chain": 12719.750000000002,
+      "bulk_ess_per_1000_gradients_all_chains": 0.3905408148547229
+    },
+    {
+      "label": "GMRF first map",
+      "run": "pc_gmrf_adapt",
+      "window": [
+        0,
+        200
+      ],
+      "chains": 4,
+      "draws_per_chain": 200,
+      "rhat_pixel_max_classic": 1.1354461768000217,
+      "rhat_pixel_max_rank": 1.113995078315889,
+      "pixels_above_1.05_rank": 79,
+      "ess_worst_sokal": 96.04512943194646,
+      "ess_worst_bulk": 29.32220746852928,
+      "rhat_phi_classic": 1.0047052837339612,
+      "mean_leapfrog_per_trajectory": 72.64750000000001,
+      "gradients_per_chain": 14529.500000000002,
+      "bulk_ess_per_1000_gradients_all_chains": 0.504528845943241
+    },
+    {
+      "label": "GMRF first map, window 2",
+      "run": "pc_gmrf_adapt",
+      "window": [
+        200,
+        400
+      ],
+      "chains": 4,
+      "draws_per_chain": 200,
+      "rhat_pixel_max_classic": 1.1175829420920578,
+      "rhat_pixel_max_rank": 1.117968720990286,
+      "pixels_above_1.05_rank": 99,
+      "ess_worst_sokal": 116.66380552833601,
+      "ess_worst_bulk": 25.475054481517944,
+      "rhat_phi_classic": 1.003606706641776,
+      "mean_leapfrog_per_trajectory": 73.77374999999999,
+      "gradients_per_chain": 14754.749999999998,
+      "bulk_ess_per_1000_gradients_all_chains": 0.43164158121143953
+    },
+    {
+      "label": "GMRF first map, window 3",
+      "run": "pc_gmrf_adapt",
+      "window": [
+        400,
+        600
+      ],
+      "chains": 4,
+      "draws_per_chain": 200,
+      "rhat_pixel_max_classic": 1.1747133283421716,
+      "rhat_pixel_max_rank": 1.1642603495549197,
+      "pixels_above_1.05_rank": 178,
+      "ess_worst_sokal": 89.49723747528861,
+      "ess_worst_bulk": 19.198372680978423,
+      "rhat_phi_classic": 0.9985131961383181,
+      "mean_leapfrog_per_trajectory": 72.19624999999999,
+      "gradients_per_chain": 14439.249999999998,
+      "bulk_ess_per_1000_gradients_all_chains": 0.33239906298766253
+    },
+    {
+      "label": "GMRF re-adapted",
+      "run": "pc_gmrf_adapt2",
+      "window": [
+        0,
+        200
+      ],
+      "chains": 4,
+      "draws_per_chain": 200,
+      "rhat_pixel_max_classic": 1.6231350843868817,
+      "rhat_pixel_max_rank": 1.5400759237541617,
+      "pixels_above_1.05_rank": 766,
+      "ess_worst_sokal": 52.128106174672055,
+      "ess_worst_bulk": 7.15187282392709,
+      "rhat_phi_classic": 1.031817915839846,
+      "mean_leapfrog_per_trajectory": 74.91625,
+      "gradients_per_chain": 14983.250000000002,
+      "bulk_ess_per_1000_gradients_all_chains": 0.11933113349785743
+    },
+    {
+      "label": "TV 3 lambda* first map",
+      "run": "pc_tv_lam11.25_adapt",
+      "window": [
+        0,
+        200
+      ],
+      "chains": 4,
+      "draws_per_chain": 200,
+      "rhat_pixel_max_classic": 1.3494434611180577,
+      "rhat_pixel_max_rank": 1.3027239805448059,
+      "pixels_above_1.05_rank": 641,
+      "ess_worst_sokal": 60.97980869934224,
+      "ess_worst_bulk": 10.623462429647867,
+      "rhat_phi_classic": 1.0091347248931657,
+      "mean_leapfrog_per_trajectory": 44.363749999999996,
+      "gradients_per_chain": 8872.75,
+      "bulk_ess_per_1000_gradients_all_chains": 0.2993283488672584
+    },
+    {
+      "label": "TV 3 lambda* first map, window 2",
+      "run": "pc_tv_lam11.25_adapt",
+      "window": [
+        200,
+        400
+      ],
+      "chains": 4,
+      "draws_per_chain": 200,
+      "rhat_pixel_max_classic": 1.3586766994852453,
+      "rhat_pixel_max_rank": 1.2748151520274014,
+      "pixels_above_1.05_rank": 606,
+      "ess_worst_sokal": 50.3325171263117,
+      "ess_worst_bulk": 12.014625967698516,
+      "rhat_phi_classic": 1.0046798481617731,
+      "mean_leapfrog_per_trajectory": 44.363749999999996,
+      "gradients_per_chain": 8872.75,
+      "bulk_ess_per_1000_gradients_all_chains": 0.33852599159501046
+    },
+    {
+      "label": "TV 3 lambda* re-adapted",
+      "run": "pc_tv_lam11.25_adapt2",
+      "window": [
+        0,
+        200
+      ],
+      "chains": 4,
+      "draws_per_chain": 200,
+      "rhat_pixel_max_classic": 1.6353828067498055,
+      "rhat_pixel_max_rank": 1.5008944940871103,
+      "pixels_above_1.05_rank": 597,
+      "ess_worst_sokal": 48.10938015387431,
+      "ess_worst_bulk": 7.469607628437995,
+      "rhat_phi_classic": 1.0604620642919556,
+      "mean_leapfrog_per_trajectory": 33.17375,
+      "gradients_per_chain": 6634.75,
+      "bulk_ess_per_1000_gradients_all_chains": 0.28145776511692205
+    }
+  ],
+  "note": "windows of equal length; bulk ESS per 1000 gradient evaluations pools all chains"
+}

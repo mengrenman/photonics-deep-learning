@@ -1,0 +1,48 @@
+{
+  "lam": 1.25,
+  "delta": 0.01,
+  "sigma_0": 1.0,
+  "mu": 0.0,
+  "starts": [
+    {
+      "chain": 0,
+      "kind": "truth",
+      "source": "theta_true of pc_matern/chains.npz",
+      "tv_prior_energy": 505.5374273112834,
+      "tv_term": 414.53087098678634,
+      "theta_min": 0.0,
+      "theta_max": 0.6931471805599453,
+      "theta_pixel_std": 0.2524760992517851
+    },
+    {
+      "chain": 1,
+      "kind": "map",
+      "source": "pc_tv_lam1.25_adapt/prepared.npz theta_hat",
+      "tv_prior_energy": 441.69726481668397,
+      "tv_term": 354.58915132549237,
+      "theta_min": -0.07079959324468232,
+      "theta_max": 0.8247925737554005,
+      "theta_pixel_std": 0.2431254388341218
+    },
+    {
+      "chain": 2,
+      "kind": "matern",
+      "source": "mean of the draws of pc_matern/chains.npz",
+      "tv_prior_energy": 550.9791731087078,
+      "tv_term": 465.8251814570096,
+      "theta_min": -0.1990233641642165,
+      "theta_max": 0.9353558639436961,
+      "theta_pixel_std": 0.23917576246744662
+    },
+    {
+      "chain": 3,
+      "kind": "gmrf",
+      "source": "last draw of chain 0 of pc_gmrf_adapt/chains.npz",
+      "tv_prior_energy": 3571.082991717098,
+      "tv_term": 3365.3744428450404,
+      "theta_min": -1.194697618484497,
+      "theta_max": 1.5101392269134521,
+      "theta_pixel_std": 0.41711410134357463
+    }
+  ]
+}

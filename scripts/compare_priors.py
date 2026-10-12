@@ -222,7 +222,7 @@ def main(argv=None):
     feats = {lab: s["features"]["probabilities"] for lab, s in zip(labels, summaries)}
     names = list(next(iter(feats.values())))
     truth_ok = {name: bool(feats[labels[0]][name]["truth_satisfies"]) for name in names}
-    family = {lab: s["prior"]["kind"] for lab, s in zip(labels, summaries)}  # q-GGMRF settings share one family
+    family = {lab: s["prior"]["kind"] for lab, s in zip(labels, summaries)}  # q-GGMRF settings (and TV weights) share one family
     verdicts = {name: ft.verdict({lab: feats[lab][name]["p"] for lab in labels}, converged, family=family) for name in names}
     conv_families = sorted({family[lab] for lab in labels if converged[lab]})
     minimum_met = all(f in conv_families for f in ft.REQUIRED_FAMILIES)

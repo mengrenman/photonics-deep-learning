@@ -1,0 +1,92 @@
+{
+  "runs": [
+    "pc_tv_lam3.75_adapt",
+    "pc_tv_lam3.75_indep"
+  ],
+  "chains_per_run": [
+    4,
+    2
+  ],
+  "draws_used_per_chain": 200,
+  "relations": {
+    "pc_tv_lam3.75_adapt": {
+      "continues": null
+    },
+    "pc_tv_lam3.75_indep": {
+      "continues": null
+    }
+  },
+  "chains_independent": true,
+  "interpretation": "the pooled chains are independent chains",
+  "rhat_phi": 1.7009139915416869,
+  "pooled": {
+    "all": {
+      "pixels": 2304,
+      "rhat_max": 8.65843183051269,
+      "rhat_rank_max": 1.7704739964521896,
+      "n_above_1.05": 2106,
+      "ess_bulk_min": 9.00820622692258,
+      "ess_bulk_median": 21.968790826092835
+    },
+    "edge_band_abs_d_le_1": {
+      "pixels": 498,
+      "rhat_max": 7.8606967031099915,
+      "rhat_rank_max": 1.683769166523616,
+      "n_above_1.05": 411,
+      "ess_bulk_min": 9.517558491293636,
+      "ess_bulk_median": 28.044930901196107
+    },
+    "abs_d_le_2": {
+      "pixels": 824,
+      "rhat_max": 7.8606967031099915,
+      "rhat_rank_max": 1.683769166523616,
+      "n_above_1.05": 711,
+      "ess_bulk_min": 9.454741117207847,
+      "ess_bulk_median": 24.5908294100617
+    }
+  },
+  "profile_pooled": {
+    "bias_d-1": 0.18552087879441756,
+    "bias_d+2": -0.14017964799878832,
+    "std_d-1": 0.126967745798597,
+    "frac_abs_z_gt_3": 0.011284722222222222,
+    "frac_abs_z_gt_3_d-1": 0.04838709677419355,
+    "frac_abs_z_gt_3_band": 0.050200803212851405
+  },
+  "profile_per_run": {
+    "pc_tv_lam3.75_adapt": {
+      "bias_d-1": 0.18951899819396106,
+      "bias_d+2": -0.12012666078148179,
+      "std_d-1": 0.1061971493269097,
+      "frac_abs_z_gt_3": 0.024305555555555556,
+      "frac_abs_z_gt_3_d-1": 0.07661290322580645,
+      "frac_abs_z_gt_3_band": 0.08634538152610442
+    },
+    "pc_tv_lam3.75_indep": {
+      "bias_d-1": 0.1775246399953306,
+      "bias_d+2": -0.18028562243340135,
+      "std_d-1": 0.1442025934985107,
+      "frac_abs_z_gt_3": 0.006944444444444444,
+      "frac_abs_z_gt_3_d-1": 0.016129032258064516,
+      "frac_abs_z_gt_3_band": 0.028112449799196786
+    }
+  },
+  "features_pooled": {
+    "gap_valley": 0.9925,
+    "ring_hole": 1.0,
+    "ring_continuity": 0.8525
+  },
+  "features_per_run": {
+    "pc_tv_lam3.75_adapt": {
+      "gap_valley": 1.0,
+      "ring_hole": 1.0,
+      "ring_continuity": 1.0
+    },
+    "pc_tv_lam3.75_indep": {
+      "gap_valley": 0.9775,
+      "ring_hole": 1.0,
+      "ring_continuity": 0.5575
+    }
+  },
+  "note": "diagnostic only: the chains of different runs use different affine maps (and may be continuations of each other, see relations); the DESIGN flag is the single run's summary.json"
+}

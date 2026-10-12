@@ -37,8 +37,12 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("runs", nargs="*", default=DEFAULT_RUNS)
     ap.add_argument("--dir", default=str(ROOT / "results" / "prior_comparison"))
+    ap.add_argument("--audit-dir", default=None,
+                    help="where comparison.json, prior_energy.json, convergence_audit.json and edge_analysis.json are read from "
+                         "(default --dir; milestone 5 keeps its own in results/prior_comparison/m5)")
     args = ap.parse_args(argv)
     d = Path(args.dir)
+    ad = Path(args.audit_dir) if args.audit_dir else d
     S = {r: json.loads((d / r / "summary.json").read_text()) for r in args.runs}
     first = next(iter(S.values()))
     op = first["operating_point"]
@@ -97,17 +101,24 @@ def main(argv=None):
     print(table(["run", "%|z|>3", "% inside", "% outside", "edge share", "edge share by chance", "max |z|", "rms z",
                  "err_model MAP", "err_model mean", "err_chi MAP", "err_chi mean", "err_data mean"], rows))
 
-    print("\n### feature probabilities (delta = log2/2) from the stored draws; mcse = spread of the per-chain estimates\n")
+    print("\n### feature probabilities (delta = log2/2) from the stored draws; converged runs: (+-mcse) = spread of the per-chain estimates over sqrt(chains); "
+          "unconverged runs: [min-max] over the chains (a standard error from unconverged chains understates the uncertainty)\n")
     names = list(first["features"]["probabilities"])
     rows = []
     for r, s in S.items():
-        rows.append([r, "yes" if s["convergence"]["converged"] else "no"] +
-                    [f"{f(s['features']['probabilities'][k]['p'], 3)} (+-{f(s['features']['probabilities'][k]['mcse'], 3)})"
-                     for k in names])
+        conv = s["convergence"]["converged"]
+
+        def cell(k):
+            pr = s["features"]["probabilities"][k]
+            if conv:
+                return f"{f(pr['p'], 3)} (+-{f(pr['mcse'], 3)})"
+            return f"{f(pr['p'], 3)} [{f(min(pr['p_chain']), 3)}-{f(max(pr['p_chain']), 3)}]"
+
+        rows.append([r, "yes" if conv else "no"] + [cell(k) for k in names])
     print(table(["run", "converged"] + names, rows))
     print("\ntruth satisfies: " + ", ".join(f"{k}: {first['features']['probabilities'][k]['truth_satisfies']}" for k in names))
 
-    cmp_path = d / "comparison.json"
+    cmp_path = ad / "comparison.json"
     if cmp_path.exists():
         cmp = json.loads(cmp_path.read_text())
         print(f"\n### verdicts and disagreement (comparison.json; {cmp['n_converged']} converged runs of {len(cmp['labels'])})\n")
@@ -121,12 +132,14 @@ def main(argv=None):
         print()
         print(table(["pair", "both converged", "% pixels >2", "inside", "outside", "near edge", "away from edge", "max", "mean"], rows))
 
-    extra_tables(d, args.runs)
+    extra_tables(d, args.runs, ad)
 
 
-def extra_tables(d, runs):
-    """The audit tables, from the JSON files that exist in ``d`` (silently skipped otherwise)."""
-    pe, ca, ea = (d / name for name in ("prior_energy.json", "convergence_audit.json", "edge_analysis.json"))
+def extra_tables(d, runs, ad=None):
+    """The audit tables, from the JSON files that exist in ``ad`` (default ``d``; silently skipped otherwise); the robustness controls
+    are read from the run directories of ``d``."""
+    ad = d if ad is None else ad
+    pe, ca, ea = (ad / name for name in ("prior_energy.json", "convergence_audit.json", "edge_analysis.json"))
     controls = [r for r in CONTROL_RUNS if (d / r / "summary.json").exists()]
     if controls:
         print("\n### robustness controls (summary.json of each)\n")

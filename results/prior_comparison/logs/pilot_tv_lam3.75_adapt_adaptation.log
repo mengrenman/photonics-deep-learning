@@ -1,0 +1,7 @@
+# batch_run 2026-10-11T13:35:31+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "4", "OMP_NUM_THREADS": "4", "OPENBLAS_NUM_THREADS": "4", "MKL_NUM_THREADS": "4", "VECLIB_MAXIMUM_THREADS": "4", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=true", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/run_prior_comparison.py --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior tv --lam 3.75 --delta 0.01 --sigma-0 1 --adapt --out pilot_tv_lam3.75_adapt --chains 2 --prior-samples 0 --stage adapt
+adaptation: 900 trajectories ([('init', 50), ('window0', 50), ('window1', 100), ('window2', 200), ('window3', 400), ('final', 100)]), kappa = 2304, trajectory length 1.75, target acceptance 0.8, start scale 0.5, initial map: Laplace at the MAP
+  init       50 traj: accept 0.780, eps 0.0453, mean L 42.4, 219 s
+  window0    50 traj: accept 0.740, eps 0.0406, mean L 46.1, 265 s; map updated (weight 0.979, variance ratio median 15.4, update 0.6 s)
+  window1   100 traj: accept 0.760, eps 0.0199, mean L 64.8, 683 s; map updated (weight 0.958, variance ratio median 0.508, update 0.6 s)

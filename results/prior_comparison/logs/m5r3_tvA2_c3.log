@@ -1,0 +1,26 @@
+# batch_run 2026-10-11T22:58:54+08:00 slot cpu7
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/segment_loop.py --out-dir results/prior_comparison/pc_tv_lam3.75_adapt2 --chain-id 3 --first 0 --last 5 --samples 100 --warmup 50 --stop scripts/jobs/stop/tvA2 --go scripts/jobs/go/tvA2 -- --n 48 --side 2 --eps-r 2 --snr 30 --seed 0 --chains 4 --prior tv --lam 3.75 --delta 0.01 --sigma-0 1 --map-maxiter 4000 --adapt --out pc_tv_lam3.75_adapt2 --start-theta results/prior_comparison/pc_tv_lam3.75_adapt2/starts.npy
+segment_loop: waiting for /Users/mengren/Documents/new_projects/photonics-dl/scripts/jobs/go/tvA2
+segment_loop: chain 3, segments 0..5, pending [0, 1, 2, 3, 4, 5]
+segment_loop: 2026-10-11T22:58:54+0800 starting chain 3 segment 0
+chain 3 segment 0: HMC in zeta of the adapted map db384479292dd523, 50 step-size warmup + 100 samples, thin 1, trajectory length 1.0, step 0.0269, init scale 2.0
+done in 827 s (compile 1 s): acceptance 0.860, step 0.0371, |zeta|^2/2 at the end 2827, mean Phi' 2530.3
+segment_loop: segment 0 done in 1304 s
+segment_loop: 2026-10-11T23:20:38+0800 starting chain 3 segment 1
+chain 3 segment 1: HMC in zeta of the adapted map db384479292dd523, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.0, step 0.0371, init scale 2.0
+done in 780 s (compile 2 s): acceptance 0.920, step 0.0371, |zeta|^2/2 at the end 2908, mean Phi' 2505.6
+segment_loop: segment 1 done in 787 s
+segment_loop: 2026-10-11T23:33:45+0800 starting chain 3 segment 2
+chain 3 segment 2: HMC in zeta of the adapted map db384479292dd523, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.0, step 0.0371, init scale 2.0
+done in 832 s (compile 2 s): acceptance 0.870, step 0.0371, |zeta|^2/2 at the end 3523, mean Phi' 1912.5
+segment_loop: segment 2 done in 840 s
+segment_loop: 2026-10-11T23:47:45+0800 starting chain 3 segment 3
+chain 3 segment 3: HMC in zeta of the adapted map db384479292dd523, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.0, step 0.0371, init scale 2.0
+done in 870 s (compile 2 s): acceptance 0.890, step 0.0371, |zeta|^2/2 at the end 3451, mean Phi' 1897.1
+segment_loop: segment 3 done in 878 s
+segment_loop: 2026-10-12T00:02:22+0800 starting chain 3 segment 4
+chain 3 segment 4: HMC in zeta of the adapted map db384479292dd523, 0 step-size warmup + 100 samples, thin 1, trajectory length 1.0, step 0.0371, init scale 2.0
+done in 752 s (compile 2 s): acceptance 0.910, step 0.0371, |zeta|^2/2 at the end 3551, mean Phi' 1638.9
+segment_loop: segment 4 done in 759 s
+segment_loop: stop file exists, ending before segment 5
