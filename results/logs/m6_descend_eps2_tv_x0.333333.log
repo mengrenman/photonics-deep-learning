@@ -1,0 +1,30 @@
+# batch_run 2026-10-12T14:24:13+08:00 slot cpu4
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_laplace.py --stage descend --eps-r 2 --prior tv --lam-scale 0.3333333333
+g0.5_eps2_tv_x0.333333: operating point model/noise 0.065, Phi(truth) 2449 (N = 2400); prior 0.0 s
+  MAP (matern start): 8 Newton iterations, converged True, decrement 4.5e-04; Phi 2395.0 R 127.5 U 2522.45; U matern 2522.45 (8 its, converged); 18 s
+  Laplace mass 2.1 s (Jacobian check 5.2e-11); P(valley) region 1.0000, point 0.9997; total 27 s
+g0.32_eps2_tv_x0.333333: operating point model/noise 0.064, Phi(truth) 2448 (N = 2400); prior 0.0 s
+  MAP (matern start): 7 Newton iterations, converged True, decrement 9.1e-04; Phi 2397.5 R 126.0 U 2523.45; U matern 2523.45 (7 its, converged); 18 s
+  Laplace mass 1.7 s (Jacobian check 3.8e-11); P(valley) region 1.0000, point 0.9966; total 25 s
+g0.25_eps2_tv_x0.333333: operating point model/noise 0.065, Phi(truth) 2447 (N = 2400); prior 0.0 s
+  MAP (matern start): 7 Newton iterations, converged True, decrement 5.6e-04; Phi 2398.4 R 124.8 U 2523.19; U matern 2523.19 (7 its, converged); 19 s
+  Laplace mass 2.0 s (Jacobian check 3.7e-11); P(valley) region 1.0000, point 0.9874; total 27 s
+g0.2_eps2_tv_x0.333333: operating point model/noise 0.063, Phi(truth) 2446 (N = 2400); prior 0.0 s
+  MAP (matern start): 7 Newton iterations, converged True, decrement 7.2e-04; Phi 2398.8 R 124.2 U 2522.96; U matern 2522.96 (7 its, converged); 17 s
+  Laplace mass 1.8 s (Jacobian check 3.8e-11); P(valley) region 1.0000, point 0.9575; total 23 s
+g0.15_eps2_tv_x0.333333: operating point model/noise 0.062, Phi(truth) 2445 (N = 2400); prior 0.0 s
+  MAP (matern start): 9 Newton iterations, converged True, decrement 3.1e-04; Phi 2399.1 R 123.7 U 2522.86; U matern 2522.86 (9 its, converged); 23 s
+  Laplace mass 2.0 s (Jacobian check 3.8e-11); P(valley) region 1.0000, point 0.8634; total 31 s
+g0.1_eps2_tv_x0.333333: operating point model/noise 0.061, Phi(truth) 2444 (N = 2400); prior 0.0 s
+  MAP (matern start): 9 Newton iterations, converged True, decrement 4.7e-04; Phi 2399.5 R 123.5 U 2522.97; U matern 2522.97 (9 its, converged); 28 s
+  Laplace mass 2.3 s (Jacobian check 4.0e-11); P(valley) region 0.9992, point 0.6462; total 35 s
+g0.05_eps2_tv_x0.333333: operating point model/noise 0.061, Phi(truth) 2444 (N = 2400); prior 0.0 s
+  MAP (matern start): 8 Newton iterations, converged True, decrement 3.5e-04; Phi 2399.9 R 123.5 U 2523.43; U matern 2523.43 (8 its, converged); 19 s
+  Laplace mass 1.4 s (Jacobian check 4.6e-11); P(valley) region 0.9071, point 0.3255; total 25 s
+g0.025_eps2_tv_x0.333333: operating point model/noise 0.065, Phi(truth) 2444 (N = 2400); prior 0.0 s
+  MAP (matern start): 6 Newton iterations, converged True, decrement 8.1e-04; Phi 2400.2 R 123.7 U 2523.84; U matern 2523.84 (6 its, converged); 13 s
+  Laplace mass 1.4 s (Jacobian check 4.8e-11); P(valley) region 0.6906, point 0.1878; total 19 s
+g0.0125_eps2_tv_x0.333333: operating point model/noise 0.063, Phi(truth) 2444 (N = 2400); prior 0.0 s
+  MAP (matern start): 10 Newton iterations, converged True, decrement 2.5e-04; Phi 2400.3 R 123.8 U 2524.09; U matern 2524.09 (10 its, converged); 21 s
+  Laplace mass 1.3 s (Jacobian check 4.8e-11); P(valley) region unrepresentable, point 0.1292; total 26 s

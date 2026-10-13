@@ -1,0 +1,3 @@
+g0.1_eps2_matern: 5 x 100 draws; physical Phi 2437.6 (MAP 2398.3); split R-hat Phi 1.093, max pixel R-hat 1.833, worst ESS 93 -> UNCONVERGED
+  P(valley) region: MCMC 1.0000 +- 0.0000 (per chain [1.0, 1.0, 1.0, 1.0, 1.0]), Laplace 1.0000
+  P(valley) point: MCMC 0.9580 +- 0.0099, Laplace 0.9993

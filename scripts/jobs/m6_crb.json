@@ -1,0 +1,9 @@
+[
+  {
+    "name": "m6_crb",
+    "cmd": ["scripts/resolution_crb.py", "--grids", "128", "256"],
+    "device": "cpu",
+    "threads": 4,
+    "done_marker": "results/resolution/crb.json"
+  }
+]

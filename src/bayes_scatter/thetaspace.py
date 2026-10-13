@@ -14,6 +14,7 @@ here depends on the prior beyond the interface ``energy / value_and_grad / hessi
   start matters because R (a Matern precision has condition number ~10^7) and the data term (Gauss-Newton top
   eigenvalue ~10^7) make U badly scaled in theta, and L-BFGS needs many iterations from theta = mu; the
   whitened Matern MAP is well conditioned and lands near the MAP of any of the priors.
+* ``map_newton`` : damped Gauss-Newton with the Laplace mass as the Hessian, the second-order polish of the MAP (milestone 6).
 * ``ThetaTarget.laplace_mass(theta_hat)`` : H = H_GN + nabla^2 R(theta_hat), H_GN = (2/s^2) Re(J^H J) with
   J = dd/dtheta from ``jacobian`` (exact, by reciprocity), dense (N, N), checked symmetric positive definite
   by Cholesky H = L_H L_H^T (``LaplaceMass``).
@@ -36,7 +37,7 @@ from dataclasses import dataclass, field
 import jax
 import jax.numpy as jnp
 import numpy as np
-from scipy.linalg import cholesky, solve_triangular
+from scipy.linalg import cho_solve, cholesky, solve_triangular
 from scipy.optimize import minimize
 
 from . import jacobian as jb
@@ -375,6 +376,67 @@ def map_theta(target, theta0, maxiter=400, gtol=1e-6, ftol=1e-13, maxcor=30):
             "nfev": int(res.nfev), "U": float(u_val), "phi": parts["phi"], "R": parts["R"],
             "grad_inf": float(jnp.max(jnp.abs(g))), "time_s": time_s, "U_history": np.asarray(history)}
     return theta_hat, info
+
+
+def map_newton(target, theta0, max_iter=30, tol=1e-3, max_backtrack=14, c1=1e-4):
+    """MAP in theta-space by damped Gauss-Newton with the Laplace mass as the Hessian (a second-order polish of ``map_theta``).
+
+    Each iteration builds H = H_GN(theta) + nabla^2 R(theta) (``ThetaTarget.laplace_mass``: Nt + Nr solves, the Gram products, one
+    Cholesky factorization; exact Jacobian, SPD for a convex prior), takes the step p = -H^-1 grad U, and backtracks p, p / 2, ... until
+    the Armijo condition U(theta + a p) <= U(theta) + c1 a grad U . p holds. Because H is SPD, p is a descent direction. The iteration
+    stops when the Newton decrement grad U^T H^-1 grad U / 2 (the predicted decrease of U) is below ``tol`` (nats), after ``max_iter``
+    iterations, or when no step length gives a decrease.
+
+    Why: L-BFGS in theta is not preconditioned, and a Matern precision has condition number ~10^7-10^9, so the milestone-4/5 MAPs ran into the
+    iteration limit (grad U of order 1 at 400 iterations); H is the exact preconditioner for the linearized problem, so the polish converges in
+    a few iterations when the residual is small (Phi near N) and the contrast moderate. It reaches a stationary point of U (not
+    necessarily the global minimum: U is not convex in theta for the full forward model). For the pseudo-Huber TV prior the curvature of a
+    pair changes by two orders of magnitude between |D| < delta and |D| >> delta, so damped Newton may need many iterations there: use it as a
+    polish after L-BFGS.
+
+    Returns ``(theta_hat (n, n) jnp, info)``: ``info`` has ``nit``, ``converged`` (decrement < tol), ``decrement``, ``U``, ``phi``, ``R``,
+    ``grad_inf``, ``time_s`` and ``history``, a list of ``{"it", "U", "decrement", "alpha", "time_s"}`` per iteration.
+    """
+    t_all = time.perf_counter()
+    theta = jnp.asarray(theta0, dtype=jnp.float64)
+    shape = theta.shape
+    aux = target.initial_aux()
+    u_cur, g, aux = target.potential_and_grad(theta, aux)
+    u_cur = float(u_cur)
+    history, converged, decrement = [], False, float("inf")
+    for it in range(int(max_iter)):
+        t0 = time.perf_counter()
+        mass = target.laplace_mass(theta, aux=None)
+        gflat = np.asarray(g, dtype=np.float64).ravel()
+        step = -cho_solve((mass.chol, True), gflat)
+        slope = float(gflat @ step)  # < 0
+        decrement = -0.5 * slope
+        rec = {"it": it, "U": u_cur, "decrement": decrement, "alpha": 0.0}
+        if decrement < tol:
+            converged = True
+            rec["time_s"] = time.perf_counter() - t0
+            history.append(rec)
+            break
+        alpha, accepted = 1.0, False
+        for _ in range(int(max_backtrack)):
+            cand = theta + alpha * jnp.asarray(step.reshape(shape))
+            u_new, aux_new = target.potential(cand, aux)
+            if np.isfinite(float(u_new)) and float(u_new) <= u_cur + c1 * alpha * slope:
+                accepted = True
+                break
+            alpha *= 0.5
+        rec["alpha"] = alpha if accepted else 0.0
+        rec["time_s"] = time.perf_counter() - t0
+        history.append(rec)
+        if not accepted:
+            break
+        theta = cand
+        u_cur, g, aux = target.potential_and_grad(theta, aux_new)
+        u_cur = float(u_cur)
+    parts = target.energies(theta, aux)
+    info = {"nit": len(history), "converged": converged, "decrement": decrement, "U": parts["U"], "phi": parts["phi"], "R": parts["R"],
+            "grad_inf": float(jnp.max(jnp.abs(g))), "time_s": time.perf_counter() - t_all, "history": history}
+    return theta, info
 
 
 def smooth_start(forward, d_obs, s, grid, *, sigma=0.5, ell=0.4, nu=1.5, maxiter=100):

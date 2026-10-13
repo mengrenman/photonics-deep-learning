@@ -1,0 +1,513 @@
+{
+ "phi_prime_by_segment": {
+  "g0.025_eps2_matern": {
+   "0": {
+    "step": 0.16012172425038784,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.88,
+     0.82,
+     0.79
+    ],
+    "phi_prime_mean_by_segment": [
+     1977.3740103315345,
+     2054.8714486731824,
+     2033.080623881067
+    ]
+   },
+   "1": {
+    "step": 0.17521165668841648,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.72,
+     0.78,
+     0.75
+    ],
+    "phi_prime_mean_by_segment": [
+     2061.3392483348753,
+     2023.2947811965219,
+     1966.4542061354255
+    ]
+   },
+   "2": {
+    "step": 0.1663627857493425,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.74,
+     0.83,
+     0.84
+    ],
+    "phi_prime_mean_by_segment": [
+     2010.4054690747942,
+     1913.240300664269,
+     2044.0332057910862
+    ]
+   },
+   "3": {
+    "step": 0.21006362407693208,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.59,
+     0.63,
+     0.72
+    ],
+    "phi_prime_mean_by_segment": [
+     2019.9956718200776,
+     1983.2550630199203,
+     1964.7020868774093
+    ]
+   },
+   "4": {
+    "step": 0.10832886472750478,
+    "start": "the pixelized truth",
+    "acceptance_by_segment": [
+     0.77,
+     0.93,
+     0.93
+    ],
+    "phi_prime_mean_by_segment": [
+     -619.1411839671958,
+     1391.4436384471264,
+     2049.444224988581
+    ]
+   }
+  },
+  "g0.025_eps2_tv": {
+   "0": {
+    "step": 0.08749255929877427,
+    "start": "theta_hat + L_H^-T (0.5 N(0, I))",
+    "acceptance_by_segment": [
+     0.72,
+     0.74,
+     0.52,
+     0.68
+    ],
+    "phi_prime_mean_by_segment": [
+     -91208.11081716424,
+     -139500.99523239324,
+     -191355.70453723415,
+     -231951.18789196204
+    ]
+   },
+   "1": {
+    "step": 0.075395038477961,
+    "start": "theta_hat + L_H^-T (0.5 N(0, I))",
+    "acceptance_by_segment": [
+     0.88,
+     0.72,
+     0.9,
+     0.74
+    ],
+    "phi_prime_mean_by_segment": [
+     -70686.6595975835,
+     -125157.94180926123,
+     -165576.70215219172,
+     -204183.22574200138
+    ]
+   },
+   "2": {
+    "step": 0.10147091189622169,
+    "start": "theta_hat + L_H^-T (0.5 N(0, I))",
+    "acceptance_by_segment": [
+     0.7,
+     0.54,
+     0.4,
+     0.38
+    ],
+    "phi_prime_mean_by_segment": [
+     -98854.22868570355,
+     -154726.7047665935,
+     -191216.7194173891,
+     -219672.50161310023
+    ]
+   },
+   "3": {
+    "step": 0.08968823521997234,
+    "start": "theta_hat + L_H^-T (0.5 N(0, I))",
+    "acceptance_by_segment": [
+     0.64,
+     0.8,
+     0.52,
+     0.52
+    ],
+    "phi_prime_mean_by_segment": [
+     -96884.95269274806,
+     -156054.44436160772,
+     -202280.74862949594,
+     -236295.79075522086
+    ]
+   },
+   "4": {
+    "step": 0.08961859862257356,
+    "start": "the pixelized truth",
+    "acceptance_by_segment": [
+     0.7,
+     0.72,
+     0.56,
+     0.6
+    ],
+    "phi_prime_mean_by_segment": [
+     -85769.68394918746,
+     -137083.69609913885,
+     -184985.17790746686,
+     -217353.4363637441
+    ]
+   }
+  },
+  "g0.15_eps2_tv": {
+   "0": {
+    "step": 0.021907389159449415,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.94,
+     1.0,
+     0.98
+    ],
+    "phi_prime_mean_by_segment": [
+     -6252.361151685126,
+     -13412.432895589713,
+     -20963.824496819827
+    ]
+   }
+  },
+  "g0.1_eps2_matern": {
+   "0": {
+    "step": 0.1844680220627846,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.77,
+     0.79
+    ],
+    "phi_prime_mean_by_segment": [
+     1981.4085605015955,
+     1982.0476580897393
+    ]
+   },
+   "1": {
+    "step": 0.17426933243243053,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.72,
+     0.75
+    ],
+    "phi_prime_mean_by_segment": [
+     2051.9538190976605,
+     2001.47288430145
+    ]
+   },
+   "2": {
+    "step": 0.18601031907428173,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.74,
+     0.79
+    ],
+    "phi_prime_mean_by_segment": [
+     2003.0623739302714,
+     1922.8629094477458
+    ]
+   },
+   "3": {
+    "step": 0.18485461105183337,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.71,
+     0.7
+    ],
+    "phi_prime_mean_by_segment": [
+     1936.785370336218,
+     1957.8466076934233
+    ]
+   },
+   "4": {
+    "step": 0.09789140113532088,
+    "start": "the pixelized truth",
+    "acceptance_by_segment": [
+     0.71,
+     0.88
+    ],
+    "phi_prime_mean_by_segment": [
+     -3942.0277421242126,
+     -1554.0928726191214
+    ]
+   }
+  },
+  "g0.1_eps2_tv": {
+   "0": {
+    "step": 0.08654700344098626,
+    "start": "theta_hat + L_H^-T (0.5 N(0, I))",
+    "acceptance_by_segment": [
+     0.66
+    ],
+    "phi_prime_mean_by_segment": [
+     -85272.41052137727
+    ]
+   },
+   "1": {
+    "step": 0.08491980355737443,
+    "start": "theta_hat + L_H^-T (0.5 N(0, I))",
+    "acceptance_by_segment": [
+     0.8
+    ],
+    "phi_prime_mean_by_segment": [
+     -88033.83348469093
+    ]
+   },
+   "2": {
+    "step": 0.0969865565988212,
+    "start": "theta_hat + L_H^-T (0.5 N(0, I))",
+    "acceptance_by_segment": [
+     0.66
+    ],
+    "phi_prime_mean_by_segment": [
+     -105783.05147614345
+    ]
+   },
+   "3": {
+    "step": 0.09736953057255174,
+    "start": "theta_hat + L_H^-T (0.5 N(0, I))",
+    "acceptance_by_segment": [
+     0.74
+    ],
+    "phi_prime_mean_by_segment": [
+     -119542.65690432428
+    ]
+   },
+   "4": {
+    "step": 0.09010092633182092,
+    "start": "the pixelized truth",
+    "acceptance_by_segment": [
+     0.72
+    ],
+    "phi_prime_mean_by_segment": [
+     -90480.15911937789
+    ]
+   }
+  },
+  "g0.1_eps2_tv_od2": {
+   "1": {
+    "step": 0.024184990620724725,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.98,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "phi_prime_mean_by_segment": [
+     -8478.310028526284,
+     -17772.619150056395,
+     -25960.94352893087,
+     -34644.44090578722
+    ]
+   },
+   "2": {
+    "step": 0.012728044926156219,
+    "start": "theta_hat + L_H^-T (2.0 N(0, I))",
+    "acceptance_by_segment": [
+     0.98
+    ],
+    "phi_prime_mean_by_segment": [
+     -1606.8591731859713
+    ]
+   }
+  }
+ },
+ "definition": "single chains of runs without a summary.json (unfinalized): Phi' block means (drift = not stationary), valley depth of the half-height strip, indicator of the feature for three strips; laplace: the Laplace probability of the same configuration (laplace_sensitivity.json)",
+ "runs": {
+  "g0.15_eps2_tv": {
+   "config": "g0.15_eps2_tv",
+   "g": 0.15,
+   "eps_r": 2.0,
+   "prior": "tv",
+   "tag": "",
+   "chains": {
+    "0": {
+     "segments": 3,
+     "draws": 150,
+     "step": 0.021907389159449415,
+     "acceptance": 0.9733333333333334,
+     "n_warmup_seg0": 50,
+     "phi_prime_block_means": [
+      -6252.361151685126,
+      -13412.432895589713,
+      -20963.824496819827
+     ],
+     "phi_prime_drift_per_block": -7355.73167256735,
+     "variants": {
+      "band1_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.6017516505793353,
+       "depth_sd": 0.009362434739805057,
+       "depth_block_means": [
+        0.601721836008135,
+        0.603774300195317,
+        0.5997588155345542
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.9999999999999273,
+       "depth_mean_laplace": 0.5976462682581283,
+       "depth_sd_laplace": 0.026944099191114967
+      },
+      "band0.5_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.5208779565539902,
+       "depth_sd": 0.014940148356088362,
+       "depth_block_means": [
+        0.5137618195767747,
+        0.5273513848811152,
+        0.5215206652040805
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.9996392828775248,
+       "depth_mean_laplace": 0.5188983769182292,
+       "depth_sd_laplace": 0.04389725920923646
+      },
+      "band0.25_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.5037653393406925,
+       "depth_sd": 0.020833929865484976,
+       "depth_block_means": [
+        0.49773058736499337,
+        0.5020298178136225,
+        0.5115356128434616
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.9964245597163108,
+       "depth_mean_laplace": 0.5079929782164866,
+       "depth_sd_laplace": 0.05219669153419708
+      }
+     }
+    }
+   }
+  },
+  "g0.1_eps2_tv_od2": {
+   "config": "g0.1_eps2_tv",
+   "g": 0.1,
+   "eps_r": 2.0,
+   "prior": "tv",
+   "tag": "_od2",
+   "chains": {
+    "1": {
+     "segments": 4,
+     "draws": 200,
+     "step": 0.024184990620724725,
+     "acceptance": 0.995,
+     "n_warmup_seg0": 50,
+     "phi_prime_block_means": [
+      -8478.310028526284,
+      -17772.619150056395,
+      -25960.94352893087,
+      -34644.44090578722
+     ],
+     "phi_prime_drift_per_block": -8722.043625753644,
+     "variants": {
+      "band1_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.5310140738888919,
+       "depth_sd": 0.015815474221429857,
+       "depth_block_means": [
+        0.5258694847044016,
+        0.520123778505594,
+        0.5331070267886157,
+        0.5449560055569562
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.999996549985848,
+       "depth_mean_laplace": 0.5229475289479912,
+       "depth_sd_laplace": 0.031650496227049164
+      },
+      "band0.5_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.42999761480410564,
+       "depth_sd": 0.02131364922073247,
+       "depth_block_means": [
+        0.42157789900961246,
+        0.42302776065156356,
+        0.43264645485392583,
+        0.44273834470132045
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.8679631639738666,
+       "depth_mean_laplace": 0.4226295397117649,
+       "depth_sd_laplace": 0.0513272160180676
+      },
+      "band0.25_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.42454824196162816,
+       "depth_sd": 0.03299805766569107,
+       "depth_block_means": [
+        0.4214820152913346,
+        0.4253851699289389,
+        0.4094762635237832,
+        0.441849519102456
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.7830579118072772,
+       "depth_mean_laplace": 0.4108017665017776,
+       "depth_sd_laplace": 0.059046416946261525
+      }
+     }
+    },
+    "2": {
+     "segments": 1,
+     "draws": 50,
+     "step": 0.012728044926156219,
+     "acceptance": 0.98,
+     "n_warmup_seg0": 50,
+     "phi_prime_block_means": [
+      -1606.8591731859713
+     ],
+     "phi_prime_drift_per_block": null,
+     "variants": {
+      "band1_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.524811917067003,
+       "depth_sd": 0.008595905243294096,
+       "depth_block_means": [
+        0.524811917067003
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.999996549985848,
+       "depth_mean_laplace": 0.5229475289479912,
+       "depth_sd_laplace": 0.031650496227049164
+      },
+      "band0.5_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.4305875823703061,
+       "depth_sd": 0.009312015659899893,
+       "depth_block_means": [
+        0.4305875823703061
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.8679631639738666,
+       "depth_mean_laplace": 0.4226295397117649,
+       "depth_sd_laplace": 0.0513272160180676
+      },
+      "band0.25_core0.5": {
+       "representable": true,
+       "p_valley_mcmc_chain": 1.0,
+       "depth_mean": 0.42490267218954403,
+       "depth_sd": 0.014581225796536371,
+       "depth_block_means": [
+        0.42490267218954403
+       ],
+       "delta": 0.34657359027997264,
+       "p_valley_laplace": 0.7830579118072772,
+       "depth_mean_laplace": 0.4108017665017776,
+       "depth_sd_laplace": 0.059046416946261525
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,14 @@
+# batch_run 2026-10-12T13:40:44+08:00 slot cpu1
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_laplace.py --stage lambda --eps 2
+eps_r = 2, g = 0.25: smooth start 100 iterations, 46 s
+  Matern MAP from the vacuum: 9 iterations, converged True, Phi 2397.1
+  lambda 0.1: Phi_MAP 2397.4 (N 2400), R 113.2, err_chi 0.4230, 10 iterations (smooth start, U gap 0.00), 50 s, converged True
+  lambda 0.2: Phi_MAP 2398.7 (N 2400), R 130.6, err_chi 0.3844, 13 iterations (smooth start, U gap 0.00), 49 s, converged True
+  lambda 0.5: Phi_MAP 2400.9 (N 2400), R 181.0, err_chi 0.3381, 10 iterations (smooth start, U gap 0.00), 56 s, converged True
+  lambda 1: Phi_MAP 2402.9 (N 2400), R 263.4, err_chi 0.3081, 13 iterations (smooth start, U gap 0.00), 73 s, converged True
+  lambda 2: Phi_MAP 2405.6 (N 2400), R 425.8, err_chi 0.2929, 18 iterations (smooth start, U gap 0.00), 93 s, converged True
+  lambda 5: Phi_MAP 2412.1 (N 2400), R 907.7, err_chi 0.2979, 14 iterations (smooth start, U gap 0.00), 80 s, converged True
+  lambda 10: Phi_MAP 2422.2 (N 2400), R 1703.3, err_chi 0.3035, 13 iterations (smooth start, U gap 0.00), 69 s, converged True
+  lambda 20: Phi_MAP 2442.9 (N 2400), R 3280.4, err_chi 0.3106, 13 iterations (smooth start, U gap 0.00), 64 s, converged True
+  lambda 50: Phi_MAP 2519.9 (N 2400), R 7940.9, err_chi 0.3351, 16 iterations (matern start, U gap 0.00), 78 s, converged True

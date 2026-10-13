@@ -1,0 +1,77 @@
+{
+ "definition": "p_eff = 2 (E[Phi] - Phi_MAP) of the Matern MCMC runs (Gaussian posterior: E[Phi] - Phi_MAP = p_eff / 2); discrepancy target N - p_eff / 2 against N",
+ "n_data": 2400,
+ "matern_runs": {
+  "g0.025_eps2_matern": {
+   "phi_mean": 2436.3975156509628,
+   "phi_map": 2399.3277045071095,
+   "p_eff": 74.13962228770652,
+   "chains": 4,
+   "draws_per_chain": 300,
+   "converged": false,
+   "converged_classic": true
+  },
+  "g0.1_eps2_matern": {
+   "phi_mean": 2435.65691551627,
+   "phi_map": 2398.251340957934,
+   "p_eff": 74.81114911667191,
+   "chains": 4,
+   "draws_per_chain": 200,
+   "converged": false,
+   "converged_classic": false
+  }
+ },
+ "p_eff_median": 74.47538570218921,
+ "target": 2362.762307148905,
+ "sqrt_n": 48.98979485566356,
+ "lambda_rule": {
+  "1.1": {
+   "lambda_star_N": 10.0,
+   "lambda_closest_to_target": 0.1,
+   "crossing_N": 13.93677821693442,
+   "crossing_target": null,
+   "phi_map_by_lambda": {
+    "0.1": 2387.4279700361963,
+    "0.2": 2389.415183311502,
+    "0.5": 2392.0282423863973,
+    "1": 2393.827652875894,
+    "2": 2395.407801849145,
+    "5": 2397.4083442854458,
+    "10": 2399.04836232715,
+    "20": 2401.0355067316264,
+    "50": 2405.206985551267
+   }
+  },
+  "2": {
+   "lambda_star_N": 0.5,
+   "lambda_closest_to_target": 0.1,
+   "crossing_N": 0.3466848612921841,
+   "crossing_target": null,
+   "phi_map_by_lambda": {
+    "0.1": 2397.382693335279,
+    "0.2": 2398.7160864531506,
+    "0.5": 2400.854680539615,
+    "1": 2402.8630504258213,
+    "2": 2405.5938915809743,
+    "5": 2412.100675494928,
+    "10": 2422.238041457017,
+    "20": 2442.898127228901,
+    "50": 2519.910495876594
+   }
+  },
+  "4": {
+   "lambda_star_N": 2.0,
+   "lambda_closest_to_target": 0.5,
+   "crossing_N": 3.1139993446499954,
+   "crossing_target": null,
+   "phi_map_by_lambda": {
+    "0.5": 2391.3693111368725,
+    "1": 2394.479593158406,
+    "2": 2397.249173181679,
+    "5": 2402.9419937477714,
+    "10": 2411.5572563946057,
+    "20": 2427.755521158526
+   }
+  }
+ }
+}

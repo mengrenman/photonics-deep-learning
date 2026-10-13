@@ -1,0 +1,90 @@
+{
+ "name": "g0.15_eps1.1_matern",
+ "g": 0.15,
+ "eps_r": 1.1,
+ "prior": "matern",
+ "lam": null,
+ "lam_scale": null,
+ "map_ok": true,
+ "variants": {
+  "band1_core0.5": {
+   "band_frac": 1.0,
+   "core_frac": 0.5,
+   "region_status": "ok",
+   "n_strip": 108,
+   "n_core": 58,
+   "p_valley_region": 0.9595331021341564,
+   "z_depth_region": 2.757204340320112,
+   "strip_mean": 0.009977420078635946,
+   "depth_mean": 0.10061999454097716,
+   "depth_sd": 0.01920964067272049,
+   "truth_holds_region": true
+  },
+  "band1_core0.25": {
+   "band_frac": 1.0,
+   "core_frac": 0.25,
+   "region_status": "ok",
+   "n_strip": 108,
+   "n_core": 14,
+   "p_valley_region": 0.8657558079306704,
+   "z_depth_region": 2.184266215738451,
+   "strip_mean": 0.009977420078635946,
+   "depth_mean": 0.11064688213684934,
+   "depth_sd": 0.02883888043536432,
+   "truth_holds_region": true
+  },
+  "band0.5_core0.5": {
+   "band_frac": 0.5,
+   "core_frac": 0.5,
+   "region_status": "ok",
+   "n_strip": 48,
+   "n_core": 58,
+   "p_valley_region": 0.7509841458492826,
+   "z_depth_region": 1.1153764476854762,
+   "strip_mean": 0.025086802311594367,
+   "depth_mean": 0.08551061230801874,
+   "depth_sd": 0.033939682413422365,
+   "truth_holds_region": true
+  },
+  "band0.5_core0.25": {
+   "band_frac": 0.5,
+   "core_frac": 0.25,
+   "region_status": "ok",
+   "n_strip": 48,
+   "n_core": 14,
+   "p_valley_region": 0.699306383063257,
+   "z_depth_region": 1.1706775132099012,
+   "strip_mean": 0.025086802311594367,
+   "depth_mean": 0.09553749990389092,
+   "depth_sd": 0.040901451904067784,
+   "truth_holds_region": true
+  },
+  "band0.25_core0.5": {
+   "band_frac": 0.25,
+   "core_frac": 0.5,
+   "region_status": "ok",
+   "n_strip": 24,
+   "n_core": 58,
+   "p_valley_region": 0.6694130780368813,
+   "z_depth_region": 0.7653693475051455,
+   "strip_mean": 0.029392782241105468,
+   "depth_mean": 0.08120463237850764,
+   "depth_sd": 0.04383444749349545,
+   "truth_holds_region": true
+  },
+  "band0.25_core0.25": {
+   "band_frac": 0.25,
+   "core_frac": 0.25,
+   "region_status": "ok",
+   "n_strip": 24,
+   "n_core": 14,
+   "p_valley_region": 0.6405797518921822,
+   "z_depth_region": 0.8772778384022023,
+   "strip_mean": 0.029392782241105468,
+   "depth_mean": 0.09123151997437981,
+   "depth_sd": 0.04967232519127996,
+   "truth_holds_region": true
+  }
+ },
+ "time_s": 9.997847832994012
+}

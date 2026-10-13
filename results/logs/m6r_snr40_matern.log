@@ -1,0 +1,15 @@
+# batch_run 2026-10-13T09:59:01+08:00 slot cpu1
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_laplace.py --stage descend --eps-r 2 --prior matern --gaps 0.15 0.1 0.05 --snr 40 --out-dir results/resolution/snr40 --then-refeature
+g0.15_eps2_matern: operating point model/noise 0.195, Phi(truth) 2521 (N = 2400); prior 5.4 s
+  MAP (smooth start): 4 Newton iterations, converged True, decrement 2.7e-05; Phi 2393.0 R 18.1 U 2411.17; U smooth 2411.17 (4 its, converged); 22 s
+  Laplace mass 2.8 s (Jacobian check 4.6e-11); P(valley) region 1.0000, point 1.0000; total 121 s
+g0.1_eps2_matern: operating point model/noise 0.192, Phi(truth) 2517 (N = 2400); prior 5.5 s
+  MAP (neighbor start): 5 Newton iterations, converged True, decrement 8.8e-06; Phi 2393.4 R 17.6 U 2411.02; U neighbor 2411.02 (5 its, converged); 23 s
+  Laplace mass 2.8 s (Jacobian check 4.5e-11); P(valley) region 1.0000, point 0.9996; total 39 s
+g0.05_eps2_matern: operating point model/noise 0.192, Phi(truth) 2516 (N = 2400); prior 5.0 s
+  MAP (neighbor start): 5 Newton iterations, converged True, decrement 1.2e-04; Phi 2394.3 R 16.9 U 2411.19; U neighbor 2411.19 (5 its, converged); 22 s
+  Laplace mass 2.6 s (Jacobian check 4.7e-11); P(valley) region 1.0000, point 0.8169; total 36 s
+g0.05_eps2_matern: band1_core0.5 1.000, band1_core0.25 1.000, band0.5_core0.5 0.661, band0.5_core0.25 0.966, band0.25_core0.5 0.386, band0.25_core0.25 0.826
+g0.15_eps2_matern: band1_core0.5 1.000, band1_core0.25 1.000, band0.5_core0.5 1.000, band0.5_core0.25 1.000, band0.25_core0.5 1.000, band0.25_core0.25 1.000
+g0.1_eps2_matern: band1_core0.5 1.000, band1_core0.25 1.000, band0.5_core0.5 1.000, band0.5_core0.25 1.000, band0.25_core0.5 0.996, band0.25_core0.25 1.000

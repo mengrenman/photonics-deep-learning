@@ -1,0 +1,4 @@
+# batch_run 2026-10-13T08:56:49+08:00 slot cpu1
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_mcmc.py --stage chain --g 0.1 --eps-r 2 --prior matern --chain-id 4 --chains 5 --start truth --frozen-step 0.184661 --run-tag _truthfrozen --first 0 --last 3 --samples 100
+g0.1_eps2_matern_truthfrozen chain 4: Laplace mass 3.1 s; segments [0, 1, 2, 3] of 100 trajectories (10 leapfrog steps, start: the pixelized truth, frozen step 0.1847 (no warmup))

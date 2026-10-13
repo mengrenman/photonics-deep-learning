@@ -1,0 +1,242 @@
+{
+ "name": "g0.15_eps1.1_tv_x0.333333",
+ "g": 0.15,
+ "eps_r": 1.1,
+ "prior": "tv",
+ "prior_params": {
+  "kind": "tv",
+  "n": 64,
+  "lam": 3.3333333329999997,
+  "delta": 0.01,
+  "sigma_0": 1.0,
+  "mu": 0.0,
+  "neighborhood": 8,
+  "boundary": "free",
+  "pairs": "unordered, each pair once",
+  "potential": "lam b (sqrt(D^2 + delta^2) - delta)"
+ },
+ "lam": 3.3333333329999997,
+ "lam_scale": 0.3333333333,
+ "problem": {
+  "n": 64,
+  "side": 1.5,
+  "h": 0.0234375,
+  "data_grid_n": 128,
+  "radius": 0.2,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_tx": 40,
+  "n_rx": 60,
+  "n_data": 2400,
+  "noise_std": 2.5684171619369415e-05,
+  "d_obs_sha256": "874771b2d675be10503827a05815e1eeba429681cdc5b2526fcefb2a17b2d1b9",
+  "tol": 1e-10
+ },
+ "operating_point": {
+  "n_data": 2400,
+  "rel_model_error": 0.0018268104600376563,
+  "rel_noise": 0.03162277660168379,
+  "model_to_noise": 0.05776881907139001,
+  "phi_truth": 2449.079312004441,
+  "phi_clean": 2438.2309412828845,
+  "phi_excess_sd": 0.22144144006968164
+ },
+ "start": null,
+ "map": {
+  "nit": 4,
+  "converged": true,
+  "decrement": 2.0913095501707157e-05,
+  "U": 2440.237120786838,
+  "phi": 2396.5510147064297,
+  "R": 43.686106080408344,
+  "grad_inf": 0.2246424613800496,
+  "time_s": 16.973890917011886,
+  "method": "damped Gauss-Newton with the Laplace mass (thetaspace.map_newton), starts tried: matern",
+  "chosen_start": "matern",
+  "tol": 0.001,
+  "u_gap": null,
+  "all_starts": false,
+  "history": [
+   {
+    "it": 0,
+    "U": 2484.645686344854,
+    "decrement": 58.17155019851066,
+    "alpha": 0.5
+   },
+   {
+    "it": 1,
+    "U": 2462.3713877860355,
+    "decrement": 22.227672885212055,
+    "alpha": 1.0
+   },
+   {
+    "it": 2,
+    "U": 2440.930830140268,
+    "decrement": 0.6935416519281099,
+    "alpha": 1.0
+   },
+   {
+    "it": 3,
+    "U": 2440.2371207868377,
+    "decrement": 2.0913095501707157e-05,
+    "alpha": 0.0
+   }
+  ],
+  "time_s_all_starts": 16.973890917011886
+ },
+ "map_candidates": {
+  "matern": {
+   "nit": 4,
+   "converged": true,
+   "decrement": 2.0913095501707157e-05,
+   "U": 2440.237120786838,
+   "phi": 2396.5510147064297,
+   "R": 43.686106080408344,
+   "grad_inf": 0.2246424613800496,
+   "time_s": 16.973890917011886,
+   "max_iter": 40,
+   "history": [
+    {
+     "it": 0,
+     "U": 2484.645686344854,
+     "decrement": 58.17155019851066,
+     "alpha": 0.5
+    },
+    {
+     "it": 1,
+     "U": 2462.3713877860355,
+     "decrement": 22.227672885212055,
+     "alpha": 1.0
+    },
+    {
+     "it": 2,
+     "U": 2440.930830140268,
+     "decrement": 0.6935416519281099,
+     "alpha": 1.0
+    },
+    {
+     "it": 3,
+     "U": 2440.2371207868377,
+     "decrement": 2.0913095501707157e-05,
+     "alpha": 0.0
+    }
+   ]
+  }
+ },
+ "neighbor_start_given": false,
+ "map_summary": {
+  "phi": 2396.5510147064297,
+  "R": 43.686106080408344,
+  "U": 2440.237120786838,
+  "phi_over_N": 0.9985629227943457,
+  "grad_inf": 0.2246424613800496,
+  "converged": true,
+  "chosen_start": "matern",
+  "u_gap": null,
+  "map_ok": true,
+  "err_model": 0.011918934081710856,
+  "err_chi": 0.36836641957030625,
+  "err_data": 0.003954176249496378,
+  "strip_mean": 0.014337576347359368,
+  "core1_mean": 0.11330383779835536,
+  "core2_mean": 0.11651022806501182,
+  "map_has_valley_region": true,
+  "map_has_valley_point": true
+ },
+ "laplace": {
+  "time_fields_s": 0.7539214590069605,
+  "time_gn_s": 0.45482900000934023,
+  "time_prior_hessian_s": 0.022168207986396737,
+  "time_cholesky_s": 0.5945710410014726,
+  "time_total_s": 2.3748225000017555,
+  "asymmetry": 2.8414468449214625e-16,
+  "pivot_ratio_sq": 13.89421838583944,
+  "h_diag_min": 8660.352967143037,
+  "h_diag_max": 12803.26187904552,
+  "n_solves": 100,
+  "jacobian_check_rel_err": 1.8582847476165506e-11,
+  "theta_std_inside": 0.0385633459650815,
+  "theta_std_outside": 0.02584407961271545,
+  "theta_std_strip": 0.02835237756154434,
+  "theta_std_max": 0.047035761123234876
+ },
+ "features": {
+  "geometry": {
+   "n_strip": 108,
+   "n_core1": 58,
+   "n_core2": 58,
+   "strip_width_pixels": 6.3999999999999995,
+   "fits_grid": true,
+   "truth_holds": true,
+   "representable": true,
+   "status": "ok",
+   "delta": 0.04765508990216247,
+   "core_frac": 0.5,
+   "band_frac": 1.0,
+   "gap_mid": [
+    0.0,
+    0.0
+   ],
+   "pixel": 0.0234375
+  },
+  "delta": 0.04765508990216247,
+  "region": {
+   "p_valley": 0.9999999934807261,
+   "p_vs_core1": 0.9999999951519322,
+   "p_vs_core2": 0.9999999983287938,
+   "strip_mean": 0.014337576347359368,
+   "strip_sd": 0.005087515019594787,
+   "core1_mean": 0.11330383779835534,
+   "core1_sd": 0.008426388872518276,
+   "core2_mean": 0.11651022806501184,
+   "core2_sd": 0.008779884282354732,
+   "depth_mean": 0.10056945658432423,
+   "depth_sd": 0.006650667436415293,
+   "z_depth": 7.95624908147303
+  },
+  "region_status": "ok",
+  "point": {
+   "p_valley": 0.9511030443183545,
+   "p_vs_core1": 0.9696439260808225,
+   "p_vs_core2": 0.9775289976193096,
+   "strip_mean": 0.0236688417962476,
+   "strip_sd": 0.018803951943817662,
+   "core1_mean": 0.12301709094431551,
+   "core1_sd": 0.020670482917841546,
+   "core2_mean": 0.1271468032145972,
+   "core2_sd": 0.021058704104084676,
+   "depth_mean": 0.10141310528320877,
+   "depth_sd": 0.023416121527118205,
+   "z_depth": 2.295769404800413
+  },
+  "point_label": "single-point values (bilinear interpolation at the gap midpoint and the disk centers), not the resolution-scale feature"
+ },
+ "truth": {
+  "point": {
+   "strip": 0.0,
+   "core1": 0.09531017980432493,
+   "core2": 0.09531017980432493,
+   "holds": true
+  },
+  "region": {
+   "strip": 0.0,
+   "core1": 0.09531017980432477,
+   "core2": 0.09531017980432481,
+   "holds": true
+  }
+ },
+ "timings_s": {
+  "prior": 0.07240570799331181,
+  "laplace_and_features": 4.644971125002485,
+  "laplace_std": 2.3370122920023277,
+  "total": 28.26354720800009
+ },
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ },
+ "load_avg_1min": 18.1708984375
+}

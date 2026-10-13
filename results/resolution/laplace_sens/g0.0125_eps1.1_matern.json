@@ -1,0 +1,90 @@
+{
+ "name": "g0.0125_eps1.1_matern",
+ "g": 0.0125,
+ "eps_r": 1.1,
+ "prior": "matern",
+ "lam": null,
+ "lam_scale": null,
+ "map_ok": true,
+ "variants": {
+  "band1_core0.5": {
+   "band_frac": 1.0,
+   "core_frac": 0.5,
+   "region_status": "unrepresentable on this grid",
+   "n_strip": 0,
+   "n_core": 56,
+   "p_valley_region": null,
+   "z_depth_region": null,
+   "strip_mean": null,
+   "depth_mean": null,
+   "depth_sd": null,
+   "truth_holds_region": null
+  },
+  "band1_core0.25": {
+   "band_frac": 1.0,
+   "core_frac": 0.25,
+   "region_status": "unrepresentable on this grid",
+   "n_strip": 0,
+   "n_core": 14,
+   "p_valley_region": null,
+   "z_depth_region": null,
+   "strip_mean": null,
+   "depth_mean": null,
+   "depth_sd": null,
+   "truth_holds_region": null
+  },
+  "band0.5_core0.5": {
+   "band_frac": 0.5,
+   "core_frac": 0.5,
+   "region_status": "unrepresentable on this grid",
+   "n_strip": 0,
+   "n_core": 56,
+   "p_valley_region": null,
+   "z_depth_region": null,
+   "strip_mean": null,
+   "depth_mean": null,
+   "depth_sd": null,
+   "truth_holds_region": null
+  },
+  "band0.5_core0.25": {
+   "band_frac": 0.5,
+   "core_frac": 0.25,
+   "region_status": "unrepresentable on this grid",
+   "n_strip": 0,
+   "n_core": 14,
+   "p_valley_region": null,
+   "z_depth_region": null,
+   "strip_mean": null,
+   "depth_mean": null,
+   "depth_sd": null,
+   "truth_holds_region": null
+  },
+  "band0.25_core0.5": {
+   "band_frac": 0.25,
+   "core_frac": 0.5,
+   "region_status": "unrepresentable on this grid",
+   "n_strip": 0,
+   "n_core": 56,
+   "p_valley_region": null,
+   "z_depth_region": null,
+   "strip_mean": null,
+   "depth_mean": null,
+   "depth_sd": null,
+   "truth_holds_region": null
+  },
+  "band0.25_core0.25": {
+   "band_frac": 0.25,
+   "core_frac": 0.25,
+   "region_status": "unrepresentable on this grid",
+   "n_strip": 0,
+   "n_core": 14,
+   "p_valley_region": null,
+   "z_depth_region": null,
+   "strip_mean": null,
+   "depth_mean": null,
+   "depth_sd": null,
+   "truth_holds_region": null
+  }
+ },
+ "time_s": 12.867696500004968
+}

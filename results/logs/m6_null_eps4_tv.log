@@ -1,0 +1,5 @@
+# batch_run 2026-10-12T16:42:45+08:00 slot cpu5
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_laplace.py --stage null --eps-r 4 --prior tv --neighbor-gap 0.025 --all-starts
+g0_eps4_tv: MAP (neighbor start) 22 Newton iterations, converged True, Phi 2406.6 (N = 2400), U 3445.70
+  P_null(region) g0.025_band1_core0.5 0.000, g0.025_band0.5_core0.5 0.000, g0.025_band0.25_core0.5 0.000, g0.05_band1_core0.5 0.000, g0.05_band0.5_core0.5 0.000, g0.05_band0.25_core0.5 0.000, g0.1_band1_core0.5 0.000, g0.1_band0.5_core0.5 0.000, g0.1_band0.25_core0.5 0.000, g0.15_band1_core0.5 0.000, g0.15_band0.5_core0.5 0.000, g0.15_band0.25_core0.5 0.000; 3075 s

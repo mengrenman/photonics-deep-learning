@@ -1,0 +1,86 @@
+[
+  {
+    "name": "m6_lambda_eps1.1",
+    "cmd": [
+      "scripts/resolution_laplace.py",
+      "--stage",
+      "lambda",
+      "--eps",
+      "1.1"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/resolution/lambda/eps1.1_g0.25_lam50.json"
+  },
+  {
+    "name": "m6_lambda_eps2",
+    "cmd": [
+      "scripts/resolution_laplace.py",
+      "--stage",
+      "lambda",
+      "--eps",
+      "2"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/resolution/lambda/eps2_g0.25_lam50.json"
+  },
+  {
+    "name": "m6_lambda_eps4",
+    "cmd": [
+      "scripts/resolution_laplace.py",
+      "--stage",
+      "lambda",
+      "--eps",
+      "4"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/resolution/lambda/eps4_g0.25_lam50.json"
+  },
+  {
+    "name": "m6_descend_eps1.1_matern",
+    "cmd": [
+      "scripts/resolution_laplace.py",
+      "--stage",
+      "descend",
+      "--eps-r",
+      "1.1",
+      "--prior",
+      "matern"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/resolution/laplace/g0.0125_eps1.1_matern.json"
+  },
+  {
+    "name": "m6_descend_eps2_matern",
+    "cmd": [
+      "scripts/resolution_laplace.py",
+      "--stage",
+      "descend",
+      "--eps-r",
+      "2",
+      "--prior",
+      "matern"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/resolution/laplace/g0.0125_eps2_matern.json"
+  },
+  {
+    "name": "m6_descend_eps4_matern",
+    "cmd": [
+      "scripts/resolution_laplace.py",
+      "--stage",
+      "descend",
+      "--eps-r",
+      "4",
+      "--prior",
+      "matern"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/resolution/laplace/g0.0125_eps4_matern.json"
+  }
+]

@@ -1,0 +1,358 @@
+{
+ "definition": "eps_r 2; Laplace probabilities of the r/2-strip and full-strip valley for the open gap, and the depth minus delta of the MAP and of the ideal 2.5 cycle/lambda low-pass, at three SNRs; the TV weight is that of 30 dB (0.5) at every SNR",
+ "rows": [
+  {
+   "snr_db": 20,
+   "strip_gap": 0.05,
+   "prior": "matern",
+   "present": false
+  },
+  {
+   "snr_db": 20,
+   "strip_gap": 0.05,
+   "prior": "tv",
+   "present": false
+  },
+  {
+   "snr_db": 30,
+   "strip_gap": 0.05,
+   "prior": "matern",
+   "present": true,
+   "phi_over_N": 0.9995644451531032,
+   "map_ok": true,
+   "lam": null,
+   "p_full_strip": {
+    "p": 0.9999999561631154,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.7210056531707394,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.45188012299617414,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.03179382570063316
+  },
+  {
+   "snr_db": 30,
+   "strip_gap": 0.05,
+   "prior": "tv",
+   "present": true,
+   "phi_over_N": 1.0012319543404036,
+   "map_ok": true,
+   "lam": 0.5,
+   "p_full_strip": {
+    "p": 0.9475692059226692,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.16245310311414485,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.1473261473404437,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": -0.04247670141203436
+  },
+  {
+   "snr_db": 40,
+   "strip_gap": 0.05,
+   "prior": "matern",
+   "present": true,
+   "phi_over_N": 0.9976117900162916,
+   "map_ok": true,
+   "lam": null,
+   "p_full_strip": {
+    "p": 0.9999999945578262,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.6609448068517975,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.38649997043888273,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.022814220450116662
+  },
+  {
+   "snr_db": 40,
+   "strip_gap": 0.05,
+   "prior": "tv",
+   "present": true,
+   "phi_over_N": 0.998840364199818,
+   "map_ok": true,
+   "lam": 0.5,
+   "p_full_strip": {
+    "p": 0.9579541401009605,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.09706277200725522,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.0889057141453834,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": -0.06332097574263224
+  },
+  {
+   "snr_db": 20,
+   "strip_gap": 0.1,
+   "prior": "matern",
+   "present": false
+  },
+  {
+   "snr_db": 20,
+   "strip_gap": 0.1,
+   "prior": "tv",
+   "present": false
+  },
+  {
+   "snr_db": 30,
+   "strip_gap": 0.1,
+   "prior": "matern",
+   "present": true,
+   "phi_over_N": 0.9992713919879664,
+   "map_ok": true,
+   "lam": null,
+   "p_full_strip": {
+    "p": 1.0,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.9999284883624874,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.9936195557510714,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.14899599164574545
+  },
+  {
+   "snr_db": 30,
+   "strip_gap": 0.1,
+   "prior": "tv",
+   "present": true,
+   "phi_over_N": 1.0010187429235362,
+   "map_ok": true,
+   "lam": 0.5,
+   "p_full_strip": {
+    "p": 0.999996549985848,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.8679631639738666,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.7830579118072772,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.07605594943179228
+  },
+  {
+   "snr_db": 40,
+   "strip_gap": 0.1,
+   "prior": "matern",
+   "present": true,
+   "phi_over_N": 0.9972469633518152,
+   "map_ok": true,
+   "lam": null,
+   "p_full_strip": {
+    "p": 1.0,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.9999826780007259,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.9959610910193731,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.14534413468448898
+  },
+  {
+   "snr_db": 40,
+   "strip_gap": 0.1,
+   "prior": "tv",
+   "present": true,
+   "phi_over_N": 0.9986701205837625,
+   "map_ok": true,
+   "lam": 0.5,
+   "p_full_strip": {
+    "p": 0.9999995912780699,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.8442428172173383,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.7526932306860179,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.07003056571972238
+  },
+  {
+   "snr_db": 20,
+   "strip_gap": 0.15,
+   "prior": "matern",
+   "present": false
+  },
+  {
+   "snr_db": 20,
+   "strip_gap": 0.15,
+   "prior": "tv",
+   "present": false
+  },
+  {
+   "snr_db": 30,
+   "strip_gap": 0.15,
+   "prior": "matern",
+   "present": true,
+   "phi_over_N": 0.9990501441679133,
+   "map_ok": true,
+   "lam": null,
+   "p_full_strip": {
+    "p": 1.0,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.999999999998941,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.9999996705871513,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.23879517410815249
+  },
+  {
+   "snr_db": 30,
+   "strip_gap": 0.15,
+   "prior": "tv",
+   "present": true,
+   "phi_over_N": 1.0008229049442285,
+   "map_ok": true,
+   "lam": 0.5,
+   "p_full_strip": {
+    "p": 0.9999999999999273,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.9996392828775248,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.9964245597163108,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.17232478663825662
+  },
+  {
+   "snr_db": 40,
+   "strip_gap": 0.15,
+   "prior": "matern",
+   "present": true,
+   "phi_over_N": 0.9971027656254502,
+   "map_ok": true,
+   "lam": null,
+   "p_full_strip": {
+    "p": 1.0,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.9999999999999988,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.9999999776213481,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.23946140756489448
+  },
+  {
+   "snr_db": 40,
+   "strip_gap": 0.15,
+   "prior": "tv",
+   "present": true,
+   "phi_over_N": 0.9986113155491457,
+   "map_ok": true,
+   "lam": 0.5,
+   "p_full_strip": {
+    "p": 1.0,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_half_strip": {
+    "p": 0.9996808381886514,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "p_quarter_strip": {
+    "p": 0.9962389440618421,
+    "truth_holds": true,
+    "status": "ok"
+   },
+   "map_depth_minus_delta_half_strip": 0.1784574194734379
+  }
+ ],
+ "lowpass_depth_minus_delta_half_strip_open": {
+  "0.05": {
+   "2": -0.2443790557172944,
+   "2.5": 0.037708738468490044,
+   "3": 0.1383463799350299
+  },
+  "0.1": {
+   "2": -0.11301320828678718,
+   "2.5": 0.19611391724604138,
+   "3": 0.2792104440889042
+  },
+  "0.15": {
+   "2": 0.01264873240550679,
+   "2.5": 0.31175050098994134,
+   "3": 0.3713948963939662
+  }
+ }
+}

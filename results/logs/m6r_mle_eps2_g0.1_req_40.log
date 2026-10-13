@@ -1,0 +1,4 @@
+# batch_run 2026-10-13T10:45:03+08:00 slot cpu6
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_mle.py --stage chunk --point eps2_g0.1_req --first 40 --count 8
+eps2_g0.1_req [40, 48): done (/Users/mengren/Documents/new_projects/photonics-dl/results/resolution/mle/eps2_g0.1_req/chunk_40_48.json)

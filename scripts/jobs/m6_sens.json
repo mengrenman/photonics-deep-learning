@@ -1,0 +1,36 @@
+[
+  {
+    "name": "m6_descend_eps2_tv_x3",
+    "cmd": [
+      "scripts/resolution_laplace.py",
+      "--stage",
+      "descend",
+      "--eps-r",
+      "2",
+      "--prior",
+      "tv",
+      "--lam-scale",
+      "3"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/resolution/laplace/g0.0125_eps2_tv_x3.json"
+  },
+  {
+    "name": "m6_descend_eps2_tv_x0.333333",
+    "cmd": [
+      "scripts/resolution_laplace.py",
+      "--stage",
+      "descend",
+      "--eps-r",
+      "2",
+      "--prior",
+      "tv",
+      "--lam-scale",
+      "0.3333333333"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/resolution/laplace/g0.0125_eps2_tv_x0.333333.json"
+  }
+]

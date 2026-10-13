@@ -1,0 +1,5 @@
+# batch_run 2026-10-12T15:29:24+08:00 slot cpu5
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_mcmc.py --stage chain --g 0.1 --eps-r 2 --prior tv --chain-id 1 --chains 4 --first 0 --last 0 --samples 50 --warmup 50
+g0.1_eps2_tv chain 1: Laplace mass 2.8 s; segments [0] of 50 trajectories (warmup 50, 20 leapfrog steps, init scale 0.5)
+  segment 0: 1760 s (compile 3 s), step 0.0849, acceptance 0.800, load 13.4

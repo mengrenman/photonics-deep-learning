@@ -1,0 +1,253 @@
+{
+ "name": "g0.05_eps2_matern",
+ "g": 0.05,
+ "eps_r": 2.0,
+ "prior": "matern",
+ "prior_params": {
+  "kind": "matern",
+  "n": 64,
+  "sigma": 0.5,
+  "ell": 0.4,
+  "nu": 1.5,
+  "kappa": 4.330127018922193,
+  "mean": 0.0,
+  "pad": 2,
+  "form": "DOI marginal of the torus field (dense covariance, Cholesky)"
+ },
+ "lam": null,
+ "lam_scale": null,
+ "problem": {
+  "n": 64,
+  "side": 1.5,
+  "h": 0.0234375,
+  "data_grid_n": 128,
+  "radius": 0.2,
+  "snr_db": 40.0,
+  "seed": 0,
+  "n_tx": 40,
+  "n_rx": 60,
+  "n_data": 2400,
+  "noise_std": 6.68485592062779e-05,
+  "d_obs_sha256": "76df6faeb97845d56a88a71fb762edfdd2b4e7f9cf07d5c2d4403f9aa5abc5af",
+  "tol": 1e-10
+ },
+ "operating_point": {
+  "n_data": 2400,
+  "rel_model_error": 0.0019202586401272982,
+  "rel_noise": 0.009999999999999995,
+  "model_to_noise": 0.19202586401272992,
+  "phi_truth": 2515.937013429482,
+  "phi_clean": 2438.230941282882,
+  "phi_excess_sd": 1.586168555625544
+ },
+ "start": null,
+ "map": {
+  "nit": 5,
+  "converged": true,
+  "decrement": 0.00012455164419213728,
+  "U": 2411.1874057840996,
+  "phi": 2394.2682960391,
+  "R": 16.919109744999957,
+  "grad_inf": 0.33424977618139967,
+  "time_s": 21.796773916008533,
+  "method": "damped Gauss-Newton with the Laplace mass (thetaspace.map_newton), starts tried: neighbor",
+  "chosen_start": "neighbor",
+  "tol": 0.001,
+  "u_gap": null,
+  "all_starts": false,
+  "history": [
+   {
+    "it": 0,
+    "U": 252717.7145946006,
+    "decrement": 249131.0784662774,
+    "alpha": 1.0
+   },
+   {
+    "it": 1,
+    "U": 4057.420698890595,
+    "decrement": 1646.5591929934974,
+    "alpha": 1.0
+   },
+   {
+    "it": 2,
+    "U": 2516.834999894391,
+    "decrement": 105.67274007432908,
+    "alpha": 1.0
+   },
+   {
+    "it": 3,
+    "U": 2411.2410858059984,
+    "decrement": 0.05412355364078286,
+    "alpha": 1.0
+   },
+   {
+    "it": 4,
+    "U": 2411.1874057840996,
+    "decrement": 0.00012455164419213728,
+    "alpha": 0.0
+   }
+  ],
+  "time_s_all_starts": 21.796773916008533
+ },
+ "map_candidates": {
+  "neighbor": {
+   "nit": 5,
+   "converged": true,
+   "decrement": 0.00012455164419213728,
+   "U": 2411.1874057840996,
+   "phi": 2394.2682960391,
+   "R": 16.919109744999957,
+   "grad_inf": 0.33424977618139967,
+   "time_s": 21.796773916008533,
+   "max_iter": 60,
+   "history": [
+    {
+     "it": 0,
+     "U": 252717.7145946006,
+     "decrement": 249131.0784662774,
+     "alpha": 1.0
+    },
+    {
+     "it": 1,
+     "U": 4057.420698890595,
+     "decrement": 1646.5591929934974,
+     "alpha": 1.0
+    },
+    {
+     "it": 2,
+     "U": 2516.834999894391,
+     "decrement": 105.67274007432908,
+     "alpha": 1.0
+    },
+    {
+     "it": 3,
+     "U": 2411.2410858059984,
+     "decrement": 0.05412355364078286,
+     "alpha": 1.0
+    },
+    {
+     "it": 4,
+     "U": 2411.1874057840996,
+     "decrement": 0.00012455164419213728,
+     "alpha": 0.0
+    }
+   ]
+  }
+ },
+ "neighbor_start_given": true,
+ "map_summary": {
+  "phi": 2394.2682960391,
+  "R": 16.919109744999957,
+  "U": 2411.1874057840996,
+  "phi_over_N": 0.9976117900162916,
+  "grad_inf": 0.33424977618139967,
+  "converged": true,
+  "chosen_start": "neighbor",
+  "u_gap": null,
+  "map_ok": true,
+  "err_model": 0.11118716649573854,
+  "err_chi": 0.39141674659776665,
+  "err_data": 0.0013000107386586346,
+  "strip_mean": 0.309374785898406,
+  "core1_mean": 0.7982298655272257,
+  "core2_mean": 0.8033825919966291,
+  "map_has_valley_region": true,
+  "map_has_valley_point": true
+ },
+ "laplace": {
+  "time_fields_s": 0.9702658750029514,
+  "time_gn_s": 0.44528400000126567,
+  "time_prior_hessian_s": 0.02239966699562501,
+  "time_cholesky_s": 0.5625665419938741,
+  "time_total_s": 2.5905942090030294,
+  "asymmetry": 7.888241571269601e-17,
+  "pivot_ratio_sq": 79.69833836636994,
+  "h_diag_min": 8581.388740133345,
+  "h_diag_max": 46119.00858033922,
+  "n_solves": 100,
+  "jacobian_check_rel_err": 4.658647663904272e-11,
+  "theta_std_inside": 0.04812640019392029,
+  "theta_std_outside": 0.050270700003117716,
+  "theta_std_strip": 0.053880505032789724,
+  "theta_std_max": 0.06960964056117926
+ },
+ "features": {
+  "geometry": {
+   "n_strip": 36,
+   "n_core1": 58,
+   "n_core2": 58,
+   "strip_width_pixels": 2.1333333333333333,
+   "fits_grid": true,
+   "truth_holds": true,
+   "representable": true,
+   "status": "ok",
+   "delta": 0.34657359027997264,
+   "core_frac": 0.5,
+   "band_frac": 1.0,
+   "gap_mid": [
+    0.0,
+    0.0
+   ],
+   "pixel": 0.0234375
+  },
+  "delta": 0.34657359027997264,
+  "region": {
+   "p_valley": 0.9999999945578262,
+   "p_vs_core1": 0.9999999958278395,
+   "p_vs_core2": 0.9999999986985062,
+   "strip_mean": 0.30937478589840606,
+   "strip_sd": 0.022959725382294127,
+   "core1_mean": 0.7982298655272257,
+   "core1_sd": 0.012459512061975299,
+   "core2_mean": 0.8033825919966291,
+   "core2_sd": 0.012334558968068555,
+   "depth_mean": 0.49143144286352136,
+   "depth_sd": 0.022880895265699145,
+   "z_depth": 6.330952128464387
+  },
+  "region_status": "ok",
+  "point": {
+   "p_valley": 0.8169127358645079,
+   "p_vs_core1": 0.8717048675457103,
+   "p_vs_core2": 0.9016908826679244,
+   "strip_mean": 0.46723930110893486,
+   "strip_sd": 0.04819748571277493,
+   "core1_mean": 0.8858675912238332,
+   "core1_sd": 0.03988334639143502,
+   "core2_mean": 0.8957646127869716,
+   "core2_sd": 0.03975540024734868,
+   "depth_mean": 0.42357680089646754,
+   "depth_sd": 0.056364655066054155,
+   "z_depth": 1.3661613031474116
+  },
+  "point_label": "single-point values (bilinear interpolation at the gap midpoint and the disk centers), not the resolution-scale feature"
+ },
+ "truth": {
+  "point": {
+   "strip": 0.0,
+   "core1": 0.693147180559945,
+   "core2": 0.6931471805599452,
+   "holds": true
+  },
+  "region": {
+   "strip": 0.0,
+   "core1": 0.6931471805599445,
+   "core2": 0.6931471805599447,
+   "holds": true
+  }
+ },
+ "timings_s": {
+  "prior": 5.015767958000652,
+  "laplace_and_features": 4.612336416001199,
+  "laplace_std": 2.1421795830101473,
+  "total": 36.402861084003234
+ },
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ },
+ "load_avg_1min": 16.29443359375
+}

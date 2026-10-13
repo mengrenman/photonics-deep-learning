@@ -1,0 +1,510 @@
+{
+ "configurations": {
+  "g0.025_eps2_matern": {
+   "g": 0.025,
+   "eps_r": 2.0,
+   "prior": "matern",
+   "chains": 5,
+   "draws_per_chain": 300,
+   "converged_in_summary_json": true,
+   "rhat_pixel_max_in_summary_json": 1.0338415847234539,
+   "note_convergence": "the two convergence entries are those of the four-chain summary.json, not of the chains used here when --chains differs",
+   "variants": {
+    "band1_core0.5": {
+     "band_frac": 1.0,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 36,
+     "n_core": 56,
+     "p_mcmc": 0.9986666666666667,
+     "mcse": 0.0009356608288215806,
+     "per_chain": [
+      0.9966666666666667,
+      1.0,
+      1.0,
+      1.0,
+      0.9966666666666667
+     ],
+     "ess_indicator": 1520.9761163032192,
+     "p_laplace": 0.9996755454762364,
+     "difference_mcmc_minus_laplace": -0.00100887880956968
+    },
+    "band1_core0.25": {
+     "band_frac": 1.0,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 36,
+     "n_core": 14,
+     "p_mcmc": 1.0,
+     "mcse": 0.0,
+     "per_chain": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "ess_indicator": 1500.0,
+     "p_laplace": 0.9999812029862283,
+     "difference_mcmc_minus_laplace": 1.8797013771720827e-05
+    },
+    "band0.5_core0.5": {
+     "band_frac": 0.5,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 16,
+     "n_core": 56,
+     "p_mcmc": 0.11266666666666666,
+     "mcse": 0.012217967023702656,
+     "per_chain": [
+      0.09333333333333334,
+      0.12666666666666668,
+      0.12666666666666668,
+      0.13333333333333333,
+      0.08333333333333333
+     ],
+     "ess_indicator": 669.7062387695081,
+     "p_laplace": 0.13508380547604026,
+     "difference_mcmc_minus_laplace": -0.0224171388093736
+    },
+    "band0.5_core0.25": {
+     "band_frac": 0.5,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 16,
+     "n_core": 14,
+     "p_mcmc": 0.5326666666666666,
+     "mcse": 0.023696744491136984,
+     "per_chain": [
+      0.6133333333333333,
+      0.6366666666666667,
+      0.52,
+      0.61,
+      0.2833333333333333
+     ],
+     "ess_indicator": 443.3073251089698,
+     "p_laplace": 0.6213306485607567,
+     "difference_mcmc_minus_laplace": -0.08866398189409008
+    },
+    "band0.25_core0.5": {
+     "band_frac": 0.25,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 8,
+     "n_core": 56,
+     "p_mcmc": 0.046,
+     "mcse": 0.0075645786575992465,
+     "per_chain": [
+      0.03666666666666667,
+      0.043333333333333335,
+      0.056666666666666664,
+      0.06333333333333334,
+      0.03
+     ],
+     "ess_indicator": 766.8964372664772,
+     "p_laplace": 0.060645118380025176,
+     "difference_mcmc_minus_laplace": -0.014645118380025177
+    },
+    "band0.25_core0.25": {
+     "band_frac": 0.25,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 8,
+     "n_core": 14,
+     "p_mcmc": 0.324,
+     "mcse": 0.02181928252085532,
+     "per_chain": [
+      0.3333333333333333,
+      0.42,
+      0.3466666666666667,
+      0.38666666666666666,
+      0.13333333333333333
+     ],
+     "ess_indicator": 460.0560802080172,
+     "p_laplace": 0.37114339320780304,
+     "difference_mcmc_minus_laplace": -0.04714339320780303
+    }
+   }
+  },
+  "g0.025_eps2_tv": {
+   "g": 0.025,
+   "eps_r": 2.0,
+   "prior": "tv",
+   "chains": 5,
+   "draws_per_chain": 200,
+   "converged_in_summary_json": false,
+   "rhat_pixel_max_in_summary_json": 2.039594646384653,
+   "note_convergence": "the two convergence entries are those of the four-chain summary.json, not of the chains used here when --chains differs",
+   "variants": {
+    "band1_core0.5": {
+     "band_frac": 1.0,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 36,
+     "n_core": 56,
+     "p_mcmc": 0.772,
+     "mcse": 0.026976651575451455,
+     "per_chain": [
+      0.79,
+      0.695,
+      0.885,
+      0.75,
+      0.74
+     ],
+     "ess_indicator": 241.86669037018132,
+     "p_laplace": 0.6000947146268264,
+     "difference_mcmc_minus_laplace": 0.17190528537317362
+    },
+    "band1_core0.25": {
+     "band_frac": 1.0,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 36,
+     "n_core": 14,
+     "p_mcmc": 0.683,
+     "mcse": 0.032600276136406904,
+     "per_chain": [
+      0.605,
+      0.73,
+      0.755,
+      0.645,
+      0.68
+     ],
+     "ess_indicator": 203.72175482601637,
+     "p_laplace": 0.6170034769204451,
+     "difference_mcmc_minus_laplace": 0.06599652307955495
+    },
+    "band0.5_core0.5": {
+     "band_frac": 0.5,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 16,
+     "n_core": 56,
+     "p_mcmc": 0.047,
+     "mcse": 0.00864789523261243,
+     "per_chain": [
+      0.05,
+      0.03,
+      0.09,
+      0.01,
+      0.055
+     ],
+     "ess_indicator": 598.9215217637815,
+     "p_laplace": 0.018804130586038803,
+     "difference_mcmc_minus_laplace": 0.028195869413961197
+    },
+    "band0.5_core0.25": {
+     "band_frac": 0.5,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 16,
+     "n_core": 14,
+     "p_mcmc": 0.054,
+     "mcse": 0.010114273172580176,
+     "per_chain": [
+      0.04,
+      0.075,
+      0.07,
+      0.01,
+      0.075
+     ],
+     "ess_indicator": 499.36205427377513,
+     "p_laplace": 0.029641187682996395,
+     "difference_mcmc_minus_laplace": 0.024358812317003604
+    },
+    "band0.25_core0.5": {
+     "band_frac": 0.25,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 8,
+     "n_core": 56,
+     "p_mcmc": 0.076,
+     "mcse": 0.014920007318786017,
+     "per_chain": [
+      0.08,
+      0.04,
+      0.145,
+      0.025,
+      0.09
+     ],
+     "ess_indicator": 315.462318717499,
+     "p_laplace": 0.022413244442392677,
+     "difference_mcmc_minus_laplace": 0.05358675555760732
+    },
+    "band0.25_core0.25": {
+     "band_frac": 0.25,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 8,
+     "n_core": 14,
+     "p_mcmc": 0.077,
+     "mcse": 0.013147461354437217,
+     "per_chain": [
+      0.065,
+      0.055,
+      0.155,
+      0.01,
+      0.1
+     ],
+     "ess_indicator": 411.15788213160215,
+     "p_laplace": 0.03193775266999632,
+     "difference_mcmc_minus_laplace": 0.04506224733000368
+    }
+   }
+  },
+  "g0.1_eps2_matern": {
+   "g": 0.1,
+   "eps_r": 2.0,
+   "prior": "matern",
+   "chains": 5,
+   "draws_per_chain": 200,
+   "converged_in_summary_json": false,
+   "rhat_pixel_max_in_summary_json": 1.0405570278947445,
+   "note_convergence": "the two convergence entries are those of the four-chain summary.json, not of the chains used here when --chains differs",
+   "variants": {
+    "band1_core0.5": {
+     "band_frac": 1.0,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 72,
+     "n_core": 58,
+     "p_mcmc": 1.0,
+     "mcse": 0.0,
+     "per_chain": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "ess_indicator": 1000.0,
+     "p_laplace": 1.0,
+     "difference_mcmc_minus_laplace": 0.0
+    },
+    "band1_core0.25": {
+     "band_frac": 1.0,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 72,
+     "n_core": 14,
+     "p_mcmc": 1.0,
+     "mcse": 0.0,
+     "per_chain": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "ess_indicator": 1000.0,
+     "p_laplace": 1.0,
+     "difference_mcmc_minus_laplace": 0.0
+    },
+    "band0.5_core0.5": {
+     "band_frac": 0.5,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 32,
+     "n_core": 58,
+     "p_mcmc": 0.978,
+     "mcse": 0.005148407661902562,
+     "per_chain": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.89
+     ],
+     "ess_indicator": 811.7376309767951,
+     "p_laplace": 0.9999284883624874,
+     "difference_mcmc_minus_laplace": -0.021928488362487397
+    },
+    "band0.5_core0.25": {
+     "band_frac": 0.5,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 32,
+     "n_core": 14,
+     "p_mcmc": 0.991,
+     "mcse": 0.0032894432800953514,
+     "per_chain": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.955
+     ],
+     "ess_indicator": 824.2735412046538,
+     "p_laplace": 0.9999991275982134,
+     "difference_mcmc_minus_laplace": -0.008999127598213419
+    },
+    "band0.25_core0.5": {
+     "band_frac": 0.25,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 16,
+     "n_core": 58,
+     "p_mcmc": 0.965,
+     "mcse": 0.00637470151459041,
+     "per_chain": [
+      1.0,
+      0.995,
+      0.995,
+      1.0,
+      0.835
+     ],
+     "ess_indicator": 831.1428034621044,
+     "p_laplace": 0.9936195557510714,
+     "difference_mcmc_minus_laplace": -0.028619555751071446
+    },
+    "band0.25_core0.25": {
+     "band_frac": 0.25,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 16,
+     "n_core": 14,
+     "p_mcmc": 0.979,
+     "mcse": 0.005030732260640741,
+     "per_chain": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.895
+     ],
+     "ess_indicator": 812.3432527574068,
+     "p_laplace": 0.9997970749112731,
+     "difference_mcmc_minus_laplace": -0.02079707491127314
+    }
+   }
+  },
+  "g0.1_eps2_tv": {
+   "g": 0.1,
+   "eps_r": 2.0,
+   "prior": "tv",
+   "chains": 5,
+   "draws_per_chain": 50,
+   "converged_in_summary_json": false,
+   "rhat_pixel_max_in_summary_json": 3.3224115315871305,
+   "note_convergence": "the two convergence entries are those of the four-chain summary.json, not of the chains used here when --chains differs",
+   "variants": {
+    "band1_core0.5": {
+     "band_frac": 1.0,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 72,
+     "n_core": 58,
+     "p_mcmc": 1.0,
+     "mcse": 0.0,
+     "per_chain": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "ess_indicator": 250.0,
+     "p_laplace": 0.999996549985848,
+     "difference_mcmc_minus_laplace": 3.4500141520288352e-06
+    },
+    "band1_core0.25": {
+     "band_frac": 1.0,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 72,
+     "n_core": 14,
+     "p_mcmc": 1.0,
+     "mcse": 0.0,
+     "per_chain": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "ess_indicator": 250.0,
+     "p_laplace": 0.9998381629464809,
+     "difference_mcmc_minus_laplace": 0.00016183705351913158
+    },
+    "band0.5_core0.5": {
+     "band_frac": 0.5,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 32,
+     "n_core": 58,
+     "p_mcmc": 0.988,
+     "mcse": 0.006378516220007661,
+     "per_chain": [
+      0.98,
+      0.98,
+      1.0,
+      1.0,
+      0.98
+     ],
+     "ess_indicator": 291.4062500000001,
+     "p_laplace": 0.8679631639738666,
+     "difference_mcmc_minus_laplace": 0.12003683602613335
+    },
+    "band0.5_core0.25": {
+     "band_frac": 0.5,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 32,
+     "n_core": 14,
+     "p_mcmc": 0.896,
+     "mcse": 0.020791574336126842,
+     "per_chain": [
+      0.98,
+      0.92,
+      0.96,
+      0.72,
+      0.9
+     ],
+     "ess_indicator": 215.55921746653985,
+     "p_laplace": 0.858943799523558,
+     "difference_mcmc_minus_laplace": 0.03705620047644198
+    },
+    "band0.25_core0.5": {
+     "band_frac": 0.25,
+     "core_frac": 0.5,
+     "region_status": "ok",
+     "n_strip": 16,
+     "n_core": 58,
+     "p_mcmc": 0.912,
+     "mcse": 0.018686268435846674,
+     "per_chain": [
+      0.78,
+      0.92,
+      0.98,
+      0.94,
+      0.94
+     ],
+     "ess_indicator": 229.84356211552995,
+     "p_laplace": 0.7830579118072772,
+     "difference_mcmc_minus_laplace": 0.1289420881927228
+    },
+    "band0.25_core0.25": {
+     "band_frac": 0.25,
+     "core_frac": 0.25,
+     "region_status": "ok",
+     "n_strip": 16,
+     "n_core": 14,
+     "p_mcmc": 0.8,
+     "mcse": 0.04067121839536837,
+     "per_chain": [
+      0.8,
+      0.88,
+      0.8,
+      0.6,
+      0.92
+     ],
+     "ess_indicator": 96.72653199259824,
+     "p_laplace": 0.7833844826379659,
+     "difference_mcmc_minus_laplace": 0.01661551736203415
+    }
+   }
+  }
+ },
+ "chains": 5,
+ "note": "p_mcmc: fraction of the stored draws with strip < min(cores) - delta; p_laplace: laplace_sensitivity.json"
+}

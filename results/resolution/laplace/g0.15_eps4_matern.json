@@ -1,0 +1,249 @@
+{
+ "name": "g0.15_eps4_matern",
+ "g": 0.15,
+ "eps_r": 4.0,
+ "prior": "matern",
+ "prior_params": {
+  "kind": "matern",
+  "n": 64,
+  "sigma": 0.5,
+  "ell": 0.4,
+  "nu": 1.5,
+  "kappa": 4.330127018922193,
+  "mean": 0.0,
+  "pad": 2,
+  "form": "DOI marginal of the torus field (dense covariance, Cholesky)"
+ },
+ "lam": null,
+ "lam_scale": null,
+ "problem": {
+  "n": 64,
+  "side": 1.5,
+  "h": 0.0234375,
+  "data_grid_n": 128,
+  "radius": 0.2,
+  "snr_db": 30.0,
+  "seed": 0,
+  "n_tx": 40,
+  "n_rx": 60,
+  "n_data": 2400,
+  "noise_std": 0.00038764297080846384,
+  "d_obs_sha256": "489ff17891a736f036552a6f8734528747fd09479a088e094ab8e0c4b5d94251",
+  "tol": 1e-10
+ },
+ "operating_point": {
+  "n_data": 2400,
+  "rel_model_error": 0.011025492346085576,
+  "rel_noise": 0.03162277660168382,
+  "model_to_noise": 0.34865668138383843,
+  "phi_truth": 2759.029297535439,
+  "phi_clean": 2438.2309412828836,
+  "phi_excess_sd": 6.548269026186155
+ },
+ "start": null,
+ "map": {
+  "nit": 5,
+  "converged": true,
+  "decrement": 7.158365843461284e-06,
+  "U": 2503.8446922483504,
+  "phi": 2407.381291706743,
+  "R": 96.46340054160746,
+  "grad_inf": 0.005853337496196761,
+  "time_s": 12.640471915998205,
+  "method": "damped Gauss-Newton with the Laplace mass (thetaspace.map_newton), starts tried: neighbor",
+  "chosen_start": "neighbor",
+  "tol": 0.001,
+  "u_gap": null,
+  "all_starts": false,
+  "history": [
+   {
+    "it": 0,
+    "U": 47431.00912772503,
+    "decrement": 43435.70182297951,
+    "alpha": 1.0
+   },
+   {
+    "it": 1,
+    "U": 3873.090988466561,
+    "decrement": 1369.1712128964468,
+    "alpha": 1.0
+   },
+   {
+    "it": 2,
+    "U": 2511.132047780078,
+    "decrement": 7.28436696927262,
+    "alpha": 1.0
+   },
+   {
+    "it": 3,
+    "U": 2503.8473124489183,
+    "decrement": 0.0026438044742035987,
+    "alpha": 1.0
+   },
+   {
+    "it": 4,
+    "U": 2503.8446922483504,
+    "decrement": 7.158365843461284e-06,
+    "alpha": 0.0
+   }
+  ],
+  "time_s_all_starts": 12.640471915998205
+ },
+ "map_candidates": {
+  "neighbor": {
+   "nit": 5,
+   "converged": true,
+   "decrement": 7.158365843461284e-06,
+   "U": 2503.8446922483504,
+   "phi": 2407.381291706743,
+   "R": 96.46340054160746,
+   "grad_inf": 0.005853337496196761,
+   "time_s": 12.640471915998205,
+   "max_iter": 60,
+   "history": [
+    {
+     "it": 0,
+     "U": 47431.00912772503,
+     "decrement": 43435.70182297951,
+     "alpha": 1.0
+    },
+    {
+     "it": 1,
+     "U": 3873.090988466561,
+     "decrement": 1369.1712128964468,
+     "alpha": 1.0
+    },
+    {
+     "it": 2,
+     "U": 2511.132047780078,
+     "decrement": 7.28436696927262,
+     "alpha": 1.0
+    },
+    {
+     "it": 3,
+     "U": 2503.8473124489183,
+     "decrement": 0.0026438044742035987,
+     "alpha": 1.0
+    },
+    {
+     "it": 4,
+     "U": 2503.8446922483504,
+     "decrement": 7.158365843461284e-06,
+     "alpha": 0.0
+    }
+   ]
+  }
+ },
+ "neighbor_start_given": true,
+ "map_summary": {
+  "phi": 2407.381291706743,
+  "R": 96.46340054160746,
+  "U": 2503.8446922483504,
+  "phi_over_N": 1.003075538211143,
+  "grad_inf": 0.005853337496196761,
+  "converged": true,
+  "chosen_start": "neighbor",
+  "u_gap": null,
+  "map_ok": true,
+  "err_model": 0.21100740469689225,
+  "err_chi": 0.3487728584273278,
+  "err_data": 0.004987319757465354,
+  "strip_mean": 0.37511028116219025,
+  "core1_mean": 1.4679131000690449,
+  "core2_mean": 1.476160887363365,
+  "map_has_valley_region": true,
+  "map_has_valley_point": true
+ },
+ "laplace": {
+  "time_fields_s": 0.6067217919990071,
+  "time_gn_s": 0.32089879200066207,
+  "time_prior_hessian_s": 0.007189832998847123,
+  "time_cholesky_s": 0.45134475000668317,
+  "time_total_s": 1.5762307090044487,
+  "asymmetry": 8.835288050861975e-17,
+  "pivot_ratio_sq": 115.80096936457889,
+  "h_diag_min": 7350.915303400637,
+  "h_diag_max": 41175.554052669395,
+  "n_solves": 100,
+  "jacobian_check_rel_err": 2.007199711663404e-10,
+  "theta_std_inside": 0.0380402860465882,
+  "theta_std_outside": 0.05826788267143129,
+  "theta_std_strip": 0.05591086768595966,
+  "theta_std_max": 0.09392862899336613
+ },
+ "features": {
+  "geometry": {
+   "n_strip": 108,
+   "n_core1": 58,
+   "n_core2": 58,
+   "strip_width_pixels": 6.3999999999999995,
+   "representable": true,
+   "delta": 0.6931471805599453,
+   "core_frac": 0.5,
+   "gap_mid": [
+    0.0,
+    0.0
+   ],
+   "pixel": 0.0234375
+  },
+  "delta": 0.6931471805599453,
+  "region": {
+   "p_valley": 1.0,
+   "p_vs_core1": 1.0,
+   "p_vs_core2": 1.0,
+   "strip_mean": 0.37511028116219025,
+   "strip_sd": 0.019082993728341775,
+   "core1_mean": 1.4679131000690449,
+   "core1_sd": 0.006586507437884786,
+   "core2_mean": 1.476160887363365,
+   "core2_sd": 0.006559294350649617,
+   "depth_mean": 1.0969267125540147,
+   "depth_sd": 0.018703813856797646,
+   "z_depth": 21.588085461368152
+  },
+  "region_status": "ok",
+  "point": {
+   "p_valley": 0.9999499236322233,
+   "p_vs_core1": 0.9999623366604822,
+   "p_vs_core2": 0.9999862397018501,
+   "strip_mean": 0.594144287462038,
+   "strip_sd": 0.047072886722956814,
+   "core1_mean": 1.4872831068932975,
+   "core1_sd": 0.028746176959459892,
+   "core2_mean": 1.498862639348081,
+   "core2_sd": 0.02856780569304071,
+   "depth_mean": 0.8989285856586513,
+   "depth_sd": 0.046245092970025305,
+   "z_depth": 4.449799792425273
+  },
+  "point_label": "single-point values (bilinear interpolation at the gap midpoint and the disk centers), not the resolution-scale feature"
+ },
+ "truth": {
+  "point": {
+   "strip": 0.0,
+   "core1": 1.3862943611198906,
+   "core2": 1.3862943611198906,
+   "holds": true
+  },
+  "region": {
+   "strip": 0.0,
+   "core1": 1.386294361119889,
+   "core2": 1.3862943611198897,
+   "holds": true
+  }
+ },
+ "timings_s": {
+  "prior": 3.448810332993162,
+  "laplace_and_features": 2.7422000829974422,
+  "laplace_std": 1.4264851250045467,
+  "total": 22.049151333005284
+ },
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ },
+ "load_avg_1min": 6.869140625
+}

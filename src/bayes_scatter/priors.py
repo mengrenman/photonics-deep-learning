@@ -165,10 +165,29 @@ class GaussianField:
         L = m[idx[:, None, :, None], idx[None, :, None, :]]  # (n, n, P, P)
         return L.reshape(n * n, P * P)
 
-    def covariance_matrix(self):
-        """Covariance L L^T of theta, shape (n*n, n*n), C-order pixel index. NumPy; small grids only."""
-        L = self.sqrt_matrix()
+    def covariance_matrix(self, max_elements=int(5e7)):
+        """Covariance L L^T of theta, shape (n*n, n*n), C-order pixel index. NumPy.
+
+        Through the (n^2, P^2) factor of ``sqrt_matrix`` while it has at most ``max_elements`` entries (n up to 48 for pad = 2), and
+        through ``covariance_matrix_circulant`` (the same matrix without the factor, up to round-off) beyond that.
+        """
+        if self.n * self.n * self.P * self.P > max_elements:
+            return self.covariance_matrix_circulant()
+        L = self.sqrt_matrix(max_elements=max_elements)
         return L @ L.T
+
+    def covariance_matrix_circulant(self):
+        """The covariance of theta over the n x n DOI, (n*n, n*n), from the torus covariance kernel directly.
+
+        The field on the torus has the circulant covariance with eigenvalues S, i.e. the kernel c = Re ifft2(S) (P x P, c[0, 0] = sigma^2),
+        and the DOI is a sub-block of it: C[(i, j), (i', j')] = c[(i - i') mod P, (j - j') mod P]. This is exactly L L^T of
+        ``sqrt_matrix`` (L L^T is the circular autocorrelation of the impulse response, whose transform is S) without forming the
+        (n^2, P^2) factor, so it works at n = 64 and beyond (the result has n^4 entries: 134 MB at n = 64).
+        """
+        n, P = self.n, self.P
+        c = np.fft.ifft2(np.asarray(self.spectrum)).real
+        idx = (np.arange(n)[:, None] - np.arange(n)[None, :]) % P  # (n, n): lag index of pixel pair (i, i')
+        return c[idx[:, None, :, None], idx[None, :, None, :]].reshape(n * n, n * n)
 
 
 # ----------------------------------------------------------------------------------------------

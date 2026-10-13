@@ -1,0 +1,12 @@
+# batch_run 2026-10-13T10:08:38+08:00 slot cpu8
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_mle.py --stage chunk --point eps2_g0.05_req --first 24 --count 8
+eps2_g0.05_req: n = 64, SNR -15.32 dB (required -15.32), aggregate 18.5 dB, sigma_CRB g 0.05, r 0.0143, eps_r 0.157, cx 0.0241, cy 0.0232
+  k = 24: truth start g_hat 0.0401 (Phi 2456.5, 6 its, step), best truth g_hat 0.0401 (Phi 2456.5), Phi(truth) 2457.3; 59 s
+  k = 25: truth start g_hat 0.0696 (Phi 2358.4, 5 its, step), best random0 g_hat 0.0695 (Phi 2358.4), Phi(truth) 2363.6; 75 s
+  k = 26: truth start g_hat 0.0000 (Phi 2437.4, 5 its, step), best truth g_hat 0.0000 (Phi 2437.4), Phi(truth) 2442.3; 61 s
+  k = 27: truth start g_hat 0.0143 (Phi 2339.1, 8 its, step), best random0 g_hat 0.0135 (Phi 2339.1), Phi(truth) 2341.4; 76 s
+  k = 28: truth start g_hat 0.0308 (Phi 2438.9, 5 its, step), best truth g_hat 0.0308 (Phi 2438.9), Phi(truth) 2439.8; 50 s
+  k = 29: truth start g_hat 0.0000 (Phi 2426.7, 7 its, step), best random0 g_hat 0.0000 (Phi 2426.6), Phi(truth) 2432.8; 61 s
+  k = 30: truth start g_hat 0.0655 (Phi 2453.4, 4 its, step), best random0 g_hat 0.0655 (Phi 2453.4), Phi(truth) 2454.1; 50 s
+  k = 31: truth start g_hat 0.0404 (Phi 2416.8, 4 its, step), best truth g_hat 0.0404 (Phi 2416.8), Phi(truth) 2417.9; 51 s

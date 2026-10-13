@@ -184,6 +184,42 @@ def test_smooth_start_lowers_the_misfit_and_map_theta_finds_a_stationary_point(p
         assert t.energies(th + 1e-3 * rng.standard_normal((6, 6)))["U"] >= info["U"] - 1e-6
 
 
+@pytest.mark.parametrize("name", ["qggmrf", "matern"])
+def test_map_newton_reaches_the_lbfgs_stationary_point_with_a_monotone_decrease(prob, name):
+    """Damped Gauss-Newton with the Laplace mass: U never increases, the iteration stops on the Newton decrement, and the point agrees with
+    a tightly converged L-BFGS MAP (the same stationary point of the same U, from the same start)."""
+    t, fwd = prob["targets"][name], prob["fwd"]
+    th0, _ = ts.smooth_start(fwd, prob["d_obs"], prob["s"], prob["grid"], maxiter=30)
+    th, info = ts.map_newton(t, th0, max_iter=40, tol=1e-6)
+    assert info["converged"] and info["decrement"] < 1e-6 and info["nit"] >= 2
+    u_hist = [h["U"] for h in info["history"]]
+    assert all(b <= a + 1e-9 for a, b in zip(u_hist, u_hist[1:]))
+    assert info["U"] <= t.energies(th0)["U"] + 1e-9
+    np.testing.assert_allclose(info["U"], info["phi"] + info["R"], rtol=1e-12)
+    g = np.asarray(t.potential_and_grad(th, t.initial_aux())[1])
+    assert np.abs(g).max() < 1e-3 * np.abs(np.asarray(t.potential_and_grad(th0, t.initial_aux())[1])).max()
+    thl, il = ts.map_theta(t, th0, maxiter=3000, gtol=1e-9)
+    assert abs(il["U"] - info["U"]) < 1e-4 * max(1.0, abs(info["U"])) and il["U"] >= info["U"] - 1e-6  # Newton is at least as low
+    np.testing.assert_allclose(np.asarray(th), np.asarray(thl), atol=2e-3)
+    # a perturbation of the point does not lower U (a minimum of a convex-prior problem near the solution)
+    rng = np.random.default_rng(11)
+    for _ in range(3):
+        assert t.energies(th + 1e-3 * rng.standard_normal((6, 6)))["U"] >= info["U"] - 1e-6
+
+
+def test_map_newton_solves_a_linear_gaussian_problem_in_one_step_and_reports_failures(gauss):
+    """Born model, identity link, cropped Gaussian prior: U is exactly quadratic with Hessian = the Laplace mass, so one Newton step lands on the
+    posterior mean (alpha = 1) and the next iteration only confirms it; an iteration cap is reported as not converged."""
+    tgt = gauss["target"]
+    th, info = ts.map_newton(tgt, jnp.zeros((6, 6)), max_iter=10, tol=1e-8)
+    assert info["converged"] and info["nit"] == 2 and info["history"][0]["alpha"] == 1.0
+    sd = np.sqrt(np.diag(gauss["cov"]))
+    assert np.max(np.abs(np.asarray(th).ravel() - gauss["mean"]) / sd) < 1e-6
+    np.testing.assert_allclose(info["grad_inf"], 0.0, atol=1e-6 * float(np.abs(np.asarray(tgt.potential_and_grad(jnp.zeros((6, 6)), tgt.initial_aux())[1])).max()))
+    _, capped = ts.map_newton(tgt, jnp.zeros((6, 6)), max_iter=1, tol=1e-12)
+    assert not capped["converged"] and capped["nit"] == 1
+
+
 # ---------------------------------------------------------------------------------------------
 # Linear-Gaussian end-to-end: Born model, identity link, cropped Gaussian prior => exact Gaussian posterior
 # ---------------------------------------------------------------------------------------------

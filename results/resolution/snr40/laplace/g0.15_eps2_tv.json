@@ -1,0 +1,350 @@
+{
+ "name": "g0.15_eps2_tv",
+ "g": 0.15,
+ "eps_r": 2.0,
+ "prior": "tv",
+ "prior_params": {
+  "kind": "tv",
+  "n": 64,
+  "lam": 0.5,
+  "delta": 0.01,
+  "sigma_0": 1.0,
+  "mu": 0.0,
+  "neighborhood": 8,
+  "boundary": "free",
+  "pairs": "unordered, each pair once",
+  "potential": "lam b (sqrt(D^2 + delta^2) - delta)"
+ },
+ "lam": 0.5,
+ "lam_scale": 1.0,
+ "problem": {
+  "n": 64,
+  "side": 1.5,
+  "h": 0.0234375,
+  "data_grid_n": 128,
+  "radius": 0.2,
+  "snr_db": 40.0,
+  "seed": 0,
+  "n_tx": 40,
+  "n_rx": 60,
+  "n_data": 2400,
+  "noise_std": 6.547905484931288e-05,
+  "d_obs_sha256": "45427729cfca5bd060a13260d14455f58a9fdd2d37801a959bd7da1c49798a73",
+  "tol": 1e-10
+ },
+ "operating_point": {
+  "n_data": 2400,
+  "rel_model_error": 0.0019501632601432123,
+  "rel_noise": 0.010000000000000009,
+  "model_to_noise": 0.19501632601432106,
+  "phi_truth": 2521.260198627121,
+  "phi_clean": 2438.230941282882,
+  "phi_excess_sd": 1.6948276184634834
+ },
+ "start": null,
+ "map": {
+  "nit": 13,
+  "converged": true,
+  "decrement": 0.0005423361347464676,
+  "U": 2577.891653579149,
+  "phi": 2396.6671573179497,
+  "R": 181.22449626119942,
+  "grad_inf": 0.9841735284009332,
+  "time_s": 63.57767454101122,
+  "method": "damped Gauss-Newton with the Laplace mass (thetaspace.map_newton), starts tried: matern",
+  "chosen_start": "matern",
+  "tol": 0.001,
+  "u_gap": null,
+  "all_starts": false,
+  "history": [
+   {
+    "it": 0,
+    "U": 2590.332014753861,
+    "decrement": 16.202723743382073,
+    "alpha": 0.125
+   },
+   {
+    "it": 1,
+    "U": 2588.639384388751,
+    "decrement": 12.180980126184213,
+    "alpha": 0.125
+   },
+   {
+    "it": 2,
+    "U": 2588.2635255775513,
+    "decrement": 10.937121427703705,
+    "alpha": 0.125
+   },
+   {
+    "it": 3,
+    "U": 2587.5944653635925,
+    "decrement": 9.874770168269455,
+    "alpha": 0.125
+   },
+   {
+    "it": 4,
+    "U": 2586.6330697534117,
+    "decrement": 8.725510218454877,
+    "alpha": 0.125
+   },
+   {
+    "it": 5,
+    "U": 2585.5419055369534,
+    "decrement": 7.548222693525923,
+    "alpha": 0.25
+   },
+   {
+    "it": 6,
+    "U": 2584.93684841745,
+    "decrement": 6.89255028281654,
+    "alpha": 0.25
+   },
+   {
+    "it": 7,
+    "U": 2583.415186433124,
+    "decrement": 5.394166482524433,
+    "alpha": 0.5
+   },
+   {
+    "it": 8,
+    "U": 2582.3612125107197,
+    "decrement": 4.399619833270893,
+    "alpha": 1.0
+   },
+   {
+    "it": 9,
+    "U": 2580.088679412648,
+    "decrement": 2.183884973201746,
+    "alpha": 1.0
+   },
+   {
+    "it": 10,
+    "U": 2577.9333951643143,
+    "decrement": 0.03875238827212669,
+    "alpha": 1.0
+   },
+   {
+    "it": 11,
+    "U": 2577.8950746153077,
+    "decrement": 0.0031041684182038782,
+    "alpha": 1.0
+   },
+   {
+    "it": 12,
+    "U": 2577.891653579149,
+    "decrement": 0.0005423361347464676,
+    "alpha": 0.0
+   }
+  ],
+  "time_s_all_starts": 63.57767454101122
+ },
+ "map_candidates": {
+  "matern": {
+   "nit": 13,
+   "converged": true,
+   "decrement": 0.0005423361347464676,
+   "U": 2577.891653579149,
+   "phi": 2396.6671573179497,
+   "R": 181.22449626119942,
+   "grad_inf": 0.9841735284009332,
+   "time_s": 63.57767454101122,
+   "max_iter": 40,
+   "history": [
+    {
+     "it": 0,
+     "U": 2590.332014753861,
+     "decrement": 16.202723743382073,
+     "alpha": 0.125
+    },
+    {
+     "it": 1,
+     "U": 2588.639384388751,
+     "decrement": 12.180980126184213,
+     "alpha": 0.125
+    },
+    {
+     "it": 2,
+     "U": 2588.2635255775513,
+     "decrement": 10.937121427703705,
+     "alpha": 0.125
+    },
+    {
+     "it": 3,
+     "U": 2587.5944653635925,
+     "decrement": 9.874770168269455,
+     "alpha": 0.125
+    },
+    {
+     "it": 4,
+     "U": 2586.6330697534117,
+     "decrement": 8.725510218454877,
+     "alpha": 0.125
+    },
+    {
+     "it": 5,
+     "U": 2585.5419055369534,
+     "decrement": 7.548222693525923,
+     "alpha": 0.25
+    },
+    {
+     "it": 6,
+     "U": 2584.93684841745,
+     "decrement": 6.89255028281654,
+     "alpha": 0.25
+    },
+    {
+     "it": 7,
+     "U": 2583.415186433124,
+     "decrement": 5.394166482524433,
+     "alpha": 0.5
+    },
+    {
+     "it": 8,
+     "U": 2582.3612125107197,
+     "decrement": 4.399619833270893,
+     "alpha": 1.0
+    },
+    {
+     "it": 9,
+     "U": 2580.088679412648,
+     "decrement": 2.183884973201746,
+     "alpha": 1.0
+    },
+    {
+     "it": 10,
+     "U": 2577.9333951643143,
+     "decrement": 0.03875238827212669,
+     "alpha": 1.0
+    },
+    {
+     "it": 11,
+     "U": 2577.8950746153077,
+     "decrement": 0.0031041684182038782,
+     "alpha": 1.0
+    },
+    {
+     "it": 12,
+     "U": 2577.891653579149,
+     "decrement": 0.0005423361347464676,
+     "alpha": 0.0
+    }
+   ]
+  }
+ },
+ "neighbor_start_given": false,
+ "map_summary": {
+  "phi": 2396.6671573179497,
+  "R": 181.22449626119942,
+  "U": 2577.891653579149,
+  "phi_over_N": 0.9986113155491457,
+  "grad_inf": 0.9841735284009332,
+  "converged": true,
+  "chosen_start": "matern",
+  "u_gap": null,
+  "map_ok": true,
+  "err_model": 0.09222872963233698,
+  "err_chi": 0.3250113475686083,
+  "err_data": 0.0012859226128318381,
+  "strip_mean": 0.15043789894098203,
+  "core1_mean": 0.752340002951602,
+  "core2_mean": 0.7607757768155945,
+  "map_has_valley_region": true,
+  "map_has_valley_point": true
+ },
+ "laplace": {
+  "time_fields_s": 1.1313625830080127,
+  "time_gn_s": 0.5706499999942025,
+  "time_prior_hessian_s": 0.02062604199454654,
+  "time_cholesky_s": 0.71147637499962,
+  "time_total_s": 3.116588499993668,
+  "asymmetry": 3.498686074763751e-16,
+  "pivot_ratio_sq": 411.7693687516623,
+  "h_diag_min": 1230.3656961178708,
+  "h_diag_max": 5199.064347802864,
+  "n_solves": 100,
+  "jacobian_check_rel_err": 2.2138860420546283e-11,
+  "theta_std_inside": 0.24153213562175982,
+  "theta_std_outside": 0.09256519963253185,
+  "theta_std_strip": 0.1643980099037898,
+  "theta_std_max": 0.6314923918310729
+ },
+ "features": {
+  "geometry": {
+   "n_strip": 108,
+   "n_core1": 58,
+   "n_core2": 58,
+   "strip_width_pixels": 6.3999999999999995,
+   "fits_grid": true,
+   "truth_holds": true,
+   "representable": true,
+   "status": "ok",
+   "delta": 0.34657359027997264,
+   "core_frac": 0.5,
+   "band_frac": 1.0,
+   "gap_mid": [
+    0.0,
+    0.0
+   ],
+   "pixel": 0.0234375
+  },
+  "delta": 0.34657359027997264,
+  "region": {
+   "p_valley": 1.0,
+   "p_vs_core1": 1.0,
+   "p_vs_core2": 1.0,
+   "strip_mean": 0.15043789894098206,
+   "strip_sd": 0.02906299498307565,
+   "core1_mean": 0.7523400029516021,
+   "core1_sd": 0.023315533937670694,
+   "core2_mean": 0.7607757768155945,
+   "core2_sd": 0.02450495667731267,
+   "depth_mean": 0.6061199909426163,
+   "depth_sd": 0.025981871322579557,
+   "z_depth": 9.989519132022053
+  },
+  "region_status": "ok",
+  "point": {
+   "p_valley": 0.9688213920770964,
+   "p_vs_core1": 0.980261957373091,
+   "p_vs_core2": 0.9844968502583953,
+   "strip_mean": 0.23848847860782024,
+   "strip_sd": 0.07260997103498398,
+   "core1_mean": 0.7629281230562981,
+   "core1_sd": 0.05368564921651612,
+   "core2_mean": 0.7723979485071185,
+   "core2_sd": 0.054600003930950894,
+   "depth_mean": 0.5291745571738881,
+   "depth_sd": 0.07780804934015226,
+   "z_depth": 2.3468133238457316
+  },
+  "point_label": "single-point values (bilinear interpolation at the gap midpoint and the disk centers), not the resolution-scale feature"
+ },
+ "truth": {
+  "point": {
+   "strip": 0.0,
+   "core1": 0.6931471805599453,
+   "core2": 0.6931471805599453,
+   "holds": true
+  },
+  "region": {
+   "strip": 0.0,
+   "core1": 0.6931471805599443,
+   "core2": 0.6931471805599447,
+   "holds": true
+  }
+ },
+ "timings_s": {
+  "prior": 0.05209237500093877,
+  "laplace_and_features": 5.5771708329994,
+  "laplace_std": 2.3901278330013156,
+  "total": 76.48185675000423
+ },
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ },
+ "load_avg_1min": 20.7958984375
+}

@@ -1,0 +1,30 @@
+# batch_run 2026-10-12T13:40:44+08:00 slot cpu4
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/resolution_laplace.py --stage descend --eps-r 2 --prior matern
+g0.5_eps2_matern: operating point model/noise 0.065, Phi(truth) 2449 (N = 2400); prior 3.6 s
+  MAP (smooth start): 3 Newton iterations, converged True, decrement 1.9e-04; Phi 2394.4 R 16.1 U 2410.50; U vacuum 2410.50 (6 its, converged), U smooth 2410.50 (3 its, converged); 22 s
+  Laplace mass 1.6 s (Jacobian check 1.1e-10); P(valley) region 1.0000, point 1.0000; total 80 s
+g0.32_eps2_matern: operating point model/noise 0.064, Phi(truth) 2448 (N = 2400); prior 4.4 s
+  MAP (vacuum start): 7 Newton iterations, converged True, decrement 4.8e-05; Phi 2396.6 R 16.3 U 2412.86; U vacuum 2412.86 (7 its, converged), U smooth 2412.86 (3 its, converged), U neighbor 2412.86 (5 its, converged); 35 s
+  Laplace mass 1.7 s (Jacobian check 6.0e-11); P(valley) region 1.0000, point 1.0000; total 97 s
+g0.25_eps2_matern: operating point model/noise 0.065, Phi(truth) 2447 (N = 2400); prior 3.9 s
+  MAP (vacuum start): 9 Newton iterations, converged True, decrement 3.1e-06; Phi 2397.1 R 17.0 U 2414.08; U vacuum 2414.08 (9 its, converged), U smooth 2414.08 (3 its, converged), U neighbor 2414.08 (4 its, converged); 47 s
+  Laplace mass 2.6 s (Jacobian check 5.0e-11); P(valley) region 1.0000, point 1.0000; total 118 s
+g0.2_eps2_matern: operating point model/noise 0.063, Phi(truth) 2446 (N = 2400); prior 8.2 s
+  MAP (neighbor start): 4 Newton iterations, converged True, decrement 7.0e-06; Phi 2397.4 R 17.4 U 2414.75; U vacuum 2414.75 (9 its, converged), U smooth 2414.75 (3 its, converged), U neighbor 2414.75 (4 its, converged); 44 s
+  Laplace mass 1.5 s (Jacobian check 5.0e-11); P(valley) region 1.0000, point 1.0000; total 119 s
+g0.15_eps2_matern: operating point model/noise 0.062, Phi(truth) 2445 (N = 2400); prior 3.7 s
+  MAP (vacuum start): 9 Newton iterations, converged True, decrement 9.4e-07; Phi 2397.7 R 17.5 U 2415.21; U vacuum 2415.21 (9 its, converged), U smooth 2415.21 (3 its, converged), U neighbor 2415.21 (4 its, converged); 38 s
+  Laplace mass 1.8 s (Jacobian check 5.2e-11); P(valley) region 1.0000, point 1.0000; total 92 s
+g0.1_eps2_matern: operating point model/noise 0.061, Phi(truth) 2444 (N = 2400); prior 5.8 s
+  MAP (neighbor start): 4 Newton iterations, converged True, decrement 1.6e-06; Phi 2398.3 R 17.1 U 2415.40; U vacuum 2415.40 (8 its, converged), U smooth 2415.40 (3 its, converged), U neighbor 2415.40 (4 its, converged); 37 s
+  Laplace mass 1.6 s (Jacobian check 5.4e-11); P(valley) region 1.0000, point 0.9993; total 93 s
+g0.05_eps2_matern: operating point model/noise 0.061, Phi(truth) 2444 (N = 2400); prior 5.0 s
+  MAP (neighbor start): 4 Newton iterations, converged True, decrement 2.8e-06; Phi 2399.0 R 16.3 U 2415.24; U vacuum 2415.24 (7 its, converged), U smooth 2415.24 (3 its, converged), U neighbor 2415.24 (4 its, converged); 29 s
+  Laplace mass 1.4 s (Jacobian check 6.0e-11); P(valley) region 1.0000, point 0.8426; total 93 s
+g0.025_eps2_matern: operating point model/noise 0.065, Phi(truth) 2444 (N = 2400); prior 3.5 s
+  MAP (vacuum start): 7 Newton iterations, converged True, decrement 3.0e-05; Phi 2399.3 R 15.6 U 2414.98; U vacuum 2414.98 (7 its, converged), U smooth 2414.98 (3 its, converged), U neighbor 2414.98 (3 its, converged); 24 s
+  Laplace mass 1.3 s (Jacobian check 6.3e-11); P(valley) region 0.9997, point 0.4131; total 63 s
+g0.0125_eps2_matern: operating point model/noise 0.063, Phi(truth) 2444 (N = 2400); prior 3.4 s
+  MAP (vacuum start): 7 Newton iterations, converged True, decrement 2.1e-06; Phi 2399.5 R 15.3 U 2414.79; U vacuum 2414.79 (7 its, converged), U smooth 2414.79 (3 its, converged), U neighbor 2414.79 (3 its, converged); 25 s
+  Laplace mass 1.3 s (Jacobian check 6.4e-11); P(valley) region unrepresentable, point 0.1986; total 63 s

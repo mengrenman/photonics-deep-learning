@@ -175,6 +175,27 @@ def test_marginal_variance_exact(kind):
 
 
 @pytest.mark.parametrize("kind", KINDS)
+def test_circulant_covariance_equals_the_factor_product_and_serves_large_grids(kind):
+    """The DOI covariance from the torus kernel c = Re ifft2(S) is L L^T of ``sqrt_matrix`` without forming the (n^2, P^2) factor, and
+    ``covariance_matrix`` falls back to it when the factor would exceed ``max_elements`` (n = 64 needs 6.7e7 entries)."""
+    f = make(kind)
+    C = f.covariance_matrix()
+    Cc = f.covariance_matrix_circulant()
+    assert Cc.shape == C.shape
+    assert np.max(np.abs(Cc - C)) < 1e-13 * f.sigma**2
+    np.testing.assert_allclose(f.covariance_matrix(max_elements=1), Cc, rtol=0, atol=0)  # the fallback is the circulant form
+    with pytest.raises(ValueError):
+        f.sqrt_matrix(max_elements=1)  # while the factor itself still refuses
+    big = GaussianField(_Grid(64, 1.5), kind, sigma=0.5, ell=0.4)  # n^2 P^2 = 6.7e7 > 5e7
+    Cb = big.covariance_matrix()
+    assert Cb.shape == (4096, 4096)
+    assert np.max(np.abs(np.diag(Cb) - 0.25)) < 1e-12 and np.max(np.abs(Cb - Cb.T)) < 1e-14
+    # stationary: the covariance of two pixels depends on their offset only
+    C4 = Cb.reshape(64, 64, 64, 64)
+    assert abs(C4[3, 5, 8, 9] - C4[20, 30, 25, 34]) < 1e-14 and abs(C4[0, 0, 63, 63] - C4[63, 63, 0, 0]) < 1e-14
+
+
+@pytest.mark.parametrize("kind", KINDS)
 def test_marginal_variance_empirical_4000_samples(kind):
     N = 4000
     mu = 0.4

@@ -248,6 +248,11 @@ src/bayes_scatter/
   features.py     pooled / merged moments, edge mask, |z| statistics, the 11.3 features                   (milestone 4)
   adapt.py        AffineMap, adapt_map (expanding-window map adaptation), update_map, sample_chain          (milestone 5)
                   mrf.py also holds PseudoHuberTV (12.1); thetaspace.ZetaTarget accepts any affine map
+  shapes.py       TwoDisks, exact coverage and boundary-integral shape derivatives, stretch_derivatives     (milestone 6, 13.2)
+  fisher.py       data derivatives, Fisher matrix, CRB, required SNR, Born ratios (same-s and matched-power),
+                  irrep/symmetry split, nuisance_report (local regime), detection_limit                      (milestone 6)
+  gapvalley.py    the resolution-scale gap-valley feature, Gaussian functionals, orthant probability          (milestone 6, 13.3)
+  mle.py          Levenberg-Marquardt maximum likelihood of the two-disk parameters (CRB threshold check)     (milestone 6 review)
 scripts/          validate_forward.py, born_exact_check.py, run_posterior.py (+ analyze_run.py, make_tables.py,
                   measure_cost.py, plot_gn_spectrum.py); prototypes outside the ladder: run_posterior_laplace.py
                   (Laplace-whitened sampling), map_multistart.py (MAP from several starts);
@@ -258,7 +263,12 @@ scripts/          validate_forward.py, born_exact_check.py, run_posterior.py (+ 
                   milestone 5: tv_lambda_sweep.py; run_prior_comparison.py gains --prior tv and --adapt (stage adapt),
                   make_prior_jobs.py the names tv_lam<value> and <prior>_adapt; segment_loop.py (one chain's segments, one process
                   each), make_m5_resume.py / make_m5_batch.py / wait_then.py (job files and gating), check_chain_starts.py,
-                  milestone5_tables.py
+                  milestone5_tables.py;
+                  milestone 6: resolution_crb.py (13.2; --book-gaps, --born-power), resolution_laplace.py (13.3: lambda, config, descend, refeature,
+                  null, collect), resolution_mcmc.py (chain, finalize, energy, refeature, collect; --run-tag, --frozen-step, --tail-segments),
+                  resolution_cost.py, make_m6_jobs.py / make_m6_extra_jobs.py / make_m6_review_jobs.py (job files for batch_run.py);
+                  review follow-up: resolution_mle.py (Monte Carlo ML), resolution_detect.py (detection limit, ellipticity),
+                  resolution_review_analysis.py (low-pass reading, SNR check, TV-weight sensitivity, p_eff, book geometry)
 tests/            one test file per module, plus end-to-end Born test
 ```
 
@@ -705,8 +715,20 @@ the adaptations, at most 10 XLA threads at any time).
 
 ### 13.1 Question
 
-Ch. 15 calls a reconstruction "super-resolved" when the image shows features below 0.25λ (p. 464). It supports this
-with single reconstructions of gaps from λ/4 down to λ/20 at 10–20 dB. Milestone 5 found that every pixel posterior
+Ch. 15 (Sec. 15.4.2.1, pp. 464–467) calls a reconstruction "super-resolved" when the image shows features below 0.25λ (p. 464).
+It supports this with two sets of single reconstructions (corrected after the milestone-6 review; the first version of this
+section quoted "gaps from λ/4 down to λ/20 at 10–20 dB", which is not what the book shows):
+**Test #4**, six objects of unequal permittivity (3.2 down to 2.2 in steps of 0.2) with adjacent spacings 5/20 to 1/20 λ, compared
+with VBIM, for which **no noise level is stated**; and **Tests #5–8**, nine connected objects (permittivity 2.2 to 3.8 in steps of
+0.2) with spacings 4/10, 3/10, 2/10 and 1/10 λ in noise-free, 20 dB and 10 dB environments (Table 15.9). The noisy operating
+points are therefore λ/10 to 2λ/5 at 10 and 20 dB, and λ/20 appears only without a stated noise level. The measurements are 3-D
+(128 × 162 = 20,736 antenna pairs against 40 × 60 = 2400 here: +9.4 dB of aggregate SNR at equal per-datum SNR) at 500 MHz
+(λ = 0.6 m) with antenna planes 0.35 to 0.45 m (0.58 to 0.75 λ) from the objects. Over that standoff an evanescent component of
+5 cycles/λ (the half period of a λ/10 gap) decays by about e⁻¹⁸ per path and one of 10 cycles/λ (λ/20) by about e⁻³⁶, so near-field
+information does not supply the missing spatial frequencies in the book's geometry either (`results/resolution/book_geometry.json`):
+the gap in its λ/20 images cannot come from evanescent data. What differs from this benchmark is the 3-D geometry, 9 times more data,
+objects of unequal permittivity or connected, and a trained network with a learned prior.
+Milestone 5 found that every pixel posterior
 mean equals the truth low-passed at about 3 cycles/λ. The question here is which gap widths the **data** determine,
 as a function of gap, contrast and SNR, and where pixel posteriors stop reflecting the data and start reflecting
 the prior. The two halves are kept apart:
@@ -728,7 +750,18 @@ in the shape parameters is F = (2/s²) Re(D_pᴴ D_p), D_p = [∂d/∂p_k].
   Statistical resolution criterion (Smith 2005): g is resolvable when σ_CRB(g) ≤ g. F ∝ 1/s², so report the SNR
   at which σ_CRB(g) = g, as a "required SNR vs gap" curve (power SNR as in §4).
 - **Born comparison**: the same F with the Born forward (u = u_inc). The ratio F_full/F_Born for g, as a function of
-  contrast, measures whether multiple scattering adds information about the gap.
+  contrast, is reported in **two normalizations** (review): at one noise level (that of the full model), where it mostly
+  measures how much more power the Born model scatters (an effective contrast scaling), and with each model at its own power
+  SNR (§4), which is the comparison per unit of scattered power and the one that answers whether multiple scattering adds
+  information about the gap; with P_full/P_Born for every object.
+- **Local regime** (review): σ_CRB(g) = g at SNR_req is a statement about an estimator only where the nuisance parameters are
+  determined there. Report sd(r)/r and sd(ε_r)/(ε_r − 1) at SNR_req; if either exceeds 0.1 the row is a lower bound of unknown
+  tightness, not a required SNR. For at least two such points run a threshold-aware check (Monte Carlo maximum likelihood of the
+  five parameters at SNR_req: `scripts/resolution_mle.py`).
+- **Detection limit** (review): F stays well conditioned as g → 0 (the center distance 2r + g never shrinks to zero, unlike two
+  point sources), so the bound is meaningful at small g apart from the boundary g ≥ 0. Report the gap detectable against g = 0 by a
+  one-sided test (level 0.05, power 0.9), (z₀.₉₅ + z₀.₉)·σ_CRB(0) = 2.93 σ_CRB(0), next to Smith's g*; and the bound with the
+  ellipticity of both disks (s_x, s_y, gap fixed) added to the unknowns.
 - **Symmetry check**: the antenna rings and the symmetric two-disk object are invariant under x → −x. Split the
   parameters into the even irrep (g, r, ε_r, c_y) and the odd irrep (c_x, r₁ − r₂). F must be block-diagonal across
   the two irreps to solver precision. Test it.
@@ -745,8 +778,11 @@ link, Matérn (σ 0.5, ℓ 0.4) and TV at λ* (re-choose λ* by the discrepancy 
 each (g, ε_r): MAP, the dense Laplace covariance of §11.2, and the gap-valley probability. **Resolution-scale
 features (decision of 2026-10-12):** score a feature by averages over regions at the resolution scale, never single
 pixels. Gap valley: P(mean θ over the gap strip < min(mean θ over the two disk cores) − δ), δ = log(ε_r)/2. The gap
-strip is the pixels between the disks within the disk-height band; if the strip is narrower than one pixel, report
-"unrepresentable on this grid" instead of a probability. Report single-point values alongside, labeled. MCMC
+strip is the pixels between the disks within half the disk height, |y − c_y| ≤ r/2 (decision of 2026-10-13: the full-height
+strip also counts the lens-shaped void beside the neck and can fire for a closed gap, so it is reported only as a lenient bound); if the strip is narrower than one pixel, **or if the
+pixelized truth itself (the exact-coverage rendering on the inference grid) fails the feature**, report "unrepresentable on
+this grid" instead of a probability (added after the review: the first version tested only the width, and reported
+probabilities for strips that the grid cannot show even for the true object). Report single-point values alongside, labeled. MCMC
 (Laplace-mass HMC, 4 chains) spot checks at two gaps (one resolvable, one not) and one contrast, to check the Laplace
 probabilities.
 
@@ -754,5 +790,34 @@ probabilities.
 
 results/resolution/: crb.json (F, CRB, required SNR, Born ratios, symmetry-block residuals, grid-convergence check),
 laplace.json (per configuration: MAP, Φ_MAP, feature probabilities), MCMC spot-check summaries, and figures:
-σ_CRB/g vs g per contrast; required SNR vs g with the book's claimed operating points (gaps λ/20 to λ/4 at
-10–20 dB) marked; the pixel-posterior P(gap valley) vs g for both priors, overlaid on the Smith criterion.
+σ_CRB/g vs g per contrast; required SNR vs g with the book's operating points marked (Tests #5–8: gaps λ/10 to 2λ/5 at 10 and
+20 dB; Test #4: λ/20 to λ/4, no noise level stated) and the points where the bound is not local shown open; the pixel-posterior P(gap valley) vs g for both priors, overlaid on the Smith criterion.
+
+### 13.5 Execution and results (added after the runs; the report is `results/RESOLUTION_REPORT.md`)
+
+CRB sweep (27 objects, grids 128 and 256, `scripts/resolution_crb.py`, `results/resolution/crb.json`), the extended Smith sweep (g = 1e-4 to 3e-3, `smith_limit/crb.json`),
+72 Laplace configurations (`laplace.json`: 54 primary plus 18 TV runs at lambda*/3 and 3 lambda* at eps_r 2), a closed-gap negative control of the feature (`null.json`),
+and MCMC spot checks at eps_r 2, g = 0.025 and 0.1 for both priors (`mcmc.json`). Headline: the information limit g* of Smith's criterion is 2.6e-4 to 3.2e-4 lambda at 30 dB
+and the bound is local there; the gap that a pixel posterior shows at eps_r 2 and 4 (strip of half height, both priors) is 0.1 to 0.15 lambda (not below 0.5 at eps_r 1.1 for the
+Matern prior) and is set by the bandwidth of the data (2 to 3 cycles per lambda) and by delta, not by the noise. The design's full-height strip is satisfied by a closed gap up to
+g = 0.1 (`null.json`) and is not a detector; a strip of half height is recommended as the headline feature (a decision for the user).
+
+### 13.6 Review follow-up (added after the review of the milestone-6 report)
+
+The review reproduced every number it checked and corrected four interpretations; the corrections are in 13.1 (the book's operating points and the evanescent argument),
+13.2 (two Born normalizations, the local regime, the detection limit), 13.3 (representability) and in the report. New code and files:
+
+- `fisher.matched_power_ratios`, `nuisance_report` (sd of r, eps_r, cx, cy at SNR_req and the 0.1 local-regime rule), `detection_limit`; `analyze` stores `power_born` and the
+  matched-power ratios; `resolution_crb.py --born-power --book-gaps` (`born_power.json`, the gaps 0.3 and 0.4 of the book's Tests #5 to #8), `BOOK` (the corrected operating points).
+- `bayes_scatter/mle.py` and `scripts/resolution_mle.py`: Levenberg-Marquardt maximum likelihood of (g, r, eps_r, cx, cy) from noisy data of the same model at the required SNR
+  (`mle.json`, `mle_check.png`, chunks in `mle/`): the threshold-aware check of the bound.
+- `shapes.stretch_derivatives` (ellipticity nuisances s_x, s_y with the gap fixed) and `scripts/resolution_detect.py` (`detection.json`: sigma_CRB at g = 0, conditioning, the
+  detectable gap, the ellipticity bound).
+- `gapvalley.FeatureGeometry.truth_holds` / `representable` / `status`: a strip whose pixelized truth fails the feature is unrepresentable (the tables withhold the stored
+  probabilities of old records, keeping them as `*_raw`).
+- `resolution_mcmc.py`: criteria on the sampler's potential Phi' (`energy_convergence`, `--stage energy`), `--run-tag`, `--frozen-step`, `--tail-segments`, `--runs`.
+  The frozen-step truth chain is NOT a fix: from the truth the bulk step is unstable (acceptance 0 in a probe) and the runs made no progress.
+- `scripts/resolution_review_analysis.py` (`lowpass_check.json`, `snr_check.json`, `lambda_sensitivity.json`, `peff.json`, `book_geometry.json`, `verdict_range.json`,
+  `mcmc_review.json`); `make_m6_review_jobs.py` and `scripts/jobs/m6_review.json` (the follow-up batch; the Matern g = 0.15 chains, a fourth TV chain and the 20 dB runs
+  were dropped from the queue to stay in the time budget).
+

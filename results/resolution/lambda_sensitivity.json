@@ -1,0 +1,446 @@
+{
+ "definition": "TV weight sensitivity of the gap-valley probability (Laplace) at lambda*/3, lambda*, 3 lambda* of each contrast",
+ "rows": [
+  {
+   "eps_r": 1.1,
+   "g": 0.05,
+   "lambda_star": 10.0,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.05_eps1.1_tv_x0.333333",
+     "half_strip": {
+      "p": 0.6254517262091672,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9851820180755927,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9986070978967047
+    },
+    "1": {
+     "name": "g0.05_eps1.1_tv",
+     "half_strip": {
+      "p": 0.7809805096528399,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.999949129826564,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.999626150712579
+    },
+    "3": {
+     "name": "g0.05_eps1.1_tv_x3",
+     "half_strip": {
+      "p": 0.9101260509880236,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9999999999410635,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0013343488638577
+    }
+   }
+  },
+  {
+   "eps_r": 1.1,
+   "g": 0.1,
+   "lambda_star": 10.0,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.1_eps1.1_tv_x0.333333",
+     "half_strip": {
+      "p": 0.9736849165182254,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9999736610072081,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9985793059270727
+    },
+    "1": {
+     "name": "g0.1_eps1.1_tv",
+     "half_strip": {
+      "p": 0.9997997707098191,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9999999999979481,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9995783888990043
+    },
+    "3": {
+     "name": "g0.1_eps1.1_tv_x3",
+     "half_strip": {
+      "p": 0.9999999990772854,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0011237345754014
+    }
+   }
+  },
+  {
+   "eps_r": 1.1,
+   "g": 0.15,
+   "lambda_star": 10.0,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.15_eps1.1_tv_x0.333333",
+     "half_strip": {
+      "p": 0.9997875572496064,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9999999934807261,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9985629227943457
+    },
+    "1": {
+     "name": "g0.15_eps1.1_tv",
+     "half_strip": {
+      "p": 0.9999999996157855,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9995611226997143
+    },
+    "3": {
+     "name": "g0.15_eps1.1_tv_x3",
+     "half_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0009945360784709
+    }
+   }
+  },
+  {
+   "eps_r": 2.0,
+   "g": 0.05,
+   "lambda_star": 0.5,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.05_eps2_tv_x0.333333",
+     "half_strip": {
+      "p": 0.3435025236238022,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9070811061036342,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9999619211083111
+    },
+    "1": {
+     "name": "g0.05_eps2_tv",
+     "half_strip": {
+      "p": 0.16245310311414485,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9475692059226692,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0012319543404036
+    },
+    "3": {
+     "name": "g0.05_eps2_tv_x3",
+     "half_strip": {
+      "p": 0.03165111530555764,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9920245992458268,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0028231264583956
+    }
+   }
+  },
+  {
+   "eps_r": 2.0,
+   "g": 0.1,
+   "lambda_star": 0.5,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.1_eps2_tv_x0.333333",
+     "half_strip": {
+      "p": 0.8272459764250351,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9992246808048447,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9997757096842463
+    },
+    "1": {
+     "name": "g0.1_eps2_tv",
+     "half_strip": {
+      "p": 0.8679631639738666,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.999996549985848,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0010187429235362
+    },
+    "3": {
+     "name": "g0.1_eps2_tv_x3",
+     "half_strip": {
+      "p": 0.9672181645180495,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.99999999999982,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.002619327998159
+    }
+   }
+  },
+  {
+   "eps_r": 2.0,
+   "g": 0.15,
+   "lambda_star": 0.5,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.15_eps2_tv_x0.333333",
+     "half_strip": {
+      "p": 0.992299981913141,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9999997605732751,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9996379434465319
+    },
+    "1": {
+     "name": "g0.15_eps2_tv",
+     "half_strip": {
+      "p": 0.9996392828775248,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9999999999999273,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0008229049442285
+    },
+    "3": {
+     "name": "g0.15_eps2_tv_x3",
+     "half_strip": {
+      "p": 0.9999999548463114,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0024203968273173
+    }
+   }
+  },
+  {
+   "eps_r": 4.0,
+   "g": 0.05,
+   "lambda_star": 2.0,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.05_eps4_tv_x0.333333",
+     "half_strip": {
+      "p": 2.5193668262701863e-09,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9473637465694806,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.999851747602787
+    },
+    "1": {
+     "name": "g0.05_eps4_tv",
+     "half_strip": {
+      "p": 0.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9885673705901692,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0018148148495516
+    },
+    "3": {
+     "name": "g0.05_eps4_tv_x3",
+     "half_strip": {
+      "p": 0.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9827832351938397,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0057566506059887
+    }
+   }
+  },
+  {
+   "eps_r": 4.0,
+   "g": 0.1,
+   "lambda_star": 2.0,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.1_eps4_tv_x0.333333",
+     "half_strip": {
+      "p": 0.8010085945865202,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 0.9999999999990168,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9981442281664549
+    },
+    "1": {
+     "name": "g0.1_eps4_tv",
+     "half_strip": {
+      "p": 0.3199545715869988,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0003791723496642
+    },
+    "3": {
+     "name": "g0.1_eps4_tv_x3",
+     "half_strip": {
+      "p": 0.21533238645023345,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0050976817907615
+    }
+   }
+  },
+  {
+   "eps_r": 4.0,
+   "g": 0.15,
+   "lambda_star": 2.0,
+   "by_scale": {
+    "0.333": {
+     "name": "g0.15_eps4_tv_x0.333333",
+     "half_strip": {
+      "p": 0.9999999999024498,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9970093581059177
+    },
+    "1": {
+     "name": "g0.15_eps4_tv",
+     "half_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 0.9993107362007305
+    },
+    "3": {
+     "name": "g0.15_eps4_tv_x3",
+     "half_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "full_strip": {
+      "p": 1.0,
+      "truth_holds": true,
+      "status": "ok"
+     },
+     "phi_over_N": 1.0029129823032648
+    }
+   }
+  }
+ ]
+}

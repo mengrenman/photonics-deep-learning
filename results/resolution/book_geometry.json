@@ -1,0 +1,69 @@
+{
+ "source": "Campbell and Werner (eds.), Advances in Electromagnetics Empowered by AI and DL, Ch. 15, Sec. 15.4.2.1, pp. 464-467 (Xiao et al.)",
+ "quoted": {
+  "frequency_MHz": 500,
+  "wavelength_m": 0.6,
+  "transmitters": 128,
+  "receivers": 162,
+  "tx_planes_z_m": [
+   -0.1,
+   0.7
+  ],
+  "rx_planes_z_m": [
+   -0.2,
+   0.8
+  ],
+  "doi_m": "1.4 x 1.4 x 0.4 about z = 0.3 m",
+  "object_height_m": 0.1,
+  "test4": "six objects, adjacent spacings 5/20, 4/20, 3/20, 2/20, 1/20 lambda, relative permittivity 3.2 down to 2.2 in steps of 0.2; compared with VBIM; no noise level stated",
+  "tests5to8": "spacings 4/10, 3/10, 2/10, 1/10 lambda, nine connected objects with permittivity 2.2 to 3.8 in steps of 0.2; noise-free, 20 dB and 10 dB (power SNR), Table 15.9"
+ },
+ "standoff_m": {
+  "transmitters_m": 0.35,
+  "receivers_m": 0.45
+ },
+ "standoff_wavelengths": {
+  "transmitters_m": 0.5833333333333334,
+  "receivers_m": 0.75
+ },
+ "standoff_range_wavelengths": {
+  "nearest_antenna_plane": 0.5833333333333334,
+  "farthest_of_the_nearest": 0.75
+ },
+ "n_data": {
+  "book": 20736,
+  "this_benchmark": 2400,
+  "ratio": 8.64,
+  "aggregate_snr_gain_db_at_equal_per_datum_snr": 9.365137424788934
+ },
+ "evanescent_decay_per_path": {
+  "book_standoff_nearest_plane_wavelengths": 0.5833333333333334,
+  "factors": {
+   "gap lambda/4 (period 2g = lambda/2, f = 2)": 0.0017497230253180427,
+   "gap lambda/10 (f = 5)": 1.591987318598919e-08,
+   "gap lambda/20 (f = 10)": 1.4523271799660759e-16
+  },
+  "log_factors": {
+   "gap lambda/4 (period 2g = lambda/2, f = 2)": -6.348297774819763,
+   "gap lambda/10 (f = 5)": -17.955697622266097,
+   "gap lambda/20 (f = 10)": -36.468194266330094
+  }
+ },
+ "evanescent_decay_this_benchmark": {
+  "standoff_wavelengths_nearest": 3.575,
+  "tx_ring_radius": 4.0,
+  "rx_ring_radius": 4.5,
+  "object_half_extent": 0.42500000000000004,
+  "factors": {
+   "gap lambda/4 (period 2g = lambda/2, f = 2)": 1.2686460356108384e-17,
+   "gap lambda/10 (f = 5)": 1.6181912867198232e-48,
+   "gap lambda/20 (f = 10)": 8.631391061826958e-98
+  },
+  "log_factors": {
+   "gap lambda/4 (period 2g = lambda/2, f = 2)": -38.90599636282397,
+   "gap lambda/10 (f = 5)": -110.04277542788793,
+   "gap lambda/20 (f = 10)": -223.497933432223
+  }
+ },
+ "note": "frequency needed to resolve a gap g: half a period equals g, f = 1 / (2 g) cycles per wavelength; the near-field standoff of the book (>= 0.58 lambda) does not supply the missing spatial frequencies: the decay of f = 5 and 10 over one path is far below any noise level"
+}

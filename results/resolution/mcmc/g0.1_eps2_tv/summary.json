@@ -1,0 +1,275 @@
+{
+ "name": "g0.1_eps2_tv",
+ "g": 0.1,
+ "eps_r": 2.0,
+ "prior": "tv",
+ "lam": 0.5,
+ "chains": 4,
+ "draws_per_chain": 50,
+ "segments": [
+  [
+   50,
+   50
+  ]
+ ],
+ "geometry": {
+  "n_strip": 72,
+  "n_core1": 58,
+  "n_core2": 58,
+  "strip_width_pixels": 4.266666666666667,
+  "representable": true,
+  "delta": 0.34657359027997264,
+  "core_frac": 0.5,
+  "band_frac": 1.0,
+  "gap_mid": [
+   0.0,
+   0.0
+  ],
+  "pixel": 0.0234375
+ },
+ "delta": 0.34657359027997264,
+ "sampler": {
+  "name": "hmc in Laplace-whitened zeta coordinates",
+  "n_leapfrog": 20,
+  "jitter": 0.2,
+  "step0": 0.3,
+  "init_scale": 0.5,
+  "chain_seed": 1,
+  "final_step": [
+   0.08654700344098626,
+   0.08491980355737443,
+   0.0969865565988212,
+   0.09736953057255174
+  ],
+  "acceptance": 0.715,
+  "acceptance_per_chain": [
+   0.66,
+   0.8,
+   0.66,
+   0.74
+  ],
+  "n_phi_evals_per_chain": 2001,
+  "wall_s_per_chain": [
+   1729.1920145839977,
+   1755.3320554169986,
+   1658.5644601669992,
+   1513.482156459002
+  ],
+  "compile_s": 12.79142912599491,
+  "mass_theta_is_map": true
+ },
+ "phi_physical": {
+  "mean": 2437.7118103275116,
+  "std": 5.560720871891143,
+  "per_chain_mean": [
+   2438.4918306799786,
+   2438.612072004817,
+   2437.43323993534,
+   2436.31009868991
+  ],
+  "map_phi": 2402.44498310585,
+  "n_data": 2400,
+  "note": "physical misfit of the stored draws, not the sampler's Phi'"
+ },
+ "convergence": {
+  "rhat_phi": 1.0269714666473218,
+  "rhat_pixel_max": 3.3224115315871305,
+  "rhat_pixel_median": 1.2856903435518743,
+  "ess_pixel_min": 32.83337793853332,
+  "ess_pixel_median": 70.39353828395647,
+  "ess_pixel_min_geyer": 15.2344553878888,
+  "ess_phi": 140.25029766078575,
+  "thresholds": {
+   "rhat_phi": 1.01,
+   "rhat_pixel": 1.05,
+   "ess_pixel_min": 200.0
+  },
+  "converged": false,
+  "unconverged_reasons": [
+   "split R-hat of Phi 1.027 > 1.01",
+   "max pixel R-hat 3.322 > 1.05",
+   "worst-pixel ESS 33 < 200",
+   "split R-hat of Phi' 2.475 > 1.05",
+   "ESS of Phi' 30 < 200"
+  ],
+  "rhat_phi_prime": 2.475226903168744,
+  "ess_phi_prime": 29.689772968297422,
+  "ess_phi_prime_per_chain": [
+   7.519081268696384,
+   7.421943422415638,
+   7.238920562915201,
+   7.509827714270197
+  ],
+  "ess_phi_prime_geyer_per_chain": [
+   2.9803861995872816,
+   2.9805619925056415,
+   2.8048960552759112,
+   3.0066588735302426
+  ],
+  "thresholds_phi_prime": {
+   "rhat_phi_prime": 1.05,
+   "ess_phi_prime_min": 200.0
+  },
+  "converged_classic": false
+ },
+ "valley_region": {
+  "p_valley_mcmc": 1.0,
+  "per_chain": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "n_draws": 200,
+  "ess_indicator": 200.0,
+  "mcse": 0.0,
+  "p_valley_laplace": 0.999996549985848
+ },
+ "valley_point": {
+  "p_valley_mcmc": 0.505,
+  "per_chain": [
+   0.62,
+   0.66,
+   0.44,
+   0.3
+  ],
+  "n_draws": 200,
+  "ess_indicator": 117.15568622935649,
+  "mcse": 0.0461919825441468,
+  "p_valley_laplace": 0.7073202630361015
+ },
+ "region_status": "ok",
+ "functionals": {
+  "strip": {
+   "mean": 0.229952610023851,
+   "sd": 0.023077275710407342,
+   "rhat": 1.0286254599700861,
+   "ess": 221.48484466977408,
+   "mcse_mean": 0.0015506455296415485,
+   "per_chain_mean": [
+    0.23213347941662354,
+    0.2319881683961169,
+    0.23500523406242338,
+    0.22068355822024024
+   ]
+  },
+  "core1": {
+   "mean": 0.7616887205576868,
+   "sd": 0.013875501750628697,
+   "rhat": 1.0022182738680627,
+   "ess": 252.17360479172837,
+   "mcse_mean": 0.0008737735282258079,
+   "per_chain_mean": [
+    0.7612815500404142,
+    0.7608137049410214,
+    0.7642891930717333,
+    0.7603704341775775
+   ]
+  },
+  "core2": {
+   "mean": 0.7714900368196754,
+   "sd": 0.01393976980816277,
+   "rhat": 1.0437406392309958,
+   "ess": 216.68879292735699,
+   "mcse_mean": 0.0009469725211504765,
+   "per_chain_mean": [
+    0.7769026281527833,
+    0.768795961373499,
+    0.7735348300624111,
+    0.7667267276900085
+   ]
+  },
+  "mid": {
+   "mean": 0.33045499382472243,
+   "sd": 0.10357565617786052,
+   "rhat": 1.2297630661473784,
+   "ess": 102.61496004893685,
+   "mcse_mean": 0.01022474187856035,
+   "per_chain_mean": [
+    0.3223666405602989,
+    0.2903690412757383,
+    0.35154699552090357,
+    0.35753729794194894
+   ]
+  },
+  "c1": {
+   "mean": 0.7506982071521402,
+   "sd": 0.11112404943623544,
+   "rhat": 1.226198614110776,
+   "ess": 56.52549716868176,
+   "mcse_mean": 0.014780388976780988,
+   "per_chain_mean": [
+    0.7538920073959148,
+    0.7300620008206409,
+    0.7789705459609195,
+    0.7398682744310859
+   ]
+  },
+  "c2": {
+   "mean": 0.7948377310219072,
+   "sd": 0.12742683866825835,
+   "rhat": 1.1364574345632463,
+   "ess": 55.102433417161286,
+   "mcse_mean": 0.017166253420509446,
+   "per_chain_mean": [
+    0.8268654072051634,
+    0.8193070217458448,
+    0.7586210001849872,
+    0.7745574949516333
+   ]
+  },
+  "depth_region": {
+   "mean": 0.53663676866483,
+   "sd": 0.02217916584274323,
+   "rhat": 1.0223803878424438,
+   "ess": 206.11436578180047,
+   "mcse_mean": 0.0015448669319679284,
+   "per_chain_mean": [
+    0.5369586096799752,
+    0.5328166647611434,
+    0.5339067775046487,
+    0.5428650227135529
+   ]
+  }
+ },
+ "laplace": {
+  "strip": {
+   "strip_mean": 0.2548087205778349,
+   "strip_sd": 0.03414305644546205,
+   "core1_mean": 0.7725084573535353,
+   "core1_sd": 0.029030023967999183,
+   "core2_mean": 0.7830040416981169,
+   "core2_sd": 0.02898371009648982,
+   "depth_mean": 0.5229475289479912,
+   "depth_sd": 0.031650496227049164
+  },
+  "point": {
+   "strip_mean": 0.36720994915423405,
+   "strip_sd": 0.07073845940616615,
+   "core1_mean": 0.7864783340333044,
+   "core1_sd": 0.059031833250457376,
+   "core2_mean": 0.7985254664004495,
+   "core2_sd": 0.060427047586142285,
+   "depth_mean": 0.4252919510626429,
+   "depth_sd": 0.07847229880077315
+  }
+ },
+ "pixel_std": {
+  "mcmc_over_laplace_median": 2.71293997514203,
+  "mcmc_over_laplace_strip_mean": 1.3137441061485262,
+  "mcmc_mean_minus_map_rms": 0.06985806195687021,
+  "laplace_std_mean": 0.1140908932859933
+ },
+ "timings_s": {
+  "finalize": 29.421216834001825,
+  "sampling_total": 6656.5706866269975
+ },
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "2",
+  "JAX_PLATFORMS": null
+ },
+ "convergence_note": "Phi' criteria added afterwards by --stage energy from the stored segments (energy_convergence)"
+}
