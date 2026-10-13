@@ -1,0 +1,198 @@
+{
+ "n": 64,
+ "n_tx": 40,
+ "n_rx": 60,
+ "tol": 1e-10,
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ },
+ "load_avg_1min": 2.10302734375,
+ "costs": {
+  "F2": {
+   "model": "F2",
+   "dim": 5,
+   "compile_s": 0.6695178750087507,
+   "eval_near_truth_s": {
+    "median": 0.24232485399988946,
+    "mean": 0.24361821533360248,
+    "min": 0.241672792006284
+   },
+   "eval_prior_draws_s": {
+    "median": 0.300110208489059,
+    "mean": 0.3139635764164268,
+    "min": 0.21779308300756384
+   },
+   "misfit_only_s": 0.14043870850582607,
+   "fisher_s": 0.7214925000007497,
+   "fisher_over_eval": 2.9615704187503487
+  },
+  "F2u": {
+   "model": "F2u",
+   "dim": 7,
+   "compile_s": 0.5808106250042329,
+   "eval_near_truth_s": {
+    "median": 0.24963112499244744,
+    "mean": 0.24720986108513898,
+    "min": 0.24153029201261234
+   },
+   "eval_prior_draws_s": {
+    "median": 0.28339464549935656,
+    "mean": 0.2742374270007228,
+    "min": 0.21939508299692534
+   },
+   "misfit_only_s": 0.14027441650250694,
+   "fisher_s": 0.9516844160098117,
+   "fisher_over_eval": 3.8497024828716357
+  },
+  "Fe": {
+   "model": "Fe",
+   "dim": 6,
+   "compile_s": 0.6196341670001857,
+   "eval_near_truth_s": {
+    "median": 0.2550262290023966,
+    "mean": 0.2551067186662597,
+    "min": 0.25387654099904466
+   },
+   "eval_prior_draws_s": {
+    "median": 0.32224310399760725,
+    "mean": 0.3162429790839572,
+    "min": 0.20995841700641904
+   },
+   "misfit_only_s": 0.14189839600294363,
+   "fisher_s": 0.894976208001026,
+   "fisher_over_eval": 3.5082424041205584
+  }
+ },
+ "budget": {
+  "n_cases": 24,
+  "plan": [
+   [
+    "T1",
+    0.05
+   ],
+   [
+    "T1",
+    0.1
+   ],
+   [
+    "T2",
+    0.05
+   ],
+   [
+    "T2",
+    0.1
+   ],
+   [
+    "T3",
+    0.05
+   ],
+   [
+    "T3",
+    0.1
+   ],
+   [
+    "T4",
+    0.0
+   ],
+   [
+    "T5",
+    0.1
+   ]
+  ],
+  "models": [
+   "F2",
+   "F2u",
+   "Fe"
+  ],
+  "per_model": {
+   "F2": {
+    "dim": 5,
+    "eval_s": 0.24361821533360248,
+    "eval_ti_s": 0.27879089587501465,
+    "evals_per_case": 26257.098777062914,
+    "seconds_per_case_1thread": 6396.707543906184,
+    "evals_map": 2404.2355628125524,
+    "evals_chains": 20800,
+    "evals_ppc": 1899.9222626592505,
+    "ti_evals_per_case": 148480,
+    "ti_seconds_per_case_1thread": 42937.73353529055
+   },
+   "F2u": {
+    "dim": 7,
+    "eval_s": 0.24720986108513898,
+    "eval_ti_s": 0.2607236440429309,
+    "evals_per_case": 27150.926040306345,
+    "seconds_per_case_1thread": 6711.976654757014,
+    "evals_map": 2962.697934502536,
+    "evals_chains": 20800,
+    "evals_ppc": 2253.367094299123,
+    "ti_evals_per_case": 148480,
+    "ti_seconds_per_case_1thread": 40132.49513982277
+   },
+   "Fe": {
+    "dim": 6,
+    "eval_s": 0.2551067186662597,
+    "eval_ti_s": 0.28567484887510847,
+    "evals_per_case": 26927.948710130608,
+    "seconds_per_case_1thread": 6869.500635854761,
+    "evals_map": 2900.9424207210977,
+    "evals_chains": 20800,
+    "evals_ppc": 2114.5432641719763,
+    "ti_evals_per_case": 148480,
+    "ti_seconds_per_case_1thread": 43942.454552722724
+   }
+  },
+  "posterior_total_1thread_s": 159825.47867614368,
+  "posterior_total_evals": 642687.7882199989,
+  "ti_cases": [
+   "F2",
+   "Fe"
+  ],
+  "ti_total_1thread_s": 86880.18808801327,
+  "total_1thread_s": 246705.66676415695,
+  "wall_hours": {
+   "5": {
+    "effective_parallelism": 5.0,
+    "posterior_h": 8.87919325978576,
+    "ti_h": 4.826677116000737,
+    "total_h": 13.705870375786498
+   },
+   "10": {
+    "effective_parallelism": 6.2,
+    "posterior_h": 7.160639725633677,
+    "ti_h": 3.8924815451618846,
+    "total_h": 11.053121270795561
+   }
+  },
+  "note": "seconds are single-thread seconds from the measured near-truth cost; MAP counts are upper bounds (L-BFGS and Newton stop early); a model that fits badly (Fe) may need more MAP iterations and has costlier evaluations at its extreme states; TI evaluations use the mean of the near-truth and prior-draw costs."
+ },
+ "args": {
+  "chains": 4,
+  "warmup": 150,
+  "segments": 5,
+  "segment_draws": 100,
+  "n_leapfrog": 8,
+  "n_prior_starts": 3,
+  "lbfgs_iter": 300,
+  "polish_iter": 25,
+  "ppc_reps": 100,
+  "ti_temps": 16,
+  "ti_chains": 4,
+  "ti_pilot": 40,
+  "ti_warmup": 60,
+  "ti_draws": 150,
+  "ti_leapfrog": 8,
+  "budget_slots": [
+   5,
+   10
+  ],
+  "budget_ti_models": [
+   "F2",
+   "Fe"
+  ]
+ }
+}

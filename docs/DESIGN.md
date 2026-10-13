@@ -821,3 +821,54 @@ The review reproduced every number it checked and corrected four interpretations
   `mcmc_review.json`); `make_m6_review_jobs.py` and `scripts/jobs/m6_review.json` (the follow-up batch; the Matern g = 0.15 chains, a fourth TV chain and the 20 dB runs
   were dropped from the queue to stay in the time budget).
 
+
+## 14. Milestone 7: parametric priors, right and wrong
+
+### 14.1 Question
+
+Milestone 6 (results/RESOLUTION_REPORT.md) found two limits. Inside the known two-disk model the data determine the gap down
+to about 3×10⁻⁴λ at 30 dB. Model-free pixel posteriors resolve it only from about 0.1–0.15λ. Between the two, the prior does
+the work. A network trained on one scene family (Ch. 15) acts like a parametric prior. This milestone asks: when the family is
+**right**, does a shape-family posterior recover sub-λ/10 gaps with calibrated uncertainty? When it is **wrong**, does it still
+report a confident gap, and do the data (misfit, posterior-predictive checks, evidence) flag the error?
+
+### 14.2 Models (posteriors in shape space)
+
+- **F2**: two equal circles (g, r, ε_r, c_x, c_y), the milestone-6 family. Priors: g = 0.4·sigmoid(u_g) (so 0 < g < 0.4λ),
+  r ~ U[0.1, 0.3], ε_r − 1 log-normal (median 1, σ 0.5), centers ~ U[−0.2, 0.2]². Write every prior in a reparametrized
+  unconstrained space and include the Jacobians.
+- **F2u**: two circles with separate radii and permittivities (7 parameters).
+- **Fe**: one ellipse (center, semi-axes, rotation, ε_r), the "one object" alternative.
+- Shape derivatives: exact boundary derivatives (§13.2), extended to ellipses (normal speed of each parameter along
+  the boundary). Gradient of the log posterior = (∂χ/∂p)ᵀ ∇_χ(−Φ) from one adjoint solve, plus the prior terms. Check against
+  finite differences.
+- Sampler: HMC in the unconstrained parameters with a dense mass from the Fisher plus prior Hessian at the MAP (as in §11.2),
+  4 chains with overdispersed starts, convergence criteria as in §12.2. Multimodal targets (e.g. disks swapping roles) must be
+  detected and reported, not averaged over silently.
+- Evidence: Laplace log-evidence for each (truth, model), plus thermodynamic integration (≥ 12 temperatures) on at least two
+  cases, to check the Laplace values.
+
+### 14.3 Truths (ε_r = 2 unless stated, data from the n = 128 grid at 30 dB, inference on n = 64, side 1.5λ, book rings)
+
+- T1 correct family: two equal disks, r = 0.2, g ∈ {0.05, 0.1} (λ/20 and λ/10).
+- T2 ellipticity: both disks slightly elliptical (semi-axes 0.2 × 0.23, long axis along y), g ∈ {0.05, 0.1}.
+- T3 unequal permittivities: ε_r = 2.0 and 2.4 (the book's Test #4 also used unequal contrasts), g ∈ {0.05, 0.1}.
+- T4 closed gap with a neck: two touching disks joined by a bridge (rectangle 0.05 wide, full disk height), so the true gap is 0.
+- T5 three objects: T1 at g = 0.1 plus a third disk of radius 0.06 centered 0.1λ above the gap.
+
+For every truth fit F2, F2u and Fe. Also report the milestone-6 pixel posteriors (Matérn, TV at λ*; Laplace, half-height
+strip) on the same data.
+
+### 14.4 Report, per (truth, model)
+
+- Posterior of g: mean, 90% credible interval, coverage of the true g, P(g < g_det(30 dB)).
+- MAP misfit Φ_MAP against N and against Φ(truth). Posterior-predictive check: distribution of Φ for replicated data versus
+  the observed Φ, as a p-value.
+- Log evidence (Laplace; TI where run) and Bayes factors F2 vs Fe and F2 vs F2u.
+- The pixel posterior P(gap valley) on the same data.
+
+The questions to answer:
+(i) Under the right family, are sub-λ/10 gaps recovered with calibrated intervals?
+(ii) Under a wrong family, is the reported gap confidently wrong (interval excludes the truth), and by how much?
+(iii) Do Φ, the predictive check or the evidence flag the misspecification at 30 dB? If not, that is the strongest statement
+     this project can make about learned-prior "super-resolution": the data cannot tell whether it is real.
