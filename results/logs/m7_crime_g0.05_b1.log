@@ -1,0 +1,7 @@
+# batch_run 2026-10-13T20:06:41+08:00 slot cpu5
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_sweeps.py --gap 0.05 --level 0 --ppc-reps 0 --data-factor 1 --out-dir results/parametric/ellipticity_crime --seeds 5 6 7 8
+E0g0.05s5: Phi_MAP/N 0.992, g = 0.04957 +- 0.00027 (true 0.05, z 1.6), covers True; 99 s
+E0g0.05s6: Phi_MAP/N 1.015, g = 0.04986 +- 0.00027 (true 0.05, z 0.5), covers True; 144 s
+E0g0.05s7: Phi_MAP/N 0.985, g = 0.04961 +- 0.00027 (true 0.05, z 1.4), covers True; 93 s
+E0g0.05s8: Phi_MAP/N 1.023, g = 0.04982 +- 0.00027 (true 0.05, z 0.7), covers True; 99 s

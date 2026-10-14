@@ -1,0 +1,13 @@
+# batch_run 2026-10-13T13:12:59+08:00 slot cpu4
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T4 --gap 0 --model F2u --stage map
+T4_F2u: MAP from 5 starts
+  MAP start prior mode: U 9511.339 phi 9493.96 converged False (L-BFGS 18 its, Newton 1 its, 15 s)
+  MAP start prior draw 0: U 9516.633 phi 9499.33 converged False (L-BFGS 43 its, Newton 1 its, 165 s)
+  MAP start prior draw 1: U 9514.523 phi 9497.22 converged False (L-BFGS 26 its, Newton 2 its, 14 s)
+  MAP start prior draw 2: U 9511.855 phi 9494.48 converged False (L-BFGS 31 its, Newton 1 its, 12 s)
+  MAP start from F2 MAP: U 9512.944 phi 9495.56 converged False (L-BFGS 1 its, Newton 0 its, 2 s)
+  symmetry images of the best mode: exchange (r1, eps1) <-> (r2, eps2) at fixed positions, mirror x -> -x
+  MAP start image: exchange (r1, eps1) <-> (r2, eps2) at fixed positions: U 9511.310 phi 9493.93 converged False (L-BFGS 14 its, Newton 0 its, 5 s)
+  MAP start image: mirror x -> -x: U 9511.299 phi 9493.91 converged False (L-BFGS 13 its, Newton 0 its, 5 s)
+  MAP: Phi 9493.9 (N = 2400, Phi(truth) 2443.6), p_hat = g 1.82e-05, r1 0.203, r2 0.2026, eps1 2.033, eps2 2.035, cx 0.0002111, cy 7.483e-05; Laplace log Z 28050.65 (fd 28046.94760953842); 225 s

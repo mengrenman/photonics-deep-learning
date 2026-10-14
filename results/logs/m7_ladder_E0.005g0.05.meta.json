@@ -1,0 +1,56 @@
+{
+  "name": "m7_ladder_E0.005g0.05",
+  "status": "ok",
+  "device": "cpu",
+  "slot": 1,
+  "threads": 1,
+  "cmd": [
+    "/Users/mengren/anaconda3/envs/photonics-dl/bin/python",
+    "scripts/parametric_sweeps.py",
+    "--gap",
+    "0.05",
+    "--level",
+    "0.005",
+    "--ppc-reps",
+    "30"
+  ],
+  "cmd_in_jobs_file": [
+    "scripts/parametric_sweeps.py",
+    "--gap",
+    "0.05",
+    "--level",
+    "0.005",
+    "--ppc-reps",
+    "30"
+  ],
+  "cwd": "/Users/mengren/Documents/new_projects/photonics-dl",
+  "env": {
+    "JAX_PLATFORMS": "cpu",
+    "NPROC": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "pinned": false,
+  "cores": null,
+  "host": {
+    "hostname": "mbp",
+    "system": "Darwin",
+    "release": "27.0.0",
+    "machine": "arm64",
+    "cpu_model": "Apple M3 Max",
+    "logical_cpus": 16,
+    "physical_cpus": 16,
+    "mem_total_bytes": 137438953472
+  },
+  "log": "/Users/mengren/Documents/new_projects/photonics-dl/results/logs/m7_ladder_E0.005g0.05.log",
+  "done_marker": "/Users/mengren/Documents/new_projects/photonics-dl/results/parametric/ellipticity/E0.005g0.05.json",
+  "start": "2026-10-13T17:42:41+08:00",
+  "end": "2026-10-13T17:47:01+08:00",
+  "wall_s": 259.89,
+  "exit_code": 0,
+  "marker_present": true
+}

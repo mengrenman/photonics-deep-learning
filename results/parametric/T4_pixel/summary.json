@@ -1,0 +1,158 @@
+{
+ "case": "T4_pixel",
+ "truth_label": "T4",
+ "g_true": 0.0,
+ "feature": {
+  "n_strip": 0,
+  "n_core1": 58,
+  "n_core2": 58,
+  "strip_width_pixels": 0.0,
+  "fits_grid": false,
+  "truth_holds": null,
+  "representable": false,
+  "status": "unrepresentable on this grid",
+  "delta": 0.34657359027997264,
+  "core_frac": 0.5,
+  "band_frac": 0.5,
+  "gap_mid": [
+   0.0,
+   0.0
+  ],
+  "pixel": 0.0234375
+ },
+ "band_frac": 0.5,
+ "core_frac": 0.5,
+ "priors": {
+  "matern": {
+   "lam": null,
+   "phi_map": 2399.737471874743,
+   "phi_over_N": 0.9998906132811428,
+   "R": 13.00920725034,
+   "converged": true,
+   "map_ok": true,
+   "features": {
+    "geometry": {
+     "n_strip": 0,
+     "n_core1": 58,
+     "n_core2": 58,
+     "strip_width_pixels": 0.0,
+     "fits_grid": false,
+     "truth_holds": null,
+     "representable": false,
+     "status": "unrepresentable on this grid",
+     "delta": 0.34657359027997264,
+     "core_frac": 0.5,
+     "band_frac": 0.5,
+     "gap_mid": [
+      0.0,
+      0.0
+     ],
+     "pixel": 0.0234375
+    },
+    "delta": 0.34657359027997264,
+    "region": null,
+    "region_status": "unrepresentable on this grid",
+    "point": {
+     "p_valley": 0.0008555577839297612,
+     "p_vs_core1": 0.005088427250043992,
+     "p_vs_core2": 0.006653395559680031,
+     "strip_mean": 0.6874138741099616,
+     "strip_sd": 0.04627407629727387,
+     "core1_mean": 0.8601498552037501,
+     "core1_sd": 0.042908898208466405,
+     "core2_mean": 0.8665644460396265,
+     "core2_sd": 0.04278929961486209,
+     "depth_mean": 0.1759432765117267,
+     "depth_sd": 0.06013445683392394,
+     "z_depth": -2.8374799200312633
+    },
+    "point_label": "single-point values (bilinear interpolation at the gap midpoint and the disk centers), not the resolution-scale feature"
+   },
+   "truth": {
+    "point": {
+     "strip": 0.6931471805599453,
+     "core1": 0.6931471805599453,
+     "core2": 0.6931471805599453,
+     "holds": false
+    },
+    "region": {
+     "strip": 0.0,
+     "core1": 0.6931471805599445,
+     "core2": 0.6931471805599443,
+     "holds": null
+    }
+   },
+   "time_s": 88.31730374999461
+  },
+  "tv": {
+   "lam": 0.5,
+   "phi_map": 2403.0942939993756,
+   "phi_over_N": 1.0012892891664065,
+   "R": 176.90079885991793,
+   "converged": true,
+   "map_ok": true,
+   "features": {
+    "geometry": {
+     "n_strip": 0,
+     "n_core1": 58,
+     "n_core2": 58,
+     "strip_width_pixels": 0.0,
+     "fits_grid": false,
+     "truth_holds": null,
+     "representable": false,
+     "status": "unrepresentable on this grid",
+     "delta": 0.34657359027997264,
+     "core_frac": 0.5,
+     "band_frac": 0.5,
+     "gap_mid": [
+      0.0,
+      0.0
+     ],
+     "pixel": 0.0234375
+    },
+    "delta": 0.34657359027997264,
+    "region": null,
+    "region_status": "unrepresentable on this grid",
+    "point": {
+     "p_valley": 4.936745230299522e-05,
+     "p_vs_core1": 0.0007959309927791369,
+     "p_vs_core2": 0.001305260581848322,
+     "strip_mean": 0.6709328447576623,
+     "strip_sd": 0.05757907447228828,
+     "core1_mean": 0.7515265743875599,
+     "core1_sd": 0.0592580860604825,
+     "core2_mean": 0.7548872598051286,
+     "core2_sd": 0.06373421424955426,
+     "depth_mean": 0.08227407233868189,
+     "depth_sd": 0.07376734503448479,
+     "z_depth": -3.582879630786982
+    },
+    "point_label": "single-point values (bilinear interpolation at the gap midpoint and the disk centers), not the resolution-scale feature"
+   },
+   "truth": {
+    "point": {
+     "strip": 0.6931471805599453,
+     "core1": 0.6931471805599453,
+     "core2": 0.6931471805599453,
+     "holds": false
+    },
+    "region": {
+     "strip": 0.0,
+     "core1": 0.6931471805599445,
+     "core2": 0.6931471805599443,
+     "holds": null
+    }
+   },
+   "time_s": 31.49077537500125
+  }
+ },
+ "operating_point": {
+  "n_data": 2400,
+  "rel_model_error": 0.0019204129984884768,
+  "rel_noise": 0.03162277660168379,
+  "model_to_noise": 0.060728791234170826,
+  "phi_truth": 2443.607813340531,
+  "phi_clean": 2438.2309412828804,
+  "phi_excess_sd": 0.1097549412789348
+ }
+}

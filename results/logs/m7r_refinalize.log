@@ -1,0 +1,7 @@
+T1g0.05_F2: Phi_MAP/N = 1.015, converged True (R-hat 1.002, ESS 1456), multimodal False; g = 0.05022 +- 0.00028, 90% CI [0.04977, 0.05068], covers True, P(g < g_det) = 0.0
+T1g0.05_Fe: Phi_MAP/N = 43.248, converged True (R-hat 1.003, ESS 1374), multimodal False
+T1g0.1_F2: Phi_MAP/N = 1.015, converged True (R-hat 1.003, ESS 1612), multimodal False; g = 0.10029 +- 0.00028, 90% CI [0.09984, 0.10076], covers True, P(g < g_det) = 0.0
+T1g0.1_Fe: Phi_MAP/N = 74.848, converged True (R-hat 1.004, ESS 1525), multimodal False
+T2g0.1_F2: Phi_MAP/N = 8.372, converged True (R-hat 1.003, ESS 1391), multimodal False; g = 0.07597 +- 0.00028, 90% CI [0.07553, 0.07644], covers False, P(g < g_det) = 0.0
+T2g0.1_Fe: Phi_MAP/N = 79.403, converged True (R-hat 1.001, ESS 1441), multimodal False
+T4_Fe: Phi_MAP/N = 8.525, converged True (R-hat 1.004, ESS 1224), multimodal False

@@ -1,0 +1,15 @@
+# batch_run 2026-10-14T09:31:08+08:00 slot cpu1
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_snr.py --truth T4 --gap 0 --snr 20 --seeds 0 1 2 3 4 5 6 7 8 9 10 11
+T4_F2_snr20_s0: Phi/N 1.3114, dPhi +709.2, p(null) 1.27e-44; g = 0.00002 +- 0.00077 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 99 s
+T4_F2_snr20_s1: Phi/N 1.3093, dPhi +722.4, p(null) 4.28e-44; g = 0.00002 +- 0.00078 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 101 s
+T4_F2_snr20_s2: Phi/N 1.2756, dPhi +703.7, p(null) 4.43e-36; g = 0.00002 +- 0.00077 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 118 s
+T4_F2_snr20_s3: Phi/N 1.2599, dPhi +721.3, p(null) 1.41e-32; g = 0.00002 +- 0.00077 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 102 s
+T4_F2_snr20_s4: Phi/N 1.3028, dPhi +715.4, p(null) 1.75e-42; g = 0.00002 +- 0.00078 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 108 s
+T4_F2_snr20_s5: Phi/N 1.3081, dPhi +755.6, p(null) 8.54e-44; g = 0.00002 +- 0.00077 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 118 s
+T4_F2_snr20_s6: Phi/N 1.3071, dPhi +699.5, p(null) 1.47e-43; g = 0.00002 +- 0.00077 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 109 s
+T4_F2_snr20_s7: Phi/N 1.2902, dPhi +730.9, p(null) 1.84e-39; g = 0.00002 +- 0.00077 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 116 s
+T4_F2_snr20_s8: Phi/N 1.3198, dPhi +709.3, p(null) 9.72e-47; g = 0.00002 +- 0.00077 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 116 s
+T4_F2_snr20_s9: Phi/N 1.2856, dPhi +601.3, p(null) 2.21e-38; g = 0.00003 +- 0.00078 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 124 s
+T4_F2_snr20_s10: Phi/N 1.2827, dPhi +709.3, p(null) 1.05e-37; g = 0.00002 +- 0.00077 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 124 s
+T4_F2_snr20_s11: Phi/N 1.2724, dPhi +638.9, p(null) 2.43e-35; g = 0.00002 +- 0.00078 (true 0.0, z -0.0); L-BFGS then Newton from start 0, 104 s

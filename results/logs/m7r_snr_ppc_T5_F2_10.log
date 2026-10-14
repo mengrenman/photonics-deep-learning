@@ -1,0 +1,4 @@
+# batch_run 2026-10-14T09:31:08+08:00 slot cpu2
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_snr.py --truth T5 --gap 0.1 --snr 10 --seeds 0 --ppc-reps 20
+T5_F2_snr10_s0: Phi/N 1.0555, dPhi +95.0, p(null) 0.00319; g = 0.06902 +- 0.00282 (true 0.1, z +11.0); newton from start 0, 96 s

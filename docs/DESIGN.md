@@ -253,6 +253,11 @@ src/bayes_scatter/
                   irrep/symmetry split, nuisance_report (local regime), detection_limit                      (milestone 6)
   gapvalley.py    the resolution-scale gap-valley feature, Gaussian functionals, orthant probability          (milestone 6, 13.3)
   mle.py          Levenberg-Marquardt maximum likelihood of the two-disk parameters (CRB threshold check)     (milestone 6 review)
+  ellipses.py     EllipseRenderer (exact coverage and boundary derivatives of ellipses, JAX), the truths T1 to T5,
+                  FeatureObject                                                                              (milestone 7, 14.2, 14.3)
+  shapemodels.py  F2, F2u, Fe: unconstrained parametrizations, priors with Jacobians, symmetry images           (milestone 7, 14.2)
+  shapepost.py    ShapePosterior, GaussianToy, MAP, Laplace evidence, HMC, multimodality, thermodynamic integration,
+                  predictive checks                                                                          (milestone 7, 14.2, 14.4)
 scripts/          validate_forward.py, born_exact_check.py, run_posterior.py (+ analyze_run.py, make_tables.py,
                   measure_cost.py, plot_gn_spectrum.py); prototypes outside the ladder: run_posterior_laplace.py
                   (Laplace-whitened sampling), map_multistart.py (MAP from several starts);
@@ -268,7 +273,13 @@ scripts/          validate_forward.py, born_exact_check.py, run_posterior.py (+ 
                   null, collect), resolution_mcmc.py (chain, finalize, energy, refeature, collect; --run-tag, --frozen-step, --tail-segments),
                   resolution_cost.py, make_m6_jobs.py / make_m6_extra_jobs.py / make_m6_review_jobs.py (job files for batch_run.py);
                   review follow-up: resolution_mle.py (Monte Carlo ML), resolution_detect.py (detection limit, ellipticity),
-                  resolution_review_analysis.py (low-pass reading, SNR check, TV-weight sensitivity, p_eff, book geometry)
+                  resolution_review_analysis.py (low-pass reading, SNR check, TV-weight sensitivity, p_eff, book geometry);
+                  milestone 7: parametric_run.py (stages prepare, map, chain, ppc, ti, finalize, pixel, cost), parametric_collect.py,
+                  make_m7_jobs.py (batch_run job files, restrictable to a plan and to models), parametric_profile.py (profile marginal of the gap),
+                  parametric_sweeps.py (F2 Laplace fits over noise seeds and over the T2 ellipticity ladder), parametric_ti_offline.py;
+                  review follow-up (14.7): parametric_snr.py (F2/F2u fits at 10, 20, 30 dB over noise seeds, analytic misfit flag),
+                  parametric_evidence_is.py (importance-sampling log evidence), parametric_discretization.py (noise-free fits to data of
+                  other grids, offset-corrected calibration); make_m7_jobs.py gains the batches is, snr, disc
 tests/            one test file per module, plus end-to-end Born test
 ```
 
@@ -872,3 +883,96 @@ The questions to answer:
 (ii) Under a wrong family, is the reported gap confidently wrong (interval excludes the truth), and by how much?
 (iii) Do Φ, the predictive check or the evidence flag the misspecification at 30 dB? If not, that is the strongest statement
      this project can make about learned-prior "super-resolution": the data cannot tell whether it is real.
+
+
+### 14.5 Implementation notes (added after the milestone-7 build)
+
+**Modules.** `ellipses.py`: `EllipseRenderer` (exact pixel coverage of an ellipse (xc, yc, a, b, psi) and its exact boundary derivatives in JAX; `coverage` is a `jax.custom_jvp`, so grad, jvp and vmap use the boundary integrals),
+the truths (`make_truth("T1".."T5")`: `EllipseScene`, `BridgedDisks`, `shapes.TwoDisks` for T1), `FeatureObject`. `shapemodels.py`: `F2`, `F2u`, `Fe` with their unconstrained parametrizations (g = 0.4 sigmoid(u_g), r and the
+radii uniform on [0.1, 0.3], eps_r - 1 log-normal, centers uniform on [-0.2, 0.2]^2, Fe with ordered semi-axes b <= a on the triangle [0.05, 0.55]^2), the priors with their Jacobians and the symmetry images. `shapepost.py`: `ShapePosterior`
+(gradient = one adjoint solve x the exact boundary derivative x the analytic dp/du), `GaussianToy` (validation with exact evidence) and the algorithms (MAP, Laplace, HMC in the Laplace map, multimodality, TI, predictive checks). The
+posterior is truncated to |u_k| <= 10 (U = +inf outside, no solve): a trajectory that flies to eps_r ~ e^5 ends in a stagnating Krylov solve; the removed PRIOR mass is below 9e-5 per logistic coordinate, which bounds the change of
+log Z (below 1e-3) only for a posterior that lies inside the box. T4 with F2 and F2u does not: its data want g -> 0, the profile marginal of u_g peaks near -12, and only 4.4e-4 of the posterior mass is inside the box, so the truncated target
+is a different distribution (log Z lower by 7.7, `T4_F2/profile.json`, `truncation`) and the MAP, Laplace evidence and chains of those two cases describe it, not the posterior (14.7). Scripts: `parametric_run.py`,
+`parametric_collect.py`, `make_m7_jobs.py` (job files for `batch_run.py`, one process and one XLA thread per chain), the three scripts added during the run (14.6): `parametric_profile.py`, `parametric_sweeps.py`, `parametric_ti_offline.py`, and the three of the
+review follow-up (14.7): `parametric_snr.py`, `parametric_evidence_is.py`, `parametric_discretization.py`.
+
+**Sampling and diagnostics.** `run_hmc`: eight leapfrog steps, step jitter +-25 %, step adaptation to acceptance 0.7 in 150 warmup steps from an overdispersed start (2 x N(0, I) in the Laplace coordinates), then frozen; 4 chains x 5 segments of 100
+recorded draws, one npz per segment (resumable). `convergence_report`: classic and rank-normalized split R-hat of Phi, coordinate R-hat <= 1.05, bulk ESS >= 200 (DESIGN 12.2); the limit for Phi is ESS-aware (14.7): 1.01 above the split R-hat to expect from independent sampling,
+`shapepost.expected_split_rhat` = 1 + (K / ESS - 1 / n) / 2 (K = 8 split sequences of n = 250 draws), and `converged_strict` keeps the fixed 1.01. `detect_multimodality`: distinct MAP modes from several
+starts and the symmetry images, chain separation, bimodality coefficient. Evidence: Laplace in u (Gauss-Newton and finite-difference Hessians; lik_const = -N log(pi s^2), so values are comparable between models of one data set) and TI,
+beta_k = (k/15)^5 with 16 temperatures (or the geometric schedule `ti_schedule(beta_min=...)`), pilot 40 + warmup 60 + 150 draws per temperature, trapezoid with the Euler-Maclaurin end correction applied only to intervals where Var_beta[Phi] changes by at most
+a factor of 10 (14.7: elsewhere it is invalid, and the run is flagged `schedule_ok` False), Monte Carlo error from the ESS, Richardson estimate of the discretization error; importance sampling with a Student-t proposal at the Laplace fit
+(`importance_log_evidence`) as the independent check of the Laplace value. Predictive check:
+`refit` (best-fit misfit of replicated data, p-value uniform for a correct model: toy test, KS p = 0.10; with R replicates it cannot resolve p below 1/(R + 1)) and `draw` (classical, conservative); `misfit_p_value`: the analytic flag
+P(Gamma(N - dim/2) >= Phi_MAP), no resolution limit. Validation: `tests/test_ellipses.py`, `test_shapemodels.py`, `test_shapepost.py`,
+`test_parametric_scripts.py` (the Laplace evidence and the profile marginal are exact on a linear-Gaussian toy to 1e-6, TI agrees with the exact evidence within its error on the toy, a prior without its Jacobian is rejected by the prior-only HMC test).
+
+**Cost (Mac, one XLA thread, `results/parametric/cost.json`).** Value and gradient of Phi at n = 64: 244 ms (F2), 247 ms (F2u), 255 ms (Fe) on an idle machine; 0.4 to 0.5 s with ten processes running (a chain of 650 steps took 43 to 50 minutes,
+a TI temperature 17 to 24 minutes).
+
+
+### 14.6 Execution and results (added after the runs and corrected after the review, see 14.7; the report is `results/PARAMETRIC_REPORT.md`, every number below is in a file under `results/parametric/`)
+
+**Run.** Data: n = 128, 30 dB, noise key 0, cached in `data/<truth>.npz`; inference n = 64, 40 transmitters, 60 receivers, tolerance 1e-10; N = 2400; the grid error of the n = 64 model at the truth is 0.061 of the noise (T1, g = 0.05,
+`T1g0.05_F2/problem.json`). Fitted: all 24 cases (8 truths x F2, F2u, Fe) to the MAP with the Laplace evidence (`<case>/map.json`; `tables.md` section 5); HMC (4 chains x 500) for T1 (both gaps) x {F2, Fe}, T2 g = 0.1 x {F2, Fe}, T4 x Fe;
+T4 x F2 by the profile marginal (`T4_F2/profile.json`; the chains are degenerate, below); T3 g = 0.05 x F2u with 4 of 5 segments (400 draws per chain, `T3g0.05_F2u/chains_partial.json`); pixel posteriors (Matern, TV at lambda* = 0.5, Laplace, half-height strip) for all eight
+truths (`<truth>_pixel/summary.json`); TI (two independent one-chain runs each) for T1 g = 0.05 x F2 and T2 g = 0.1 x F2, with the beta = 1 temperature taken from the production chains (`offline_ti.json`). Not run: HMC for T2 g = 0.05, T3 (F2, Fe),
+T5 and the F2u/Fe chains of the other truths (their MAP, Laplace interval and Laplace evidence are in `tables.md` section 5); TI of a third case; the last TI temperature as a TI temperature (the machine slept and was shared; the runs were stopped at 15 of 16
+temperatures, 15 completed).
+
+**(i) Right family.** T1: g = 0.05022 +- 0.00028 (90 % interval [0.04977, 0.05068], z of the truth -0.8) and 0.10029 +- 0.00028 ([0.09984, 0.10076], z -1.0), converged (R-hat 1.002 and 1.003, bulk ESS 1456 and 1612, acceptance 0.72), unimodal,
+refit predictive p = 0.21; the posterior sd is 2.8e-4, the milestone-6 bound is 2.6e-4 to 2.8e-4; the Laplace and profile marginals agree with the chains (0.050224 +- 0.000271 against 0.050224 +- 0.000275). **These two cases are one data realization**
+(both use noise key 0; the correlation of z between the two gaps over the 41 keys is 0.985, `discretization/discretization.md`), so one interval that covers is weak evidence by itself; the statement rests on the calibration over noise keys below and on the agreement of
+the Laplace Gaussian with the chains and with importance sampling (weight ESS 788 of 1000, `T1g0.05_F2/is_evidence.json`). T3, where the right family is F2u: g = 0.0501 (Laplace; 0.050071 +- 0.000276 from 4 x 400 draws), Phi/N 1.014.
+**Calibration over 41 noise realizations** of T1 (F2 Laplace, `ellipticity/calibration_g*.md`): the width is calibrated (sd of z 1.00 +- 0.11 at g = 0.05, 0.98 +- 0.11 at 0.1) and the location is offset (mean z -1.15 +- 0.16 and -1.19 +- 0.16, so the 90 % interval covers
+the truth in 66 % (se 5 %) and 68 % of the data sets; bias +3.1e-4 and +3.3e-4). **The offset is a deterministic forward-model (grid) bias, not noise** (`discretization/discretization.md`): (1) with the same noise keys the data generated on the inference grid
+(`ellipticity_crime/`, 8 keys) differ from the n = 128 data by a constant shift of z, -1.019 +- 0.002 (the noise cancels in the pairing); (2) F2 fitted to NOISE-FREE T1 data at g = 0.05 gives g* - g = +0.005 sd for n = 64 data, +1.024 sd (+2.78e-4) for
+n = 128 data and +1.237 sd for n = 256 data (successive shifts shrink by 0.21; extrapolated to the continuum 1.29 sd); +0.002 and +1.057 sd at g = 0.1; (3) with the offset removed the 41 noise-driven z have mean -0.13 +- 0.16 and sd 1.00 (0.98 at g = 0.1) and the shifted
+interval covers 88 % (nominal 90 %). So the interval WIDTH is calibrated and the 1.0 sd location offset at 30 dB is a model error: the family absorbs it almost entirely (the noise-free misfit is 0.112 nats against a model-error energy of 8.85 nats at the true parameters), so it is
+not flagged, and because it is fixed in wavelengths it is 0.10 sd at 10 dB, 0.32 sd at 20 dB, 1.02 at 30 dB and 3.2 sd at 40 dB. This is the concrete case of a model error that a family absorbs without a flag, and it is not benign for g. At the book's 10 to 20 dB the right-family fit
+is unbiased at the level of the noise (T1 over 40 keys: mean z -0.3 at 10 dB and -0.5 at 20 dB, coverage of the truth by the 3 sd interval 100 %, `snr/snr_summary.md`).
+
+**(ii) Wrong family.** F2 on T2 (15 % ellipticity): g = 0.07597 +- 0.00028 for a true 0.1 (z = 87; 0.02826 for 0.05, z 78 by Laplace). F2 on T3 (unequal contrasts): 0.04175 and 0.09339 for 0.05 and 0.1 (z 31 and 24). F2 on T5 (a third small disk): 0.0691 for
+0.1 (z 110). The intervals are tight (sd 2.8e-4) and wrong by 24 to 110 sd (7 to 33 widths of the 90 % interval), by 0.0066 to 0.031 wavelengths. T4 (closed gap with a neck): F2 reports g ~ 0 (mean 2.3e-6, 90 % interval [1.2e-7, 7.0e-6], P(g < g_det) = 1), which is the true value
+for the wrong reason (the profile misfit falls steeply to g -> 0, slope 4.3e5 per unit g, because the bridge is better fit by overlap). The ellipticity ladder shows how the bias grows (`ellipticity/ellipticity_g0.1.md`): g error -0.00056 (z 2.0) at 0.5 % ellipticity, -0.0014 (z 5.0) at 1 %, -0.0031 (z 11) at 2 %.
+
+**(iii) Flags.** *Fit at 30 dB, noise key 0.* Phi_MAP/N = 1.015 for the right family and 8.1 to 8.4 (T2), 15.1 and 16.9 (T3), 4.0 (T4), 5.1 (T5) for F2 (F2u does not help T2, T4, T5: 8.1, 4.0, 5.1); the refit predictive p-value (100 replicates, resolution 1/101) is 0.000 for
+every wrong case (z 355 for T2); the pixel posteriors fit every truth (Phi/N 1.000) and so cannot flag anything. *The scaling.* The misfit excess grows as the SQUARE of the error of the gap, dPhi = c z^2 (z in posterior sd, dPhi = Phi_MAP minus the misfit of the noise realization
+itself), and c depends on the kind of model error and not on the SNR (the error is fixed in wavelengths; z scales as 1/s and dPhi as 1/s^2): c = 2.6 to 2.9 for the 15 % ellipticity of T2, 2.0 to 2.3 for the ladder up to 5 % (against the shift from the level-0 fit of the same noise; 2.5 to 2.7 at 15 %), 0.80 for the third disk (T5), 30 to 68 for unequal contrasts (T3), 0.09 to 0.11
+for the grid error (`snr/snr_summary.md`, `ellipticity/ellipticity_g*.md`, `discretization/discretization.md`; c changes by less than 15 % between 30, 20 and 10 dB). A misfit flag of 3 sd (dPhi = 3 sqrt(N - dim/2) = 147 nats) therefore needs z = sqrt(147 / c) at ANY SNR:
+about 7.5 for ellipticity, 13.6 for a third small disk, 1.5 to 2.2 for unequal contrasts, 37 to 41 for the grid error (about 61 dB). *The ladder at 30 dB* (the analytic flag P(Gamma(N - 5/2) >= Phi_MAP), no resolution limit; the 30 replicates of the first version could not resolve p
+below 0.03, and the realization of key 0 is +0.78 sd high): 0.5 % ellipticity (z 2.0): p = 0.12, not a flag (the refit p of 0.033 was one replicate in thirty); 1 % (z 5): p = 0.011; 2 % (z 11): p = 5e-11. Over 40 noise keys (`snr/snr_summary.md`) a 1 % ellipticity moves the gap interval
+off the truth by more than 3 sd in 97.5 % of the draws while the misfit flags it at the 5 % level in 42.5 % and at 3 sd in 2.5 %; at 2 % the flag is certain. So the earlier sentence "the data flag a model error once it biases the gap by about 2 sigma, never later" was wrong: the misfit lags the
+gap error by a factor up to the square of the ratio of thresholds. *At the book's SNRs* (40 noise keys per cell, Laplace fits, analytic null; `snr/snr_summary.md`): at 20 dB every wrong case is flagged at 3 sd in every draw (T5: z of the truth 34.6, dPhi 977 = 20 sd; T2 g = 0.1: z 26, dPhi 1748). **At 10 dB the F2 interval on T5 excludes the true gap by 10.8 sd (in every draw) while
+the misfit excess is 97 nats = 2.0 sd: the 5 % flag fires in 70 % of the draws (28 of 40) and the 3 sd flag in 17.5 % (7 of 40).** T2 (z 7.6 to 8.2) is flagged at 5 % in every draw and at 3 sd in 75 %; T3 (z 2.1 to 2.9, so the interval misses the truth by 3 sd in only 20 to 52.5 % of the draws) is flagged in every draw; T4
+(dPhi 70 nats, 12 keys): 50 % at 5 %, none at 3 sd. The refit predictive check agrees for the two cells run (T5 10 dB: p = 0.000 of 20 replicates, z 3.2; T2 g = 0.1 10 dB: z 5.4). The evidence separates right from wrong only when a better family exists: F2 against F2u log BF = +9.8 to +10.4
+on every truth where F2u does not fit better (Occam factor, IS and Laplace agree), -33672 and -38050 on T3 where it does; between two wrong families the Bayes factor says nothing (F2 against Fe +10971 on T4, 1e5 on the others, each family misfitting). **So the strongest statement of (iii)
+is reached at the book's 10 dB for a deformation like the third disk (and for ellipticity below about 1.5 % at 30 dB): the interval is confidently wrong by 11 sd and the data raise no flag in 30 % (5 % level) to 82.5 % (3 sd) of the draws. It is not reached at 20 dB, nor at 30 dB for 2 % ellipticity and above or for the third disk (z 110 against its 3 sd threshold of 13.6).** The caveat remains that the noise level is exactly known and that the forward operator is exact up to the grid; the grid error itself is such an unflagged model error (it needs about 60 dB to be seen).
+
+**Evidence check.** Importance sampling with a Student-t proposal (5 degrees of freedom, shape 1.2 x the Laplace covariance, 1000 draws; `parametric_evidence_is.py`, `<case>/is_evidence.json`, `tables.md` section 7) reproduces the Laplace log evidence of all 15 cases with an interior posterior (F2 and F2u on seven truths, Fe on T4): IS minus Laplace (finite-difference Hessian) is within 0.03 nats everywhere and IS minus Laplace (Gauss-Newton Hessian) within 0.09 except T3 g = 0.1 F2 (0.28; Phi/N 16.9, where the Gauss-Newton Hessian is not the exact one); the IS standard error is at most 0.022 and the weight ESS 667 to 789 of 1000 (e.g. T1 g = 0.05 F2: 35397.847 +- 0.016 against 35397.841). The Occam factor of F2 against F2u is therefore verified: by IS +9.82 to +10.41 (T1 g = 0.05 10.38, g = 0.1 10.41; T2 9.82, 9.92; T5 10.16), by Laplace +9.81 to +10.39, and on T3 -33672.30 and -38049.35 (IS) against -33672.39 and -38049.64. **Thermodynamic integration** (`offline_ti.json`): the first version applied the Euler-Maclaurin end correction to every interval and gave 35424.4 +- 12.8 and 17367.8 +- 7.3, i.e. 26.6 and 15.4 nats ABOVE Laplace (`offline_ti_v1.json`). That was an artifact: in the first four intervals of the power schedule Var_beta[Phi] changes by 15 to 230 times between neighbors (1.9e11 to 8.5e8 in one interval), where a one-term expansion is invalid, and the correction added 30 to 64 nats there. With the guard (`ti_combine`: correct only where the variance changes by at most 10-fold) the TI values are 35375.0 +- 3.1 (between runs 4.5) and 17334.5 +- 2.1 (2.1), 22.8 and 17.8 nats BELOW the IS values (35397.85 and 17352.29), `schedule_ok` False in all four runs (intervals 0 to 3, or 1 to 3, without correction): trapezoid lower bounds, which is what a coarse schedule gives for a concave integrand (trapezoid 35373.5 and 17332.9). The TI check is therefore not a measurement of the evidence at this schedule and budget; the Laplace values were right, and IS is the check. A TI run on a geometric schedule (`parametric_run.py --stage ti --ti-beta-min 1e-7`) was not made (about 5 hours of single-thread time).
+
+**Failures and corrections.** (1) T4, F2 and F2u: the MAP lies on the |u_g| = 10 wall (g = 1.8e-5, MAP not converged), the Laplace sd of u_g is 14, and HMC is degenerate: two of four chains started outside the box and never moved, a third had a step of 5e-4
+(kept in `T4_F2/chains_degenerate/`). The gap marginal was computed instead by profiling the other parameters (`parametric_profile.py`, validated against the T1 chains and exact on a toy). The posterior mass inside the box is 4.4e-4, so the truncated target (not only its Laplace value)
+differs from the posterior by 7.7 nats in log Z (`T4_F2/profile.json`, `truncation`); the Laplace evidence of T4 F2 (28060.7) is unreliable; the profile value is 28062.8. (2) Three cases were flagged unconverged by the R-hat of Phi alone (classic or rank-normalized 1.0107 to 1.0133 against 1.01; all classic coordinate R-hats below 1.005): T1 g = 0.1 Fe,
+T2 g = 0.1 F2 and Fe. With 4 x 500 draws and a bulk ESS of Phi of 229 to 414 the R-hat to expect from perfect mixing is 1.0077 to 1.0154 (`shapepost.expected_split_rhat`), so the limit is now ESS-aware (14.7) and all seven chain sets converge; the strict limit 1.01 still flags those three (`tables.md`
+section 1 shows both, with the classic and rank-normalized maxima). (3) The jobs were restructured four times (placeholder jobs that hold slots until running processes exit, so that the XLA threads stayed at ten); no finished work was lost.
+
+### 14.7 Review follow-up (added after the review of the milestone-7 report)
+
+The review reproduced the code and the numbers and corrected three interpretations; this section records what changed (the finding-by-finding log is in `results/PARAMETRIC_REPORT.md`).
+
+- **(iii) is settled by a scaling law, not by a threshold of 2 sigma** (14.6). New: `shapepost.misfit_p_value` (the analytic null Gamma(N - dim/2); the replicate-based p-value has a resolution of 1/(R + 1) and the key-0 realization is +0.78 sd high), `scripts/parametric_snr.py` (F2 and F2u fits
+  at 10, 20 and 30 dB over 40 noise keys, `snr/`; the noise generator checked against Gamma(N, 1) over 1000 keys, `snr/noise_null_check.json`: mean 2400.5, sd 47.8, KS p 0.89; keys 0 to 39 have sd 41.3, which is why the 41-seed empirical null was narrow), the ladder
+  with p, dPhi and c (`ellipticity/ellipticity_g*.md`).
+- **(i) the offset is a grid bias** (`scripts/parametric_discretization.py`, `discretization/`).
+- **Evidence.** `shapepost.importance_log_evidence` and `scripts/parametric_evidence_is.py` (`<case>/is_evidence.json`); `ti_combine` applies the Euler-Maclaurin end correction only where Var_beta[Phi] changes by at most 10-fold between neighbors and reports `schedule_ok`; `ti_schedule(beta_min=...)`
+  and `parametric_run.py --ti-beta-min` give a geometric schedule (ratio 3.2 for 16 temperatures from 1e-7); the offline TI is recomputed (`offline_ti.json`, the first version `offline_ti_v1.json`).
+- **Convergence.** `shapepost.expected_split_rhat`; `convergence_report` has `rhat_phi_expected`, `rhat_phi_limit` (the expected value at max(ESS, 200) plus 0.01: an allowance that grew as the ESS of unmixed chains collapses would excuse them), `converged` (ESS-aware) and `converged_strict`; `tables.md` quotes the classic and rank maxima and the expected R-hat; the seven summaries were regenerated (`parametric_run.py --stage finalize`; every
+  other number in them is unchanged) and the partial chains of T3 g = 0.05 F2u have their own report (`chains_partial.json`).
+- **Truncation.** The statement that the box removes less than 9e-5 of the mass is about the prior and holds for interior posteriors only (`shapepost._U_and_grad_fn`, 14.5); `profile.json` reports the mass inside the box (T4: 4.4e-4).
+- **Profile marginal.** `parametric_profile.py` interpolates the marginal in u_g (cubic spline of log m on a 32 times finer grid) instead of the CDF linearly in g, which put the 95 % point of the T4 gap 12 % too high (7.89e-6 against 7.03e-6; the same coarse grid with the new rule gives 7.03e-6 and the 145-point grid 7.03e-6);
+  the run is resumable per grid point.
+- **Fe orientation** (`shapemodels.Fe` docstring): the coordinate of psi splits a posterior near +-pi/2; every Fe fit has |psi| <= 0.0013 (`tables.md` section 9).
+- **Tests.** New tests for each code defect: the TI end correction on a sharp posterior (10.8 nats too high without the guard, 4.2 too low and flagged with it), the geometric schedule, importance sampling on the Gaussian toy and a heavy-tailed target, the analytic null by simulation, the noise generator, the expected R-hat against simulated AR(1) chains and the
+  ESS-aware criterion, the quantiles of the profile marginal against an exponential law, the profile checkpoint, the SNR units (cached noise reproduced, scaled copies, resumable), the importance-sampling script, the discretization fit and analysis, the ladder flags, the offline TI guard, the new `tables.md` sections and the job files.

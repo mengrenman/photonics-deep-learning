@@ -32,6 +32,9 @@ Contents.
   monotonicity of E_beta[phi]).
 * ``predictive_check``: replicate the data at posterior draws with fresh noise and compare the observed misfit with the replicated ones; ``mode="refit"`` compares the
   best-fit misfits (calibrated: its p-value is uniform for a correct model), ``mode="draw"`` the classical misfit at the draw (conservative).
+* ``misfit_p_value``: the same question without replicates, against the analytic null law of the best-fit misfit, Gamma(N - dim / 2, 1) (exact for a linear model with complex
+  Gaussian noise; no Monte Carlo resolution limit). ``importance_log_evidence``: log Z by importance sampling with a Student-t proposal at the Laplace fit, the independent
+  check of the Laplace evidence (thermodynamic integration needs a schedule fine enough near beta = 0, see ``ti_combine``).
 """
 
 import copy
@@ -68,8 +71,12 @@ def _U_and_grad_fn(problem):
     """Jitted ``(u, aux, data, beta) -> (U_beta, grad U_beta, aux_new)`` with U_beta = beta phi - log pi_u. For beta = 0 the (expensive) data term is skipped by ``lax.cond``.
 
     **Truncation.** Outside the box |u_k| <= ``U_BOUND`` (10) the density is zero: U = +inf, the gradient is 0 and no solve is done, so a proposal that flies there is rejected
-    at once. Why: a trajectory that leaves the region of moderate contrast ends where the Krylov solve stagnates (eps_r ~ e^5 or more) and costs seconds per evaluation. The mass removed
-    is at most 2 sigmoid(-10) = 9e-5 per logistic coordinate and 1.5e-23 for a standard normal one (a change of log Z below 1e-3 for the models here).
+    at once. Why: a trajectory that leaves the region of moderate contrast ends where the Krylov solve stagnates (eps_r ~ e^5 or more) and costs seconds per evaluation.
+    The PRIOR mass removed is at most 2 sigmoid(-10) = 9e-5 per logistic coordinate and 1.5e-23 for a standard normal one. That bounds the change of log Z (below 1e-3) only for a
+    posterior that lies inside the box, which is the case for every interior fit here. It is false for a posterior that itself reaches the wall: if the data want a coordinate at its
+    bound (the gap g -> 0 of T4: the profile misfit falls with slope 4.3e5 per unit g, so the marginal of u_g peaks near -12, outside the box, and only 4.4e-4 of the posterior
+    mass is inside), the truncated target is a different distribution (log Z lower by 7.7: results/parametric/T4_F2/profile.json, ``truncation``), and its MAP, Laplace evidence and chains describe the truncated target, not the
+    posterior (the profile marginal of ``scripts/parametric_profile.py`` has no truncation and reports the mass inside the box).
     """
     if getattr(problem, "_U_and_grad", None) is not None:
         return problem._U_and_grad
@@ -533,6 +540,39 @@ def laplace_log_evidence(problem, fit):
     return float(problem.lik_const - fit.U + 0.5 * fit.u_hat.size * LOG_2PI - 0.5 * fit.logdet)
 
 
+def importance_log_evidence(problem, u_hat, cov, *, n_draws=300, df=5.0, scale=1.2, seed=7, data=None):
+    """Log evidence by importance sampling: the independent check of ``laplace_log_evidence``.
+
+    The proposal is a multivariate Student-t with ``df`` degrees of freedom (heavier tails than the posterior), location ``u_hat`` and shape ``scale`` x ``cov`` (the Laplace fit of
+    the case), and log Z = log mean_j w_j with w_j = exp(lik_const - phi(u_j) + log pi_u(u_j)) / q(u_j) for ``n_draws`` draws u_j ~ q, one forward solve each. Draws outside the
+    truncation box |u_k| <= ``U_BOUND`` get weight 0 (the target of ``potential``). It is unbiased for Z, so the estimate of log Z has a small bias of order the relative variance of
+    the weights over ``n_draws`` (negligible when the weight ESS is a large fraction of the draws).
+
+    Returns a dict: ``log_z``, ``se`` (delta method: sd of the weights over their mean over sqrt(n_draws)), ``weight_ess`` = 1 / sum of the squared normalized weights (a value near
+    ``n_draws`` means the proposal is nearly the posterior; a small one means the estimate is not to be trusted), ``max_weight`` (largest normalized weight), ``n_draws``,
+    ``n_outside_box``, ``df``, ``scale``, ``seed``. Cost: ``n_draws`` solves (about 0.25 s each at n = 64 on one thread). Validated on the linear-Gaussian toy (exact evidence) and
+    against the Laplace evidence of the scattering cases (DESIGN 14.6).
+    """
+    data = problem.data if data is None else data
+    u_hat = np.asarray(u_hat, dtype=np.float64)
+    cov = np.asarray(cov, dtype=np.float64)
+    q = stats.multivariate_t(loc=u_hat, shape=scale * cov, df=df, seed=seed)
+    U = np.atleast_2d(q.rvs(int(n_draws)))
+    lq = np.atleast_1d(q.logpdf(U))
+    inside = np.all(np.abs(U) <= U_BOUND, axis=1)
+    safe = np.where(inside[:, None], U, u_hat[None, :])  # no solve outside the box
+    phi = phi_at_draws(problem, safe, data)
+    lp = np.asarray(jax.vmap(problem.log_prior)(jnp.asarray(safe)))
+    lw = np.where(inside, problem.lik_const - phi + lp - lq, -np.inf)
+    top = float(np.max(lw))
+    wt = np.exp(lw - top)
+    log_z = float(top + np.log(np.mean(wt)))
+    wn = wt / wt.sum()
+    se = float(np.std(wt, ddof=1) / np.sqrt(len(wt)) / np.mean(wt))
+    return {"log_z": log_z, "se": se, "weight_ess": float(1.0 / np.sum(wn**2)), "max_weight": float(wn.max()), "n_draws": int(len(wt)), "n_outside_box": int((~inside).sum()),
+            "df": float(df), "scale": float(scale), "seed": int(seed)}
+
+
 # ----------------------------------------------------------------------------------------------
 # HMC in the coordinates of an affine map
 # ----------------------------------------------------------------------------------------------
@@ -629,12 +669,35 @@ def overdispersed_starts(amap, key, n_chains, scale=2.0):
     return scale * np.asarray(jax.random.normal(key, (n_chains, amap.size), dtype=jnp.float64))
 
 
+def expected_split_rhat(ess_total, n_chains, n_draws):
+    """The split R-hat to expect from chains that DO sample one distribution, given the multi-chain bulk ESS of the statistic: 1 + (1 / ESS_c - 1 / n) / 2.
+
+    ``ess_total`` is the bulk ESS over all ``n_chains`` x ``n_draws`` draws (``diagnostics.ess_bulk``); the chains are split in halves, so there are K = 2 ``n_chains`` sequences of
+    n = ``n_draws`` // 2 draws and ESS_c = ``ess_total`` / K per sequence. Derivation: the variance of a sequence mean is sigma^2 / ESS_c and the within-sequence variance is
+    biased low by the same factor, so R-hat^2 = var_plus / W = 1 - 1/n + 1/ESS_c to first order. Checked against simulated AR(1) chains (``diagnostics.ar1_rhat_null``;
+    tau = 4, 8, 16: simulated mean 1.0063, 1.0143, 1.0306 against 1.0060, 1.0140, 1.0300, standard deviation about 0.26 / ESS_c). With fewer than about 100 draws per
+    sequence-ESS an R-hat of 1.01 is therefore the noise floor of perfect mixing, not a failure. NaN if the ESS is not positive.
+    """
+    k = 2 * int(n_chains)
+    n = int(n_draws) // 2
+    if not ess_total > 0:
+        return float("nan")
+    return float(1.0 + 0.5 * (k / ess_total - 1.0 / n))
+
+
 def convergence_report(phi, u, p=None, names=None, rhat_phi_max=1.01, rhat_param_max=1.05, ess_min=200.0):
     """Convergence numbers of DESIGN 12.2 for C chains of n draws: ``phi`` (C, n), ``u`` (C, n, dim), optionally physical parameters ``p`` (C, n, k).
 
     Reported: the classic split R-hat of phi (``rhat_phi``) and its rank-normalized bulk and folded versions (``rhat_phi_rank``, the worst of the two), the maximum classic split R-hat
-    over the u (and p) coordinates, the worst rank-normalized R-hat, the worst multi-chain bulk ESS (rank-normalized) and the worst summed Sokal ESS, and the flag
-    ``converged`` = classic and rank R-hat of phi <= ``rhat_phi_max``, max R-hat of the coordinates <= ``rhat_param_max`` and worst bulk ESS >= ``ess_min``.
+    over the u (and p) coordinates (``max_rhat``), the worst rank-normalized R-hat of the coordinates (``max_rhat_rank``; quote it beside ``max_rhat``, which is the classic statistic
+    only), the worst multi-chain bulk ESS (rank-normalized) and the worst summed Sokal ESS.
+
+    **The criterion for phi is ESS-aware.** With a bulk ESS of a few hundred over 8 split sequences, perfect mixing already gives a split R-hat above 1.01 (``expected_split_rhat``,
+    ``rhat_phi_expected``: 1.0077 for ESS 414 in 4 x 500 draws), so the limit is ``rhat_phi_limit`` = ``rhat_phi_expected`` + (``rhat_phi_max`` - 1): the excess over the value of an
+    independent-sampling null must not exceed 0.01 (for a large ESS this is the plain 1.01). The expected value is evaluated at max(ESS, ``ess_min``): the bulk ESS of chains that
+    have not mixed is itself small (it contains the between-chain variance), and an allowance that grew as the ESS collapsed would excuse exactly the chains the R-hat is there to catch
+    (a set that fails ``ess_min`` fails anyway). ``converged`` = classic and rank R-hat of phi <= that limit, max R-hat of the coordinates <= ``rhat_param_max`` and worst bulk ESS
+    >= ``ess_min``. ``converged_strict`` is the same with the fixed limit ``rhat_phi_max`` (the rule as first stated in DESIGN 12.2).
     """
     phi, u = np.asarray(phi, dtype=np.float64), np.asarray(u, dtype=np.float64)
     out = {}
@@ -642,6 +705,9 @@ def convergence_report(phi, u, p=None, names=None, rhat_phi_max=1.01, rhat_param
     out["rhat_phi"] = float(dg.split_rhat(x)[0])
     out["rhat_phi_rank"] = float(dg.split_rhat_rank(x)[2][0])
     out["ess_bulk_phi"] = float(dg.ess_bulk(x)[0])
+    out["rhat_phi_expected"] = expected_split_rhat(out["ess_bulk_phi"], phi.shape[0], phi.shape[1])
+    capped = expected_split_rhat(max(out["ess_bulk_phi"], ess_min), phi.shape[0], phi.shape[1]) if out["ess_bulk_phi"] > 0 else float("nan")  # the allowance never exceeds that of ESS = ess_min
+    out["rhat_phi_limit"] = float(max(rhat_phi_max, capped + (rhat_phi_max - 1.0))) if np.isfinite(capped) else rhat_phi_max
     sets = {"u": (u, [f"u{k}" for k in range(u.shape[2])])}
     if p is not None:
         p = np.asarray(p, dtype=np.float64)
@@ -660,7 +726,9 @@ def convergence_report(phi, u, p=None, names=None, rhat_phi_max=1.01, rhat_param
     out["worst_ess_bulk"] = worst_ess
     out["worst_ess_sokal_sum"] = float(min(np.nanmin(out[t]["ess_sokal_sum"]) for t in sets))
     out["thresholds"] = {"rhat_phi": rhat_phi_max, "rhat_param": rhat_param_max, "ess": ess_min}
-    out["converged"] = bool(out["rhat_phi"] <= rhat_phi_max and out["rhat_phi_rank"] <= rhat_phi_max and worst_rhat <= rhat_param_max and worst_ess >= ess_min)
+    rest = bool(worst_rhat <= rhat_param_max and worst_ess >= ess_min)
+    out["converged"] = bool(out["rhat_phi"] <= out["rhat_phi_limit"] and out["rhat_phi_rank"] <= out["rhat_phi_limit"] and rest)
+    out["converged_strict"] = bool(out["rhat_phi"] <= rhat_phi_max and out["rhat_phi_rank"] <= rhat_phi_max and rest)
     return out
 
 
@@ -809,10 +877,23 @@ def detect_multimodality(problem, search, fit, batch=None, names=None, mode_dist
 # ----------------------------------------------------------------------------------------------
 
 
-def ti_schedule(n_temps, power=5.0):
-    """The temperatures beta_k = (k / K)^power, k = 0..K with K = n_temps - 1 (so ``n_temps`` values; the design uses power 5 and at least 12 temperatures)."""
+def ti_schedule(n_temps, power=5.0, beta_min=None):
+    """The temperatures of a TI run, ``n_temps`` values from 0 to 1.
+
+    Default (``beta_min`` None): beta_k = (k / K)^power, k = 0..K with K = n_temps - 1 (the design uses power 5 and at least 12 temperatures). With ``beta_min`` given: 0 followed by a
+    geometric sequence from ``beta_min`` to 1 (ratio (1 / beta_min)^(1 / (n_temps - 2)) between neighbors). Why the second form: for a data set of N complex numbers and a few
+    parameters the posterior contracts the prior by many orders of magnitude, E_beta[phi] falls from the prior value to about N within beta ~ 1e-3 and Var_beta[phi] ~ beta^-2 over
+    several decades. Between two temperatures of ratio r the variance changes by r^2, so a ratio of at most 3 keeps the change of the variance below the factor 10 at which the
+    Euler-Maclaurin end correction of ``ti_combine`` is valid; the power schedule has ratio 32 between its first two nonzero temperatures (beta_1 = 1.3e-6, beta_2 = 4.2e-5 for 16
+    temperatures), where the correction was invalid and biased the T1 and T2 estimates upward by 15 to 27 nats (DESIGN 14.6). The geometric ratio is at most 3 for
+    ``beta_min`` >= 3^-(n_temps - 2) (about 2e-7 for 16 temperatures).
+    """
     if n_temps < 3:
         raise ValueError("need at least 3 temperatures")
+    if beta_min is not None:
+        if not 0.0 < beta_min < 1.0:
+            raise ValueError("beta_min must be in (0, 1)")
+        return np.concatenate([[0.0], np.geomspace(beta_min, 1.0, n_temps - 1)])
     k = np.arange(n_temps, dtype=np.float64)
     return (k / (n_temps - 1)) ** power
 
@@ -882,14 +963,21 @@ def ti_temperature(problem, beta, u_starts, amap_prev, key, *, n_pilot=40, n_war
     return TIResult(float(beta), phi, batch.u, batch, stats_)
 
 
-def ti_combine(problem, temps, betas=None):
+VAR_RATIO_MAX = 10.0  # the Euler-Maclaurin end correction is applied only where Var_beta[phi] changes by less than this factor between neighbors
+
+
+def ti_combine(problem, temps, betas=None, var_ratio_max=VAR_RATIO_MAX):
     """Combine the temperatures into the TI estimate of log Z and its diagnostics.
 
     ``temps``: list of ``TIResult`` or of their ``stats`` dicts (keys ``beta``, ``mean_phi``, ``var_phi``, ``ess_phi``, ``rhat_phi``, ``rhat_phi_rank``, ``acceptance``), ordered
     by beta from 0 to 1. With f_k = lik_const - E_k[phi] (the expected log-likelihood at beta_k) log Z = integral of f over [0, 1], and f'(beta) = Var_beta[phi] >= 0.
 
-    * ``log_z_trapezoid``: the trapezoid rule on the schedule; ``log_z``: with the end correction -(Delta^2 / 12)(f'_(k+1) - f'_k) of each interval (Euler-Maclaurin; Friel, Hurn and
-      Wyse 2014), which uses the sample variances; the reported estimate is the corrected one.
+    * ``log_z_trapezoid``: the trapezoid rule on the schedule (a lower bound where f is concave, which holds where Var_beta[phi] decreases with beta); ``log_z``: with the end
+      correction -(Delta^2 / 12)(f'_(k+1) - f'_k) of each interval (Euler-Maclaurin; Friel, Hurn and Wyse 2014), which uses the sample variances.
+      **The correction is a one-term Taylor expansion and is valid only if f' is smooth on the scale Delta.** It is applied to an interval only if Var_beta[phi] changes there
+      by a factor of at most ``var_ratio_max`` (10) and both variances are positive; in the other intervals the trapezoid value stands, and they are listed in
+      ``end_correction["skipped_intervals"]`` with ``schedule_ok`` False (the schedule is too coarse there: refine it, ``ti_schedule(beta_min=...)``). In the milestone-7 runs the
+      first interval after beta_1 had Var falling from 1.9e11 to 8.5e8 and the correction added 26.7 of the 36.0 nats of the total, biasing log Z upward by 15 to 27 nats.
     * ``mc_se``: Monte Carlo standard error, f_k with variance Var_k / ESS_k (bulk ESS of phi, raw) and the variance estimates with variance 2 Var_k^2 / ESS_k (Gaussian
       approximation), propagated through the quadrature weights, independent temperatures.
     * ``discretization``: |trapezoid - corrected| and the trapezoid on every second temperature (the coarse rule), whose difference to the fine trapezoid over 3 estimates the
@@ -911,12 +999,17 @@ def ti_combine(problem, temps, betas=None):
     w[:-1] += 0.5 * df
     w[1:] += 0.5 * df
     trap = float(np.sum(w * f))
-    corr_terms = (df**2 / 12.0) * (var[1:] - var[:-1])
-    corrected = float(trap - np.sum(corr_terms))
+    lo, hi = np.minimum(var[1:], var[:-1]), np.maximum(var[1:], var[:-1])
+    with np.errstate(divide="ignore", invalid="ignore"):
+        ratio = np.where(lo > 0.0, hi / lo, np.inf)
+    valid = ratio <= var_ratio_max
+    coef = np.where(valid, df**2 / 12.0, 0.0)  # per interval: the weight of the end correction
+    corrected = float(trap - np.sum(coef * (var[1:] - var[:-1])))
+    skipped = [int(k) for k in np.flatnonzero(~valid)]
     var_f = var / ess
     cvec = np.zeros_like(beta)
-    cvec[1:] += df**2 / 12.0
-    cvec[:-1] -= df**2 / 12.0
+    cvec[1:] += coef
+    cvec[:-1] -= coef
     var_var = 2.0 * var**2 / ess
     mc_se = float(np.sqrt(np.sum(w**2 * var_f) + np.sum(cvec**2 * var_var)))
     idx = np.arange(0, len(beta), 2)
@@ -930,16 +1023,22 @@ def ti_combine(problem, temps, betas=None):
     rr = np.array([s.get("rhat_phi_rank", np.nan) for s in st])
     acc = np.array([s["acceptance"] for s in st])
     ok = bool(np.all(rh[1:] <= 1.05) and np.all(rr[1:] <= 1.05) and np.all(ess >= 20.0) and np.all((acc > 0.3) & (acc < 0.99)))
+    would_add = -(df**2 / 12.0) * (var[1:] - var[:-1])  # what the one-term correction would add per interval
+    skipped_amount = float(np.sum(would_add[~valid]))
     return {"betas": beta.tolist(), "n_temps": int(len(beta)), "mean_phi": phi_mean.tolist(), "var_phi": var.tolist(), "ess_phi": ess.tolist(), "f": f.tolist(),
             "log_z": corrected, "log_z_trapezoid": trap, "mc_se": mc_se,
+            "end_correction": {"var_ratio_max": float(var_ratio_max), "n_applied": int(valid.sum()), "skipped_intervals": skipped, "var_ratio": [None if not np.isfinite(r) else float(r) for r in ratio],
+                               "skipped_would_add": skipped_amount},
+            "schedule_ok": not skipped,
             "discretization": {"corrected_minus_trapezoid": corrected - trap, "coarse_trapezoid": coarse, "fine_minus_coarse": trap - coarse, "richardson_error_estimate": (trap - coarse) / 3.0},
             "monotone": {"violations_at": viol, "ok": not viol}, "worst_rhat": float(np.nanmax(rh[1:])), "worst_rhat_rank": float(np.nanmax(rr[1:])), "min_ess": float(np.nanmin(ess)),
             "acceptance_range": [float(acc.min()), float(acc.max())], "converged": ok, "lik_const": float(problem.lik_const)}
 
 
-def thermodynamic_integration(problem, key, *, n_temps=12, power=5.0, n_chains=4, n_pilot=40, n_warmup=60, n_samples=150, n_leapfrog=8, jitter=0.25, data=None, prior_starts=None,
-                              callback=None, rng_seed=0):
-    """Log evidence by thermodynamic integration over beta_k = (k / K)^power (``n_temps`` values), sequentially from the prior (beta = 0) to the posterior (beta = 1).
+def thermodynamic_integration(problem, key, *, n_temps=12, power=5.0, beta_min=None, n_chains=4, n_pilot=40, n_warmup=60, n_samples=150, n_leapfrog=8, jitter=0.25, data=None,
+                              prior_starts=None, callback=None, rng_seed=0):
+    """Log evidence by thermodynamic integration over beta_k = (k / K)^power (``n_temps`` values; or the geometric schedule from ``beta_min``, ``ti_schedule``), sequentially from the prior
+    (beta = 0) to the posterior (beta = 1).
 
     At beta = 0 the chains start from i.i.d. prior draws (``prior_starts`` (C, dim), or drawn from ``problem.model.sample_prior_p``; for a problem without a model they must be given)
     in the prior-scale map; at every later temperature from the final states of the previous one, with the previous map as the starting point of the adaptation
@@ -947,7 +1046,7 @@ def thermodynamic_integration(problem, key, *, n_temps=12, power=5.0, n_chains=4
     ``callback(k, TIResult)`` is called after each temperature (checkpointing hook).
     Returns ``(ti_combine(...) dict, list of TIResult)``.
     """
-    betas = ti_schedule(n_temps, power)
+    betas = ti_schedule(n_temps, power, beta_min)
     keys = jax.random.split(key, n_temps)
     if prior_starts is None:
         model = getattr(problem, "model", None)
@@ -972,6 +1071,26 @@ def thermodynamic_integration(problem, key, *, n_temps=12, power=5.0, n_chains=4
 # ----------------------------------------------------------------------------------------------
 # Posterior-predictive check
 # ----------------------------------------------------------------------------------------------
+
+
+def misfit_null(n_data, dim):
+    """The law of the best-fit misfit Phi_MAP = sum |d - model|^2 / s^2 when the model is right: Gamma(shape a = N - dim / 2, scale 1), mean a and standard deviation sqrt(a).
+
+    N complex data with noise CN(0, s^2) are 2 N real numbers of variance s^2 / 2, so Phi = chi^2_(2N) / 2 for the true parameters; fitting ``dim`` real parameters removes ``dim``
+    degrees of freedom (exact for a linear model, a good approximation for a smooth nonlinear one with a weak prior). ``scipy.stats.gamma(a)`` is returned.
+    """
+    return stats.gamma(a=float(n_data) - 0.5 * float(dim))
+
+
+def misfit_p_value(phi_map, n_data, dim):
+    """Analytic flag for a misfit: p = P(Gamma(N - dim / 2) >= phi_map), the tail probability of the best-fit misfit under the right model (``misfit_null``), and the
+    z-score z = (phi_map - a) / sqrt(a), a = N - dim / 2. Unlike the replicate-based p-value of ``predictive_check`` it has no Monte Carlo resolution limit (30 replicates cannot
+    resolve p below 1/31), and it needs no refits. Returns ``{"p_value", "z", "mean", "sd"}``. The statistic is not paired with the noise realization: a realization whose own
+    noise-only misfit sits +0.8 sd high (seed 0 of milestone 7, 2438.2 against 2400) moves p by that much (``noise_only`` in the SNR and ladder tables removes it)."""
+    null = misfit_null(n_data, dim)
+    a = float(n_data) - 0.5 * float(dim)
+    return {"p_value": float(null.sf(phi_map)), "z": float((phi_map - a) / math.sqrt(a)), "mean": a, "sd": math.sqrt(a)}
+
 
 
 def predictive_check(problem, u_draws, key, *, n_rep=100, mode="refit", u_hat=None, data=None, max_iter=12):

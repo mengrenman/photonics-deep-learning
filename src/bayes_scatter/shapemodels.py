@@ -28,6 +28,10 @@ Models (priors as in DESIGN 14.2; every choice the design leaves open is marked 
   data) of the likelihood. F2 is F2u with r1 = r2 and eps1 = eps2 (nested).
 * ``Fe`` (6 parameters): p = (cx, cy, a, b, psi, eps_r), one ellipse with semi-axes a >= b in [0.05, 0.55] (ordered pair, uniform on the triangle), rotation psi in [-pi/2, pi/2)
   uniform, center U[-0.2, 0.2]^2, eps_r - 1 log-normal. It has no gap: the "one object" alternative.
+  **Limitation of the orientation coordinate.** psi = pi (sigmoid(u_psi) - 1/2) removes the redundancy psi ~ psi + pi of the DENSITY, but the two ends psi = -pi/2 and psi = +pi/2
+  are the same ellipse and sit at u_psi -> -inf and +inf, so a posterior for an ellipse elongated along y (psi near +-pi/2) would split across the two ends of the box (and
+  the logistic prior makes u_psi = +-10 the wall of the truncation box). A periodic coordinate, for example (cos 2 psi, sin 2 psi) times the ellipticity, would not. It does not
+  matter for the milestone-7 results: every Fe fit has an ellipse along x, psi within 0.01 of 0 (``results/parametric/tables.md`` section 7).
 
 A shape that leaves the DOI is truncated by it (the renderer's convention), so the prior support needs no constraint; nothing here is clipped.
 """

@@ -24,7 +24,7 @@ Stages (--stage; ``all`` = prepare, map, chain, ppc, finalize; every stage skips
             (chain, segment) in <dir>/chains/, written as soon as it is done; a rerun continues from the last one. ``--chain-id`` selects one chain (one process per chain under
             ``scripts/batch_run.py``), ``--first-segment`` / ``--last-segment`` a range of segments.
   ppc       the posterior-predictive checks (``shapepost.predictive_check``, refit and draw modes) from the pooled draws: <dir>/ppc.json.
-  ti        thermodynamic integration (``shapepost.ti_temperature``), beta_k = (k / K)^``--ti-power``, ``--ti-temps`` temperatures, ``--ti-chains`` chains each; one file per
+  ti        thermodynamic integration (``shapepost.ti_temperature``), beta_k = (k / K)^``--ti-power`` (or geometric from ``--ti-beta-min``), ``--ti-temps`` temperatures, ``--ti-chains`` chains each; one file per
             temperature in <dir>/ti/ (a rerun continues at the first missing one), then <dir>/ti.json (``ti_combine``). ``--ti-tag a --ti-seed 3 --ti-chains 1`` is an
             independent run in <dir>/ti_a/ and ti_a.json (one chain per process: four such runs take the wall time of one chain); ``finalize`` combines all the runs of a case
             (``combine_ti_runs``: the mean, and the between-run standard deviation as the direct error bar).
@@ -118,6 +118,8 @@ def parse_args(argv=None):
     g = ap.add_argument_group("thermodynamic integration")
     g.add_argument("--ti-temps", type=int, default=16, help="number of temperatures (the design asks for at least 12)")
     g.add_argument("--ti-power", type=float, default=5.0)
+    g.add_argument("--ti-beta-min", type=float, default=None, help="geometric schedule from this beta (0 first) instead of the power schedule; 1e-7 with 16 temperatures keeps the ratio between "
+                   "neighbors at 3.2 and the end correction valid (DESIGN 14.7; the power schedule is not fine enough near beta = 0 for these posteriors)")
     g.add_argument("--ti-chains", type=int, default=4)
     g.add_argument("--ti-pilot", type=int, default=40)
     g.add_argument("--ti-warmup", type=int, default=60)
@@ -491,7 +493,7 @@ def stage_ti(args):
     prob = build_problem(args)
     model = sm.make_model(args.model)
     post = make_posterior(args, prob)
-    betas = sp.ti_schedule(args.ti_temps, args.ti_power)
+    betas = sp.ti_schedule(args.ti_temps, args.ti_power, args.ti_beta_min)
     keys = jax.random.split(jax.random.key(args.ti_seed), args.ti_temps)
     rng = np.random.default_rng(args.ti_seed)
     starts = np.asarray(jax.vmap(model.u_from_p)(jnp.asarray(model.sample_prior_p(rng, args.ti_chains))))
@@ -515,7 +517,7 @@ def stage_ti(args):
         print(f"{case_name(args)} TI{ti_tag_suffix(tag)} {k + 1}/{len(betas)}: beta {beta:.3e}, E[phi] {st['mean_phi']:.1f}, var {st['var_phi']:.1f}, ESS {st['ess_phi']:.0f}, "
               f"R-hat {st['rhat_phi']:.3f}, acceptance {st['acceptance']:.2f}, {st['wall_s']:.0f} s")
     out = sp.ti_combine(post, all_stats)
-    out["settings"] = {k: getattr(args, k) for k in ("ti_temps", "ti_power", "ti_chains", "ti_pilot", "ti_warmup", "ti_draws", "ti_leapfrog", "ti_seed", "ti_tag")}
+    out["settings"] = {k: getattr(args, k) for k in ("ti_temps", "ti_power", "ti_beta_min", "ti_chains", "ti_pilot", "ti_warmup", "ti_draws", "ti_leapfrog", "ti_seed", "ti_tag")}
     out["wall_s"] = float(sum(s.get("wall_s", 0.0) for s in all_stats))
     out["n_grad_per_chain"] = int(sum(s["n_grad_per_chain"] for s in all_stats))
     write_json(ti_json_path(d, tag), out)

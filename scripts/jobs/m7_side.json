@@ -1,0 +1,332 @@
+[
+  {
+    "name": "m7_ladder_E0g0.1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "30"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1.json"
+  },
+  {
+    "name": "m7_ladder_E0.005g0.1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0.005",
+      "--ppc-reps",
+      "30"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0.005g0.1.json"
+  },
+  {
+    "name": "m7_ladder_E0.01g0.1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0.01",
+      "--ppc-reps",
+      "30"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0.01g0.1.json"
+  },
+  {
+    "name": "m7_ladder_E0.02g0.1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0.02",
+      "--ppc-reps",
+      "30"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0.02g0.1.json"
+  },
+  {
+    "name": "m7_ladder_E0.05g0.1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0.05",
+      "--ppc-reps",
+      "30"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0.05g0.1.json"
+  },
+  {
+    "name": "m7_ladder_E0.15g0.1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0.15",
+      "--ppc-reps",
+      "30"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0.15g0.1.json"
+  },
+  {
+    "name": "m7_calib_g0.05_b0",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.05s4.json"
+  },
+  {
+    "name": "m7_calib_g0.05_b1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.05s8.json"
+  },
+  {
+    "name": "m7_calib_g0.05_b2",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.05s12.json"
+  },
+  {
+    "name": "m7_calib_g0.05_b3",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "13",
+      "14",
+      "15",
+      "16"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.05s16.json"
+  },
+  {
+    "name": "m7_calib_g0.05_b4",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.05s20.json"
+  },
+  {
+    "name": "m7_calib_g0.05_b5",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "21",
+      "22",
+      "23",
+      "24"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.05s24.json"
+  },
+  {
+    "name": "m7_calib_g0.1_b0",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1s4.json"
+  },
+  {
+    "name": "m7_calib_g0.1_b1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1s8.json"
+  },
+  {
+    "name": "m7_calib_g0.1_b2",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1s12.json"
+  },
+  {
+    "name": "m7_calib_g0.1_b3",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "13",
+      "14",
+      "15",
+      "16"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1s16.json"
+  },
+  {
+    "name": "m7_calib_g0.1_b4",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1s20.json"
+  },
+  {
+    "name": "m7_calib_g0.1_b5",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "21",
+      "22",
+      "23",
+      "24"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1s24.json"
+  }
+]

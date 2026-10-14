@@ -499,7 +499,157 @@ def test_ti_on_the_scattering_posterior_matches_the_laplace_evidence_where_the_p
     search = sp.map_estimate(post, np.zeros((1, 5)), lbfgs_iter=150)
     fit = sp.laplace_fit(post, search.u_hat, hessian="fd")
     laplace = sp.laplace_log_evidence(post, fit)
-    res, _ = sp.thermodynamic_integration(post, jax.random.key(1), n_temps=14, n_chains=3, n_pilot=30, n_warmup=40, n_samples=100)
+    # the geometric schedule from beta = 1e-6 (ratio 2.9 between neighbors): on the power schedule beta_k = (k / 13)^5 the variance of phi falls by 100 to 1000 times between the first
+    # nonzero temperatures, the end correction is invalid there and ``ti_combine`` skips it, which leaves a trapezoid LOWER bound (33 nats below the Laplace value for this problem)
+    res, _ = sp.thermodynamic_integration(post, jax.random.key(1), n_temps=14, beta_min=1e-6, n_chains=3, n_pilot=30, n_warmup=40, n_samples=100)
     # the first intervals of the schedule have E_beta[phi] ~ 1e5 to 1e6, so a short run has a Monte Carlo error of several nats (res["mc_se"]); the estimate must be consistent with it
     assert np.isfinite(res["log_z"]) and res["mc_se"] > 0 and res["monotone"]["ok"] and res["worst_rhat"] < 1.5
-    assert abs(res["log_z"] - laplace) < 5.0 * res["mc_se"] + 5.0
+    assert abs(res["log_z"] - laplace) < 5.0 * res["mc_se"] + 5.0  # measured: 909.06 against 913.91 (mc_se 1.1)
+    # a ratio of 2.9 between neighbors is borderline by design (variance ratio ~ 8.4 against the limit 10, and 100 draws per chain make the variance noisy: 7 of 13 intervals exceed it
+    # here), so the guard skips some end corrections; the bookkeeping must be consistent
+    ec = res["end_correction"]
+    assert ec["n_applied"] + len(ec["skipped_intervals"]) == res["n_temps"] - 1 and res["schedule_ok"] == (not ec["skipped_intervals"])
+
+
+# ----------------------------------------------------------------------------------------------
+# Review follow-up (DESIGN 14.7): TI end correction, importance-sampling evidence, analytic misfit flag, ESS-aware R-hat
+# ----------------------------------------------------------------------------------------------
+
+
+def sharp_gaussian_ti_stats(betas, t=1.0e6):
+    """Exact E_beta[phi] and Var_beta[phi] of a one-dimensional posterior that is sqrt(t) times narrower than its N(0, 1) prior: phi = a u^2 / 2 with a = t, so the power posterior
+    is N(0, v) with v = 1 / (1 + beta a), E[phi] = a v / 2, Var[phi] = (a v)^2 / 2, and log Z = -log(1 + t) / 2 (lik_const = 0)."""
+    v = 1.0 / (1.0 + np.asarray(betas) * t)
+    return [{"beta": float(b), "mean_phi": 0.5 * t * x, "var_phi": 0.5 * (t * x) ** 2, "ess_phi": 1e12, "rhat_phi": 1.0, "rhat_phi_rank": 1.0, "acceptance": 0.8}
+            for b, x in zip(betas, v)], -0.5 * np.log1p(t)
+
+
+class _ZeroConst:
+    lik_const = 0.0
+
+
+def test_ti_end_correction_is_skipped_where_the_variance_changes_by_more_than_a_factor_of_ten():
+    """The defect found in review: on a power schedule the first intervals of a sharp posterior have Var_beta[phi] falling by 20 to 350 times, the one-term Euler-Maclaurin
+    correction is invalid there and (applied everywhere) put log Z ABOVE the exact value, by 10.8 nats here. Skipped there, the estimate is a trapezoid lower bound, flagged."""
+    betas = sp.ti_schedule(16)
+    st, exact = sharp_gaussian_ti_stats(betas)
+    always = sp.ti_combine(_ZeroConst, st, var_ratio_max=np.inf)  # the old behavior
+    guarded = sp.ti_combine(_ZeroConst, st)
+    assert always["log_z"] - exact > 5.0  # the defect: an overshoot of several nats, far outside any claimed error
+    assert always["end_correction"]["skipped_intervals"] == [] and always["schedule_ok"] is True
+    ec = guarded["end_correction"]
+    assert ec["var_ratio_max"] == 10.0 and ec["skipped_intervals"] == [1, 2, 3] and guarded["schedule_ok"] is False
+    assert ec["n_applied"] == 15 - 3 and ec["skipped_would_add"] > 5.0  # what the skipped corrections would have added
+    assert guarded["log_z"] - exact < 0.5 and abs(guarded["log_z"] - exact) < abs(always["log_z"] - exact)
+    assert guarded["log_z_trapezoid"] == always["log_z_trapezoid"] and all(r is None or r > 0 for r in ec["var_ratio"])
+    # the standard error does not carry the weight of a correction that was not applied
+    assert guarded["mc_se"] <= always["mc_se"]
+
+
+def test_geometric_ti_schedule_keeps_the_variance_ratio_valid_and_the_estimate_close():
+    betas = sp.ti_schedule(16, beta_min=1e-7)
+    assert betas[0] == 0.0 and betas[1] == pytest.approx(1e-7) and betas[-1] == 1.0 and len(betas) == 16
+    ratios = betas[2:] / betas[1:-1]
+    assert np.allclose(ratios, ratios[0]) and ratios[0] < 3.2  # 10^(7 / 14) = 3.16
+    st, exact = sharp_gaussian_ti_stats(betas)
+    res = sp.ti_combine(_ZeroConst, st)
+    assert res["schedule_ok"] is True and res["end_correction"]["skipped_intervals"] == []
+    assert abs(res["log_z"] - exact) < 0.5 < abs(res["log_z_trapezoid"] - exact)  # the correction helps where it is valid
+    with pytest.raises(ValueError):
+        sp.ti_schedule(16, beta_min=1.5)
+    with pytest.raises(ValueError):
+        sp.ti_schedule(16, beta_min=0.0)
+    # a zero or negative variance estimate is never an interval where the correction can be judged valid
+    broken = [dict(s) for s in st]
+    broken[5]["var_phi"] = 0.0
+    assert 4 in sp.ti_combine(_ZeroConst, broken)["end_correction"]["skipped_intervals"]
+
+
+def test_importance_sampling_evidence_is_exact_for_the_gaussian_toy_and_good_for_a_heavy_tailed_posterior():
+    toy = make_toy(seed=2, m=15, d=3, noise=0.4)
+    mean, cov = toy.exact_posterior()
+    res = sp.importance_log_evidence(toy, mean, cov, n_draws=400, df=5.0, scale=1.2, seed=3)
+    assert abs(res["log_z"] - toy.exact_log_evidence()) < 4.0 * res["se"] + 1e-3 and res["se"] < 0.05
+    assert res["weight_ess"] > 0.7 * res["n_draws"] and res["n_outside_box"] == 0
+    # a core inside a halo: the Laplace evidence is off by more than 0.3, importance sampling at the Laplace fit is not
+    problem = FunctionProblem(core_halo_phi, 2, prior_sd=CORE_HALO_PRIOR_SD)
+    search = sp.map_estimate(problem, np.array([[0.05, -0.03]]))
+    fit = sp.laplace_fit(problem, search.u_hat)
+    exact = core_halo_evidence()
+    assert abs(sp.laplace_log_evidence(problem, fit) - exact) > 0.3
+    res = sp.importance_log_evidence(problem, fit.u_hat, fit.cov, n_draws=4000, df=5.0, scale=2.0, seed=1)
+    assert abs(res["log_z"] - exact) < 4.0 * res["se"] + 0.01  # the box |u| <= 10 removes 4e-3 of the N(0, 3^2) prior mass in two dimensions
+    # draws outside the box get weight zero without a solve
+    wide = sp.importance_log_evidence(toy, mean, 1e4 * cov, n_draws=200, seed=0)
+    assert wide["n_outside_box"] > 0 and np.isfinite(wide["log_z"])
+
+
+def test_misfit_p_value_is_the_exact_null_of_the_best_fit_misfit_of_a_linear_complex_model():
+    """Phi_MAP = sum |d - A theta|^2 / s^2 with N complex data and ``dim`` real parameters has the law Gamma(N - dim / 2): checked by simulation (Kolmogorov-Smirnov), and the
+    replicate-free p-value is uniform; this is the null against which 30 replicates (resolution 1/31) cannot resolve p < 0.03."""
+    rng = np.random.default_rng(0)
+    n, dim, reps = 80, 5, 3000
+    A = rng.standard_normal((n, dim)) + 1j * rng.standard_normal((n, dim))
+    Ar = np.vstack([A.real, A.imag])
+    Q, _ = np.linalg.qr(Ar)
+    phi = np.empty(reps)
+    for k in range(reps):
+        e = (rng.standard_normal(n) + 1j * rng.standard_normal(n)) / np.sqrt(2.0)  # CN(0, 1): s = 1
+        r = np.concatenate([e.real, e.imag])
+        r = r - Q @ (Q.T @ r)  # the residual of the least-squares fit of the real parameters
+        phi[k] = np.sum(r * r)
+    null = sp.misfit_null(n, dim)
+    assert null.mean() == n - dim / 2 and np.sqrt(null.var()) == pytest.approx(np.sqrt(n - dim / 2))
+    assert phi.mean() == pytest.approx(n - dim / 2, abs=3 * np.sqrt((n - dim / 2) / reps))
+    assert stats.kstest(phi, null.cdf).pvalue > 0.01
+    p = np.array([sp.misfit_p_value(x, n, dim)["p_value"] for x in phi])
+    assert stats.kstest(p, "uniform").pvalue > 0.01
+    flag = sp.misfit_p_value(2400 + 5.0 * np.sqrt(2397.5), 2400, 5)
+    assert flag["mean"] == 2397.5 and flag["z"] == pytest.approx((2400 + 5.0 * np.sqrt(2397.5) - 2397.5) / np.sqrt(2397.5)) and flag["p_value"] < 1e-5
+    assert sp.misfit_p_value(2456.1, 2400, 5)["p_value"] == pytest.approx(0.116, abs=0.001)  # the 0.5 % ellipticity rung of the ladder: not a flag
+
+
+def test_noise_generator_has_the_gamma_null_misfit_of_the_noise_alone():
+    """add_noise at noise level s gives sum |e|^2 / s^2 ~ Gamma(N, 1): mean N, sd sqrt(N) (the reviewers' check of the generator over 1000 keys: sd 48.0 against 49.0)."""
+    d = jnp.zeros((20, 30), dtype=jnp.complex128)
+    s = 0.7
+    phis = np.array([float(jnp.sum(jnp.abs(add_noise(jax.random.key(k), d, s)) ** 2)) / s**2 for k in range(300)])
+    n = 600
+    assert phis.mean() == pytest.approx(n, abs=4 * np.sqrt(n / 300))
+    assert phis.std(ddof=1) == pytest.approx(np.sqrt(n), rel=0.15)
+
+
+def test_expected_split_rhat_matches_simulated_ar1_chains_and_makes_the_phi_criterion_ess_aware():
+    """The split R-hat of well-mixed chains with ESS_c per split sequence is 1 + (1 / ESS_c - 1 / n) / 2 (tau = 8 in 4 x 500 draws: 1.014, above 1.01 although nothing is wrong)."""
+    tau, n_chains, n_draws = 8.0, 4, 500
+    sim = dg.ar1_rhat_null(n_chains, n_draws, tau, n_rep=150, rank=False, seed=2)["classic"]
+    ess_total = n_chains * n_draws / tau
+    expected = sp.expected_split_rhat(ess_total, n_chains, n_draws)
+    assert expected == pytest.approx(1.014, abs=1e-4) and sim.mean() == pytest.approx(expected, abs=0.004)
+    assert np.isnan(sp.expected_split_rhat(0.0, 4, 500)) and sp.expected_split_rhat(1e12, 4, 500) == pytest.approx(1.0 - 0.5 / 250)
+    # convergence_report: AR(1) chains of one distribution pass the ESS-aware rule even when the fixed limit 1.01 fails; chains that sit at different places fail both
+    rng = np.random.default_rng(5)
+    rho = (tau - 1) / (tau + 1)
+    e = rng.standard_normal((n_chains, n_draws + 100, 3))
+    x = np.zeros_like(e)
+    for t_ in range(1, e.shape[1]):
+        x[:, t_] = rho * x[:, t_ - 1] + np.sqrt(1 - rho**2) * e[:, t_]
+    x = x[:, 100:]
+    phi = x[..., 0]
+    rep = sp.convergence_report(phi, x)
+    assert rep["rhat_phi_expected"] == pytest.approx(sp.expected_split_rhat(rep["ess_bulk_phi"], n_chains, n_draws))
+    assert rep["rhat_phi_limit"] == pytest.approx(rep["rhat_phi_expected"] + 0.01) and rep["rhat_phi_expected"] > 1.01
+    assert rep["converged_strict"] == (rep["rhat_phi"] <= 1.01 and rep["rhat_phi_rank"] <= 1.01 and rep["max_rhat"] <= 1.05 and rep["worst_ess_bulk"] >= 200.0)
+    assert rep["converged"] == (rep["rhat_phi"] <= rep["rhat_phi_limit"] and rep["rhat_phi_rank"] <= rep["rhat_phi_limit"] and rep["max_rhat"] <= 1.05 and rep["worst_ess_bulk"] >= 200.0)
+    assert rep["converged"] is True and rep["max_rhat_rank"] >= 1.0 and 0.0 < rep["max_rhat_rank"] < 1.1
+    # a chain with a different mean is not excused by the allowance
+    shifted = x.copy()
+    shifted[0] += 1.5
+    bad = sp.convergence_report(shifted[..., 0], shifted)
+    assert bad["converged"] is False and bad["converged_strict"] is False and bad["rhat_phi"] > bad["rhat_phi_limit"]
+    # the bulk ESS of unmixed chains collapses, which would make the expected R-hat (and an uncapped allowance) enormous: the limit is evaluated at ESS >= ess_min
+    assert bad["rhat_phi_expected"] > 1.1 and bad["rhat_phi_limit"] == pytest.approx(sp.expected_split_rhat(200.0, n_chains, n_draws) + 0.01) and bad["rhat_phi_limit"] < 1.03
+    # with a large ESS the limit is the plain 1.01
+    iid = rng.standard_normal((4, 2000, 2))
+    big = sp.convergence_report(iid[..., 0], iid)
+    assert big["rhat_phi_limit"] == pytest.approx(1.01, abs=0.002) and big["converged"] is True

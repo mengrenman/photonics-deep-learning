@@ -1,0 +1,4 @@
+# batch_run 2026-10-13T17:04:55+08:00 slot cpu9
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_sweeps.py --gap 0.1 --level 0.15 --ppc-reps 30
+E0.15g0.1: Phi_MAP/N 8.372, refit p 0.000 (z 463.3); g = 0.07598 +- 0.00029 (true 0.1, z 83.2), covers False; 298 s

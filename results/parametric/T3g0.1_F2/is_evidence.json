@@ -1,0 +1,25 @@
+{
+ "case": "T3g0.1_F2",
+ "log_z": -3259.3755485783877,
+ "se": 0.022351082706473995,
+ "weight_ess": 667.0796658035888,
+ "max_weight": 0.00975736483867365,
+ "n_draws": 1000,
+ "n_outside_box": 0,
+ "df": 5.0,
+ "scale": 1.2,
+ "seed": 7,
+ "laplace_gn": -3259.6567687242105,
+ "laplace_fd": -3259.4049078852654,
+ "is_minus_laplace_gn": 0.2812201458227719,
+ "is_minus_laplace_fd": 0.029359306877722702,
+ "map_converged": true,
+ "time_s": 189.82008512500033,
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ }
+}

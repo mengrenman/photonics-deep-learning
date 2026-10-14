@@ -1,0 +1,60 @@
+{
+  "name": "m7r_is_T4_Fe",
+  "status": "ok",
+  "device": "cpu",
+  "slot": 5,
+  "threads": 1,
+  "cmd": [
+    "/Users/mengren/anaconda3/envs/photonics-dl/bin/python",
+    "scripts/parametric_evidence_is.py",
+    "--truth",
+    "T4",
+    "--gap",
+    "0",
+    "--model",
+    "Fe",
+    "--draws",
+    "1000"
+  ],
+  "cmd_in_jobs_file": [
+    "scripts/parametric_evidence_is.py",
+    "--truth",
+    "T4",
+    "--gap",
+    "0",
+    "--model",
+    "Fe",
+    "--draws",
+    "1000"
+  ],
+  "cwd": "/Users/mengren/Documents/new_projects/photonics-dl",
+  "env": {
+    "JAX_PLATFORMS": "cpu",
+    "NPROC": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "pinned": false,
+  "cores": null,
+  "host": {
+    "hostname": "mbp",
+    "system": "Darwin",
+    "release": "27.0.0",
+    "machine": "arm64",
+    "cpu_model": "Apple M3 Max",
+    "logical_cpus": 16,
+    "physical_cpus": 16,
+    "mem_total_bytes": 137438953472
+  },
+  "log": "/Users/mengren/Documents/new_projects/photonics-dl/results/logs/m7r_is_T4_Fe.log",
+  "done_marker": "/Users/mengren/Documents/new_projects/photonics-dl/results/parametric/T4_Fe/is_evidence.json",
+  "start": "2026-10-14T10:03:49+08:00",
+  "end": "2026-10-14T10:06:25+08:00",
+  "wall_s": 156.436,
+  "exit_code": 0,
+  "marker_present": true
+}

@@ -1,0 +1,138 @@
+[
+  {
+    "name": "m7_map_T1g0.05_F2",
+    "cmd": [
+      "scripts/parametric_run.py",
+      "--truth",
+      "T1",
+      "--gap",
+      "0.05",
+      "--model",
+      "F2",
+      "--stage",
+      "map"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T1g0.05_F2/map.json"
+  },
+  {
+    "name": "m7_map_T1g0.1_F2",
+    "cmd": [
+      "scripts/parametric_run.py",
+      "--truth",
+      "T1",
+      "--gap",
+      "0.1",
+      "--model",
+      "F2",
+      "--stage",
+      "map"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T1g0.1_F2/map.json"
+  },
+  {
+    "name": "m7_map_T2g0.05_F2",
+    "cmd": [
+      "scripts/parametric_run.py",
+      "--truth",
+      "T2",
+      "--gap",
+      "0.05",
+      "--model",
+      "F2",
+      "--stage",
+      "map"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T2g0.05_F2/map.json"
+  },
+  {
+    "name": "m7_map_T2g0.1_F2",
+    "cmd": [
+      "scripts/parametric_run.py",
+      "--truth",
+      "T2",
+      "--gap",
+      "0.1",
+      "--model",
+      "F2",
+      "--stage",
+      "map"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T2g0.1_F2/map.json"
+  },
+  {
+    "name": "m7_map_T3g0.05_F2",
+    "cmd": [
+      "scripts/parametric_run.py",
+      "--truth",
+      "T3",
+      "--gap",
+      "0.05",
+      "--model",
+      "F2",
+      "--stage",
+      "map"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T3g0.05_F2/map.json"
+  },
+  {
+    "name": "m7_map_T3g0.1_F2",
+    "cmd": [
+      "scripts/parametric_run.py",
+      "--truth",
+      "T3",
+      "--gap",
+      "0.1",
+      "--model",
+      "F2",
+      "--stage",
+      "map"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T3g0.1_F2/map.json"
+  },
+  {
+    "name": "m7_map_T4_F2",
+    "cmd": [
+      "scripts/parametric_run.py",
+      "--truth",
+      "T4",
+      "--gap",
+      "0",
+      "--model",
+      "F2",
+      "--stage",
+      "map"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T4_F2/map.json"
+  },
+  {
+    "name": "m7_map_T5_F2",
+    "cmd": [
+      "scripts/parametric_run.py",
+      "--truth",
+      "T5",
+      "--gap",
+      "0.1",
+      "--model",
+      "F2",
+      "--stage",
+      "map"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T5_F2/map.json"
+  }
+]

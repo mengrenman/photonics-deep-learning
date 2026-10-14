@@ -1,0 +1,11 @@
+# batch_run 2026-10-13T13:09:00+08:00 slot cpu7
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T5 --gap 0.1 --model F2 --stage map
+T5_F2: MAP from 4 starts
+  MAP start prior mode: U 12146.563 phi 12139.53 converged True (L-BFGS 15 its, Newton 1 its, 12 s)
+  MAP start prior draw 0: U 12146.563 phi 12139.53 converged True (L-BFGS 16 its, Newton 5 its, 20 s)
+  MAP start prior draw 1: U 12146.563 phi 12139.53 converged True (L-BFGS 24 its, Newton 1 its, 18 s)
+  MAP start prior draw 2: U 410659.347 phi 410642.44 converged False (L-BFGS 18 its, Newton 4 its, 19 s)
+  symmetry images of the best mode: mirror x -> -x
+  MAP start image: mirror x -> -x: U 12146.563 phi 12139.53 converged True (L-BFGS 6 its, Newton 1 its, 10 s)
+  MAP: Phi 12139.5 (N = 2400, Phi(truth) 2444.4), p_hat = g 0.06912, r 0.2075, eps_r 1.98, cx 5.108e-05, cy 0.005871; Laplace log Z 25574.20 (fd 25574.22110521312); 92 s

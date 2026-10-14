@@ -1,0 +1,4 @@
+# batch_run 2026-10-14T10:03:47+08:00 slot cpu0
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_evidence_is.py --truth T5 --gap 0.1 --model F2u --draws 1000
+T5_F2u: IS log Z 25564.065 +- 0.019 (weight ESS 735 of 1000); Laplace GN 25564.054; IS - Laplace +0.011; 158 s

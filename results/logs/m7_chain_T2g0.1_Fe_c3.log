@@ -1,0 +1,8 @@
+# batch_run 2026-10-13T15:50:25+08:00 slot cpu7
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T2 --gap 0.1 --model Fe --stage chain --chain-id 3 --chains 4 --segments 5
+T2g0.1_Fe chain 3 segment 0: 100 draws, step 1.159, acceptance 0.80, Phi 190570.1 +- 2.0, 1126 s
+T2g0.1_Fe chain 3 segment 1: 100 draws, step 1.159, acceptance 0.71, Phi 190570.0 +- 1.8, 429 s
+T2g0.1_Fe chain 3 segment 2: 100 draws, step 1.159, acceptance 0.70, Phi 190570.3 +- 2.1, 442 s
+T2g0.1_Fe chain 3 segment 3: 100 draws, step 1.159, acceptance 0.72, Phi 190569.7 +- 1.5, 443 s
+T2g0.1_Fe chain 3 segment 4: 100 draws, step 1.159, acceptance 0.75, Phi 190570.0 +- 1.7, 441 s

@@ -1,0 +1,6 @@
+# batch_run 2026-10-13T16:51:33+08:00 slot cpu9
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T2 --gap 0.05 --model pixel
+T2g0.05_pixel: N = 2400, s = 2.315e-04; grid error of the model at the truth 0.056 of the noise, Phi(truth) = 2445
+T2g0.05_pixel matern: Phi_MAP 2400.2 (N = 2400); P(valley) region 0.5763, point 0.7351
+T2g0.05_pixel tv: Phi_MAP 2403.1 (N = 2400); P(valley) region 0.0454, point 0.0781

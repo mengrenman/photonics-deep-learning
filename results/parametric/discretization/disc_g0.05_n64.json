@@ -1,0 +1,29 @@
+{
+ "gap": 0.05,
+ "data_n": 64,
+ "inference_n": 64,
+ "noise_std": 0.00021139370539245586,
+ "g_star": 0.05000126264737188,
+ "g_star_minus_true": 1.262647371880199e-06,
+ "laplace_sd": 0.00027141471231751,
+ "shift_sd": 0.00465209627399679,
+ "phi_map": 1.0820969936743801e-05,
+ "model_error_energy_at_truth": 3.734417138147086e-19,
+ "p_star": [
+  0.05000126264737188,
+  0.19999979825426187,
+  2.0000020745546934,
+  6.01533406419108e-10,
+  1.04422900881751e-09
+ ],
+ "converged": true,
+ "cached_clean_data_max_rel_diff": null,
+ "time_s": 17.40688466701249,
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ }
+}

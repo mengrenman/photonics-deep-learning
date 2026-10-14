@@ -1,0 +1,184 @@
+{
+ "case": "T3g0.05_pixel",
+ "truth_label": "T3g0.05",
+ "g_true": 0.05,
+ "feature": {
+  "n_strip": 16,
+  "n_core1": 58,
+  "n_core2": 58,
+  "strip_width_pixels": 2.1333333333333333,
+  "fits_grid": true,
+  "truth_holds": true,
+  "representable": true,
+  "status": "ok",
+  "delta": 0.34657359027997264,
+  "core_frac": 0.5,
+  "band_frac": 0.5,
+  "gap_mid": [
+   0.0,
+   0.0
+  ],
+  "pixel": 0.0234375
+ },
+ "band_frac": 0.5,
+ "core_frac": 0.5,
+ "priors": {
+  "matern": {
+   "lam": null,
+   "phi_map": 2399.952789830681,
+   "phi_over_N": 0.9999803290961171,
+   "R": 19.268657350305155,
+   "converged": true,
+   "map_ok": true,
+   "features": {
+    "geometry": {
+     "n_strip": 16,
+     "n_core1": 58,
+     "n_core2": 58,
+     "strip_width_pixels": 2.1333333333333333,
+     "fits_grid": true,
+     "truth_holds": true,
+     "representable": true,
+     "status": "ok",
+     "delta": 0.34657359027997264,
+     "core_frac": 0.5,
+     "band_frac": 0.5,
+     "gap_mid": [
+      0.0,
+      0.0
+     ],
+     "pixel": 0.0234375
+    },
+    "delta": 0.34657359027997264,
+    "region": {
+     "p_valley": 0.11526516775761853,
+     "p_vs_core1": 0.11526516775761853,
+     "p_vs_core2": 0.9999860433749255,
+     "strip_mean": 0.49847986816848844,
+     "strip_sd": 0.035477734347886355,
+     "core1_mean": 0.7971957834608878,
+     "core1_sd": 0.013883020054472254,
+     "core2_mean": 1.0001186255064607,
+     "core2_sd": 0.009944155841753812,
+     "depth_mean": 0.4001773363151858,
+     "depth_sd": 0.03739008861155969,
+     "z_depth": 1.43363516979312
+    },
+    "region_status": "ok",
+    "point": {
+     "p_valley": 0.5081229896838838,
+     "p_vs_core1": 0.508123402966236,
+     "p_vs_core2": 0.9998363382430606,
+     "strip_mean": 0.5394566100789755,
+     "strip_sd": 0.049889492606938,
+     "core1_mean": 0.8873951820294967,
+     "core1_sd": 0.041795897095805994,
+     "core2_mean": 1.108847315976686,
+     "core2_sd": 0.03721456541014973,
+     "depth_mean": 0.4586646389241159,
+     "depth_sd": 0.05768525636511277,
+     "z_depth": 1.943149007342097
+    },
+    "point_label": "single-point values (bilinear interpolation at the gap midpoint and the disk centers), not the resolution-scale feature"
+   },
+   "truth": {
+    "point": {
+     "strip": 0.0,
+     "core1": 0.6931471805599453,
+     "core2": 0.8754687373538999,
+     "holds": true
+    },
+    "region": {
+     "strip": 0.0,
+     "core1": 0.6931471805599453,
+     "core2": 0.8754687373538999,
+     "holds": true
+    }
+   },
+   "time_s": 96.42643904100987
+  },
+  "tv": {
+   "lam": 0.5,
+   "phi_map": 2403.960950478138,
+   "phi_over_N": 1.0016503960325573,
+   "R": 216.16024559019132,
+   "converged": true,
+   "map_ok": true,
+   "features": {
+    "geometry": {
+     "n_strip": 16,
+     "n_core1": 58,
+     "n_core2": 58,
+     "strip_width_pixels": 2.1333333333333333,
+     "fits_grid": true,
+     "truth_holds": true,
+     "representable": true,
+     "status": "ok",
+     "delta": 0.34657359027997264,
+     "core_frac": 0.5,
+     "band_frac": 0.5,
+     "gap_mid": [
+      0.0,
+      0.0
+     ],
+     "pixel": 0.0234375
+    },
+    "delta": 0.34657359027997264,
+    "region": {
+     "p_valley": 0.03318019544830328,
+     "p_vs_core1": 0.03318021512645902,
+     "p_vs_core2": 0.8326969583013564,
+     "strip_mean": 0.5361945346727177,
+     "strip_sd": 0.05830027434634266,
+     "core1_mean": 0.7602338400394999,
+     "core1_sd": 0.028146584099386016,
+     "core2_mean": 0.939157289374073,
+     "core2_sd": 0.02119851725370732,
+     "depth_mean": 0.3135010300340687,
+     "depth_sd": 0.05999006049539947,
+     "z_depth": -0.5513006650233369
+    },
+    "region_status": "ok",
+    "point": {
+     "p_valley": 0.1018781492870447,
+     "p_vs_core1": 0.10537116201876984,
+     "p_vs_core2": 0.7133005648723791,
+     "strip_mean": 0.5531870403390176,
+     "strip_sd": 0.07309507072272518,
+     "core1_mean": 0.7792833172375164,
+     "core1_sd": 0.06477091402813993,
+     "core2_mean": 0.9496777992492359,
+     "core2_sd": 0.05518247613867445,
+     "depth_mean": 0.3112935179043586,
+     "depth_sd": 0.08204456448828726,
+     "z_depth": -0.43001108721407916
+    },
+    "point_label": "single-point values (bilinear interpolation at the gap midpoint and the disk centers), not the resolution-scale feature"
+   },
+   "truth": {
+    "point": {
+     "strip": 0.0,
+     "core1": 0.6931471805599453,
+     "core2": 0.8754687373538999,
+     "holds": true
+    },
+    "region": {
+     "strip": 0.0,
+     "core1": 0.6931471805599453,
+     "core2": 0.8754687373538999,
+     "holds": true
+    }
+   },
+   "time_s": 34.969420084002195
+  }
+ },
+ "operating_point": {
+  "n_data": 2400,
+  "rel_model_error": 0.0021120239367616064,
+  "rel_noise": 0.03162277660168381,
+  "model_to_noise": 0.06678806112962098,
+  "phi_truth": 2443.907309625215,
+  "phi_clean": 2438.230941282883,
+  "phi_excess_sd": 0.11586838359000946
+ }
+}

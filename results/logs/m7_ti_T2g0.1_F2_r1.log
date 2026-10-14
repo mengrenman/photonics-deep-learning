@@ -1,0 +1,18 @@
+# batch_run 2026-10-13T13:18:29+08:00 slot cpu3
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T2 --gap 0.1 --model F2 --stage ti --ti-tag r1 --ti-seed 3 --ti-chains 1
+T2g0.1_F2 TI_r1 1/16: beta 0.000e+00, E[phi] 1760482.5, var 1927098340097.7, ESS 103, R-hat 1.002, acceptance 0.67, 28 s
+T2g0.1_F2 TI_r1 2/16: beta 1.317e-06, E[phi] 996844.9, var 196238041292.8, ESS 10, R-hat 1.092, acceptance 0.72, 1027 s
+T2g0.1_F2 TI_r1 3/16: beta 4.214e-05, E[phi] 85405.0, var 1166080869.6, ESS 21, R-hat 1.026, acceptance 0.59, 1176 s
+T2g0.1_F2 TI_r1 4/16: beta 3.200e-04, E[phi] 27947.5, var 19161854.6, ESS 34, R-hat 0.997, acceptance 0.83, 1262 s
+T2g0.1_F2 TI_r1 5/16: beta 1.348e-03, E[phi] 21743.9, var 1012527.1, ESS 44, R-hat 1.008, acceptance 0.89, 1434 s
+T2g0.1_F2 TI_r1 6/16: beta 4.115e-03, E[phi] 20662.7, var 151426.5, ESS 32, R-hat 0.999, acceptance 0.70, 1330 s
+T2g0.1_F2 TI_r1 7/16: beta 1.024e-02, E[phi] 20369.5, var 30491.9, ESS 6, R-hat 1.153, acceptance 0.70, 1273 s
+T2g0.1_F2 TI_r1 8/16: beta 2.213e-02, E[phi] 20193.9, var 4627.3, ESS 37, R-hat 1.038, acceptance 0.75, 1245 s
+T2g0.1_F2 TI_r1 9/16: beta 4.315e-02, E[phi] 20145.9, var 1042.3, ESS 9, R-hat 1.118, acceptance 0.68, 1298 s
+T2g0.1_F2 TI_r1 10/16: beta 7.776e-02, E[phi] 20129.0, var 595.8, ESS 55, R-hat 1.016, acceptance 0.75, 1232 s
+T2g0.1_F2 TI_r1 11/16: beta 1.317e-01, E[phi] 20110.9, var 101.8, ESS 56, R-hat 1.010, acceptance 0.79, 1227 s
+T2g0.1_F2 TI_r1 12/16: beta 2.121e-01, E[phi] 20105.3, var 45.6, ESS 41, R-hat 1.044, acceptance 0.69, 1313 s
+T2g0.1_F2 TI_r1 13/16: beta 3.277e-01, E[phi] 20101.2, var 18.4, ESS 16, R-hat 1.077, acceptance 0.70, 1316 s
+T2g0.1_F2 TI_r1 14/16: beta 4.889e-01, E[phi] 20099.8, var 22.0, ESS 35, R-hat 0.994, acceptance 0.73, 1205 s
+T2g0.1_F2 TI_r1 15/16: beta 7.082e-01, E[phi] 20096.9, var 2.6, ESS 39, R-hat 1.007, acceptance 0.65, 1242 s

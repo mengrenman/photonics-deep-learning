@@ -1,0 +1,130 @@
+[batch_run 09:31:08] 42 job(s) to run, 0 skipped; cpu slots 7 x 1 thread(s), gpu slots 1, unpinned; logs in /Users/mengren/Documents/new_projects/photonics-dl/results/logs
+[batch_run 09:31:08] START m7r_snr_T4_F2_10 (cpu0, unpinned) [1/42]
+[batch_run 09:31:08] START m7r_snr_T4_F2_20 (cpu1, unpinned) [2/42]
+[batch_run 09:31:08] START m7r_snr_ppc_T5_F2_10 (cpu2, unpinned) [3/42]
+[batch_run 09:31:08] START m7r_snr_ppc_T5_F2_20 (cpu3, unpinned) [4/42]
+[batch_run 09:31:08] START m7r_snr_ppc_T2g0.1_F2_10 (cpu4, unpinned) [5/42]
+[batch_run 09:31:08] START m7r_snr_ppc_T2g0.1_F2_20 (cpu5, unpinned) [6/42]
+[batch_run 09:31:08] START m7r_snr_T1g0.05_F2 (cpu6, unpinned) [7/42]
+[batch_run 09:32:34] DONE  m7r_snr_ppc_T5_F2_20 exit 0 in 85.8 s
+[batch_run 09:32:34] START m7r_snr_T1g0.1_F2 (cpu3, unpinned) [8/42]
+[batch_run 09:32:35] DONE  m7r_snr_ppc_T2g0.1_F2_20 exit 0 in 86.8 s
+[batch_run 09:32:35] START m7r_snr_T2g0.05_F2 (cpu5, unpinned) [9/42]
+[batch_run 09:32:45] DONE  m7r_snr_ppc_T5_F2_10 exit 0 in 97.4 s
+[batch_run 09:32:45] START m7r_snr_T2g0.1_F2 (cpu2, unpinned) [10/42]
+[batch_run 09:32:51] DONE  m7r_snr_ppc_T2g0.1_F2_10 exit 0 in 103.0 s
+[batch_run 09:32:51] START m7r_snr_T3g0.05_F2 (cpu4, unpinned) [11/42]
+[batch_run 09:40:34] DONE  m7r_snr_T1g0.05_F2 exit 0 in 566.5 s
+[batch_run 09:40:34] START m7r_snr_T3g0.1_F2 (cpu6, unpinned) [12/42]
+[batch_run 09:41:50] DONE  m7r_snr_T1g0.1_F2 exit 0 in 556.9 s
+[batch_run 09:41:51] START m7r_snr_T5_F2 (cpu3, unpinned) [13/42]
+[batch_run 09:43:59] DONE  m7r_snr_T2g0.05_F2 exit 0 in 684.7 s
+[batch_run 09:43:59] START m7r_snr_T3g0.05_F2u (cpu5, unpinned) [14/42]
+[batch_run 09:44:06] DONE  m7r_snr_T2g0.1_F2 exit 0 in 680.6 s
+[batch_run 09:44:06] START m7r_snr_T3g0.1_F2u (cpu2, unpinned) [15/42]
+[batch_run 09:45:16] DONE  m7r_snr_T3g0.05_F2 exit 0 in 745.2 s
+[batch_run 09:45:16] START m7r_snr_T1g0.05_F2_30dB (cpu4, unpinned) [16/42]
+[batch_run 09:45:24] DONE  m7r_snr_T1g0.05_F2_30dB exit 0 in 8.1 s
+[batch_run 09:45:24] START m7r_snr_T2g0.05_F2_30dB (cpu4, unpinned) [17/42]
+[batch_run 09:45:32] DONE  m7r_snr_T2g0.05_F2_30dB exit 0 in 8.1 s
+[batch_run 09:45:32] START m7r_snr_T2g0.1_F2_30dB (cpu4, unpinned) [18/42]
+[batch_run 09:45:41] DONE  m7r_snr_T2g0.1_F2_30dB exit 0 in 8.6 s
+[batch_run 09:45:41] START m7r_snr_T3g0.05_F2_30dB (cpu4, unpinned) [19/42]
+[batch_run 09:45:49] DONE  m7r_snr_T3g0.05_F2_30dB exit 0 in 8.6 s
+[batch_run 09:45:49] START m7r_snr_T3g0.1_F2_30dB (cpu4, unpinned) [20/42]
+[batch_run 09:45:59] DONE  m7r_snr_T3g0.1_F2_30dB exit 0 in 9.6 s
+[batch_run 09:45:59] START m7r_snr_T4_F2_30dB (cpu4, unpinned) [21/42]
+[batch_run 09:46:28] DONE  m7r_snr_T4_F2_30dB exit 0 in 29.3 s
+[batch_run 09:46:28] START m7r_snr_T5_F2_30dB (cpu4, unpinned) [22/42]
+[batch_run 09:46:36] DONE  m7r_snr_T5_F2_30dB exit 0 in 8.1 s
+[batch_run 09:46:36] START m7r_snr_E0.005g0.1_F2_30dB (cpu4, unpinned) [23/42]
+[batch_run 09:52:48] DONE  m7r_snr_E0.005g0.1_F2_30dB exit 0 in 371.4 s
+[batch_run 09:52:48] START m7r_snr_E0.01g0.1_F2_30dB (cpu4, unpinned) [24/42]
+[batch_run 09:53:30] DONE  m7r_snr_T4_F2_20 exit 0 in 1341.8 s
+[batch_run 09:53:30] START m7r_snr_E0.02g0.1_F2_30dB (cpu1, unpinned) [25/42]
+[batch_run 09:53:34] DONE  m7r_snr_T5_F2 exit 0 in 703.1 s
+[batch_run 09:53:34] START m7r_snr_T1g0.1_F2_30dB (cpu3, unpinned) [26/42]
+[batch_run 09:56:56] DONE  m7r_snr_T3g0.1_F2u exit 0 in 769.8 s
+[batch_run 09:56:56] START m7r_disc_fit (cpu2, unpinned) [27/42]
+[batch_run 09:57:10] DONE  m7r_snr_T3g0.05_F2u exit 0 in 790.5 s
+[batch_run 09:57:10] START m7r_is_T1g0.05_F2 (cpu5, unpinned) [28/42]
+[batch_run 09:57:46] DONE  m7r_snr_T3g0.1_F2 exit 0 in 1031.3 s
+[batch_run 09:57:46] START m7r_is_T1g0.05_F2u (cpu6, unpinned) [29/42]
+[batch_run 09:58:18] DONE  m7r_snr_T1g0.1_F2_30dB exit 0 in 284.3 s
+[batch_run 09:58:18] START m7r_is_T1g0.1_F2 (cpu3, unpinned) [30/42]
+[batch_run 09:58:45] DONE  m7r_snr_E0.01g0.1_F2_30dB exit 0 in 357.1 s
+[batch_run 09:58:45] START m7r_is_T1g0.1_F2u (cpu4, unpinned) [31/42]
+[batch_run 09:58:57] DONE  m7r_disc_fit exit 0 in 121.2 s
+[batch_run 09:58:57] START m7r_is_T2g0.05_F2 (cpu2, unpinned) [32/42]
+[batch_run 09:59:41] DONE  m7r_snr_E0.02g0.1_F2_30dB exit 0 in 371.1 s
+[batch_run 09:59:41] START m7r_is_T2g0.05_F2u (cpu1, unpinned) [33/42]
+[batch_run 10:00:16] DONE  m7r_snr_T4_F2_10 exit 0 in 1748.7 s
+[batch_run 10:00:16] START m7r_is_T2g0.1_F2 (cpu0, unpinned) [34/42]
+[batch_run 10:00:20] DONE  m7r_is_T1g0.05_F2 exit 0 in 190.3 s
+[batch_run 10:00:20] START m7r_is_T2g0.1_F2u (cpu5, unpinned) [35/42]
+[batch_run 10:01:06] DONE  m7r_is_T1g0.05_F2u exit 0 in 200.8 s
+[batch_run 10:01:06] START m7r_is_T3g0.05_F2 (cpu6, unpinned) [36/42]
+[batch_run 10:01:37] DONE  m7r_is_T1g0.1_F2 exit 0 in 198.7 s
+[batch_run 10:01:37] START m7r_is_T3g0.05_F2u (cpu3, unpinned) [37/42]
+[batch_run 10:02:16] DONE  m7r_is_T1g0.1_F2u exit 0 in 210.8 s
+[batch_run 10:02:16] START m7r_is_T3g0.1_F2 (cpu4, unpinned) [38/42]
+[batch_run 10:02:26] DONE  m7r_is_T2g0.05_F2 exit 0 in 209.3 s
+[batch_run 10:02:26] START m7r_is_T3g0.1_F2u (cpu2, unpinned) [39/42]
+[batch_run 10:03:11] DONE  m7r_is_T2g0.05_F2u exit 0 in 209.8 s
+[batch_run 10:03:11] START m7r_is_T5_F2 (cpu1, unpinned) [40/42]
+[batch_run 10:03:47] DONE  m7r_is_T2g0.1_F2 exit 0 in 210.9 s
+[batch_run 10:03:47] START m7r_is_T5_F2u (cpu0, unpinned) [41/42]
+[batch_run 10:03:49] DONE  m7r_is_T2g0.1_F2u exit 0 in 208.9 s
+[batch_run 10:03:49] START m7r_is_T4_Fe (cpu5, unpinned) [42/42]
+[batch_run 10:04:34] DONE  m7r_is_T3g0.05_F2 exit 0 in 207.4 s
+[batch_run 10:05:03] DONE  m7r_is_T3g0.05_F2u exit 0 in 206.4 s
+[batch_run 10:05:27] DONE  m7r_is_T3g0.1_F2 exit 0 in 191.8 s
+[batch_run 10:05:38] DONE  m7r_is_T3g0.1_F2u exit 0 in 191.8 s
+[batch_run 10:06:02] DONE  m7r_is_T5_F2 exit 0 in 171.1 s
+[batch_run 10:06:25] DONE  m7r_is_T4_Fe exit 0 in 156.4 s
+[batch_run 10:06:27] DONE  m7r_is_T5_F2u exit 0 in 159.5 s
+
+job                              status          wall s  exit
+m7r_snr_ppc_T5_F2_20             ok                85.8     0
+m7r_snr_ppc_T2g0.1_F2_20         ok                86.8     0
+m7r_snr_ppc_T5_F2_10             ok                97.4     0
+m7r_snr_ppc_T2g0.1_F2_10         ok               103.0     0
+m7r_snr_T1g0.05_F2               ok               566.5     0
+m7r_snr_T1g0.1_F2                ok               556.9     0
+m7r_snr_T2g0.05_F2               ok               684.7     0
+m7r_snr_T2g0.1_F2                ok               680.6     0
+m7r_snr_T3g0.05_F2               ok               745.2     0
+m7r_snr_T1g0.05_F2_30dB          ok                 8.1     0
+m7r_snr_T2g0.05_F2_30dB          ok                 8.1     0
+m7r_snr_T2g0.1_F2_30dB           ok                 8.6     0
+m7r_snr_T3g0.05_F2_30dB          ok                 8.6     0
+m7r_snr_T3g0.1_F2_30dB           ok                 9.6     0
+m7r_snr_T4_F2_30dB               ok                29.3     0
+m7r_snr_T5_F2_30dB               ok                 8.1     0
+m7r_snr_E0.005g0.1_F2_30dB       ok               371.4     0
+m7r_snr_T4_F2_20                 ok              1341.8     0
+m7r_snr_T5_F2                    ok               703.1     0
+m7r_snr_T3g0.1_F2u               ok               769.8     0
+m7r_snr_T3g0.05_F2u              ok               790.5     0
+m7r_snr_T3g0.1_F2                ok              1031.3     0
+m7r_snr_T1g0.1_F2_30dB           ok               284.3     0
+m7r_snr_E0.01g0.1_F2_30dB        ok               357.1     0
+m7r_disc_fit                     ok               121.2     0
+m7r_snr_E0.02g0.1_F2_30dB        ok               371.1     0
+m7r_snr_T4_F2_10                 ok              1748.7     0
+m7r_is_T1g0.05_F2                ok               190.3     0
+m7r_is_T1g0.05_F2u               ok               200.8     0
+m7r_is_T1g0.1_F2                 ok               198.7     0
+m7r_is_T1g0.1_F2u                ok               210.8     0
+m7r_is_T2g0.05_F2                ok               209.3     0
+m7r_is_T2g0.05_F2u               ok               209.8     0
+m7r_is_T2g0.1_F2                 ok               210.9     0
+m7r_is_T2g0.1_F2u                ok               208.9     0
+m7r_is_T3g0.05_F2                ok               207.4     0
+m7r_is_T3g0.05_F2u               ok               206.4     0
+m7r_is_T3g0.1_F2                 ok               191.8     0
+m7r_is_T3g0.1_F2u                ok               191.8     0
+m7r_is_T5_F2                     ok               171.1     0
+m7r_is_T4_Fe                     ok               156.4     0
+m7r_is_T5_F2u                    ok               159.5     0
+[batch_run 10:06:27] 42 ok, 0 not ok

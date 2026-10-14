@@ -1,0 +1,12 @@
+[
+  {
+    "name": "m7r_disc_fit",
+    "cmd": [
+      "scripts/parametric_discretization.py",
+      "fit"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/discretization/disc_g0.1_n256.json"
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "name": "m7_hold4_4038",
+  "status": "running",
+  "device": "cpu",
+  "slot": 2,
+  "threads": 1,
+  "cmd": [
+    "bash",
+    "-c",
+    "while kill -0 4038 2>/dev/null; do sleep 20; done"
+  ],
+  "cmd_in_jobs_file": [
+    "bash",
+    "-c",
+    "while kill -0 4038 2>/dev/null; do sleep 20; done"
+  ],
+  "cwd": "/Users/mengren/Documents/new_projects/photonics-dl",
+  "env": {
+    "JAX_PLATFORMS": "cpu",
+    "NPROC": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "pinned": false,
+  "cores": null,
+  "host": {
+    "hostname": "mbp",
+    "system": "Darwin",
+    "release": "27.0.0",
+    "machine": "arm64",
+    "cpu_model": "Apple M3 Max",
+    "logical_cpus": 16,
+    "physical_cpus": 16,
+    "mem_total_bytes": 137438953472
+  },
+  "log": "/Users/mengren/Documents/new_projects/photonics-dl/results/logs/m7_hold4_4038.log",
+  "done_marker": "/Users/mengren/Documents/new_projects/photonics-dl/results/logs/m7_hold4_4038.never",
+  "start": "2026-10-13T17:38:41+08:00",
+  "end": null,
+  "wall_s": null,
+  "exit_code": null
+}

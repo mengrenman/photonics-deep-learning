@@ -1,0 +1,67 @@
+{
+ "truth": {
+  "name": "T5",
+  "kind": "EllipseScene",
+  "ellipses": [
+   [
+    -0.25,
+    0.0,
+    0.2,
+    0.2,
+    0.0
+   ],
+   [
+    0.25,
+    0.0,
+    0.2,
+    0.2,
+    0.0
+   ],
+   [
+    0.0,
+    0.1,
+    0.06,
+    0.06,
+    0.0
+   ]
+  ],
+  "eps": [
+   2.0,
+   2.0,
+   2.0
+  ],
+  "true_gap": 0.1,
+  "description": "two disks, gap 0.1, plus a disk of radius 0.06 at (0, 0.1)"
+ },
+ "truth_label": "T5",
+ "g_true": 0.1,
+ "g_det": 0.0007540062995777645,
+ "n": 64,
+ "side": 1.5,
+ "h": 0.0234375,
+ "data_grid_n": 128,
+ "snr_db": 30.0,
+ "seed": 0,
+ "n_tx": 40,
+ "n_rx": 60,
+ "n_data": 2400,
+ "noise_std": 0.00021678421859709315,
+ "d_obs_sha256": "8ccb18171b5b7302a30e35c81065fa373e9fd81b81c7dcc0645770b089579264",
+ "tol": 1e-10,
+ "operating_point": {
+  "n_data": 2400,
+  "rel_model_error": 0.0019207077262226844,
+  "rel_noise": 0.031622776601683764,
+  "model_to_noise": 0.06073811134346804,
+  "phi_truth": 2444.401588566785,
+  "phi_clean": 2438.230941282882,
+  "phi_excess_sd": 0.1259578102354395
+ },
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ }
+}

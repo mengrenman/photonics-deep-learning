@@ -1,0 +1,25 @@
+{
+ "case": "T4_Fe",
+ "log_z": 17089.590117666212,
+ "se": 0.01792423943380497,
+ "weight_ess": 757.026866688743,
+ "max_weight": 0.001838783067727027,
+ "n_draws": 1000,
+ "n_outside_box": 0,
+ "df": 5.0,
+ "scale": 1.2,
+ "seed": 7,
+ "laplace_gn": 17089.565120456362,
+ "laplace_fd": 17089.583457539044,
+ "is_minus_laplace_gn": 0.024997209849971114,
+ "is_minus_laplace_fd": 0.006660127168288454,
+ "map_converged": true,
+ "time_s": 154.86828820800292,
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ }
+}

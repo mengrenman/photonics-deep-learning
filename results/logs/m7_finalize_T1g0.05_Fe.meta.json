@@ -1,0 +1,47 @@
+{
+  "name": "m7_finalize_T1g0.05_Fe",
+  "status": "ok",
+  "device": "cpu",
+  "slot": 7,
+  "threads": 1,
+  "cmd": [
+    "bash",
+    "-c",
+    "end=$(( $(date +%s) + 14400 )); until [ -e results/parametric/T1g0.05_Fe/chains/c0_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T1g0.05_Fe/chains/c1_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T1g0.05_Fe/chains/c2_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T1g0.05_Fe/chains/c3_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; exec /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T1 --gap 0.05 --model Fe --chains 4 --segments 5"
+  ],
+  "cmd_in_jobs_file": [
+    "bash",
+    "-c",
+    "end=$(( $(date +%s) + 14400 )); until [ -e results/parametric/T1g0.05_Fe/chains/c0_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T1g0.05_Fe/chains/c1_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T1g0.05_Fe/chains/c2_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T1g0.05_Fe/chains/c3_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; exec /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T1 --gap 0.05 --model Fe --chains 4 --segments 5"
+  ],
+  "cwd": "/Users/mengren/Documents/new_projects/photonics-dl",
+  "env": {
+    "JAX_PLATFORMS": "cpu",
+    "NPROC": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "pinned": false,
+  "cores": null,
+  "host": {
+    "hostname": "mbp",
+    "system": "Darwin",
+    "release": "27.0.0",
+    "machine": "arm64",
+    "cpu_model": "Apple M3 Max",
+    "logical_cpus": 16,
+    "physical_cpus": 16,
+    "mem_total_bytes": 137438953472
+  },
+  "log": "/Users/mengren/Documents/new_projects/photonics-dl/results/logs/m7_finalize_T1g0.05_Fe.log",
+  "done_marker": "/Users/mengren/Documents/new_projects/photonics-dl/results/parametric/T1g0.05_Fe/summary.json",
+  "start": "2026-10-13T15:38:13+08:00",
+  "end": "2026-10-13T15:50:25+08:00",
+  "wall_s": 732.422,
+  "exit_code": 0,
+  "marker_present": true
+}

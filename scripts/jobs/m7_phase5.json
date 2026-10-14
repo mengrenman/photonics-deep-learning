@@ -1,0 +1,329 @@
+[
+  {
+    "name": "m7_hold5_4038",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 4038 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_4038.never"
+  },
+  {
+    "name": "m7_hold5_4297",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 4297 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_4297.never"
+  },
+  {
+    "name": "m7_hold5_4383",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 4383 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_4383.never"
+  },
+  {
+    "name": "m7_hold5_4385",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 4385 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_4385.never"
+  },
+  {
+    "name": "m7_hold5_9752",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 9752 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_9752.never"
+  },
+  {
+    "name": "m7_hold5_9813",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 9813 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_9813.never"
+  },
+  {
+    "name": "m7_hold5_68628",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 68628 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_68628.never"
+  },
+  {
+    "name": "m7_hold5_68629",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 68629 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_68629.never"
+  },
+  {
+    "name": "m7_hold5_68630",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 68630 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_68630.never"
+  },
+  {
+    "name": "m7_hold5_68631",
+    "cmd": [
+      "bash",
+      "-c",
+      "while kill -0 68631 2>/dev/null; do sleep 20; done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/logs/m7_hold5_68631.never"
+  },
+  {
+    "name": "m7_calib_g0.1_b8",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "33",
+      "34",
+      "35",
+      "36"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1s36.json"
+  },
+  {
+    "name": "m7_calib_g0.1_b9",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--seeds",
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity/E0g0.1s40.json"
+  },
+  {
+    "name": "m7_crime_g0.05_b0",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--data-factor",
+      "1",
+      "--out-dir",
+      "results/parametric/ellipticity_crime",
+      "--seeds",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity_crime/E0g0.05s4.json"
+  },
+  {
+    "name": "m7_crime_g0.05_b1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--data-factor",
+      "1",
+      "--out-dir",
+      "results/parametric/ellipticity_crime",
+      "--seeds",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity_crime/E0g0.05s8.json"
+  },
+  {
+    "name": "m7_crime_g0.05_b2",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--data-factor",
+      "1",
+      "--out-dir",
+      "results/parametric/ellipticity_crime",
+      "--seeds",
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity_crime/E0g0.05s12.json"
+  },
+  {
+    "name": "m7_crime_g0.05_b3",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.05",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--data-factor",
+      "1",
+      "--out-dir",
+      "results/parametric/ellipticity_crime",
+      "--seeds",
+      "13",
+      "14",
+      "15",
+      "16"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity_crime/E0g0.05s16.json"
+  },
+  {
+    "name": "m7_crime_g0.1_b0",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--data-factor",
+      "1",
+      "--out-dir",
+      "results/parametric/ellipticity_crime",
+      "--seeds",
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity_crime/E0g0.1s4.json"
+  },
+  {
+    "name": "m7_crime_g0.1_b1",
+    "cmd": [
+      "scripts/parametric_sweeps.py",
+      "--gap",
+      "0.1",
+      "--level",
+      "0",
+      "--ppc-reps",
+      "0",
+      "--data-factor",
+      "1",
+      "--out-dir",
+      "results/parametric/ellipticity_crime",
+      "--seeds",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/ellipticity_crime/E0g0.1s8.json"
+  },
+  {
+    "name": "m7_finalize_T3g0.05_F2u",
+    "cmd": [
+      "bash",
+      "-c",
+      "end=$(( $(date +%s) + 14400 )); until [ -e results/parametric/T3g0.05_F2u/chains/c0_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T3g0.05_F2u/chains/c1_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T3g0.05_F2u/chains/c2_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T3g0.05_F2u/chains/c3_s4.npz ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; exec /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T3 --gap 0.05 --model F2u --chains 4 --segments 5"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T3g0.05_F2u/summary.json"
+  },
+  {
+    "name": "m7_finalize_ti_T1g0.05_F2",
+    "cmd": [
+      "bash",
+      "-c",
+      "end=$(( $(date +%s) + 21600 )); until [ -e results/parametric/T1g0.05_F2/ti_r0.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T1g0.05_F2/ti_r1.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T1g0.05_F2/summary.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; mv results/parametric/T1g0.05_F2/summary.json results/parametric/T1g0.05_F2/summary_before_ti.json; /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T1 --gap 0.05 --model F2 --chains 4 --segments 5 --stage finalize && touch results/parametric/T1g0.05_F2/finalize_ti.done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T1g0.05_F2/finalize_ti.done"
+  },
+  {
+    "name": "m7_finalize_ti_T2g0.1_F2",
+    "cmd": [
+      "bash",
+      "-c",
+      "end=$(( $(date +%s) + 21600 )); until [ -e results/parametric/T2g0.1_F2/ti_r0.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T2g0.1_F2/ti_r1.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T2g0.1_F2/summary.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; mv results/parametric/T2g0.1_F2/summary.json results/parametric/T2g0.1_F2/summary_before_ti.json; /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T2 --gap 0.1 --model F2 --chains 4 --segments 5 --stage finalize && touch results/parametric/T2g0.1_F2/finalize_ti.done"
+    ],
+    "device": "cpu",
+    "threads": 1,
+    "done_marker": "results/parametric/T2g0.1_F2/finalize_ti.done"
+  }
+]

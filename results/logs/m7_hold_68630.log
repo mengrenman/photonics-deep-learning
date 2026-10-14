@@ -1,0 +1,3 @@
+# batch_run 2026-10-13T15:14:31+08:00 slot cpu2
+# env {"JAX_PLATFORMS": "cpu", "NPROC": "1", "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1", "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false", "PYTHONUNBUFFERED": "1"}
+# cmd bash -c while kill -0 68630 2>/dev/null; do sleep 20; done

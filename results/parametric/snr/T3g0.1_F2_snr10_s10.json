@@ -1,0 +1,43 @@
+{
+ "label": "T3g0.1",
+ "model": "F2",
+ "snr": 10.0,
+ "seed": 10,
+ "g_true": 0.1,
+ "n_data": 2400,
+ "noise_std": 0.0023942336349159,
+ "phi_map": 2772.293036435647,
+ "phi_over_N": 1.155122098514853,
+ "map_converged": true,
+ "fit": "newton from start 0",
+ "noise_only_phi": 2369.182258463385,
+ "delta_phi": 403.110777972262,
+ "p_null": 1.4920165569534456e-13,
+ "z_phi": 7.654418535189111,
+ "p_hat": [
+  0.09536616975776283,
+  0.2011986758417295,
+  2.1893453024579395,
+  -0.001139738905581028,
+  0.0003781020304595428
+ ],
+ "g_hat": 0.09536616975776283,
+ "g_sd": 0.002789373749072146,
+ "g_ci": [
+  0.09077764994053915,
+  0.0999546895749865
+ ],
+ "g_error": -0.00463383024223718,
+ "z_true": 1.6612439418627827,
+ "log_z_laplace": 23423.579148455552,
+ "ppc_refit": null,
+ "covers_true": false,
+ "time_s": 12.51097841700539,
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ }
+}

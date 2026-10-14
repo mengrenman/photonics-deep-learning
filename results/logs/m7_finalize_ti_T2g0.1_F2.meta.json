@@ -1,0 +1,46 @@
+{
+  "name": "m7_finalize_ti_T2g0.1_F2",
+  "status": "running",
+  "device": "cpu",
+  "slot": 6,
+  "threads": 1,
+  "cmd": [
+    "bash",
+    "-c",
+    "end=$(( $(date +%s) + 21600 )); until [ -e results/parametric/T2g0.1_F2/ti_r0.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T2g0.1_F2/ti_r1.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T2g0.1_F2/summary.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; mv results/parametric/T2g0.1_F2/summary.json results/parametric/T2g0.1_F2/summary_before_ti.json; /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T2 --gap 0.1 --model F2 --chains 4 --segments 5 --stage finalize && touch results/parametric/T2g0.1_F2/finalize_ti.done"
+  ],
+  "cmd_in_jobs_file": [
+    "bash",
+    "-c",
+    "end=$(( $(date +%s) + 21600 )); until [ -e results/parametric/T2g0.1_F2/ti_r0.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T2g0.1_F2/ti_r1.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; until [ -e results/parametric/T2g0.1_F2/summary.json ]; do [ $(date +%s) -ge $end ] && exit 3; sleep 20; done; mv results/parametric/T2g0.1_F2/summary.json results/parametric/T2g0.1_F2/summary_before_ti.json; /Users/mengren/anaconda3/envs/photonics-dl/bin/python scripts/parametric_run.py --truth T2 --gap 0.1 --model F2 --chains 4 --segments 5 --stage finalize && touch results/parametric/T2g0.1_F2/finalize_ti.done"
+  ],
+  "cwd": "/Users/mengren/Documents/new_projects/photonics-dl",
+  "env": {
+    "JAX_PLATFORMS": "cpu",
+    "NPROC": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+    "PYTHONUNBUFFERED": "1"
+  },
+  "pinned": false,
+  "cores": null,
+  "host": {
+    "hostname": "mbp",
+    "system": "Darwin",
+    "release": "27.0.0",
+    "machine": "arm64",
+    "cpu_model": "Apple M3 Max",
+    "logical_cpus": 16,
+    "physical_cpus": 16,
+    "mem_total_bytes": 137438953472
+  },
+  "log": "/Users/mengren/Documents/new_projects/photonics-dl/results/logs/m7_finalize_ti_T2g0.1_F2.log",
+  "done_marker": "/Users/mengren/Documents/new_projects/photonics-dl/results/parametric/T2g0.1_F2/finalize_ti.done",
+  "start": "2026-10-13T23:29:33+08:00",
+  "end": null,
+  "wall_s": null,
+  "exit_code": null
+}

@@ -1,0 +1,59 @@
+{
+ "truth": {
+  "name": "T2",
+  "kind": "EllipseScene",
+  "ellipses": [
+   [
+    -0.225,
+    0.0,
+    0.2,
+    0.22999999999999998,
+    0.0
+   ],
+   [
+    0.225,
+    0.0,
+    0.2,
+    0.22999999999999998,
+    0.0
+   ]
+  ],
+  "eps": [
+   2.0,
+   2.0
+  ],
+  "true_gap": 0.05,
+  "description": "two ellipses 0.2 x 0.230 (long axis along y), gap 0.05"
+ },
+ "truth_label": "T2g0.05",
+ "g_true": 0.05,
+ "g_det": 0.0007540062995777645,
+ "n": 64,
+ "side": 1.5,
+ "h": 0.0234375,
+ "data_grid_n": 128,
+ "snr_db": 30.0,
+ "seed": 0,
+ "n_tx": 40,
+ "n_rx": 60,
+ "n_data": 2400,
+ "noise_std": 0.00023153997000557232,
+ "d_obs_sha256": "c10bbb6470ff7bae51096961818f19068988f17507c91feac228038de88a0db4",
+ "tol": 1e-10,
+ "operating_point": {
+  "n_data": 2400,
+  "rel_model_error": 0.0017645541676088556,
+  "rel_noise": 0.03162277660168377,
+  "model_to_noise": 0.05580010224386498,
+  "phi_truth": 2444.896122611377,
+  "phi_clean": 2438.230941282882,
+  "phi_excess_sd": 0.1360524441494827
+ },
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "1",
+  "OPENBLAS_NUM_THREADS": "1",
+  "JAX_PLATFORMS": "cpu"
+ }
+}
