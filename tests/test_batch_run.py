@@ -449,7 +449,7 @@ def test_xla_flags_merge_keeps_foreign_flags_and_replaces_duplicates():
 
 def test_gpu_job_environment():
     env = br.gpu_job_env("1", n_sharing=1)
-    assert env["JAX_PLATFORMS"] == "cuda" and env["CUDA_VISIBLE_DEVICES"] == "1"
+    assert env["JAX_PLATFORMS"] == "cuda,cpu" and env["CUDA_VISIBLE_DEVICES"] == "1"
     assert env["XLA_PYTHON_CLIENT_PREALLOCATE"] == "false" and env["XLA_PYTHON_CLIENT_MEM_FRACTION"] == "0.9"
     assert "XLA_FLAGS" not in env and "NPROC" not in env and env["OMP_NUM_THREADS"] == "1"  # no XLA CPU client
     assert br.gpu_job_env(0, n_sharing=2)["XLA_PYTHON_CLIENT_MEM_FRACTION"] == "0.45"
@@ -513,7 +513,7 @@ def test_run_writes_logs_meta_and_passes_the_environment(tmp_path, capsys):
     assert cpu_env["JAX_PLATFORMS"] == "cpu" and cpu_env["NPROC"] == "4" and cpu_env["OMP_NUM_THREADS"] == "2"
     assert "--xla_cpu_multi_thread_eigen=true" in cpu_env["XLA_FLAGS"]
     gpu_env = json.loads((tmp_path / "env_g1.json").read_text())
-    assert gpu_env["JAX_PLATFORMS"] == "cuda" and gpu_env["CUDA_VISIBLE_DEVICES"] == "1"
+    assert gpu_env["JAX_PLATFORMS"] == "cuda,cpu" and gpu_env["CUDA_VISIBLE_DEVICES"] == "1"
     assert gpu_env["XLA_PYTHON_CLIENT_PREALLOCATE"] == "false" and gpu_env["XLA_PYTHON_CLIENT_MEM_FRACTION"] == "0.9"
     meta = json.loads((logs / "c1.meta.json").read_text())
     assert meta["status"] == "ok" and meta["exit_code"] == 0 and meta["wall_s"] >= 0

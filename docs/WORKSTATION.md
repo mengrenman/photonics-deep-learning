@@ -102,9 +102,12 @@ CUDA 13 wheels, `jax[cuda13]`, need 580). The RTX 3090 (Ampere, compute capabili
 `nvidia-smi` must work before JAX can see the GPU; the driver is installed from the distribution or NVIDIA,
 not from pip. The JAX installation page (read on 2026-10-05) lists `jax[cuda13]` as the recommended extra and
 `jax[cuda12]` as the legacy one; the CUDA 12 wheels support SM 5.2 and newer, the CUDA 13 wheels SM 7.5 and
-newer. Check the current minimum on that page when you upgrade JAX. Use `JAX_PLATFORMS=cuda` for "the GPU or
+newer. Check the current minimum on that page when you upgrade JAX. Use `JAX_PLATFORMS=cuda,cpu` for "the GPU or
 fail" (as `batch_run.py` and `bench_backend.py --platform gpu` do): the plain default falls back to the CPU
-with only a log warning if the CUDA plugin cannot load.
+with only a log warning if the CUDA plugin cannot load, while a listed platform that cannot start is an error
+(checked on the workstation with the GPU hidden: `Unable to initialize backend 'cuda'`). Do not use `cuda`
+alone: `jax.debug.callback`, which the samplers' evaluation counters use, needs a CPU device, and without one
+those programs fail at run time (4 GPU test failures on 2026-11-08 had this cause).
 
 **Verification.**
 
@@ -144,7 +147,7 @@ The norm printed on the Mac (CPU, JAX 0.11.2) is `4.217235372566e-01`; the resid
 cd ~/work/photonics-dl && conda activate photonics-dl
 JAX_PLATFORMS=cpu NPROC=8 python -m pytest -q -m "not slow"     # CPU; NPROC keeps XLA from starting 128 threads
 JAX_PLATFORMS=cpu NPROC=8 python -m pytest -q                   # including the slow tests
-JAX_PLATFORMS=cuda python -m pytest -q -m "not slow"            # GPU (fails loudly if the GPU is not visible)
+JAX_PLATFORMS=cuda,cpu python -m pytest -q -m "not slow"        # GPU (fails loudly if the GPU is not visible)
 python -m pytest -q tests/test_batch_run.py                     # the job runner and bench_backend's import order
 ```
 
@@ -283,11 +286,11 @@ it, which is why the totals above leave one core out. `--smt` lets jobs use sibl
 core's first thread is taken (two jobs then share a physical core; only for experiments). A pinned request that
 does not fit (for example 64 slots plus a GPU job) is refused with the number that fit.
 
-GPU jobs run with `JAX_PLATFORMS=cuda` (an unavailable GPU is an error, not a silent fall back to the CPU),
+GPU jobs run with `JAX_PLATFORMS=cuda,cpu` (an unavailable GPU is an error, not a silent fall back to the CPU),
 `CUDA_VISIBLE_DEVICES` from `--gpu-devices` (default `0`), `XLA_PYTHON_CLIENT_PREALLOCATE=false` and
 `XLA_PYTHON_CLIENT_MEM_FRACTION = 0.9 / (jobs sharing that device)`. One GPU slot is the sensible default; two
-only help if a single job does not keep the card busy. A GPU job does not get `NPROC` or the XLA CPU flags (it
-has no XLA CPU client); it does get the BLAS/OpenMP variables set to `--gpu-threads` (default 1), and with
+only help if a single job does not keep the card busy. A GPU job does not get `NPROC` or the XLA CPU flags (its
+CPU client only runs callbacks); it does get the BLAS/OpenMP variables set to `--gpu-threads` (default 1), and with
 `--pin` it runs under `taskset` on that many reserved cores.
 
 **Smoke the GPU path through `batch_run.py` before a sweep** (this also checks a GPU job pinned to one core,

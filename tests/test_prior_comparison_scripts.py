@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 from types import SimpleNamespace
 
+import jax
 import numpy as np
 import pytest
 
@@ -830,10 +831,28 @@ def test_adapted_chains_start_around_the_final_state_of_the_adaptation_chain_unl
 
 def test_one_process_run_with_adapt_equals_the_staged_run_and_refuses_a_mixed_or_foreign_map(adapted, tmp_path):
     a, b = np.load(adapted["one"] / "chains.npz"), np.load(adapted["first_segment"] / "chains.npz")
-    for key in ("theta", "phi_physical", "welford_mean", "welford_var", "accept", "step", "theta_hat"):
-        np.testing.assert_allclose(b[key], a[key], rtol=1e-8, atol=1e-9, err_msg=key)
-    assert json.loads((adapted["one"] / "adaptation.json").read_text())["map_digest"] == \
-        json.loads((adapted["staged"] / "adaptation.json").read_text())["map_digest"]
+    one_digest = json.loads((adapted["one"] / "adaptation.json").read_text())["map_digest"]
+    staged_digest = json.loads((adapted["staged"] / "adaptation.json").read_text())["map_digest"]
+    if jax.default_backend() == "cpu":
+        # the CPU runs are bit-reproducible: the same adapted map (to the byte) and the same draws
+        for key in ("theta", "phi_physical", "welford_mean", "welford_var", "accept", "step", "theta_hat"):
+            np.testing.assert_allclose(b[key], a[key], rtol=1e-8, atol=1e-9, err_msg=key)
+        assert one_digest == staged_digest
+    else:
+        # On the GPU the adaptation's reductions are not bit-reproducible between the two runs, so the maps differ in the last digits
+        # and their digests differ (measured on the RTX 3090, 2026-11-08: center 1.9e-5, chol 9.5e-6, eps 2.6e-5 apart; theta_hat 1e-14).
+        # The draws then differ by a constant ~5e-4 (no growth over the 20 draws: not chaotic divergence). The bounds are about 10 times the
+        # measured differences; a wrong map, seed or chain assignment would put the draws O(0.1) apart.
+        m1, m2 = np.load(adapted["one"] / "adapted_map.npz"), np.load(adapted["staged"] / "adapted_map.npz")
+        for key in ("center", "chol", "theta_final"):
+            np.testing.assert_allclose(m2[key], m1[key], rtol=0, atol=2e-3 * np.abs(m1[key]).max(), err_msg=key)
+        np.testing.assert_allclose(m2["eps"], m1["eps"], rtol=2e-3)
+        assert m1["traj_length"] == m2["traj_length"] and np.array_equal(m1["max_leapfrog"], m2["max_leapfrog"])
+        gpu_tol = {"theta": dict(rtol=0, atol=1e-2), "phi_physical": dict(rtol=5e-3), "welford_mean": dict(rtol=0, atol=2e-3),
+                   "welford_var": dict(rtol=0, atol=2e-4), "accept": dict(rtol=0, atol=0), "step": dict(rtol=2e-2),
+                   "theta_hat": dict(rtol=1e-10, atol=1e-12)}
+        for key, tol in gpu_tol.items():
+            np.testing.assert_allclose(b[key], a[key], err_msg=key, **tol)
     # finalize refuses segments run with different maps
     mixed = tmp_path / "mixed"
     shutil.copytree(adapted["staged"], mixed)

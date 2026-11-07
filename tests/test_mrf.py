@@ -242,9 +242,11 @@ def test_prior_sampler_agrees_with_exact_quadrature_for_a_non_gaussian_qggmrf():
     exact = _quadrature_std(prior)
     out = mrf.sample_prior(prior, jax.random.key(1), n_chains=4, n_warmup=200, n_samples=3000, thin=2)
     assert out["rhat_max"] < 1.02
-    np.testing.assert_allclose(out["theta_std"], exact, rtol=0.03)
+    # per-pixel relative error of the sampled std over 60 seeds (Mac CPU, workstation CPU and GPU, 2026-11-08): mean 0.000, sd 0.011 on
+    # every backend; the worst of the 4 pixels reached 3.2% once (GPU, seed 0), so 3% was a 3-sd bound on a maximum of four. 4% is 3.8 sd
+    np.testing.assert_allclose(out["theta_std"], exact, rtol=0.04)
     gaussian = np.sqrt(np.diag(np.linalg.inv(prior.hessian(prior.mean))))
-    assert abs(gaussian[0] / exact - 1.0) > 0.05  # the Laplace/Gaussian approximation would fail the 3% check
+    assert abs(gaussian[0] / exact - 1.0) > 0.05  # the Laplace/Gaussian approximation would fail the 4% check
 
 
 # ---------------------------------------------------------------------------------------------

@@ -23,7 +23,7 @@ override T); ``--gpu-slots G`` GPU jobs run at once. CPU jobs get ``JAX_PLATFORM
 that make XLA's CPU backend use T threads (``cpu_job_env``: the XLA thread pool is sized by the ``NPROC``
 environment variable in JAX 0.11, ``XLA_FLAGS`` alone cannot do it; a pool of two hangs, so 2 or 3 threads get a
 pool of four; see docs/WORKSTATION.md). GPU jobs get
-``JAX_PLATFORMS=cuda``, ``CUDA_VISIBLE_DEVICES`` (``--gpu-devices``), ``XLA_PYTHON_CLIENT_PREALLOCATE=false``
+``JAX_PLATFORMS=cuda,cpu``, ``CUDA_VISIBLE_DEVICES`` (``--gpu-devices``), ``XLA_PYTHON_CLIENT_PREALLOCATE=false``
 and ``XLA_PYTHON_CLIENT_MEM_FRACTION = 0.9 / (jobs sharing that device)``.
 
 Pinning (``--pin``, Linux only). The logical CPUs are grouped by the L3 cache they share (sysfs
@@ -133,11 +133,12 @@ def cpu_job_env(threads, base_xla_flags=None):
     return {"JAX_PLATFORMS": "cpu", **thread_env(threads, base_xla_flags), "PYTHONUNBUFFERED": "1"}
 
 
-def gpu_job_env(device, n_sharing=1, host_threads=1, platform_name="cuda"):
+def gpu_job_env(device, n_sharing=1, host_threads=1, platform_name="cuda,cpu"):
     """Environment overrides of a GPU job on CUDA device ``device`` shared by ``n_sharing`` concurrent jobs.
 
-    ``JAX_PLATFORMS=cuda`` makes JAX fail loudly when it cannot see the GPU instead of silently falling
-    back to the CPU. Memory is allocated on demand and capped at 0.9 / n_sharing of the device, rounded down.
+    ``JAX_PLATFORMS=cuda,cpu`` makes JAX fail loudly when it cannot see the GPU instead of silently falling
+    back to the CPU; the CPU device is listed too because ``jax.debug.callback`` (the samplers' evaluation
+    counters) needs one, and with ``cuda`` alone such a program fails at run time. Memory is allocated on demand and capped at 0.9 / n_sharing of the device, rounded down.
     """
     fraction = math.floor(0.9 / max(1, n_sharing) * 1000 + 1e-9) / 1000
     return {
@@ -558,7 +559,7 @@ class Options:
     gpu_slots: int = 1
     gpu_devices: tuple = ("0",)
     gpu_threads: int = 1
-    gpu_platform: str = "cuda"
+    gpu_platform: str = "cuda,cpu"
     pinned: bool = False
     taskset: str = None
     smt: bool = False
@@ -811,7 +812,7 @@ def parse_args(argv=None):
     ap.add_argument("--gpu-slots", type=int, default=1, help="GPU jobs running at once")
     ap.add_argument("--gpu-devices", default="0", help="comma-separated CUDA device ids; slot i uses entry i mod len")
     ap.add_argument("--gpu-threads", type=int, default=1, help="CPU threads (reserved when pinned) per GPU job")
-    ap.add_argument("--gpu-platform", default="cuda", help="JAX_PLATFORMS value of GPU jobs")
+    ap.add_argument("--gpu-platform", default="cuda,cpu", help="JAX_PLATFORMS value of GPU jobs")
     ap.add_argument("--pin", action="store_true", help="Linux only: pin each job to cores of one L3 group (taskset)")
     ap.add_argument("--smt", action="store_true", help="with --pin: allow sibling hardware threads once every "
                     "core's first thread is in use (two jobs then share a physical core)")

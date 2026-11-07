@@ -138,7 +138,7 @@ def parse_args(argv=None):
     ap.add_argument("--no-mem-guard", action="store_true", help="on the CPU backend, attempt batched cases whose "
                     "estimated Krylov basis exceeds the available memory (may kill the process)")
     ap.add_argument("--platform", choices=["auto", "cpu", "gpu"], default="auto",
-                    help="cpu sets JAX_PLATFORMS=cpu; gpu sets JAX_PLATFORMS=cuda (fails if no GPU is visible)")
+                    help="cpu sets JAX_PLATFORMS=cpu; gpu sets JAX_PLATFORMS=cuda,cpu (fails if no GPU is visible)")
     ap.add_argument("--threads", type=int, default=None, help="limit the CPU threads of XLA / BLAS / OpenMP to this "
                     "number (NPROC and friends; default: leave the environment alone). 1 is exact; for 2 or 3 the XLA "
                     "pool is 4, because a pool of 2 hangs. Combine with taskset to pin to that many cores")
@@ -170,7 +170,7 @@ def apply_environment(args):
     if args.platform == "cpu":
         put("JAX_PLATFORMS", "cpu")
     elif args.platform == "gpu":
-        put("JAX_PLATFORMS", "cuda")
+        put("JAX_PLATFORMS", "cuda,cpu")  # cpu too: jax.debug.callback needs a CPU device
     if args.platform != "cpu" and "XLA_PYTHON_CLIENT_PREALLOCATE" not in env:
         put("XLA_PYTHON_CLIENT_PREALLOCATE", "false")  # memory statistics then show what the run needs
     if args.threads:

@@ -212,8 +212,10 @@ def test_ti_checks_the_laplace_evidence_where_the_posterior_is_not_gaussian():
     res, _ = sp.thermodynamic_integration(problem, jax.random.key(6), n_temps=14, n_chains=4, n_pilot=40, n_warmup=60, n_samples=400, prior_starts=3.0 * rng.standard_normal((4, 2)))
     assert abs(res["log_z"] - exact) < 3.0 * res["mc_se"] + abs(res["discretization"]["richardson_error_estimate"]) + 0.05
     assert abs(res["log_z"] - exact) < abs(laplace - exact)
-    # the scale mixing of the core / halo transition is slow at beta ~ 0.7 to 1 (R-hat 1.05 to 1.08 with 400 draws): the diagnostics say so, and the estimate is still within its error
-    assert res["worst_rhat"] < 1.2
+    # the scale mixing of the core / halo transition is slow at beta ~ 0.7 to 1: the diagnostics say so, and the estimate is still within
+    # its error. Over 40 seeds (20 on the Mac, 20 on the workstation, 2026-11-08) the worst R-hat had mean 1.11, sd 0.06 and maximum 1.29
+    # (seed 0 on the workstation), and the two error assertions above never failed; 1.35 is about 4 sd above the mean
+    assert res["worst_rhat"] < 1.35
 
 
 def test_ti_diagnostics_flag_a_crude_schedule():

@@ -440,9 +440,14 @@ def _banana_features(x):
 
 BANANA_TRUTH = np.array([100.0, 0.0, 1.0 + 2e4 * BANANA_B**2])
 FROZEN_FACTOR = 16  # frozen-arm chains are this many times longer than the adaptation-on arm's (resolution of the control)
+# Independent chains per arm. With 8, the standard errors (from the spread of 8 chain means) were themselves so noisy that the
+# z scores of the adaptation-on arm had sd ~3 over seeds, and the assertions below failed for 5 of 20 seeds on the Mac and 6 of 20
+# on the workstation (seed sweep, 2026-11-08); the test as written passed only because seed 0 was a good one. 32 chains give the
+# same thresholds the power they were meant to have.
+BANANA_CHAINS = 32
 
 
-def _banana_chains(adapt_on, n_chains=8, window=25, n_windows=160, burn=100, frozen_factor=1):
+def _banana_chains(adapt_on, n_chains=BANANA_CHAINS, window=25, n_windows=160, burn=100, frozen_factor=1):
     """Feature means of ``n_chains`` independent chains: each adapts (3 expanding windows), then records ``window * n_windows``
     trajectories either with the map and step FROZEN (``sample_chain``; ``frozen_factor`` times as many trajectories) or with
     adaptation LEFT ON (``adapt_map`` windows of ``window`` trajectories, each re-centering at its own mean and re-estimating the
@@ -484,7 +489,11 @@ def test_c_negative_control_adaptation_left_on_during_recording_biases_a_banana_
     z_frozen, est_frozen, se_frozen = _banana_chains(adapt_on=False, frozen_factor=FROZEN_FACTOR)
     z_on, est_on, _ = _banana_chains(adapt_on=True)
     # frozen map and step: an exact HMC chain for a fixed affine change of variables, unbiased within Monte Carlo error
-    assert np.abs(z_frozen).max() < 4.5, (z_frozen, est_frozen)
+    # (the z scores are not standard normal: these moments are heavy-tailed, so a seed whose chains reach far into the tail inflates the
+    # mean and its estimated standard error together and z is skewed. Over 60 seeds of 32 chains: z sd 1.3 to 1.5, mean shifts -0.8 to
+    # +0.5, worst |z| 5.08; at 4x the chain length the shift shrank instead of doubling, and the pooled means were 100.010, -0.0001 and
+    # 3.0001 against 100, 0 and 3, so the frozen arm is unbiased and the bound is on the skewed statistic, 2026-11-08)
+    assert np.abs(z_frozen).max() < 6.0, (z_frozen, est_frozen)
     # adaptation on (state-dependent kernel): E x1^2 and E x2^2 are low and E x2 is high by many standard errors
     assert z_on[0] < -6.0 and z_on[1] > 4.0 and z_on[2] < -4.0, (z_on, est_on)
     assert est_on[0] < 0.92 * BANANA_TRUTH[0]  # a 8%+ bias in a second moment, 4 times the frozen run's

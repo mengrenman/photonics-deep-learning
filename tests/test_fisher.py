@@ -69,7 +69,9 @@ def test_fisher_matrix_is_symmetric_positive_semidefinite_and_matches_the_defini
     assert ev.min() > -1e-12 * ev.max()
     D = np.asarray(rec["D"])
     ref = (2.0 / s**2) * (D.real.T @ D.real + D.imag.T @ D.imag)  # Re(D^H D) = Re^T Re + Im^T Im
-    np.testing.assert_allclose(F, ref, rtol=1e-12)
+    # off-diagonal entries are sums with cancellation (|F_14| ~ 160 next to entries ~ 4e7), so their round-off is relative to the
+    # matrix scale, not to the entry: 3e-12 relative on F_14 on the workstation (Linux, x86) against 1e-12 allowed before
+    np.testing.assert_allclose(F, ref, rtol=1e-12, atol=1e-14 * np.abs(ref).max())
     # the score has covariance F: Monte Carlo over complex noise with E|e|^2 = s^2 (checks the factor 2 / s^2)
     rng = np.random.default_rng(0)
     e = (rng.standard_normal((100_000, D.shape[0])) + 1j * rng.standard_normal((100_000, D.shape[0]))) * s / np.sqrt(2.0)
