@@ -20,6 +20,14 @@ are the implicit-function (adjoint) gradient. Two deliberate departures from cal
 
 Implementer's choices:
 
+* Warm adjoint (``u0`` given as a pair ``(fields, adjoint)``, see ``Forward``): the adjoint solve of the
+  gradient is started from the adjoint fields of the previous evaluation instead of zero. It is the same
+  linear system with the same relative tolerance, so the gradient changes only within solver tolerance. To
+  get the new adjoint fields out of ``jax.grad`` without a side channel, this path is a ``custom_vjp``
+  whose backward rule returns the adjoint solution as the "cotangent" of the adjoint start ``w0`` (a slot
+  with no other meaning); ``value_and_grad_aux`` below wraps that. It supports reverse mode only (no
+  ``jvp``/``linearize``/``hessian``); the plain path (``u0`` an array or None) keeps
+  ``custom_linear_solve`` and all derivative modes.
 * ``batch="stack"`` (default): one stacked GMRES over all transmitters. Every transmitter has its own Krylov
   space and stops at ``tol`` relative to its own ``||u_inc,t||``; the stack iterates until the slowest
   transmitter is done. ``batch="vmap"`` runs the same solver per transmitter under ``jax.vmap``; it is
@@ -99,10 +107,98 @@ def _solve_linear(g_hat, chi, b, x0, cfg, matvec_hook=None):
     return lax.custom_linear_solve(matvec, b, solve=forward_solve, transpose_solve=adjoint_solve)
 
 
+def _operator(g_hat):
+    """The map ``(chi, x) -> x - G(chi x)`` (complex-linear in x, real-analytic in chi)."""
+    return lambda chi, x: x - _apply_G(g_hat, chi * x)
+
+
+@partial(jax.custom_vjp, nondiff_argnums=(0,))
+def _solve_linear_warm(cfg, g_hat, chi, b, x0, w0):
+    """Solve (I - G diag chi) x = b from the start ``x0`` (None: zero) like ``_solve_linear``, but a reverse-mode
+    derivative starts its adjoint solve from ``w0`` (same shape as ``b``) instead of zero.
+
+    The cotangent returned for ``w0`` is NOT a derivative: it is the adjoint solution w = A^{-T} (cotangent of
+    the output), the start for the next evaluation (see the module docstring). ``g_hat`` and ``x0`` receive no
+    cotangent.
+    """
+    return _krylov(lambda x: _operator(g_hat)(chi, x), b, x0, cfg)
+
+
+def _solve_linear_warm_fwd(cfg, g_hat, chi, b, x0, w0):
+    x = _solve_linear_warm(cfg, g_hat, chi, b, x0, w0)
+    return x, (g_hat, chi, x, w0)
+
+
+def _solve_linear_warm_bwd(cfg, res, ct):
+    g_hat, chi, x, w0 = res
+    op = _operator(g_hat)
+    # JAX transposes without conjugating: A^T = I - diag(chi) G^T = I - diag(chi) G (the kernel is symmetric).
+    w0 = jnp.where(jnp.isfinite(w0), w0, 0.0)  # a start left over from a diverged evaluation must not poison this one
+    w = _krylov(lambda v: v - chi * _apply_G(g_hat, v), ct, w0, cfg)
+    # implicit function theorem, d x = A^{-1} (d b - (d A) x): b receives w, chi receives -(d(A(chi) x)/d chi)^T w
+    _, vjp_chi = jax.vjp(lambda c: op(c, x), chi)
+    (ct_chi,) = vjp_chi(w)
+    return None, -ct_chi, w, None, w
+
+
+_solve_linear_warm.defvjp(_solve_linear_warm_fwd, _solve_linear_warm_bwd)
+
+
+def split_aux(aux):
+    """``aux`` -> ``(fields, adjoint)``: ``aux`` is either the total fields u (Nt, n, n) alone (adjoint None: the
+    adjoint solve starts from zero) or a pair ``(u, w)`` with the adjoint fields w of the last gradient."""
+    if isinstance(aux, (tuple, list)):
+        u, w = aux
+        return u, w
+    return aux, None
+
+
+def aux_fields(aux):
+    """The total-field part (Nt, n, n) of an aux (array or pair)."""
+    return split_aux(aux)[0]
+
+
+def with_fields(aux, u):
+    """``aux`` with its total-field part replaced by ``u`` (the adjoint part, if any, is kept)."""
+    if isinstance(aux, (tuple, list)):
+        return (u, aux[1])
+    return u
+
+
+def value_and_grad_aux(fun, x, aux, *args):
+    """Value, gradient and new aux of ``fun(x, aux, *args) -> (value, fields)`` by reverse mode.
+
+    ``fun`` must evaluate the forward model with the aux it is given (``Forward.__call__(chi, aux)`` accepts both
+    forms) and return the real scalar value and the total fields u (Nt, n, n) of its solve. ``x`` is a real array.
+    Returns ``(value, grad_x, aux_new)``:
+
+    * ``aux`` an array (or None), the old interface: ``aux_new = stop_gradient(u)``, cold adjoint solve;
+    * ``aux`` a pair ``(u0, w0)``: the adjoint solve starts from ``w0`` and ``aux_new = (stop_gradient(u), w)`` with
+      w the adjoint fields (Nt, n, n) of this gradient. Structure, shapes and dtypes of ``aux_new`` equal those of
+      ``aux``, so it can be a ``lax.scan`` / ``lax.cond`` carry.
+    """
+    if isinstance(aux, (tuple, list)):
+        u0, w0 = aux
+
+        def f(x, w):
+            return fun(x, (u0, w), *args)
+
+        (val, u), (g, w) = jax.value_and_grad(f, argnums=(0, 1), has_aux=True)(x, w0)
+        return val, g, (lax.stop_gradient(u), lax.stop_gradient(w))
+    (val, u), g = jax.value_and_grad(fun, has_aux=True)(x, aux, *args)
+    return val, g, lax.stop_gradient(u)
+
+
 def _solve_fields(g_hat, u_inc, chi, u0, cfg):
     chi = jnp.asarray(chi)
+    u0, w0 = split_aux(u0)
     if u0 is not None:
         u0 = lax.stop_gradient(jnp.asarray(u0, dtype=u_inc.dtype))
+    if w0 is not None:  # warm adjoint (reverse mode only)
+        w0 = jnp.asarray(w0, dtype=u_inc.dtype)
+        if cfg.batch == "stack":
+            return _solve_linear_warm(cfg, g_hat, chi, u_inc, u0, w0)
+        return jax.vmap(lambda b, x0, w: _solve_linear_warm(cfg, g_hat, chi, b, x0, w))(u_inc, u0, w0)
     if cfg.batch == "stack":
         return _solve_linear(g_hat, chi, u_inc, u0, cfg)
     if u0 is None:
@@ -163,6 +259,12 @@ class Forward:
 
     Methods are jitted. ``solve_fields``, ``__call__`` and ``born`` are differentiable with respect to
     real chi (reverse mode, adjoint gradient); gradients do not flow into ``u0``.
+
+    **Warm adjoint.** ``u0`` (``solve_fields``, ``__call__``) is either the previous total fields u (Nt, n, n) or a
+    pair ``(u, w)`` where w (Nt, n, n) are the adjoint fields of the previous gradient (``value_and_grad_aux``
+    returns the new pair). With a pair, the adjoint solve of a reverse-mode derivative starts from w instead of
+    zero; the tolerance is unchanged (relative to the norm of its own right-hand side), so the gradient differs
+    only within solver tolerance. Pairs support reverse mode only (no ``jax.jvp``, ``linearize`` or ``hessian``).
     """
 
     def __init__(self, setup, solver="gmres", tol=1e-8, atol=0.0, restart=100, maxiter=30, *,
@@ -185,6 +287,7 @@ class Forward:
         self._cfg = _Config(solver, float(tol), float(atol), int(restart), int(maxiter), batch)
         self._n_matvec = 0
         self._counted_solve = jax.jit(self._make_counted_solve())
+        self._counted_adjoint = jax.jit(self._make_counted_adjoint())
 
     @property
     def tol(self):
@@ -205,6 +308,30 @@ class Forward:
 
         return counted
 
+    def initial_aux(self, warm_adjoint=False):
+        """Start for the first evaluation: the incident field u_inc (Nt, n, n), or with ``warm_adjoint`` the pair
+        ``(u_inc, zeros)`` that makes the first adjoint solve cold and every later one warm."""
+        if warm_adjoint:
+            return (self.u_inc, jnp.zeros_like(self.u_inc))
+        return self.u_inc
+
+    def _make_counted_adjoint(self):
+        cfg = self._cfg
+
+        def bump():
+            self._n_matvec += 1
+
+        def counted(g_hat, chi, rhs, w0):  # rhs, w0: one transmitter, shape (n, n)
+            def mv(x):
+                jax.debug.callback(bump)
+                return x - chi * _apply_G(g_hat, x)
+
+            if cfg.solver == "gmres":
+                return _krylov(lambda v: mv(v[0])[None], rhs[None], None if w0 is None else w0[None], cfg)[0]
+            return _krylov(mv, rhs, w0, cfg)
+
+        return counted
+
     def apply_G(self, w):
         """G w for w of shape (..., n, n) (complex or real); returns the same shape, complex."""
         return _apply_G_jit(self.g_hat, jnp.asarray(w))
@@ -212,7 +339,8 @@ class Forward:
     def solve_fields(self, chi, u0=None):
         """Total fields u (Nt, n, n) solving (I - G diag chi) u_t = u_inc,t for every transmitter.
 
-        ``u0``: optional warm start of shape (Nt, n, n). The result does not depend on it beyond ``tol``.
+        ``u0``: optional warm start of shape (Nt, n, n), or a pair (u, w) (see the class docstring; w only
+        matters to a derivative). The result does not depend on it beyond ``tol``.
         """
         return _solve_fields_jit(self.g_hat, self.u_inc, chi, u0, self._cfg)
 
@@ -233,7 +361,8 @@ class Forward:
         return _scattered_jit(self.R, jnp.asarray(chi), u)
 
     def __call__(self, chi, u0=None):
-        """Full forward map: returns (d, u) with d (Nt, Nr) and the total fields u (Nt, n, n)."""
+        """Full forward map: returns (d, u) with d (Nt, Nr) and the total fields u (Nt, n, n). ``u0``: None, the
+        previous fields (Nt, n, n) or the pair (u, w) of the class docstring."""
         return _forward(self.g_hat, self.R, self.u_inc, jnp.asarray(chi), u0, self._cfg)
 
     def born(self, chi):
@@ -263,6 +392,26 @@ class Forward:
             self._n_matvec = 0
             x0 = None if u0 is None else jnp.asarray(u0)[t]
             self._counted_solve(self.g_hat, chi, self.u_inc[t], x0).block_until_ready()
+            jax.effects_barrier()
+            counts[i] = self._n_matvec
+        return counts
+
+    def adjoint_matvec_counts(self, chi, rhs, w0=None, transmitters=None):
+        """Operator applications used by the adjoint solve A^T w_t = rhs_t of each transmitter, int array.
+
+        ``rhs`` (Nt, n, n) complex is the cotangent of the fields (what a gradient hands to the adjoint solve;
+        ``jax.grad`` of the misfit with respect to u gives it), ``w0`` an optional start (Nt, n, n), None for the
+        cold start. The solve, tolerance and counting convention (residual evaluations included, one transmitter
+        at a time) are those of ``matvec_counts``; the solution is not returned. Diagnostic and slow.
+        """
+        chi = jnp.asarray(chi)
+        rhs = jnp.asarray(rhs, dtype=self.u_inc.dtype)
+        idx = np.arange(self.n_tx) if transmitters is None else np.asarray(transmitters)
+        counts = np.zeros(len(idx), dtype=int)
+        for i, t in enumerate(idx):
+            self._n_matvec = 0
+            start = None if w0 is None else jnp.asarray(w0)[t]
+            self._counted_adjoint(self.g_hat, chi, rhs[t], start).block_until_ready()
             jax.effects_barrier()
             counts[i] = self._n_matvec
         return counts

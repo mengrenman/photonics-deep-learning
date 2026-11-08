@@ -357,7 +357,7 @@ def sample(target, sampler, key, xi0s, *, n_warmup, n_samples, step0, thin=1, re
 
     t0 = time.perf_counter()
     if chain_method == "vmap":
-        aux0s = jnp.broadcast_to(aux0, (n_chains,) + aux0.shape)
+        aux0s = jax.tree.map(lambda a: jnp.broadcast_to(a, (n_chains,) + a.shape), aux0)
         compiled = jax.jit(batched).lower(keys, xi0s, aux0s).compile()
         compile_s = time.perf_counter() - t0
         t0 = time.perf_counter()

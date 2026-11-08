@@ -17,11 +17,18 @@ in whitened coordinates is pi(xi) ~ exp(-Phi(xi)) N(xi; 0, I), the target of eve
 accelerator, so Phi depends on it only through the solver tolerance (use ``tol <= 1e-10`` in the forward
 model when sampling, DESIGN 2.4). With the Born forward model no solve takes place and ``aux`` is passed
 through unchanged.
+
+Warm adjoint (DESIGN 16). ``aux`` may instead be a pair ``(u, w)``, with w (Nt, n, n) the adjoint fields of the last
+gradient: the adjoint solve of the next gradient then starts from w (same tolerance, same gradient within it) and
+the new pair is returned. ``Target(..., warm_adjoint=True).initial_aux()`` makes the samplers carry the pair; an
+old-style array aux works unchanged (cold adjoint). Value-only calls (``potential``, ``misfit_of_chi``) pass w
+through untouched.
 """
 
 import jax
 import jax.numpy as jnp
 
+from .forward import aux_fields, value_and_grad_aux, with_fields
 from .priors import compose, get_link
 
 
@@ -67,12 +74,14 @@ class Target:
     s : noise level, E|e|^2 = s^2 (see ``noise_std_from_snr``).
     use_born : if True the forward map is the Born approximation d = A chi (no linear solve); the data may
         still have been generated with the full model.
+    warm_adjoint : if True, ``initial_aux()`` returns the pair ``(u_inc, 0)`` so that the samplers carry the adjoint
+        fields too and every gradient after the first starts its adjoint solve from the previous one.
 
     Methods are jitted and take/return JAX arrays. ``potential``, ``potential_and_grad`` and ``phi_fn`` are
     deterministic in xi up to the forward solver tolerance, whatever ``aux`` is.
     """
 
-    def __init__(self, forward, field, link, d_obs, s, use_born=False):
+    def __init__(self, forward, field, link, d_obs, s, use_born=False, warm_adjoint=False):
         if field.n != forward.n:
             raise ValueError(f"field grid n={field.n} does not match forward grid n={forward.n}")
         d_obs = jnp.asarray(d_obs, dtype=jnp.complex128)
@@ -86,11 +95,12 @@ class Target:
         self.d_obs = d_obs
         self.s = float(s)
         self.use_born = bool(use_born)
+        self.warm_adjoint = bool(warm_adjoint)
         self._chi = compose(field, self.link)
 
-        def phi_of_chi(chi, aux):
+        def phi_of_chi(chi, aux):  # (phi, fields u of this solve)
             if self.use_born:
-                return misfit(forward.born(chi), d_obs, self.s), aux
+                return misfit(forward.born(chi), d_obs, self.s), aux_fields(aux)
             d, u = forward(chi, aux)
             return misfit(d, d_obs, self.s), u
 
@@ -99,21 +109,18 @@ class Target:
 
         def potential(xi, aux):
             phi, u = phi_and_field(xi, aux)
-            return phi, jax.lax.stop_gradient(u)
-
-        vg = jax.value_and_grad(phi_and_field, has_aux=True)
+            return phi, with_fields(aux, jax.lax.stop_gradient(u))
 
         def potential_and_grad(xi, aux):
-            (phi, u), grad = vg(xi, aux)
-            return phi, grad, jax.lax.stop_gradient(u)
+            return value_and_grad_aux(phi_and_field, xi, aux)
 
         def misfit_of_chi(chi, aux):
             phi, u = phi_of_chi(chi, aux)
-            return phi, jax.lax.stop_gradient(u)
+            return phi, with_fields(aux, jax.lax.stop_gradient(u))
 
         def potential_only(xi, aux):  # gradient-free variant for pCN: (phi, None, aux_new)
-            phi, u = potential(xi, aux)
-            return phi, None, u
+            phi, aux_new = potential(xi, aux)
+            return phi, None, aux_new
 
         self._chi_jit = jax.jit(self._chi)
         self._misfit_of_chi = jax.jit(misfit_of_chi)
@@ -146,9 +153,10 @@ class Target:
         """Warm start for the first solve: the incident field u_inc (Nt, n, n), i.e. the Born total field.
 
         It is the exact total field for chi = 0 and a better start than zero for small contrast, and it
-        has the same shape and dtype as every later aux (the total field of the last solve).
+        has the same shape and dtype as every later aux (the total field of the last solve). With
+        ``warm_adjoint`` it is the pair ``(u_inc, zeros)``: the first adjoint solve is cold, later ones warm.
         """
-        return self.forward.u_inc
+        return self.forward.initial_aux(self.warm_adjoint)
 
     def potential(self, xi, aux):
         """Returns ``(phi, aux_new)``: the potential Phi(xi) and the total fields of this solve."""

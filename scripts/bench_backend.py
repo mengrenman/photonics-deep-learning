@@ -38,8 +38,9 @@ failed for another reason (the file is still written); 2 if the requested backen
 interrupted.
 
 Warm starts. "warm" replaces only the starting guess of the forward field solve. The adjoint solve inside the
-gradient always starts from zero (see forward.py), so a warm gradient is cheaper than a cold one by less than a
-warm forward solve is cheaper than a cold one.
+gradient starts from zero here (an array aux, see forward.py), so a warm gradient is cheaper than a cold one by less than
+a warm forward solve is cheaper than a cold one. Carrying the adjoint fields too (aux as a pair) is measured in
+scripts/measure_adjoint_warm.py (DESIGN section 16).
 
 Examples
   python scripts/bench_backend.py --platform cpu --threads 1 --grids 32:2,64:5 --modes forward,grad

@@ -1112,3 +1112,37 @@ holds at both, and c_T3 is a second-order, curvature-driven number (15.5).
    projection; with the true-gap amplitudes every case has x ≤ 0.12 and the refit agrees (shift 2.89 to 3.04, misfit within 3 % of 9c wherever 9c > 0.03). (b) The 15 % ellipticity
    discrepancy is parameter-effects curvature (p₂ tangential +0.00359, normal −0.00128 on Δg = −0.02733 against NL −0.02399), not a 10 to 15 % change of σ_g (it is 6.6 to 6.8 % for T2).
    (c) The measured c of milestone 7 is one noise draw; the grid-error rows are noise-free and the agreement of the g = 0.05 rows is not the same as that of the g = 0.1 rows (15.3 item 1).
+
+## 16. Warm-started adjoint solve
+
+### 16.1 What was done
+
+The forward solve of every gradient is warm-started from the previous total fields `u`; the adjoint solve (`A^T w = ∂Φ/∂u`, one system per transmitter, same operator, tolerance relative to its own right-hand side) used to start from zero. Now `aux` may be a pair `(u, w)` (`forward.py`: `Forward.initial_aux(warm_adjoint=True)`, `value_and_grad_aux`, `split_aux`, `aux_fields`, `with_fields`), and the adjoint solve starts from `w` of the previous gradient.
+
+- **Backward compatible.** An array `aux` (or None) takes the old `custom_linear_solve` path, returns an array, and keeps forward mode (`jvp`, `linearize`). Only a pair takes the new path. `Target`, `ThetaTarget` and `ShapePosterior` take `warm_adjoint=False` (default off); with `True`, `initial_aux()` returns `(u_inc, 0)` and everything that carries `aux` (`samplers`, `adapt`, `shapepost.run_hmc`, `lax.scan`, `lax.cond`, accept/reject) carries the pair unchanged, because structure, shapes and dtypes of the pair are stable. `inference.run_chains` broadcasts the pair leaf by leaf. Value-only calls (`potential`, `misfit_of_chi`) refresh `u` and pass `w` through.
+- **How `w` leaves `jax.grad`.** A warm solve is a `custom_vjp` (`forward._solve_linear_warm`): the backward rule solves `A^T w = cotangent` from `w0`, returns `-(∂(A(χ)u)/∂χ)^T w` for `χ`, `w` for the right-hand side, and `w` again as the "cotangent" of the start `w0`. `value_and_grad_aux` differentiates with respect to `(x, w0)` and returns the second gradient as the new adjoint field. A non-finite `w0` is replaced by zeros. The pair path supports reverse mode only.
+- **Exactness.** Same system, same relative tolerance, so the gradient changes only within solver tolerance: largest relative difference warm versus cold over all timed gradients 3.5e-11 at tol 1e-10 (`results/adjoint_warm/*.json`, `grad_rel_diff`); the misfit was bit-identical at every timed point (the forward solves are the same).
+- **Tests** (`tests/test_warm_adjoint.py`): gradient equality along a 5-point trajectory for GMRES stack, GMRES vmap and BiCGSTAB (against the tol 1e-13 reference too); the exported `w` solves `A^T w = ct`; adjoint operator applications counted with `Forward.adjoint_matvec_counts` (warm < cold; from the exact solution 1 to 2); non-finite start; pair stable in `scan` and `cond`; HMC with the pair reproduces the cold chain; `ThetaTarget` and `ShapePosterior` (including the `beta = 0` branch).
+
+### 16.2 Measurement (`scripts/measure_adjoint_warm.py`, `scripts/adjoint_warm_table.py`; JSON in `results/adjoint_warm/`)
+
+Problem: T1 truth (g = 0.05, r = 0.2, ε_r = 2), data from the 2n grid at 30 dB, F2 posterior, book rings (40 × 60), tol 1e-10, whitened coordinates of the Laplace map at the truth, step 1.3 (jitter 0.25), 8 leapfrog steps, real accept/reject (acceptance 0.75 to 0.86). Cold and warm chains are evaluated at the same points, back to back in alternating order. Mac: one process, NPROC 4 (the machine was loaded by other work; indicative). tr CPU: 16 single-thread jobs, one per L3 group (cores 0, 4, ..., 60), seeds 0 to 15, 512 gradients per grid; tr GPU: one process, 48 gradients per grid.
+
+| platform | grid | restart | cold s/grad | warm s/grad | warm/cold | adjoint operator applications per transmitter, cold / warm |
+|---|---|---|---|---|---|---|
+| Mac CPU, NPROC 4 | 48:2 | 100 | 0.0629 | 0.0612 | 0.973 | 14.0 / 13.0 |
+| Mac CPU, NPROC 4 | 64:1.5 | 100 | 0.1199 | 0.1165 | 0.972 | 14.0 / 13.0 |
+| tr, one core (16 concurrent) | 48:2 | 100 | 0.8675 | 0.8634 | 0.995 | 14.0 / 13.2 |
+| tr, one core (16 concurrent) | 64:1.5 | 100 | 2.0578 | 2.0418 | 0.992 | 14.0 / 13.0 |
+| tr, one core (16 concurrent) | 48:2 | 20 | 0.3862 | 0.3809 | 0.986 | 14.0 / 13.2 |
+| tr, one core (16 concurrent) | 64:1.5 | 20 | 1.1763 | 1.1582 | 0.985 | 14.0 / 13.0 |
+| tr GPU, one process | 48:2 | 100 | 0.0181 | 0.0173 | 0.953 | 14.0 / 13.0 |
+| tr GPU, one process | 64:1.5 | 100 | 0.0266 | 0.0255 | 0.959 | 14.0 / 13.0 |
+| tr GPU, one process | 48:2 | 20 | 0.0162 | 0.0154 | 0.951 | 14.0 / 13.0 |
+| tr GPU, one process | 64:1.5 | 20 | 0.0237 | 0.0226 | 0.954 | 14.0 / 13.0 |
+
+The count (residual evaluations included) is 14 cold and 13 warm for nearly every transmitter: the warm start saves one Arnoldi step of about twelve. Reason: at the posterior the adjoint right-hand side is the data residual, which is noise-dominated (Φ ≈ N), so a leapfrog step of 1.3 posterior sd changes it by a few percent, which is one decimal digit of a solve that has to reduce the residual by 1e-10 at a rate of about one digit per step. The saving cannot exceed that without a larger step or a looser tolerance. The wall-time gain is 1 to 2 % on one CPU core (about 1 step of the 28 of forward plus adjoint, diluted by costs that do not depend on the iteration count), 3 % on the Mac and 4.5 to 5 % on the GPU. A warm start is not always better: on the tiny 12:1.5 grid of the test, where consecutive points are far apart in data space, the warm count averaged 13.2 against 13.0.
+
+### 16.3 Recommendation
+
+Keep `warm_adjoint` as an opt-in flag (default False). It is exact and free to switch on for GPU chains (about 5 %), but it does not change the cost picture: the gradient costs the same to within 1 to 5 %. The cost per solve depends far more on the restart length than on the iteration count: with the same 14 operator applications, one CPU core takes 0.868 s (restart 100) against 0.386 s (restart 20) per gradient at 48:2, and 2.06 s against 1.18 s at 64:1.5, so the larger lever is the size of the Krylov basis (restart, and the concurrency choices of the performance study), not the iteration count. (Inference from these timings: the basis of (restart + 1) x 40 x n^2 complex numbers is allocated and read at every solve; I did not profile the allocation separately.)

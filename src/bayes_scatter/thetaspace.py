@@ -41,6 +41,7 @@ from scipy.linalg import cho_solve, cholesky, solve_triangular
 from scipy.optimize import minimize
 
 from . import jacobian as jb
+from .forward import aux_fields, value_and_grad_aux, with_fields
 from .inference import map_estimate
 from .likelihood import Target, misfit
 from .mrf import WhitenedMap
@@ -96,10 +97,12 @@ class ThetaTarget:
     use_born : forward map d = A chi (no solve) instead of the full model (validation only).
 
     Methods are jitted and take/return JAX arrays; ``aux`` is the (Nt, n, n) field array of the last solve, a pure
-    warm start (use ``tol <= 1e-10`` in the forward model when sampling, DESIGN 2.4).
+    warm start (use ``tol <= 1e-10`` in the forward model when sampling, DESIGN 2.4). ``aux`` may also be the pair
+    ``(u, w)`` of ``forward.value_and_grad_aux`` (w: adjoint fields of the last gradient, which warm-starts the next
+    adjoint solve; same gradient within the solver tolerance); ``warm_adjoint=True`` makes ``initial_aux`` return it.
     """
 
-    def __init__(self, forward, prior, d_obs, s, link="log_eps", use_born=False):
+    def __init__(self, forward, prior, d_obs, s, link="log_eps", use_born=False, warm_adjoint=False):
         if prior.n != forward.n:
             raise ValueError(f"prior grid n={prior.n} does not match forward grid n={forward.n}")
         d_obs = jnp.asarray(d_obs, dtype=jnp.complex128)
@@ -112,11 +115,12 @@ class ThetaTarget:
         self.n = forward.n
         self.link = get_link(link)
         self.use_born = bool(use_born)
+        self.warm_adjoint = bool(warm_adjoint)
         link_fn, energy, s_ = self.link, prior.energy, self.s
 
-        def phi_of_chi(chi, aux):
+        def phi_of_chi(chi, aux):  # (phi, fields u of this solve)
             if self.use_born:
-                return misfit(forward.born(chi), d_obs, s_), aux
+                return misfit(forward.born(chi), d_obs, s_), aux_fields(aux)
             d, u = forward(chi, aux)
             return misfit(d, d_obs, s_), u
 
@@ -124,19 +128,16 @@ class ThetaTarget:
             phi, u = phi_of_chi(link_fn(theta), aux)
             return phi + energy(theta), u
 
-        vg = jax.value_and_grad(u_fn, has_aux=True)
-
         def potential(theta, aux):
             u_val, u = u_fn(theta, aux)
-            return u_val, jax.lax.stop_gradient(u)
+            return u_val, with_fields(aux, jax.lax.stop_gradient(u))
 
         def potential_and_grad(theta, aux):
-            (u_val, u), g = vg(theta, aux)
-            return u_val, g, jax.lax.stop_gradient(u)
+            return value_and_grad_aux(u_fn, theta, aux)
 
         def misfit_of_chi(chi, aux):
             phi, u = phi_of_chi(chi, aux)
-            return phi, jax.lax.stop_gradient(u)
+            return phi, with_fields(aux, jax.lax.stop_gradient(u))
 
         self._potential = jax.jit(potential)
         self._potential_and_grad = jax.jit(potential_and_grad)
@@ -155,8 +156,9 @@ class ThetaTarget:
         return 1.0 + self.chi(theta)
 
     def initial_aux(self):
-        """Warm start for the first solve: the incident field (the exact total field at chi = 0)."""
-        return self.forward.u_inc
+        """Warm start for the first solve: the incident field (the exact total field at chi = 0); with
+        ``warm_adjoint`` the pair ``(u_inc, zeros)``."""
+        return self.forward.initial_aux(self.warm_adjoint)
 
     # ---- potential ----
 

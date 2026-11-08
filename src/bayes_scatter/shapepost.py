@@ -54,6 +54,7 @@ from . import diagnostics as dg
 from . import samplers as sm
 from .adapt import AffineMap
 from .ellipses import EllipseRenderer
+from .forward import aux_fields, value_and_grad_aux, with_fields
 from .likelihood import add_noise, misfit
 
 LOG_2PI = math.log(2.0 * math.pi)
@@ -132,18 +133,21 @@ class ShapePosterior:
     forward : ``forward.Forward`` (use tol <= 1e-10 for sampling, DESIGN 2.4).
     d_obs : observed data (Nt, Nr) complex; ``s`` : noise level, E|e|^2 = s^2 (``likelihood``).
     renderer : ``ellipses.EllipseRenderer`` for the grid (built if omitted; share one between posteriors on one grid).
+    warm_adjoint : if True, ``initial_aux`` is the pair ``(u_inc, 0)`` and the adjoint solve of every gradient starts from the adjoint fields of the previous one
+        (``forward.value_and_grad_aux``; same gradient within the solver tolerance). ``jac_cols`` (forward mode) always uses the plain fields.
 
     phi(u) = sum |F(chi(u)) - d_obs|^2 / s^2 with chi the exact-coverage rendering of the model at u; its gradient is ONE adjoint solve (the gradient of phi with respect to chi,
     JAX's ``custom_linear_solve`` transpose) contracted with the exact boundary derivative d chi / d u (``ellipses``) and the analytic d p / d u. ``lik_const`` = -N log(pi s^2).
     """
 
-    def __init__(self, model, forward, d_obs, s, renderer=None):
+    def __init__(self, model, forward, d_obs, s, renderer=None, warm_adjoint=False):
         if not s > 0:
             raise ValueError("noise level s must be positive")
         d_obs = jnp.asarray(d_obs, dtype=jnp.complex128)
         if d_obs.shape != (forward.n_tx, forward.n_rx):
             raise ValueError(f"d_obs must have shape {(forward.n_tx, forward.n_rx)}, got {d_obs.shape}")
         self.model, self.forward, self.s = model, forward, float(s)
+        self.warm_adjoint = bool(warm_adjoint)
         self.renderer = renderer if renderer is not None else EllipseRenderer(forward.grid)
         self.dim = model.dim
         self.n_data = forward.n_tx * forward.n_rx
@@ -159,15 +163,12 @@ class ShapePosterior:
             d, fields = forward(chi_of_u(u), aux)
             return misfit(d, data, s_), fields
 
-        vg = jax.value_and_grad(data_term, has_aux=True)
-
         def phi_and_grad(u, aux, data):
-            (phi, fields), g = vg(u, aux, data)
-            return phi, g, lax.stop_gradient(fields)
+            return value_and_grad_aux(data_term, u, aux, data)
 
         def phi_only(u, aux, data):
             phi, fields = data_term(u, aux, data)
-            return phi, lax.stop_gradient(fields)
+            return phi, with_fields(aux, lax.stop_gradient(fields))
 
         self._chi_of_u = jax.jit(chi_of_u)
         self._p_many = jax.jit(jax.vmap(model.p_from_u))
@@ -179,13 +180,13 @@ class ShapePosterior:
             eye = jnp.eye(model.dim)
             return jnp.stack([tangent(eye[k]).reshape(-1) for k in range(model.dim)], axis=1)
 
-        self._jac_cols = jax.jit(jac_cols)
-        self._simulate_clean = jax.jit(lambda u, aux: forward(chi_of_u(u), aux)[0])
+        self._jac_cols = jax.jit(lambda u, aux: jac_cols(u, aux_fields(aux)))
+        self._simulate_clean = jax.jit(lambda u, aux: forward(chi_of_u(u), aux_fields(aux))[0])
         self._U_and_grad = None
         self._prior_hessian = None
 
     def initial_aux(self):
-        return self.forward.u_inc
+        return self.forward.initial_aux(self.warm_adjoint)
 
     def with_data(self, data):
         other = copy.copy(_prepare(self))
