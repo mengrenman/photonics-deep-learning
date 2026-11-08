@@ -385,11 +385,14 @@ The thread count should grow with `NPROC` (by 2 per unit on macOS; the constant 
 their cores. On the Mac the probe finished for `NPROC` = 3 and 4 in about 5 s and hung for `NPROC=2`; if Linux
 hangs for other values, raise `MIN_XLA_POOL` in `scripts/batch_run.py` (it is the only place the floor is set).
 
-### Production settings (measured 2026-11-08, memory at 2133 MT/s)
+### Production settings (measured 2026-11-08; memory at DDR4-3200)
 
 Measured on `tr` with value-and-gradient evaluations of Phi along a warm-started chain near the truth, the
-median of 3 repetitions (raw data on `tr` in `~/work/sweeps/m8_perf/points.jsonl`). The CPU rates were taken with
-the DIMMs at the JEDEC fallback of 2133 MT/s; re-measure the CPU side after enabling XMP.
+median of 3 repetitions. The first study ran with the DIMMs at the JEDEC fallback of 2133 MT/s
+(`~/work/sweeps/m8_perf/points.jsonl` on `tr`); after D.O.C.P. was enabled (3200 MT/s, a one-hour `stress-ng`
+memory test passed with 0 failures) the production points were re-measured with the same harness
+(`~/work/sweeps/m9_perf/points.jsonl`). Memory bandwidth rose from 39 to 58 GB/s (numpy add, summed over processes
+pinned one per L3 group) and the CPU throughput by 1.41 to 1.45 times; the GPU figures did not change.
 
 * **GPU: 4 processes under CUDA MPS.** MPS runs as the user, without sudo:
   ```bash
@@ -403,23 +406,26 @@ the DIMMs at the JEDEC fallback of 2133 MT/s; re-measure the CPU side after enab
   4-process figure at 50, so whether more than 4 helps there is open. Each process uses about 1.3 GiB of the
   card (0.3 to 0.5 GiB JAX peak).
 * **CPU: 16 single-thread jobs, one per L3 group, pinned.** Two memory-bound jobs in one group each run at half
-  speed. One `batch_run` with `--gpu-slots 4 --cpu-slots 16 --pin` places them correctly (fixed 2026-11-08:
-  before, the four GPU host reservations pushed four CPU jobs into groups 0 to 3, costing 17 to 24 % of the CPU
-  throughput). Run side by side, the GPU loses 1 to 4 % and the CPU 2 to 6 %.
+  speed, and 32 processes move no more data than 16 (57 against 58 GB/s), so more than 16 jobs does not help this
+  forward model. One `batch_run` with `--gpu-slots 4 --cpu-slots 16 --pin` places them correctly (fixed
+  2026-11-08: before, the four GPU host reservations pushed four CPU jobs into groups 0 to 3, costing 17 to 24 %
+  of the CPU throughput). Run side by side in one invocation, the GPU loses about 2 % and the CPU 2 to 4 %.
 * **GMRES restart.** 48:2 and 64:1.5 converge in 15 to 19 operator applications, so any restart of 20 or more
-  gives bit-identical results, and only the Krylov-basis cost changes: restart 20 is 1.7 to 1.8 times faster than
-  100 on the CPU and 6 to 10 % faster on the GPU. Use 30 on a new problem (the margin at 20 is one application
-  for 48:2) and check `Forward.matvec_counts` before going to 20. 64:5 needs 51 to 53 applications: use 50
-  (20 and 30 are 25 to 28 % slower on the CPU). Across restart lengths Phi agrees to 8e-10 relative on 64:5.
+  gives bit-identical results, and only the Krylov-basis cost changes: restart 20 was 1.7 to 1.8 times faster
+  than 100 on the CPU (at 2133 MT/s) and 6 to 10 % faster on the GPU. Use 30 on a new problem (the margin at 20
+  is one application for 48:2) and check `Forward.matvec_counts` before going to 20. 64:5 needs 51 to 53
+  applications: use 50. At 3200 MT/s, 16 CPU jobs at 64:5 give 3.57 evals/s at restart 50 against 3.38 at 100,
+  2.80 at 30 and 2.60 at 20. Across restart lengths Phi agrees to 8e-10 relative on 64:5.
 
-| problem | GPU, 4 MPS processes | CPU, 16 jobs | together | one GPU process |
+| problem | GPU, 4 MPS processes | CPU, 16 jobs | together, one `batch_run` | one GPU process |
 |---|---|---|---|---|
-| 48:2 (restart 20) | 64 evals/s | 26 | about 90 | 33 |
-| 64:1.5 (restart 20) | 55 | 11.2 | about 66 | 32 |
-| 64:5 (restart 50) | 8.3 | 2.4 | about 10.7 | 4.65 |
+| 48:2 (restart 20) | 67 evals/s | 38.8 (was 27.5 at 2133) | 103 (65.7 + 37.4) | 33 |
+| 64:1.5 (restart 20) | 56.4 | 17.2 (was 11.9) | 71.6 (55.1 + 16.5) | 32 |
+| 64:5 (restart 50) | 8.57 | 3.58 (was 2.47) | 11.9 (8.41 + 3.50) | 4.65 |
 
 The warm-started adjoint (`warm_adjoint=True`, DESIGN section 16) saves one Arnoldi step of about 13: 4.5 to 5 %
-on the GPU, 0.5 to 1.5 % on one CPU core. It is exact (gradients agree to 3.5e-11) and off by default.
+on the GPU, 0.5 to 1.5 % on one CPU core (at 2133 MT/s). It is exact (gradients agree to 3.5e-11) and off by
+default.
 
 ## (g) Syncing results back to the Mac
 
