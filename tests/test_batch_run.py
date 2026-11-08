@@ -234,6 +234,23 @@ def test_gpu_host_reservation_comes_out_of_the_last_group(topo):
         br.plan_slots(topo, 64, 1, reserved=[1])
 
 
+def test_gpu_host_reservations_do_not_double_up_cpu_jobs_in_a_group(topo):
+    # 4 GPU slots + 16 single-thread CPU jobs on a 3990X: one CPU job per L3 group. Before 2026-11-08 the
+    # reserved cores made groups 12-15 look fuller, so jobs 13-16 went to groups 0-3 (two per group, each at
+    # half speed on the memory-bound forward model) and groups 12-15 held only the GPU host threads.
+    slots = br.plan_slots(topo, 16, 1, reserved=[1, 1, 1, 1])
+    assert sorted(group_of(topo, s[0]) for s in slots) == list(range(16))
+    pool = br.CorePool(topo)
+    hosts = [pool.acquire(1, reverse=True) for _ in range(4)]
+    jobs = [pool.acquire(1) for _ in range(16)]
+    assert {group_of(topo, h[0]) for h in hosts} == {12, 13, 14, 15}
+    assert sorted(group_of(topo, j[0]) for j in jobs) == list(range(16))
+    assert not {h[0] for h in hosts} & {j[0] for j in jobs}
+    # A finished job's group is refilled first, ahead of groups that still hold one.
+    pool.release(jobs[13])
+    assert group_of(topo, pool.acquire(1)[0]) == group_of(topo, jobs[13][0])
+
+
 def test_pack_fills_one_group_before_the_next(topo):
     pool = br.CorePool(topo)
     first = [pool.acquire(1, pack=True)[0] for _ in range(5)]

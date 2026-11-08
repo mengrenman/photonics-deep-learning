@@ -31,9 +31,12 @@ Pinning (``--pin``, Linux only). The logical CPUs are grouped by the L3 cache th
 and cores by ``thread_siblings_list``. A CPU job gets T logical CPUs from one L3 group, one logical CPU per
 physical core, and is started under ``taskset -c``. Concurrent jobs never share a CPU (nor, unless ``--smt``,
 a physical core), and a job never spans two L3 groups, so T cannot exceed the cores of the largest group
-(4 on a Threadripper 3990X). Free groups are used round-robin ("spread", more L3 per job when the machine is
-not full; ``--pack`` fills one group first). Each GPU slot reserves ``--gpu-threads`` cores for its host
-thread so CPU jobs cannot take them. Without ``--pin`` (or off Linux) jobs run unpinned.
+(4 on a Threadripper 3990X). Free groups are used round-robin ("spread": a job goes to the group holding
+the fewest CPU jobs, so each job gets as much L3 and memory bandwidth as the machine allows; ``--pack`` fills
+one group first). Each GPU slot reserves ``--gpu-threads`` cores for its host thread so CPU jobs cannot take
+them; a reservation does not count as a CPU job, so 4 GPU slots and 16 CPU jobs on a 3990X still put one CPU
+job in each of the 16 groups (measured 2026-11-08: two memory-bound jobs in one group each run at half
+speed). Without ``--pin`` (or off Linux) jobs run unpinned.
 
 Per job it writes ``<log-dir>/<name>.log`` (stdout and stderr) and ``<log-dir>/<name>.meta.json`` (host,
 command, environment overrides, cores, start and end time, wall seconds, exit code). Ctrl-C (or SIGTERM)
@@ -387,9 +390,11 @@ class CorePool:
 
     ``acquire(n)`` returns n CPUs from one group (a sorted tuple) or None if no group has n free. It prefers
     a group whose next n free CPUs are all first hardware threads (one CPU per physical core), then the group
-    with the most free CPUs ("spread"; ``pack=True`` takes the fewest that still fit), then the lowest group
-    index (the highest with ``reverse=True``, used for the GPU hosts' reservation). With ``smt`` the sibling
-    hardware threads become available after the first threads of a group are used up.
+    holding the fewest jobs and then the most free CPUs ("spread"; ``pack=True`` takes the group with the
+    fewest free CPUs that still fit), then the lowest group index (the highest with ``reverse=True``, used for
+    the GPU hosts' reservation). A reservation (``reverse=True``) is not counted as a job, so a GPU host core
+    does not push a CPU job into a group that already holds one. With ``smt`` the sibling hardware threads
+    become available after the first threads of a group are used up.
     """
 
     def __init__(self, topology, smt=False):
@@ -398,6 +403,7 @@ class CorePool:
         self._rank = [{c: i for i, c in enumerate(order)} for order in self._order]
         self._primary = {core[0] for g in topology.groups for core in g.cores}
         self._free = [list(order) for order in self._order]
+        self._jobs = [0] * len(self._order)  # CPU jobs (non-reservation holders) per group
 
     def capacity(self):
         """Largest number of CPUs one holder can ever get (the biggest group)."""
@@ -413,13 +419,16 @@ class CorePool:
                 continue
             clean = all(c in self._primary for c in free[:n])
             fill = -len(free) if pack else len(free)
-            key = (clean, fill, gi if reverse else -gi)
+            load = 0 if (pack or reverse) else -self._jobs[gi]
+            key = (clean, load, fill, gi if reverse else -gi)
             if best_key is None or key > best_key:
                 best, best_key = gi, key
         if best is None:
             return None
         free = self._free[best]
         taken, self._free[best] = free[:n], free[n:]
+        if not reverse:
+            self._jobs[best] += 1
         return tuple(sorted(taken))
 
     def release(self, cpus):
@@ -427,6 +436,7 @@ class CorePool:
             mine = [c for c in cpus if c in rank]
             if mine:
                 self._free[gi] = sorted(self._free[gi] + mine, key=rank.__getitem__)
+                self._jobs[gi] = max(0, self._jobs[gi] - 1)
 
 
 def plan_slots(topology, n_slots, threads, *, reserved=(), smt=False, pack=False):

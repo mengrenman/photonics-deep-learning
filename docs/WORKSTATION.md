@@ -288,8 +288,9 @@ does not fit (for example 64 slots plus a GPU job) is refused with the number th
 
 GPU jobs run with `JAX_PLATFORMS=cuda,cpu` (an unavailable GPU is an error, not a silent fall back to the CPU),
 `CUDA_VISIBLE_DEVICES` from `--gpu-devices` (default `0`), `XLA_PYTHON_CLIENT_PREALLOCATE=false` and
-`XLA_PYTHON_CLIENT_MEM_FRACTION = 0.9 / (jobs sharing that device)`. One GPU slot is the sensible default; two
-only help if a single job does not keep the card busy. A GPU job does not get `NPROC` or the XLA CPU flags (its
+`XLA_PYTHON_CLIENT_MEM_FRACTION = 0.9 / (jobs sharing that device)`. More than one GPU slot needs CUDA MPS
+(next paragraph): without it the processes time-slice the card and 2 to 4 of them deliver only 0.38 to 0.55 of
+one process's throughput. A GPU job does not get `NPROC` or the XLA CPU flags (its
 CPU client only runs callbacks); it does get the BLAS/OpenMP variables set to `--gpu-threads` (default 1), and with
 `--pin` it runs under `taskset` on that many reserved cores.
 
@@ -383,6 +384,42 @@ The thread count should grow with `NPROC` (by 2 per unit on macOS; the constant 
 `taskset` alone limits the pool, but this is not confirmed. The jobs set both, so either way they stay within
 their cores. On the Mac the probe finished for `NPROC` = 3 and 4 in about 5 s and hung for `NPROC=2`; if Linux
 hangs for other values, raise `MIN_XLA_POOL` in `scripts/batch_run.py` (it is the only place the floor is set).
+
+### Production settings (measured 2026-11-08, memory at 2133 MT/s)
+
+Measured on `tr` with value-and-gradient evaluations of Phi along a warm-started chain near the truth, the
+median of 3 repetitions (raw data on `tr` in `~/work/sweeps/m8_perf/points.jsonl`). The CPU rates were taken with
+the DIMMs at the JEDEC fallback of 2133 MT/s; re-measure the CPU side after enabling XMP.
+
+* **GPU: 4 processes under CUDA MPS.** MPS runs as the user, without sudo:
+  ```bash
+  export CUDA_MPS_PIPE_DIRECTORY=~/work/mps/pipe CUDA_MPS_LOG_DIRECTORY=~/work/mps/log
+  mkdir -p $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY && nvidia-cuda-mps-control -d
+  # ... run the sweep with the same two variables exported ...
+  echo quit | nvidia-cuda-mps-control
+  ```
+  With MPS, 4 processes give 1.5 to 1.8 times one process. 6 or 8 processes added 6 to 14 % on 48:2 and 64:1.5
+  (one repetition each); the 64:5 runs with 6 and 8 processes used restart 20 and are not comparable with the
+  4-process figure at 50, so whether more than 4 helps there is open. Each process uses about 1.3 GiB of the
+  card (0.3 to 0.5 GiB JAX peak).
+* **CPU: 16 single-thread jobs, one per L3 group, pinned.** Two memory-bound jobs in one group each run at half
+  speed. One `batch_run` with `--gpu-slots 4 --cpu-slots 16 --pin` places them correctly (fixed 2026-11-08:
+  before, the four GPU host reservations pushed four CPU jobs into groups 0 to 3, costing 17 to 24 % of the CPU
+  throughput). Run side by side, the GPU loses 1 to 4 % and the CPU 2 to 6 %.
+* **GMRES restart.** 48:2 and 64:1.5 converge in 15 to 19 operator applications, so any restart of 20 or more
+  gives bit-identical results, and only the Krylov-basis cost changes: restart 20 is 1.7 to 1.8 times faster than
+  100 on the CPU and 6 to 10 % faster on the GPU. Use 30 on a new problem (the margin at 20 is one application
+  for 48:2) and check `Forward.matvec_counts` before going to 20. 64:5 needs 51 to 53 applications: use 50
+  (20 and 30 are 25 to 28 % slower on the CPU). Across restart lengths Phi agrees to 8e-10 relative on 64:5.
+
+| problem | GPU, 4 MPS processes | CPU, 16 jobs | together | one GPU process |
+|---|---|---|---|---|
+| 48:2 (restart 20) | 64 evals/s | 26 | about 90 | 33 |
+| 64:1.5 (restart 20) | 55 | 11.2 | about 66 | 32 |
+| 64:5 (restart 50) | 8.3 | 2.4 | about 10.7 | 4.65 |
+
+The warm-started adjoint (`warm_adjoint=True`, DESIGN section 16) saves one Arnoldi step of about 13: 4.5 to 5 %
+on the GPU, 0.5 to 1.5 % on one CPU core. It is exact (gradients agree to 3.5e-11) and off by default.
 
 ## (g) Syncing results back to the Mac
 
