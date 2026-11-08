@@ -1,0 +1,28 @@
+{
+ "unit": "T3g0.05_F2_snr10_s27",
+ "label": "T3g0.05",
+ "snr": 10.0,
+ "seed": 27,
+ "g_true": 0.05,
+ "g_hat": 0.038889243123624254,
+ "delta_phi": 350.1799370100216,
+ "phi_map_stored": 2816.218970413804,
+ "phi_at_p_hat": 2816.218970477328,
+ "g_sd_stored": 0.002691309215022144,
+ "z_stored": 4.128383618782478,
+ "g_sd_gn": 0.002691309215022144,
+ "g_sd_fd": 0.0027683056943658187,
+ "sd_ratio_fd_gn": 1.0286093024591532,
+ "z_gn": 4.128383618782478,
+ "z_fd": 4.013558509448167,
+ "c_gn": 20.546183759912683,
+ "c_fd": 21.738624621934303,
+ "time_s": 19.33661237510387,
+ "thread_env": {
+  "NPROC": "1",
+  "XLA_FLAGS": "--xla_cpu_multi_thread_eigen=false",
+  "OMP_NUM_THREADS": "2",
+  "OPENBLAS_NUM_THREADS": "2",
+  "JAX_PLATFORMS": "cpu"
+ }
+}

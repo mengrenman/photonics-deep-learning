@@ -246,6 +246,36 @@ def circle_basis_integrals(grid, xc, yc, radius, method="arcs", n_samples=200_00
     return out
 
 
+def circle_mode_integrals(grid, xc, yc, radius, m, method="arcs"):
+    """Exact boundary integrals over (circle and pixel) of the harmonic normal speeds cos(m phi) and sin(m phi), an array (2, n, n) (lengths, ds = R dphi).
+
+    phi is the polar angle about the circle's own center (xc, yc). A normal displacement field v_n(phi) = a cos(m phi) + b sin(m phi) of the boundary changes the area of the
+    region inside a pixel by a [0] + b [1] (Reynolds transport, module docstring). Between two consecutive crossings of the pixel-edge lines the arc lies in one pixel and
+    the integrals are closed form, R [sin(m phi)]/m and -R [cos(m phi)]/m (R [phi] and 0 for m = 0); this is the same arc decomposition as ``circle_basis_integrals``, of which
+    m = 1 is the (cos, sin) part: ``circle_mode_integrals(..., 1)`` equals ``circle_basis_integrals(...)[1:]`` to round-off. ``method`` "arcs" is the only one (exact).
+    The circle must lie inside the DOI for the integral over the whole boundary to be the full derivative of the area.
+    """
+    if method != "arcs":
+        raise ValueError("method must be 'arcs'")
+    m = int(m)
+    if m < 0:
+        raise ValueError("m must be >= 0")
+    out = np.zeros((2, grid.n, grid.n))
+    a = _crossing_angles(grid, xc, yc, radius)
+    lo, hi = a[:-1], a[1:]
+    keep = hi - lo > 1e-15
+    lo, hi = lo[keep], hi[keep]
+    mid = 0.5 * (lo + hi)
+    i, j, ok = _pixel_index(grid, xc + radius * np.cos(mid), yc + radius * np.sin(mid))
+    lo, hi, i, j = lo[ok], hi[ok], i[ok], j[ok]
+    if m == 0:
+        np.add.at(out[0], (i, j), radius * (hi - lo))
+    else:
+        np.add.at(out[0], (i, j), radius * (np.sin(m * hi) - np.sin(m * lo)) / m)
+        np.add.at(out[1], (i, j), -radius * (np.cos(m * hi) - np.cos(m * lo)) / m)
+    return out
+
+
 def coverage_derivatives(grid, obj, names=PARAM_NAMES, method="arcs", n_samples=200_000):
     """d coverage / d p for the shape parameters in ``names`` (not ``eps_r``): array (len(names), n, n).
 

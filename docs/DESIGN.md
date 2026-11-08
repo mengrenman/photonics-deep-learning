@@ -933,19 +933,19 @@ interval covers 88 % (nominal 90 %). So the interval WIDTH is calibrated and the
 not flagged, and because it is fixed in wavelengths it is 0.10 sd at 10 dB, 0.32 sd at 20 dB, 1.02 at 30 dB and 3.2 sd at 40 dB. This is the concrete case of a model error that a family absorbs without a flag, and it is not benign for g. At the book's 10 to 20 dB the right-family fit
 is unbiased at the level of the noise (T1 over 40 keys: mean z -0.3 at 10 dB and -0.5 at 20 dB, coverage of the truth by the 3 sd interval 100 %, `snr/snr_summary.md`).
 
-**(ii) Wrong family.** F2 on T2 (15 % ellipticity): g = 0.07597 +- 0.00028 for a true 0.1 (z = 87; 0.02826 for 0.05, z 78 by Laplace). F2 on T3 (unequal contrasts): 0.04175 and 0.09339 for 0.05 and 0.1 (z 31 and 24). F2 on T5 (a third small disk): 0.0691 for
-0.1 (z 110). The intervals are tight (sd 2.8e-4) and wrong by 24 to 110 sd (7 to 33 widths of the 90 % interval), by 0.0066 to 0.031 wavelengths. T4 (closed gap with a neck): F2 reports g ~ 0 (mean 2.3e-6, 90 % interval [1.2e-7, 7.0e-6], P(g < g_det) = 1), which is the true value
+**(ii) Wrong family.** F2 on T2 (15 % ellipticity): g = 0.07597 +- 0.00028 for a true 0.1 (z = 87; 0.02826 for 0.05, z 78 by Laplace). F2 on T3 (unequal contrasts): 0.04175 and 0.09339 for 0.05 and 0.1 (z 30 and 20 with the observed-information sd; 31 and 24 with the Gauss-Newton sd first reported; corrected 2026-11-08, see 15.5). F2 on T5 (a third small disk): 0.0691 for
+0.1 (z 110). The intervals are tight (sd 2.8e-4 to 3.2e-4) and wrong by 20 to 110 sd (6 to 33 widths of the 90 % interval), by 0.0066 to 0.031 wavelengths. T4 (closed gap with a neck): F2 reports g ~ 0 (mean 2.3e-6, 90 % interval [1.2e-7, 7.0e-6], P(g < g_det) = 1), which is the true value
 for the wrong reason (the profile misfit falls steeply to g -> 0, slope 4.3e5 per unit g, because the bridge is better fit by overlap). The ellipticity ladder shows how the bias grows (`ellipticity/ellipticity_g0.1.md`): g error -0.00056 (z 2.0) at 0.5 % ellipticity, -0.0014 (z 5.0) at 1 %, -0.0031 (z 11) at 2 %.
 
 **(iii) Flags.** *Fit at 30 dB, noise key 0.* Phi_MAP/N = 1.015 for the right family and 8.1 to 8.4 (T2), 15.1 and 16.9 (T3), 4.0 (T4), 5.1 (T5) for F2 (F2u does not help T2, T4, T5: 8.1, 4.0, 5.1); the refit predictive p-value (100 replicates, resolution 1/101) is 0.000 for
 every wrong case (z 355 for T2); the pixel posteriors fit every truth (Phi/N 1.000) and so cannot flag anything. *The scaling.* The misfit excess grows as the SQUARE of the error of the gap, dPhi = c z^2 (z in posterior sd, dPhi = Phi_MAP minus the misfit of the noise realization
-itself), and c depends on the kind of model error and not on the SNR (the error is fixed in wavelengths; z scales as 1/s and dPhi as 1/s^2): c = 2.6 to 2.9 for the 15 % ellipticity of T2, 2.0 to 2.3 for the ladder up to 5 % (against the shift from the level-0 fit of the same noise; 2.5 to 2.7 at 15 %), 0.80 for the third disk (T5), 30 to 68 for unequal contrasts (T3), 0.09 to 0.11
+itself), and c depends on the kind of model error and not on the SNR (the error is fixed in wavelengths; z scales as 1/s and dPhi as 1/s^2): c = 2.6 to 2.9 for the 15 % ellipticity of T2, 2.0 to 2.3 for the ladder up to 5 % (against the shift from the level-0 fit of the same noise; 2.5 to 2.7 at 15 %), 0.80 for the third disk (T5), 32 to 92 for unequal contrasts (T3; corrected 2026-11-08, 15.5; a second-order quantity specific to this contrast imbalance), 0.09 to 0.11
 for the grid error (`snr/snr_summary.md`, `ellipticity/ellipticity_g*.md`, `discretization/discretization.md`; c changes by less than 15 % between 30, 20 and 10 dB). A misfit flag of 3 sd (dPhi = 3 sqrt(N - dim/2) = 147 nats) therefore needs z = sqrt(147 / c) at ANY SNR:
-about 7.5 for ellipticity, 13.6 for a third small disk, 1.5 to 2.2 for unequal contrasts, 37 to 41 for the grid error (about 61 dB). *The ladder at 30 dB* (the analytic flag P(Gamma(N - 5/2) >= Phi_MAP), no resolution limit; the 30 replicates of the first version could not resolve p
+about 7.5 for ellipticity, 13.6 for a third small disk, 1.3 to 2.1 for unequal contrasts, 37 to 41 for the grid error (about 61 dB). *The ladder at 30 dB* (the analytic flag P(Gamma(N - 5/2) >= Phi_MAP), no resolution limit; the 30 replicates of the first version could not resolve p
 below 0.03, and the realization of key 0 is +0.78 sd high): 0.5 % ellipticity (z 2.0): p = 0.12, not a flag (the refit p of 0.033 was one replicate in thirty); 1 % (z 5): p = 0.011; 2 % (z 11): p = 5e-11. Over 40 noise keys (`snr/snr_summary.md`) a 1 % ellipticity moves the gap interval
 off the truth by more than 3 sd in 97.5 % of the draws while the misfit flags it at the 5 % level in 42.5 % and at 3 sd in 2.5 %; at 2 % the flag is certain. So the earlier sentence "the data flag a model error once it biases the gap by about 2 sigma, never later" was wrong: the misfit lags the
 gap error by a factor up to the square of the ratio of thresholds. *At the book's SNRs* (40 noise keys per cell, Laplace fits, analytic null; `snr/snr_summary.md`): at 20 dB every wrong case is flagged at 3 sd in every draw (T5: z of the truth 34.6, dPhi 977 = 20 sd; T2 g = 0.1: z 26, dPhi 1748). **At 10 dB the F2 interval on T5 excludes the true gap by 10.8 sd (in every draw) while
-the misfit excess is 97 nats = 2.0 sd: the 5 % flag fires in 70 % of the draws (28 of 40) and the 3 sd flag in 17.5 % (7 of 40).** T2 (z 7.6 to 8.2) is flagged at 5 % in every draw and at 3 sd in 75 %; T3 (z 2.1 to 2.9, so the interval misses the truth by 3 sd in only 20 to 52.5 % of the draws) is flagged in every draw; T4
+the misfit excess is 97 nats = 2.0 sd: the 5 % flag fires in 70 % of the draws (28 of 40) and the 3 sd flag in 17.5 % (7 of 40).** T2 (z 7.6 to 8.2) is flagged at 5 % in every draw and at 3 sd in 75 %; T3 (z 2.1 to 2.8, so the interval misses the truth by 3 sd in only 15 to 45 % of the draws; observed-information sd, corrected 2026-11-08) is flagged in every draw; T4
 (dPhi 70 nats, 12 keys): 50 % at 5 %, none at 3 sd. The refit predictive check agrees for the two cells run (T5 10 dB: p = 0.000 of 20 replicates, z 3.2; T2 g = 0.1 10 dB: z 5.4). The evidence separates right from wrong only when a better family exists: F2 against F2u log BF = +9.8 to +10.4
 on every truth where F2u does not fit better (Occam factor, IS and Laplace agree), -33672 and -38050 on T3 where it does; between two wrong families the Bayes factor says nothing (F2 against Fe +10971 on T4, 1e5 on the others, each family misfitting). **So the strongest statement of (iii)
 is reached at the book's 10 dB for a deformation like the third disk (and for ellipticity below about 1.5 % at 30 dB): the interval is confidently wrong by 11 sd and the data raise no flag in 30 % (5 % level) to 82.5 % (3 sd) of the draws. It is not reached at 20 dB, nor at 30 dB for 2 % ellipticity and above or for the third disk (z 110 against its 3 sd threshold of 13.6).** The caveat remains that the noise level is exactly known and that the forward operator is exact up to the grid; the grid error itself is such an unflagged model error (it needs about 60 dB to be seen).
@@ -976,3 +976,139 @@ The review reproduced the code and the numbers and corrected three interpretatio
 - **Fe orientation** (`shapemodels.Fe` docstring): the coordinate of psi splits a posterior near +-pi/2; every Fe fit has |psi| <= 0.0013 (`tables.md` section 9).
 - **Tests.** New tests for each code defect: the TI end correction on a sharp posterior (10.8 nats too high without the guard, 4.2 too low and flagged with it), the geometric schedule, importance sampling on the Gaussian toy and a heavy-tailed target, the analytic null by simulation, the noise generator, the expected R-hat against simulated AR(1) chains and the
   ESS-aware criterion, the quantiles of the profile marginal against an exponential law, the profile checkpoint, the SNR units (cached noise reproduced, scaled copies, resumable), the importance-sampling script, the discretization fit and analysis, the ladder flags, the offline TI guard, the new `tables.md` sections and the job files.
+
+## 15. Milestone 8: the geometry of detectability
+
+### 15.1 The law and its first-order derivation
+
+Milestone 7 (results/PARAMETRIC_REPORT.md §0 (iii)) measured ΔΦ = c z² for a misspecified shape family. Here ΔΦ is the
+excess of the MAP misfit over that of a correct model, z is the error of the gap estimate in posterior standard
+deviations, and c depends only on the kind of model error, not on the SNR. Derivation at first order:
+
+- **Whitened coordinates.** With CN(0, s²) noise, real and imaginary parts each have variance s²/2, so in whitened
+  real-stacked data y_w = y_r/(s/√2) the misfit is Φ = ½‖r_w‖². The likelihood is exp(−Φ), and the Fisher matrix of a
+  model with whitened Jacobian D (2N × k, real) is DᵀD.
+- **Model error.** Let δ (whitened) be the difference between the true data and the model's data at the base point p₀
+  (noise-free). To first order in δ, the least-squares bias is Δp = (DᵀD)⁻¹Dᵀδ, and the misfit excess is
+  ΔΦ = ½‖P_⊥δ‖², where P_⊥ = I − D(DᵀD)⁻¹Dᵀ projects off the tangent space T = range(D) of the model manifold.
+- **The gap direction.** With e_g the gap's unit vector in parameter space, Δg = vᵀδ for v = D(DᵀD)⁻¹e_g, and
+  ‖v‖² = [(DᵀD)⁻¹]_gg = σ_g² (the Cramér–Rao variance). So z = Δg/σ_g = ŵᵀδ, where ŵ = v/‖v‖ is the unit vector in T
+  orthogonal to the tangent directions of every other parameter. It is the "pure gap" direction of the model manifold in
+  data space.
+- **Which gap.** Δg = (fitted − base). It is the error of the estimate only if the base gap is the true gap. A model error
+  that also changes the object's own gap (every A1 boundary deformation with m ≥ 2 changes the edge-to-edge gap by
+  −2(−1)ᵐε at first order) has z_true = z_fit − (gap change)/σ_g; equivalently δ is replaced by its gap-preserving
+  version, which differs by a multiple of the in-model tangent d_r − 2 d_g and so has the same ΔΦ. Any statement about
+  "bias" or "detectability" uses z_true; z_fit is the response of the estimate.
+- **Result.** If δ makes an angle α with T, and its tangential part makes an angle β with ŵ, then
+  ‖P_⊥δ‖ = ‖δ‖ sin α and ŵᵀδ = ‖δ‖ cos α cos β, so
+
+  **c = ΔΦ/z² = ½ tan²α / cos²β,**
+
+  independent of ‖δ‖ for a fixed direction of δ (all A1 errors of a family that scale together) and of the SNR, because
+  both scale with the noise level and cancel. An error whose data signature lies almost in the model's tangent space
+  (α → 0) and along the pure gap direction (β → 0) biases g without raising the misfit. Those are the confounded
+  directions. If z = O(‖δ‖²) (no A1 component, see 15.2), ΔΦ = O(‖δ‖²) too and c scales as 1/‖δ‖²: it is then a
+  second-order quantity that this formula cannot predict.
+- **Conditions.**
+  - *Exactness.* δ is the exact difference between the true data and the model at p₀, so the nonlinearity of the truth is
+    irrelevant. The formula is exact iff the model map μ is affine between p₀ and the fit p*. The corrections are the
+    intrinsic curvature times ‖P_⊥δ‖ and the parameter-effects curvature times ‖p₁‖; both are independent of the SNR, so c is
+    SNR independent also nonlinearly for noise-free fits with a negligible prior. Second order: p = p₁ + p₂ with
+    p₂ = (DᵀD)⁻¹(−½DᵀH[p₁,p₁] + H[p₁,·]ᵀP_⊥δ), H = d²μ (`detectability.second_order_bias`); the series fails when the
+    residual-curvature operator below has an eigenvalue near 1 (milestone 8: T3).
+  - *Base point.* First-order z and ΔΦ do not change if p₀ moves along nuisance directions (ŵ and P_⊥ annihilate those
+    columns), so the base-point dependence is itself a second-order curvature diagnostic. The base point of the analysis is
+    the profile foot point (g = g_true, the nuisances at their least-squares values; `detectability.foot_point`): there
+    Dᵀδ has only a gap component, the tangential part of δ is exactly along ŵ (β = 0 or π) and c = ½ tan²α. "D evaluated at
+    the noise-free MAP with δ measured from p₀" has no first-order meaning (at the exact MAP the tangential residual is
+    zero) and is not used; the correction for a distant base point is the second-order one.
+  - *Curvature of the residual.* At a fit with residual r = y − μ(p*), the Hessian of Φ is DᵀD − ⟨r, d²μ⟩ = DᵀD(I − A),
+    A = (DᵀD)⁻¹⟨r, d²μ⟩. The Gauss–Newton sd (Fisher) is then wrong by the factors 1/√(1 − λ) in the directions of
+    the eigenvectors of A; z and c must use the observed-information sd when Φ/N ≫ 1 (milestone 7's T3: the sd of g is 16 %
+    larger at g = 0.1). The Laplace log evidence changes by −½ Σ log(1 − λ).
+  - *Noise.* DESIGN's ΔΦ is the expected excess over a correct model. Milestone 7 measured Φ_MAP − Φ(noise), which is lower by
+    ½‖P_T e‖² (mean k/2 = 2.5). One noise draw also has z-noise of sd 1 and ΔΦ-noise of sd √(2ΔΦ); the interaction terms are
+    z = z_NL + ŵ*ᵀe and ΔΦ = Φ_NL + r*ᵀe − ½‖P_T* e‖² (e the whitened noise). The reference for the law is therefore the
+    noise-free nonlinear fit, not a single draw.
+  - Nuisance parameters free (projected out through (DᵀD)⁻¹).
+
+### 15.2 Symmetry selection rule
+
+The book's rings are invariant under σ_x: x → −x and σ_y: y → −y (milestone 6 checked the angle sets), so the
+forward map and its linearization at a D₂-symmetric object intertwine the D₂ actions on shape perturbations and on data
+(antenna permutations). The data space splits into four isotypic components (A₁, B₁, B₂, A₂), and so does the space of
+model errors. The gap g, the radius r and ε_r are A₁; c_x and r₁ − r₂ change sign under σ_x; c_y changes sign under σ_y
+(the pair rotation, A₂ at m = 1, is outside F2). The isotypic components of the real D₂ irreps are one dimensional and
+mutually orthogonal, and an intertwiner preserves them, so ŵ (built from A₁ columns, and for the nuisances c_x, c_y from
+columns orthogonal to A₁) lies in A₁ and **at first order only the A₁ part of a model error can bias g**. Errors in the
+other irreps give z = O(‖δ‖²) and therefore a large c ∝ 1/‖δ‖². This predicts the large c of T3 (unequal contrasts: the
+A₁ part, the mean contrast, is absorbed by ε_r, and what is left is σ_x-odd) and the small c of T5 (the third disk lies on
+the σ_x axis, so its A₁ part is nonzero).
+
+Conditions: a D₂-invariant base point (a symmetric object p₀ with c_x = c_y = 0 and equal disks), antenna sets invariant
+under both reflections (exact permutations, `D2Action` raises otherwise), iid noise (the whitened metric is the identity, so
+the permutations are orthogonal), and exact grid flips for the contrast. The rule holds at every base point that
+satisfies them (milestone 8 checked the nominal ε_r = 2 base and the mean-contrast base of T3): "z is second order" for T3
+holds at both, and c_T3 is a second-order, curvature-driven number (15.5).
+
+### 15.3 Computations
+
+1. **Verify the formula.** From noise-free data, compute α, β, c_geom for T2 (ellipticity 0.5%, 1%, 2%, 5%, 15%), T3,
+   T5 and the grid error (n = 128 and n = 256 data against the n = 64 model). The reference is the noise-free nonlinear fit
+   c_NL; the milestone-7 values (results/parametric/snr, ellipticity, discretization) are ONE noise draw each and are
+   compared through the noise decomposition of 15.1. Report where the first-order formula fails and why (second-order
+   `second_order_bias`, residual-curvature eigenvalues, observed-information sd).
+2. **Selection rule check.** For every truth, decompose δ into the four D₂ isotypic components (average over the group
+   action on data) and report the fraction of ‖δ‖² and of z carried by each. Non-A₁ components must give |z| at
+   round-off in the linear computation.
+3. **Detectability spectrum.** Boundary deformations of the two disks, normal displacement v_n(φ) = ε·cos(mφ) or
+   ε·sin(mφ) in each disk's polar angle, combined into D₂ irreps. A₁ modes are cos(mφ) on the right disk plus its σ_x
+   image cos(m(π − φ)) = (−1)^m cos(mφ) on the left. For m = 2…8 at ε_r = 1.1, 2, 4 and g = 0.05, 0.1, on a grid whose
+   harmonics are resolved (n = 192; the spectrum is shown against n = 64 and 128), report in the gap-error convention
+   (z_true, the gap-preserving tangent τ_m − (−1)^m τ₀, 15.1):
+   - dz_true/dε (gap error per unit deformation, in posterior sd at 30 dB; the response of the F2 estimate dz_fit/dε is
+     reported separately and labeled as such),
+   - c_m,
+   - the deformation amplitude at which z_true = 3 while ΔΦ stays below the 3σ flag (147 nats), in wavelengths,
+   - the small-deformation measures ε m/r (boundary slope) and x = ε(ε_r − 1)/h (contrast displacement per boundary pixel),
+   - ‖τ_m‖/‖τ₂‖ against the far-field band-limit prediction J_m(2k₀r)/J₂(2k₀r) (2k₀r = 2.51).
+
+   m = 0 and m = 1 lie inside the model (r and g), so they serve as checks: α = 0 and z_true = 0. Use the existing exact
+   boundary derivatives (shapes.py, ellipses.py) with v_n as the displacement field, and jvp for the data tangents.
+4. Report as results/DETECTABILITY_REPORT.md.
+
+### 15.4 Implementation notes (milestone 8)
+
+- `src/bayes_scatter/detectability.py`: whitened Jacobian, `analyze_error` (z, ΔΦ, α, β, c), `D2Action`, the boundary modes, and (after the review)
+  `gap_change_per_amplitude`/`true_gap_tangent` (gap-error convention), `curvature_tensor`/`second_order_bias`/`residual_curvature_operator`/`log_evidence_gap`
+  (second order, steps 1e-3 max(|p|, 0.1), central differences of the exact jvp Jacobian) and `foot_point` (profile foot point). `shapes.circle_mode_integrals`
+  gives the exact arc integrals of cos(mφ) and sin(mφ).
+- `scripts/detectability_verify.py` (15.3 items 1 and 2) and `scripts/detectability_spectrum.py` (item 3, `--n` selects the grid; n = 64, 128, 192 are in
+  `results/detectability/spectrum/n<N>/`). Everything is resumable and the numbers are in `results/detectability/`; the report is
+  `results/DETECTABILITY_REPORT.md`.
+- Cost: one n = 192 base object takes 5 to 10 min on one core (the 6 bases of one grid ran in parallel on the workstation, one process per core); one verify case takes 1.5 to
+  4 min on the Mac.
+
+### 15.5 Review follow-up (added after the review of the milestone-8 draft)
+
+1. **The spectrum measured the wrong gap (critical).** z = ŵᵀτ is the response of the F2 estimate to the BASE gap, but every A1 mode with m ≥ 2 changes the deformed object's
+   own gap by −2(−1)ᵐε. The error of the estimate is z_true = z_fit + 2(−1)ᵐ/σ_g per unit amplitude (15.1 "Which gap"); m = 0 then has z_true = 0 as it must. In this
+   convention all 42 A1 cases are unflagged at z_true = 3 (c ≤ 4.5, ε₃ = 2.3e-4 to 9.6e-4 wavelengths at n = 192), the confounded modes are the high-m gap-preserving ones that lie
+   beyond the far-field band limit (m > 2k₀r = 2.5; ‖τ_m‖/‖τ₂‖ follows J_m/J₂), and T2 (a gap-preserving m = 2 deformation to first order, the m = 0 mode at +er/2 plus the
+   m = 2 mode at −er/2) is reproduced: c_true(m = 2) = 1.892 at ε_r 2, g 0.1, n = 192 against 1.871 for the independent ellipse renderer (`test_ellipticity_is_the_gap_preserving_m2_mode...`).
+   The first version's conclusions ("low harmonics are the most damaging", "many are flagged first") were artifacts of the base-gap convention.
+2. **n = 64 is not converged for m ≥ 5.** The pixelization floor of ‖τ_m‖ is ≈ 1 % of ‖τ₂‖; the base-gap response dz_fit changes by factors 5 to 300 between n = 64, 128 and 192
+   for m ≥ 5. The true-gap quantities converge (|dz_true/dε| within 0.5 % between n = 128 and 192, ≤ 5 % between 64 and 192) because they are dominated by 2/σ_g. The spectrum is
+   reported at n = 192 with the convergence table; the m = 6 and 7 "extremes" of the first version are removed.
+3. **The T3 sd (major).** The Gauss-Newton sd understates the posterior sd of g when Φ/N ≫ 1: at the milestone-7 T3 MAPs the observed-information (finite-difference Hessian) sd is 1.159
+   times larger at g = 0.1 (3.243e-4 against 2.799e-4) and 1.037 times larger at g = 0.05; z = 23.64 → 20.40 and 30.67 → 29.58, c = 68.1 → 91.5 and 35.8 → 38.5. The largest eigenvalue of
+   (DᵀD)⁻¹⟨r, d²μ⟩ at the T3 g = 0.1 MAP is 0.443, which predicts log Z(FD) − log Z(GN) = 0.270 against 0.252 in `results/parametric/T3g0.1_F2/is_evidence.json` (importance sampling agrees with
+   the FD Laplace value to 0.03). The milestone-7 report (results/PARAMETRIC_REPORT.md sections 0(iii), 3, 4.2, 4.4) and 14.6 above were corrected on 2026-11-08 at the user's request, for every T3 unit of the SNR experiment (`scripts/parametric_t3_fd_sd.py`, `results/parametric/snr_fd/t3_fd_summary.md`; the stored MAPs, nothing refit): at 30 / 20 / 10 dB, key 0, z = 29.6 / 9.5 / 3.2 and c = 38.5 / 36.7 / 32.4 (g = 0.05), z = 20.4 / 6.6 / 2.2 and c = 91.5 / 86.5 / 76.6 (g = 0.1); at 10 dB over 40 keys the interval excludes the truth at 3 sd in 18 and 6 of 40 (were 21 and 8).
+4. **T3 is second order at both base points (major).** At the nominal base 95.7 % of the A1 energy lies along the ε_r tangent (cos 0.978) and the first-order z comes from the non-tangent
+   remainder; c_T3 = ΔΦ/z² with z = O(Δ²) is a curvature quantity that the first-order c_geom cannot predict, so the agreement of c_geom (40, 54) with the measured c (35.8, 68) is
+   a cancellation of a +34 % overshoot in Δg and a +15 % overshoot in σ_g(p₀). The selection rule holds at both bases; c_T3 needs the second-order theory (15.1) and scales as 1/Δ². At the symmetric bases the non-A₁ part of z is below 6e-15 of z; at the profile foot points of T3 (g = 0.05: c_x = 0.0042, where the B₁ error is absorbed by c_x) and T5 (c_y = 0.0050) the base is not D₂-symmetric and 23 % and 2 % of z are carried by non-A₁ components, which is what the condition of 15.2 says.
+5. **Attributions.** (a) The nonlinear-refit failures of the first version are explained by x = ε₃(ε_r − 1)/h (all 20 agreeing cases have x ≤ 0.31, all 15 failures x ≥ 0.41), not by a small
+   projection; with the true-gap amplitudes every case has x ≤ 0.12 and the refit agrees (shift 2.89 to 3.04, misfit within 3 % of 9c wherever 9c > 0.03). (b) The 15 % ellipticity
+   discrepancy is parameter-effects curvature (p₂ tangential +0.00359, normal −0.00128 on Δg = −0.02733 against NL −0.02399), not a 10 to 15 % change of σ_g (it is 6.6 to 6.8 % for T2).
+   (c) The measured c of milestone 7 is one noise draw; the grid-error rows are noise-free and the agreement of the g = 0.05 rows is not the same as that of the g = 0.1 rows (15.3 item 1).

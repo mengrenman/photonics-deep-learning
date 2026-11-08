@@ -2,13 +2,15 @@
 
 Every number below is read from a file under `/Users/mengren/Documents/new_projects/photonics-dl/results/parametric/` (named per item; `snr/x` means `results/parametric/snr/x`). `tables.md` holds the case tables, `snr/snr_summary.md` the SNR experiment, `ellipticity/*.md` the ladder and the calibration, `discretization/discretization.md` the grid-bias analysis. Repository state: HEAD is 07857dc ("Milestone 7 (in progress): parametric-prior runs and review follow-up", committed at your request on 2026-10-14; its parent 761fd7e is the milestone-7 build commit). The working tree was clean when this report was audited, and this report file is added after the commit. The commit contains: DESIGN 14.5 to 14.7, the changes to `shapepost.py`, `shapemodels.py` and the scripts, the new scripts, tests and job files, and `results/parametric/**`.
 
+**Correction (2026-11-08, milestone 8).** The T3 numbers below are corrected; everything else is unchanged. T3 (unequal contrasts fitted by F2) misfits strongly (Phi/N 15 to 17 at 30 dB), and the Gauss-Newton Hessian, which this report used for every Laplace sd, drops the residual-curvature term. For T3 that term matters: at the milestone-7 MAP the observed-information (finite-difference) sd of g is 1.159 times the Gauss-Newton sd at g = 0.1 and 1.037 times at g = 0.05 (importance sampling agrees with the finite-difference Laplace to 0.03 nats, section 5). Recomputed at the stored MAPs of every T3 unit (`results/parametric/snr_fd/t3_fd_summary.md`, `scripts/parametric_t3_fd_sd.py`; nothing refit): key 0 at 30 / 20 / 10 dB gives z 29.6 / 9.5 / 3.2 and c 38.5 / 36.7 / 32.4 at g = 0.05 (were 30.7 / 9.9 / 3.3 and 35.8 / 34.2 / 30.4), and z 20.4 / 6.6 / 2.2 and c 91.5 / 86.5 / 76.6 at g = 0.1 (were 23.6 / 7.5 / 2.4 and 68.1 / 66.4 / 62.1); over the 40 keys at 10 dB the interval excludes the truth at 3 sd in 18 of 40 (g = 0.05, was 21) and 6 of 40 (g = 0.1, was 8). The misfit numbers (dPhi, Phi/N, p, the flag counts) do not depend on the sd and are unchanged. For T2 and T5 the observed-information sd at the 30 dB MAP differs from Gauss-Newton by at most 3 % (`results/detectability/verify/*.json`, `sigma_full`), and those rows are left as they were. Milestone 8 also showed that T3's c is a second-order (curvature) quantity that scales as one over the square of the contrast imbalance, so it describes this T3 and is not a constant of "unequal contrasts" (`results/DETECTABILITY_REPORT.md` section 3, DESIGN 15.5). `tables.md` and `snr/snr_summary.md` are the original generated tables and still show the Gauss-Newton values.
+
 ## 0. Result
 
 **(i) Right family: the interval width is calibrated; the location carries a deterministic grid bias of 1.0 sd at 30 dB, which is itself an unflagged model error.** T1 gives g = 0.05022 +- 0.00028 and 0.10029 +- 0.00028 (HMC, converged), but these are one data realization (noise key 0; the correlation of z between the two gaps over 41 keys is 0.985). Over 41 noise keys the sd of z is 1.00 +- 0.11 and 0.98 +- 0.11, the mean z is -1.15 +- 0.16 and -1.19 +- 0.16 and the 90 % interval covers 66 % and 68 % (`ellipticity/calibration_g0.05.md`, `calibration_g0.1.md`). The offset is not noise: F2 fitted to noise-free data of the n = 128 grid is off by +1.024 sd (+1.237 sd for n = 256 data, 1.29 extrapolated; +0.005 for n = 64 data), the paired shift between data grids is -1.019 +- 0.002 over 8 keys, and with the offset removed z has mean -0.13 +- 0.16, sd 1.00 and 88 % coverage (`discretization/discretization.md`). Fixed in wavelengths, it is 0.10 sd at 10 dB, 0.32 at 20 dB, 1.02 at 30 dB, 3.2 at 40 dB.
 
-**(ii) Wrong family: confidently wrong.** F2 on T2, T3 and T5 gives intervals with sd 2.8e-4 that miss the true gap by 24 to 110 sd (7 to 33 widths of the 90 % interval), 0.0066 to 0.031 wavelengths (`tables.md` section 5; T2 g = 0.1 chains: z = 87). T4 (closed gap with a neck): g = 2.35e-6, 90 % interval [1.20e-7, 7.03e-6], P(g < g_det) = 1, the true value for the wrong reason (`T4_F2/profile.json`).
+**(ii) Wrong family: confidently wrong.** F2 on T2, T3 and T5 gives intervals with sd 2.8e-4 to 3.2e-4 that miss the true gap by 20 to 110 sd (6 to 33 widths of the 90 % interval; T3 corrected 2026-11-08), 0.0066 to 0.031 wavelengths (`tables.md` section 5; T2 g = 0.1 chains: z = 87). T4 (closed gap with a neck): g = 2.35e-6, 90 % interval [1.20e-7, 7.03e-6], P(g < g_det) = 1, the true value for the wrong reason (`T4_F2/profile.json`).
 
-**(iii) What flags it: the misfit excess grows as the square of the gap error, so the strongest statement is reached at the book's 10 dB.** dPhi = c z^2, with c fixed by the kind of error and independent of the SNR: 2.6 to 2.9 (15 % ellipticity), 2.0 to 2.3 (ellipticity up to 5 %), 0.80 (third small disk, T5), 30 to 68 (unequal contrasts, T3), 0.09 to 0.11 (the grid error). A 3 sd misfit flag (147 nats) needs z of about 7.2 to 7.6, 8.0 to 8.6, 13.6, 1.5 to 2.2 and 37 to 41 respectively, at any SNR. At 10 dB the F2 interval on T5 excludes the true gap by 10.8 sd on average (8.3 to 13.1 sd) and by more than 3 sd in all 40 noise draws while the misfit excess is 97 nats = 2.0 sd; the 5 % flag fires in 28 of 40 draws (70 %) and the 3 sd flag in 7 of 40 (17.5 %) (`snr/snr_summary.md`). At 20 dB every wrong case is flagged at 3 sd in every draw. At 30 dB a 1 % ellipticity moves the gap by 4.9 sd (interval excludes the truth by more than 3 sd in 39 of 40 draws) and the misfit flags it at 5 % in 17 of 40 and at 3 sd in 1 of 40; at 2 % the flag is certain. The first report's sentence "the data flag a model error once it biases the gap by about 2 sigma, never later", and its conclusion that the strongest statement is not reached, were wrong.
+**(iii) What flags it: the misfit excess grows as the square of the gap error, so the strongest statement is reached at the book's 10 dB.** dPhi = c z^2, with c fixed by the kind of error and independent of the SNR: 2.6 to 2.9 (15 % ellipticity), 2.0 to 2.3 (ellipticity up to 5 %), 0.80 (third small disk, T5), 32 to 92 (unequal contrasts, T3; corrected 2026-11-08, and specific to this contrast imbalance), 0.09 to 0.11 (the grid error). A 3 sd misfit flag (147 nats) needs z of about 7.2 to 7.6, 8.0 to 8.6, 13.6, 1.3 to 2.1 and 37 to 41 respectively, at any SNR. At 10 dB the F2 interval on T5 excludes the true gap by 10.8 sd on average (8.3 to 13.1 sd) and by more than 3 sd in all 40 noise draws while the misfit excess is 97 nats = 2.0 sd; the 5 % flag fires in 28 of 40 draws (70 %) and the 3 sd flag in 7 of 40 (17.5 %) (`snr/snr_summary.md`). At 20 dB every wrong case is flagged at 3 sd in every draw. At 30 dB a 1 % ellipticity moves the gap by 4.9 sd (interval excludes the truth by more than 3 sd in 39 of 40 draws) and the misfit flags it at 5 % in 17 of 40 and at 3 sd in 1 of 40; at 2 % the flag is certain. The first report's sentence "the data flag a model error once it biases the gap by about 2 sigma, never later", and its conclusion that the strongest statement is not reached, were wrong.
 
 **What changed from the first report** (details in the review log): (a) section 4 is rewritten with the scaling law, the analytic null and fits at 10, 20 and 30 dB over many noise keys; (b) the 1.2 sd offset of (i) is explained as a grid bias and "exact forward models" is withdrawn; (c) the TI check, which came out 15 to 27 nats above Laplace, was a quadrature artifact; importance sampling confirms the Laplace evidence in all 15 interior cases it was run on (F2 and F2u on seven truths, Fe on T4) to 0.03 nats (finite-difference Hessian) or 0.09 nats (Gauss-Newton, one case 0.28). Smaller: the wrong gaps are 24 to 110 sd, not 20 to 300; the Occam factor is +9.8 to +10.4; two HMC cases are one realization; three chain sets flagged unconverged sit at the noise floor of perfect mixing.
 
@@ -50,17 +52,17 @@ At g = 0.1 the shifts are +0.002, +1.057, +1.298 sd. Paired by noise key, z(n = 
 
 **Chains (T2 g = 0.1, `T2g0.1_F2/summary.json`):** g = 0.075972 +- 0.000276, 90 % interval [0.075535, 0.076438], truth 0.1, z = 87.
 
-**Laplace intervals** (`tables.md` section 5, sd about 2.8e-4):
+**Laplace intervals** (`tables.md` section 5, sd about 2.8e-4; the T3 rows use the observed-information sd, 2.79e-4 and 3.24e-4, corrected 2026-11-08):
 
 | truth | F2 g | true g | z | error (wavelengths) |
 |---|---|---|---|---|
 | T2 | 0.02826 | 0.05 | 78 | 0.0217 |
 | T2 | 0.07598 | 0.1 | 83 | 0.0240 |
-| T3 | 0.04175 | 0.05 | 31 | 0.0083 |
-| T3 | 0.09339 | 0.1 | 24 | 0.0066 |
+| T3 | 0.04175 | 0.05 | 30 | 0.0083 |
+| T3 | 0.09339 | 0.1 | 20 | 0.0066 |
 | T5 | 0.06912 | 0.1 | 110 | 0.0309 |
 
-The F2 gaps are wrong by 24 to 110 sd, i.e. 7 to 33 widths of the 90 % interval (the first report said 20 to 300; no case reaches 300).
+The F2 gaps are wrong by 20 to 110 sd, i.e. 6 to 33 widths of the 90 % interval (the first report said 20 to 300; no case reaches 300).
 
 **T4 (closed gap with a neck):** profile marginal (`T4_F2/profile.json`; HMC is degenerate, section 6): mean 2.35e-6, sd 2.35e-6, 90 % interval [1.20e-7, 7.03e-6], P(g < g_det) = 1. This is correct for the wrong reason: the profile misfit falls with slope 4.3e5 per unit g toward g -> 0 because the bridge is better fit by overlap. The Laplace "covers: yes" of T4 F2 in `tables.md` section 5 is spurious (MAP on the wall, not converged).
 
@@ -80,8 +82,8 @@ Let z be the distance of the F2 gap from the true gap in Laplace sd, and dPhi = 
 | T2 15 % ellipticity, g = 0.1 | 83 / 26 / 8.4 | 2.55 / 2.60 / 2.72 | 7.6 |
 | ellipticity 0.5 % to 5 % (ladder; c against the level-0 fit of the same noise) | 2 to 29 at 30 dB | 2.0 to 2.3 | 8.0 to 8.6 |
 | T5, third disk r = 0.06 | 110 / 35 / 11 | 0.80 / 0.80 / 0.79 | 13.6 |
-| T3 unequal contrasts, g = 0.05 | 31 / 9.9 / 3.3 | 35.8 / 34.2 / 30.4 | 2.0 to 2.2 |
-| T3 unequal contrasts, g = 0.1 | 24 / 7.5 / 2.4 | 68.1 / 66.4 / 62.1 | 1.5 |
+| T3 unequal contrasts, g = 0.05 (corrected 2026-11-08) | 29.6 / 9.5 / 3.2 | 38.5 / 36.7 / 32.4 | 2.0 to 2.1 |
+| T3 unequal contrasts, g = 0.1 (corrected 2026-11-08) | 20.4 / 6.6 / 2.2 | 91.5 / 86.5 / 76.6 | 1.3 to 1.4 |
 | grid error n = 128 -> 64, absorbed by F2 (`discretization/`) | 1.02 / 0.32 / 0.10 | 0.11 (g = 0.05), 0.09 (g = 0.1) | 37 to 41 (about 61 dB) |
 
 A third small disk can move the gap by 13.6 sd before the misfit rises by 3 sd, ellipticity by 7.5 sd, a grid error by 37 sd. The data are not blind; they see the error quadratically.
@@ -109,8 +111,8 @@ The g = 0.05 ladder agrees to within a few percent (1 %: z 4.8, p = 0.014). **Ty
 | T2 g = 0.1 | 10 dB | +8.2 | 40/40 | +172.9 (18.9) | 40/40 | 30/40 |
 | T2 g = 0.1 | 20 dB | +26.2 | 40/40 | +1747.6 (59.2) | 40/40 | 40/40 |
 | T2 g = 0.05 | 10 dB | +7.6 | 40/40 | +166.6 (17.8) | 40/40 | 30/40 |
-| T3 g = 0.1 | 10 dB | +2.1 | 8/40 | +378.9 (25.1) | 40/40 | 40/40 |
-| T3 g = 0.05 | 10 dB | +2.9 | 21/40 | +336.6 (23.8) | 40/40 | 40/40 |
+| T3 g = 0.1 (corrected 2026-11-08) | 10 dB | +2.1 | 6/40 | +378.9 (25.1) | 40/40 | 40/40 |
+| T3 g = 0.05 (corrected 2026-11-08) | 10 dB | +2.8 | 18/40 | +336.6 (23.8) | 40/40 | 40/40 |
 | T4 (12 keys) | 10 dB | gap on the boundary: not meaningful | - | +69.5 (13.0) | 6/12 | 0/12 |
 | T4 (12 keys) | 20 dB | - | - | +701.4 (41.5) | 12/12 | 12/12 |
 | T1 g = 0.05, right family | 10 / 20 dB | -0.3 / -0.5 | 0/40 | -2.1 (1.6) | 1/40 | 0/40 |

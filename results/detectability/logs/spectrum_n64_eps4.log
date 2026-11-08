@@ -1,0 +1,16 @@
+n=64 eps4_g0.05 m=2: refit shift +3.006 sd (linear +3.000), phi 8.632 (linear 8.591)
+n=64 eps4_g0.05 m=3: refit shift +2.889 sd (linear +3.000), phi 38.56 (linear 37.94)
+n=64 eps4_g0.05 m=4: refit shift +3.009 sd (linear +3.000), phi 1.831 (linear 1.848)
+n=64 eps4_g0.05 m=5: refit shift +2.997 sd (linear +3.000), phi 0.1424 (linear 0.1441)
+n=64 eps4_g0.05 m=6: refit shift +2.997 sd (linear +3.000), phi 0.02094 (linear 0.022)
+n=64 eps4_g0.05 m=7: refit shift +2.996 sd (linear +3.000), phi 0.006891 (linear 0.007411)
+n=64 eps4_g0.05 m=8: refit shift +2.998 sd (linear +3.000), phi 0.005347 (linear 0.006057)
+n=64 eps4_g0.05: sigma_g 2.899e-04, s 3.843e-04, 134 s
+n=64 eps4_g0.1 m=2: refit shift +3.016 sd (linear +3.000), phi 10.52 (linear 10.42)
+n=64 eps4_g0.1 m=3: refit shift +2.905 sd (linear +3.000), phi 22.43 (linear 22.2)
+n=64 eps4_g0.1 m=4: refit shift +3.003 sd (linear +3.000), phi 2.498 (linear 2.536)
+n=64 eps4_g0.1 m=5: refit shift +2.997 sd (linear +3.000), phi 0.1217 (linear 0.1233)
+n=64 eps4_g0.1 m=6: refit shift +2.996 sd (linear +3.000), phi 0.01747 (linear 0.01838)
+n=64 eps4_g0.1 m=7: refit shift +2.996 sd (linear +3.000), phi 0.009736 (linear 0.01032)
+n=64 eps4_g0.1 m=8: refit shift +2.997 sd (linear +3.000), phi 0.007256 (linear 0.007816)
+n=64 eps4_g0.1: sigma_g 3.352e-04, s 3.853e-04, 114 s

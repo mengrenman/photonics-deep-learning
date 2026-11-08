@@ -1,0 +1,8 @@
+E0.05g0.05 [total]: z -27.073, dPhi 1733, alpha 28.41 deg, beta 104.40 deg, c_geom 2.364; NL shift -25.903 sd, phi 1747, c_NL 2.603, c_NL(sd full) 2.444; dg lin -0.00757, 2nd -0.00732
+E0.05g0.05 [pure]: z -27.741, dPhi 1727, alpha 28.91 deg, beta 105.11 deg, c_geom 2.244; NL shift -26.614 sd, phi 1740, c_NL 2.457, c_NL(sd full) 2.314
+E0.05g0.05 [ref0]: z -28.063, dPhi 1740, alpha 28.96 deg, beta 105.26 deg, c_geom 2.209
+E0.05g0.05 [foot]: z -26.881, dPhi 1742, alpha 65.52 deg, beta 180.00 deg, c_geom 2.411; dg lin -0.00736, 2nd -0.00732
+E0.05g0.1 [total]: z -29.464, dPhi 1814, alpha 28.64 deg, beta 105.49 deg, c_geom 2.09; NL shift -28.109 sd, phi 1808, c_NL 2.288, c_NL(sd full) 2.111; dg lin -0.00851, 2nd -0.00821
+E0.05g0.1 [pure]: z -30.175, dPhi 1801, alpha 29.08 deg, beta 106.24 deg, c_geom 1.978; NL shift -28.849 sd, phi 1795, c_NL 2.157, c_NL(sd full) 1.998
+E0.05g0.1 [ref0]: z -30.487, dPhi 1818, alpha 29.14 deg, beta 106.37 deg, c_geom 1.956
+E0.05g0.1 [foot]: z -29.371, dPhi 1802, alpha 63.93 deg, beta 180.00 deg, c_geom 2.089; dg lin -0.00829, 2nd -0.00821

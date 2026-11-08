@@ -1,0 +1,15 @@
+T5 [total]: z -104.356, dPhi 1.014e+04, alpha 40.83 deg, beta 129.28 deg, c_geom 0.9312; NL shift -106.016 sd, phi 9714, c_NL 0.8643, c_NL(sd full) 0.8254; dg lin -0.03038, 2nd -0.03094
+T5 [pure]: z -105.071, dPhi 1.002e+04, alpha 40.99 deg, beta 130.16 deg, c_geom 0.9079; NL shift -106.875 sd, phi 9600, c_NL 0.8405, c_NL(sd full) 0.8043
+T5 [foot]: z -105.623, dPhi 9935, alpha 53.16 deg, beta 180.00 deg, c_geom 0.8905; dg lin -0.02980, 2nd -0.03070
+E0.02g0.05 [total]: z -10.218, dPhi 267.7, alpha 26.97 deg, beta 102.99 deg, c_geom 2.564; NL shift -10.049 sd, phi 268.8, c_NL 2.662, c_NL(sd full) 2.608; dg lin -0.00281, 2nd -0.00276
+E0.02g0.05 [pure]: z -11.144, dPhi 268.8, alpha 28.35 deg, beta 105.03 deg, c_geom 2.164; NL shift -10.995 sd, phi 269.8, c_NL 2.232, c_NL(sd full) 2.195
+E0.02g0.05 [ref0]: z -11.225, dPhi 270.4, alpha 28.36 deg, beta 105.10 deg, c_geom 2.146
+E0.02g0.05 [foot]: z -10.170, dPhi 268.7, alpha 66.31 deg, beta 180.00 deg, c_geom 2.598; dg lin -0.00277, 2nd -0.00276
+E0.02g0.1 [total]: z -11.137, dPhi 279.6, alpha 27.20 deg, beta 104.00 deg, c_geom 2.255; NL shift -10.952 sd, phi 279.5, c_NL 2.33, c_NL(sd full) 2.28; dg lin -0.00316, 2nd -0.00311
+E0.02g0.1 [pure]: z -12.104, dPhi 278.9, alpha 28.45 deg, beta 106.12 deg, c_geom 1.904; NL shift -11.936 sd, phi 278.6, c_NL 1.956, c_NL(sd full) 1.921
+E0.02g0.1 [ref0]: z -12.179, dPhi 280.8, alpha 28.47 deg, beta 106.18 deg, c_geom 1.893
+E0.02g0.1 [foot]: z -11.109, dPhi 279.2, alpha 64.82 deg, beta 180.00 deg, c_geom 2.262; dg lin -0.00312, 2nd -0.00311
+grid128g0.05 [total]: z +1.019, dPhi 0.1121, alpha 6.46 deg, beta 75.89 deg, c_geom 0.108; NL shift +1.022 sd, phi 0.1121, c_NL 0.1073, c_NL(sd full) 0.1069; dg lin +0.00028, 2nd +0.00028
+grid128g0.05 [foot]: z +1.020, dPhi 0.112, alpha 24.90 deg, beta 0.00 deg, c_geom 0.1078; dg lin +0.00028, 2nd +0.00028
+grid128g0.1 [total]: z +1.055, dPhi 0.0978, alpha 6.02 deg, beta 75.43 deg, c_geom 0.08793; NL shift +1.055 sd, phi 0.09791, c_NL 0.08798, c_NL(sd full) 0.08763; dg lin +0.00030, 2nd +0.00030
+grid128g0.1 [foot]: z +1.055, dPhi 0.09784, alpha 22.74 deg, beta 0.00 deg, c_geom 0.08788; dg lin +0.00030, 2nd +0.00030
