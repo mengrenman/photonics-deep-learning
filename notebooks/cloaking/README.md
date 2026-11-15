@@ -55,7 +55,7 @@ this in the quasi-static range and reaches at most 8 dB, in bands of larger size
 scanned.
 
 **05. Cloaking in the testbed.** Gradient descent on a shell of pixels hides a dielectric core from
-one transmitter to 46 dB on the grid it was tuned on (50 dB in another run; see the limits below).
+one transmitter to 46.5 dB on the grid it was tuned on (50 dB in another run; see the limits below).
 The design does not transfer: evaluated on a grid twice as fine it keeps 28 dB, which is the
 mismatch between the two discretizations, while the same pixels re-tuned on the fine grid are deep
 again there. Hiding the core from all 40

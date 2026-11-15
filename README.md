@@ -12,6 +12,311 @@ four MCMC samplers (pCN, pCN-Langevin, MALA, HMC), convergence diagnostics, a MA
 Gaussian reference posterior (Born model) against which the samplers are validated. The contract for every
 module is [docs/DESIGN.md](docs/DESIGN.md).
 
+## Gallery
+
+A selection of results, each with the notebook or report it comes from. The first eight items are
+outputs of the notebooks in [`notebooks/cloaking/`](notebooks/cloaking/README.md), rendered at a
+higher resolution and otherwise unchanged. Those notebooks follow Leonhardt and Philbin,
+*Geometry and Light: The Science of Invisibility* (Dover, 2010). The last two items come from the
+Bayesian testbed itself.
+
+Lengths are in free-space wavelengths, so the wavenumber is k0 = 2 pi, except in the two
+ray-optics items, which use the lens radius and the circle radius a. Every wave result is
+two-dimensional, at one frequency and for one polarization, with the electric field E_z along the
+invariant (z) axis. The one exception, a scalar-wave result for a sphere, is marked where it
+appears.
+
+### Invisibility and cloaking
+
+#### Rays through four classic lenses
+
+<p align="center">
+  <img src="docs/figures/cloaking_lens_rays.png" width="660" alt="Rays traced through the Luneburg lens, Maxwell's fish-eye, the Eaton lens and the invisible sphere">
+</p>
+
+*Rays traced through four graded-index media, with lengths in lens radii; the gray disk is the
+unit circle. Luneburg lens: parallel rays meet at one point on the rim. Maxwell's fish-eye, here
+filling the whole plane: rays from the dot at (-0.5, 0) are circles that meet again at the square
+at (2, 0). Eaton lens: every ray is turned around and leaves antiparallel to its incoming
+direction. Invisible sphere: every ray turns through a full circle inside and leaves on the
+continuation of its incoming line.*
+
+One ray tracer handles all four profiles. It integrates the ray equation that follows from
+Fermat's principle, written as Newton's law for a unit mass, d^2 r / d xi^2 = grad(n^2 / 2), where
+n is the refractive index and d xi = dl / n along the path. The integrator is an adaptive
+Runge-Kutta method, and the gradient of n^2 comes from automatic differentiation. The Eaton lens
+and the invisible sphere have an index that diverges at the center and need a tighter tolerance.
+Each lens is tested on the traced rays against its defining property: the focus on the rim, the
+image point, the exit direction and the exit line. The worst error in any of these tests is
+6 x 10^-8. The invisible sphere has no hidden region, so it is not a cloak, but it shows that a
+medium can send every ray once around its center and still return it to its original line. The
+price is a delay: every ray travels an extra optical path of 2 pi lens radii. The same closed-loop
+idea reappears on the second sheet of the cloak in the next item.
+[Notebook 01](notebooks/cloaking/01_rays_and_invisible_lenses.ipynb), sections 2 and 6.
+
+#### The conformal-map cloak
+
+<p align="center">
+  <img src="docs/figures/cloaking_conformal_cloak_rays.png" width="100%" alt="Rays of the conformal-map cloak in virtual space and in physical space">
+</p>
+
+*Left: virtual space (the w plane), two sheets joined along the branch cut (thick black line).
+The dot at its right end is the branch point, a focus of every ellipse. Rays that miss the cut
+stay on the upper sheet, where they are straight lines (blue). Rays that hit it pass to the lower
+sheet, travel once around a closed ellipse (orange) and return to the point where they entered.
+Dotted circle: the farthest a loop can reach. Right: the
+same 20 rays in physical space (the z plane), with lengths in units of the circle radius a. Blue:
+outside the circle |z| = a. Orange: inside it, where the lower sheet is mapped. Gray: the hidden
+region, which no ray can reach.*
+
+This is the conformal-map cloak of Leonhardt (2006), section 5 of Leonhardt and Philbin. The
+Zhukovski map
+w = z + a^2/z sends the outside of a circle to one sheet of a Riemann surface and the inside to a
+second sheet. On the second sheet the notebook constructs an index profile in which rays are
+closed Kepler ellipses, so every ray that crosses the cut comes back to its entry point and
+continues on its original line. Each step of the construction is checked numerically on 36 sampled
+rays. Two things the picture does not tell: the hidden region has only 1.8% of the area of the
+disk |z| < a, and every ray through the cut is delayed by the same optical path. The exit rays
+carry no trace of that delay, but a wave would see it as a phase step at the edge of the delayed
+bundle, at all but discrete frequencies. Waves are not computed in this notebook, and the index
+inside the circle is large and varies rapidly.
+[Notebook 01](notebooks/cloaking/01_rays_and_invisible_lenses.ipynb), sections 5 and 6.
+
+#### The exact field of the ideal cylindrical cloak
+
+<p align="center">
+  <img src="docs/figures/cloaking_ideal_cloak_field.png" width="100%" alt="Real part of the electric field around an ideal cylindrical cloak for a plane wave and for a line source">
+</p>
+
+*Real part of E_z around the ideal cylindrical cloak (inner radius 1 and outer radius 2, black
+circles), from the closed-form solution. Left: a plane wave traveling along +x, with ten rays
+drawn in gray. Right: a line source at (-3, 0.8), marked by the star. The two panels have
+different color scales. The inner disk is blank: the solution has no field there. E_z does not
+vanish on the inner circle (red in the left panel), and the next item is about the lining that
+this jump requires.*
+
+The cloak is the medium that transformation optics assigns to a radial map of the empty disk r' < 2
+(virtual space) onto the shell 1 < r < 2, which sends the origin to the whole inner circle. For this
+polarization the field in the shell then comes for free: E_z at a point of the shell is the vacuum
+field at the point of the disk that the map sends there. The notebook builds the anisotropic medium
+from the Jacobian of the map by automatic differentiation and checks, at 50 random points of the
+shell, that the mapped plane wave satisfies the wave equation of that medium to rounding error.
+Outside the cloak the field is exactly the field with nothing there, for any source outside the
+cloak. Nothing enters the inner disk, provided the inner boundary is the right one, which is the
+subject of the next item.
+[Notebook 02](notebooks/cloaking/02_transformation_optics_cylindrical_cloak.ipynb), sections 1 and 2.
+
+#### Why the lining of a cloak matters
+
+<p align="center">
+  <img src="docs/figures/cloaking_lining_laws.png" width="100%" alt="Residual scattering of a truncated cloak against the truncation, for a conducting lining and for a magnetic-wall lining">
+</p>
+
+*Scattering cross-section of the cloak above when it is truncated a distance delta outside its
+inner radius a, relative to the bare conducting cylinder of radius a, against delta/a. Lines: the
+analytic solution. Circles: a numerical ODE solver. Left: a perfectly conducting (PEC) wall or a
+dielectric core of permittivity 4 inside the cloak; dashed, the lowest partial wave of a thin
+conducting wire. The narrow dip lies near the size at which the dielectric core acts as a magnetic
+wall for that partial wave. Right: a magnetic wall (PMC, a boundary on which the tangential
+magnetic field vanishes); dashed, a fourth-power law. For delta/a
+below about 10^-8 the ODE solver sits at its rounding floor.*
+
+A real cylindrical cloak cannot reach its inner radius, where the material parameters are
+singular. Truncated slightly short of it, with the medium otherwise ideal, the cloak scatters
+exactly like a thin object in virtual space, of radius 2 delta for this cloak, and the lining sets
+the boundary condition on that object. A conducting wall makes it a thin conducting wire, which
+leaves 1.5% of the bare cross-section at delta/a = 10^-3 and still 0.05% at 10^-12: in two
+dimensions, for E along the wire, the cross-section of the lowest (angle-independent) partial wave
+of a thin conducting wire falls only like 1/ln^2 of its radius. A magnetic
+wall is compatible with the ideal field, and the residual then falls with the fourth power of
+delta. For this polarization the magnetic wall is what the soft-and-hard-surface lining of
+Greenleaf, Kurylev, Lassas and Uhlmann (2007) reduces to.
+[Notebook 02](notebooks/cloaking/02_transformation_optics_cylindrical_cloak.ipynb), section 4.
+
+#### A cloak of another shape, in a full-wave solver
+
+<p align="center">
+  <img src="docs/figures/cloaking_squircle_fem.png" width="100%" alt="Finite-element fields for a bare squircle, a cloak with a conducting lining and a cloak with a magnetic-wall lining">
+</p>
+
+*Real part of the total E_z from a finite-element solver for a plane wave traveling along +x, at
+30 grid points per wavelength, on one color scale. Left: a bare perfectly conducting squircle,
+x^4 + y^4 = 1, a square with rounded corners. Middle: the same object inside a cloak with a
+conducting lining. Right: a cloak whose inner region is a hole with a magnetic-wall boundary; no
+field is computed inside it (white). Dashed lines: the inner and outer boundaries of the cloak,
+x^4 + y^4 = a^4 and b^4 with a = 1 and b = 2, drawn in all three panels. In the panel titles PEC
+means perfectly conducting and "hole-lined" the magnetic-wall hole.*
+
+The cloak is generated from three ingredients: a coordinate map, its Jacobian from `jax.jacfwd`, and
+the transformation-optics formula that turns the Jacobian into the medium. No material tensor is
+derived by hand, and the squircle differs from the circular cloak in one line, the function that
+defines the shape. The solver uses bilinear finite elements with a perfectly matched layer. At this
+resolution it reproduces the exact cross-sections of a dielectric cylinder, a conducting cylinder
+and a cylindrical hole to within 5%; it is not validated in the singular region next to the lining.
+On this grid the cloak leaves 20% of the cross-section of the bare conducting squircle with the
+conducting lining and 2.3% with the magnetic wall, which hides a cavity and not the conducting
+object. That ordering agrees with the lining laws above, but the three grids tried (15, 20 and 30
+points per wavelength) do not measure those laws: both ratios still fall under refinement, and the
+smaller one is comparable to the solver's own error.
+[Notebook 03](notebooks/cloaking/03_full_wave_cloaks_and_gauge_freedom.ipynb), section 2.
+
+#### Gauge freedom: two media, the same data
+
+<p align="center">
+  <img src="docs/figures/cloaking_gauge_freedom.png" width="780" alt="Field difference between an object and two deformed versions of it">
+</p>
+
+*Magnitude of the difference between the field E_0 of an isotropic object (two dielectric disks, not
+drawn) and the fields E_1 and E_2 of two deformed versions of it, for a plane wave along +x. The
+deformation is a twist combined with a 15% dilation, and it tapers smoothly to the identity at the
+dashed circle. Left ("pull-back"): permittivity and permeability are both transformed as the change
+of coordinates requires, which makes the medium anisotropic; the difference stays inside the circle.
+Right ("naive deformation"): only the permittivity map is deformed and the medium stays isotropic;
+the difference radiates outward. The panels share one color scale, set by the right panel; the left
+panel exceeds it in places.*
+
+For anisotropic media the change of variables behind a cloak is also a non-uniqueness of the
+inverse problem, and the cloak is its singular limit. A smooth invertible map that is the identity
+outside a disk turns an isotropic medium into an anisotropic one whose field outside the disk is
+unchanged, so scattering data measured outside cannot tell the two apart. In the solver, for one
+such map, the transformed medium reproduces the data of the original object (plane waves from 8
+directions, 60 receivers on a circle of radius 3) to 2.8% on the finest grid, with the difference
+falling under refinement, while the naive deformation differs by 77 to 78% on all three grids.
+Isotropic nonmagnetic media in two dimensions, the class this project inverts for, have no such
+freedom: only a conformal map keeps an isotropic medium isotropic, and a conformal map that is the
+identity outside a disk is the identity everywhere. That removes one source of non-uniqueness;
+the limits of finite, noisy data remain.
+[Notebook 03](notebooks/cloaking/03_full_wave_cloaks_and_gauge_freedom.ipynb), sections 3 and 4.
+
+#### Ray-invisible is not wave-invisible
+
+<p align="center">
+  <img src="docs/figures/cloaking_invisible_lens_q.png" width="100%" alt="Scattering efficiency of the invisible lens against its size, exact and semiclassical">
+</p>
+
+*Scattering efficiency Q (the scattering cross-section divided by the diameter) of a cylinder of
+radius R with the index profile of the invisible sphere, against k0 R, its circumference in
+wavelengths, from 2 to 30. Dashed: the semiclassical prediction 4 sin^2(pi k0 R). Solid: exact
+solutions with the central index, which diverges, capped at 8, 12 and 20. Right: a zoom on two
+periods.*
+
+Rays leave this lens on their original lines, but each is delayed by the same optical path, one
+circumference. For waves that delay is one common phase on every partial wave that enters the
+lens, while the partial waves that miss it are untouched. So the cylinder should be nearly
+invisible when k0 R is an integer and scatter most strongly, with Q = 4, halfway between. With the
+center capped at a finite index the exact curves keep the period and never come near zero.
+Integrating the radial equation of the uncapped profile directly (not plotted) nearly recovers the
+prediction: Q = 0.03 at k0 R = 10 and 3.97 at 10.5, the remainder coming from partial waves at the
+edge of the lens. For a sphere, with Q the cross-section divided by pi R^2, the condition is the
+opposite one: Q = 3.95 at k0 R = 10 and 0.06 at 10.5 for scalar waves (not plotted either).
+Every ray through the lens crosses twice the line through the center along the direction of
+incidence. For a sphere that line is a caustic, which a cylinder does not have, and the two
+crossings add an extra phase of pi.
+[Notebook 04](notebooks/cloaking/04_partial_waves_and_scattering_cancellation.ipynb), section 2.
+
+#### Dielectric cloaks found by optimization
+
+<p align="center">
+  <img src="docs/figures/cloaking_designed_shells.png" width="100%" alt="Relative permittivity of three designed shells around a dielectric core">
+</p>
+
+*Relative permittivity of three shells, out to radius 1.4, designed around a core of radius 0.4 and
+permittivity 3 to minimize the energy that core and shell together scatter to 60 receivers on a
+circle of radius 4.5, for line sources (transmitters) on a circle of radius 4. A: optimized for one
+transmitter, at (4, 0), with every pixel free. B: optimized for all 40 transmitters, with every
+pixel free. C: all 40 transmitters, 11 concentric rings. Each shell pixel is confined to values
+between 1 and 4.*
+
+<p align="center">
+  <img src="docs/figures/cloaking_designed_field.png" width="820" alt="Total field of transmitter 0 for the bare core and for the core inside design A">
+</p>
+
+*Real part of the total field of transmitter 0, the line source at (4, 0). It lies to the right
+of the frame, so the wave travels from right to left. Left: the bare core. Right: the core inside
+design A. Solid circle: the core. Dashed circle: the edge of the design region. The receivers lie
+outside the frame.*
+
+The testbed's forward model is differentiable in the permittivity, so a cloak can be searched for
+by gradient-based optimization (L-BFGS-B) of a shell of pixels. For one transmitter at one
+wavelength, the energy scattered to the receivers falls by 46.5 dB relative to the bare core on
+the grid the design was tuned on. That depth is where the optimizer stopped, and it varies by
+several dB between runs. The design is tuned to its grid: with every pixel split in four, so that
+the object is the same and only the discretization changes, it keeps 28 dB, which is the size of
+the difference between the two discretized models for this design. The same pixels re-tuned on the
+finer grid reach 51 dB there. The design also hides the core from one direction only: summed over
+all 40 transmitters, design A scatters 2.4 dB more than the bare core. Hiding the core from all 40
+transmitters at once is far harder, and the designs found, local optima from one or two starts,
+reach 5 to 7 dB. At a signal-to-noise ratio of 30 dB, a test for a known signal against empty
+space barely registers design A from its own transmitter (detection index 1.6, the separation of
+the two hypotheses in standard deviations) when the data come from the grid it was tuned on; with
+data from finer grids the index is 13 to 16. With all 40
+transmitters every design is plainly detectable.
+[Notebook 05](notebooks/cloaking/05_cloaking_meets_inverse_scattering.ipynb), sections 2 and 5.
+
+### Bayesian inverse scattering
+
+#### A posterior, not only an image
+
+<p align="center">
+  <img src="results/Ll_mod_hmc_map/maps_log_eps.png" width="100%" alt="Truth, MAP estimate, posterior mean, posterior standard deviation and z-score for the two-disk-and-ring test object">
+</p>
+
+*The testbed's central output for one test object, two disks and a ring of relative permittivity
+eps_r = 2. The data are simulated: 40 transmitters, 60 receivers, a signal-to-noise ratio of
+30 dB, computed on a 64 x 64 grid and inverted on a 32 x 32 grid. Left to right: the truth, the
+maximum a posteriori estimate (MAP), the posterior mean and the posterior standard deviation, all
+in log eps_r (natural logarithm, 0.69 in the object), and the z-score, (mean - truth) / std. The
+line above the panels lists the run settings: the name of the test object, the sampler, and the
+standard deviation (sigma = 0.5) and correlation length (ell = 0.4 wavelengths) of the prior.*
+
+Hamiltonian Monte Carlo samples the posterior of the permittivity map under a smooth Gaussian
+(Matern) prior on log eps_r. It runs in coordinates whitened by the Laplace approximation, a
+Gaussian fitted to the posterior at the MAP from Gauss-Newton curvature. Under this prior the
+posterior is narrow: its standard deviation in log eps_r is about 0.054 inside the object and
+0.060 outside, 0.12 times that of the prior, and it agrees with the Laplace value to better than
+1% on average and within 10% pixel by pixel. Yet the mean is smoother than the truth. In 10% of
+the pixels of this run the posterior mean is more than three posterior standard deviations from
+the truth, against 0.3% for a posterior that covers the truth. Nearly all of them are within one
+pixel of an edge: the red and blue rings of the last panel, whose title counts |z| > 2 instead. A
+later study ([results/M5_REPORT.md](results/M5_REPORT.md)) attributes the bias of the mean to the
+resolution limit of the data, common to every prior tried: the bias map correlates 0.86 to 0.93
+with that of the truth low-passed at 3 cycles per wavelength. How many pixels then miss by three
+standard deviations depends on the posterior width the prior allows. Convergence is shown only
+within the basin of the MAP.
+[results/REPORT.md](results/REPORT.md), sections 6 and 7.
+
+#### How close can two disks be?
+
+<p align="center">
+  <img src="results/resolution/laplace_maps.png" width="100%" alt="Two disks at four gaps: truth, MAP estimates under two priors and their Laplace standard deviations">
+</p>
+
+*Two disks of radius 0.2 and eps_r = 2 with edge-to-edge gaps g of 0.025, 0.05, 0.1 and 0.25
+wavelengths (rows), reconstructed on a 64 x 64 grid from simulated 30 dB data. Each panel is 1.44
+by 0.9 wavelengths. First three columns, in log eps_r on one scale from -0.09 to 0.87: the truth,
+the MAP (maximum a posteriori estimate) under a smooth (Matern) prior, and the MAP under a
+total-variation (TV) prior. Last two columns: the posterior standard deviation from the Laplace
+approximation (a Gaussian fitted at the MAP) under each prior, on a scale from 0 to 0.2, which the
+TV values exceed around the disk edges.*
+
+The question is whether the data show a gap between the disks. The criterion is a posterior
+probability above 0.95 that log eps_r in the gap lies below both disks by at least half the
+contrast. At the smallest gaps both priors return two maxima joined by a bridge, and they differ
+in how deep the valley between them is. From 0.025 to 0.1 wavelengths the verdict depends on the
+prior and on how the gap is defined; the narrowest gap that both priors call open is 0.1 to 0.15
+wavelengths at this contrast (from the nine gaps of the report, of which the figure shows four).
+This is an image-domain limit and not a noise limit: in both MAPs the valley between the disks is
+about as deep as in the truth low-passed at 2.5 cycles per wavelength (somewhat shallower under
+TV), near the 2 cycles per wavelength that single scattering passes, and the threshold barely
+moves when the signal-to-noise ratio is raised by 10 dB. For comparison, if the two-disk shape is
+known and only the gap, radius, permittivity and position are estimated, the Cramer-Rao bound on
+the standard deviation of the gap estimate equals the gap itself at a gap of 2.6 x 10^-4
+wavelengths, 380 to 580 times smaller than the image threshold. The two limits are defined
+differently, and their ratio is not a loss factor. The uncertainties here are Gaussian
+approximations for one noise realization, and no Markov chain run met the convergence criteria for
+this problem.
+[results/RESOLUTION_REPORT.md](results/RESOLUTION_REPORT.md).
+
 ## Setup
 
 ```bash
