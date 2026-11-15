@@ -1,16 +1,20 @@
-# photonics-dl: a Bayesian inverse scattering testbed
+# photonics-deep-learning
 
-The book chapter this project follows (Campbell and Werner, eds., *Advances in Electromagnetics Empowered
-by Artificial Intelligence and Deep Learning*, Ch. 15, section 15.4.1.1) reconstructs the permittivity of a
-2-D scatterer from multi-static scattering data and reports point estimates only. This package puts a
-posterior on the same problem and samples it with MCMC, to see which features of a reconstruction the data
-determine and which come from the prior.
+Computational electromagnetics and deep learning for photonics, with Bayesian methods, in JAX.
 
-Everything is written from scratch in JAX (float64): a Lippmann-Schwinger forward model with FFT-accelerated
-pixel Green's functions and an adjoint gradient, Gaussian-field priors on log eps_r in whitened coordinates,
-four MCMC samplers (pCN, pCN-Langevin, MALA, HMC), convergence diagnostics, a MAP baseline, and an exact
-Gaussian reference posterior (Born model) against which the samplers are validated. The contract for every
-module is [docs/DESIGN.md](docs/DESIGN.md).
+The repository has two parts so far:
+
+- **A Bayesian inverse-scattering testbed** (`src/bayes_scatter`, with `scripts/` and `results/`): a
+  differentiable 2-D forward model and Markov chain Monte Carlo that put uncertainties on the
+  reconstruction of a scatterer's permittivity. Most of this README describes it.
+- **Exploratory notebooks** in [`notebooks/`](notebooks/README.md), one folder per topic. The first
+  topic is invisibility and cloaking; Mie scattering and other topics are planned.
+
+Deep learning is, so far, an object of study rather than a tool: the testbed follows a chapter of a
+book on AI and deep learning in electromagnetics, and [results/SPAN_TEST.md](results/SPAN_TEST.md)
+tests that chapter's network-based reconstruction. No network is trained in the repository yet;
+learned priors and a neural surrogate for the forward model are among the later milestones in
+[docs/DESIGN.md](docs/DESIGN.md), section 10.
 
 ## Gallery
 
@@ -316,6 +320,20 @@ differently, and their ratio is not a loss factor. The uncertainties here are Ga
 approximations for one noise realization, and no Markov chain run met the convergence criteria for
 this problem.
 [results/RESOLUTION_REPORT.md](results/RESOLUTION_REPORT.md).
+
+## The Bayesian testbed
+
+The book chapter the testbed follows (Campbell and Werner, eds., *Advances in Electromagnetics Empowered
+by Artificial Intelligence and Deep Learning*, Ch. 15, section 15.4.1.1) reconstructs the permittivity of a
+2-D scatterer from multi-static scattering data and reports point estimates only. This package puts a
+posterior on the same problem and samples it with MCMC, to see which features of a reconstruction the data
+determine and which come from the prior.
+
+Everything is written from scratch in JAX (float64): a Lippmann-Schwinger forward model with FFT-accelerated
+pixel Green's functions and an adjoint gradient, Gaussian-field priors on log eps_r in whitened coordinates,
+four MCMC samplers (pCN, pCN-Langevin, MALA, HMC), convergence diagnostics, a MAP baseline, and an exact
+Gaussian reference posterior (Born model) against which the samplers are validated. The contract for every
+module is [docs/DESIGN.md](docs/DESIGN.md).
 
 ## Setup
 
