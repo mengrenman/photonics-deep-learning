@@ -7,13 +7,13 @@
 #
 # - $\varepsilon(\omega,\mathbf k)$ from multiple scattering with a distributed source, checked against a plane-wave solution, the static mixing formulas, and the Bloch modes of notebook 02, which it reproduces through $k^2=k_0^2\varepsilon^T(\omega,\mathbf k)$.
 # - TE: the three second-order coefficients $\tau$, $\lambda$, $\delta$ of notebook 01. Only $\tau$ is resonant and only $\tau$ grows with the rod permittivity, with the slope a current loop gives. $\lambda$ and $\delta$ are a background fixed by the geometry.
-# - The permeability from $\tau$, compared with the O'Brien-Pendry formula, and the apparent permeabilities along $\Gamma X$ and $\Gamma M$, which differ by an amount that is negligible at resonance and comparable to $\mu-1$ far below it.
+# - The permeability from $\tau$, compared with the O'Brien-Pendry formula, and the apparent permeabilities along $\Gamma X$ and $\Gamma M$, which differ through $\delta$: by a few percent of $\mu-1$ at low frequency for a rod permittivity of 100, by more than half of it for 12, and by any factor close to the resonance, where their poles sit at slightly different frequencies.
 # - How far the second-order description reaches: Bloch wavenumbers from the local parameters against the exact ones, and the index anisotropy that $\delta$ predicts.
 # - TM: the second-order coefficient is isotropic by symmetry and vanishes at low frequency, although each rod has a magnetic-dipole moment. A Bloch mode that the nonlocal permittivity cannot see at all.
 #
 # ## Conventions
 #
-# As in notebook 02: $e^{-i\omega t}$, lengths in units of the period $a$, $f=a/\lambda_0$, $\varepsilon_0=\mu_0=c=1$, rod radius $R=0.3$, TM is $\mathbf E$ along the rods and TE is $\mathbf H$ along the rods. $\varphi$ is the angle of $\mathbf k$ from a lattice axis; $\Gamma X$ is $\varphi=0$ and $\Gamma M$ is $\varphi=\pi/4$.
+# As in notebook 02: $e^{-i\omega t}$, lengths in units of the period $a$, $f=a/\lambda_0$, $\varepsilon_0=\mu_0=c=1$, rod radius $R=0.3$, filling fraction $\eta=\pi R^2/a^2=0.283$ ($f$ is always the frequency), TM is $\mathbf E$ along the rods and TE is $\mathbf H$ along the rods. $\varphi$ is the angle of $\mathbf k$ from a lattice axis; $\Gamma X$ is $\varphi=0$ and $\Gamma M$ is $\varphi=\pi/4$.
 
 # %%
 SETUP
@@ -84,7 +84,7 @@ k0 = TWO_PI * 1e-3
 for eps in (12.0, 100.0):
     b = (eps - 1) / (eps + 1)
     rayleigh = 1 + 2 * FILL / (1 / b - FILL - 0.305827 * b * FILL**4 - 0.013362 * b * FILL**8)
-    check(f"(b) TM, eps_r = {eps:g}: area average 1 + f (eps_r - 1) (relative)", rl.driven(k0, (2e-3, 1e-3), R, eps, "TM")[0].real / (1 + FILL * (eps - 1)) - 1, 1e-4)
+    check(f"(b) TM, eps_r = {eps:g}: area average 1 + eta (eps_r - 1) (relative)", rl.driven(k0, (2e-3, 1e-3), R, eps, "TM")[0].real / (1 + FILL * (eps - 1)) - 1, 1e-4)
     e_te = rl.driven(k0, (2e-3, 1e-3), R, eps, "TE", M=6)[0]
     check(f"(b) TE, eps_r = {eps:g}: Rayleigh's series for the square array", e_te[0, 0].real, 2e-5, rayleigh)
     check(f"(b) TE, eps_r = {eps:g}: isotropic at k -> 0", abs(e_te[0, 0] - e_te[1, 1]) + abs(e_te[0, 1]), 1e-5)
@@ -162,7 +162,7 @@ for ax, F, co, eps in ((axs[0], F12, co12, 12.0), (axs[1], F100, co100, 100.0)):
     ax.semilogy(F, get(co, "tau"), color=CAT[0], label=r"$\tau$ (isotropic transverse: magnetic)")
     ax.semilogy(F, -get(co, "delta"), color=CAT[1], label=r"$-\delta$ (anisotropy)")
     ax.semilogy(F, get(co, "lam"), color=CAT[2], label=r"$\lambda$ (longitudinal)")
-    ax.axhline(FILL * (eps - 1) * R**2 / 8, color=INK, ls="--", lw=1, label=r"current loop, $f(\varepsilon_r-1)R^2/8$")
+    ax.axhline(FILL * (eps - 1) * R**2 / 8, color=INK, ls="--", lw=1, label=r"current loop, $\eta(\varepsilon_r-1)R^2/8$")
     ax.set(xlabel=r"$a/\lambda_0$", title=rf"TE, $\varepsilon_r={eps:g}$: coefficients of $k^2$ (units of $a^2$)")
 axs[0].set_ylabel("coefficient"); axs[0].legend(loc="upper left")
 plt.show()
@@ -193,7 +193,7 @@ check("lambda is continuous across the pole of tau (relative change)", above["la
 #
 # **Where $\tau$ comes from.** At low frequency $H_z$ is uniform across the cell, Faraday's law gives an azimuthal field $E_\varphi=i\omega Br/2$ in the rod, and the polarization current $-i\omega(\varepsilon_r-1)E_\varphi$ is a loop with magnetic moment $\omega^2(\varepsilon_r-1)B\,\pi R^4/8$ per unit length. Divided by the cell area this is a magnetization $M=k_0^2\,\tau_{\rm loop}B$ with
 #
-# $$\tau_{\rm loop}=\frac{f(\varepsilon_r-1)R^2}{8},$$
+# $$\tau_{\rm loop}=\frac{\eta(\varepsilon_r-1)R^2}{8},$$
 #
 # the dashed line. The static value of $\tau$ lies below it by a constant. The next cell varies the rod permittivity at a frequency low enough to be static for all of them and fits the dependence.
 
@@ -206,7 +206,7 @@ print("static coefficients (f = 0.001):")
 print("  eps_r      tau        tau - tau_loop     delta       lambda")
 for e, t, d, l in zip(eps_list, tau0, delta0, lam0):
     print(f"{e:7.0f} {t:11.5f} {t - FILL * (e - 1) * R**2 / 8:14.5f} {d:13.5f} {l:11.5f}")
-check("slope of tau against eps_r at large eps_r is the loop value f R^2 / 8", slope, 1e-5, FILL * R**2 / 8)
+check("slope of tau against eps_r at large eps_r is the loop value eta R^2 / 8 (eta = filling fraction)", slope, 1e-5, FILL * R**2 / 8)
 bg = tau0 - FILL * (eps_list - 1) * R**2 / 8
 check("the non-magnetic part of tau saturates (change from eps_r = 100 to 1000)", bg[-1] - bg[-3], 2e-3)
 check("delta saturates (change from eps_r = 100 to 1000)", delta0[-1] - delta0[-3], 2e-3)
@@ -227,9 +227,9 @@ ax.set(xlabel=r"$\varepsilon_r-1$", ylabel=r"static coefficient of $k^2$ (units 
 plt.show()
 
 # %% [markdown]
-# The magnetic part grows linearly with $\varepsilon_r-1$ with exactly the current-loop slope; everything else saturates at about a hundredth of $a^2$. The saturation has a simple reason. The loop is driven by the solenoidal part of $\mathbf E$, which the rod does not screen, so its current grows with $\varepsilon_r-1$. The other three contributions of notebook 01 (quadrupole, dipole from field curvature, second moments) are driven by the part of $\mathbf E$ that polarizes the rod like a dipole, and that field is screened inside by $2/(\varepsilon_r+1)$, so the product with $\varepsilon_r-1$ is bounded. The permeability of the lattice is therefore not "the second-order spatial dispersion" but the part of it that escapes depolarization, and the ratio of the rest to it is of order $1/\varepsilon_r$ off resonance.
+# The magnetic part grows linearly with $\varepsilon_r-1$ with exactly the current-loop slope; everything else saturates, at magnitudes between 0.004 and 0.016 $a^2$ (the printed table). The saturation has a simple reason. The loop is driven by the solenoidal part of $\mathbf E$, which the rod does not screen, so its current grows with $\varepsilon_r-1$. The other three contributions of notebook 01 (quadrupole, dipole from field curvature, second moments) are driven by the part of $\mathbf E$ that polarizes the rod like a dipole, and that field is screened inside by $2/(\varepsilon_r+1)$, so the product with $\varepsilon_r-1$ is bounded. The permeability of the lattice is therefore not "the second-order spatial dispersion" but the part of it that escapes depolarization, and the ratio of the rest to it falls like $1/(\varepsilon_r-1)$ off resonance.
 #
-# This is the Landau-Lifshitz criterion of notebook 01, section 4.1, with numbers. The printed ratio is the left side of their inequality over the right side. It is of order one for rods of ordinary permittivity, where their conclusion applies and a permeability is not a meaningful description of the second-order response, and it grows in proportion to $\varepsilon_r-1$: Merlin's "large permittivity begets high-frequency magnetism", measured. Near the resonance $\tau$ is enhanced further and the criterion is met with more room, which is why metamaterial magnetism is a resonant phenomenon in practice.
+# This is the Landau-Lifshitz criterion of notebook 01, section 4.1, with numbers. The printed ratio is the left side of their inequality over the right side. It is of order one for rods of ordinary permittivity, where their conclusion applies and a permeability is not a meaningful description of the second-order response, and it grows in proportion to $\varepsilon_r-1$: Merlin's "large permittivity begets high-frequency magnetism", in numbers. Two qualifications: the ratio is taken in the static limit, and its numerator is the loop formula, identified with a part of $\tau$ by its scaling with the rod permittivity and not separated from the rest by a computation. Near the resonance $\tau$ is enhanced further and the criterion is met with more room, which is why metamaterial magnetism is a resonant phenomenon in practice.
 #
 # ## 4. The permeability
 #
@@ -352,11 +352,11 @@ print(f"largest k_exact a covered: {rc12[-1, 1]:.2f} (eps_r = 12), {rc100[-1, 1]
 # %% [markdown]
 # At low frequency the direction-specific permeability gives the wavenumber with an error that falls like the fourth power of frequency (the neglected $k^4$ terms), the isotropic one leaves the error of the anisotropy, which falls only like the second power, and no permeability at all is worse again. The difference between the wavenumbers along $\Gamma M$ and $\Gamma X$ at the same frequency is the one $\delta$ predicts. This is the lattice version of Lorentz's intrinsic birefringence: an index that depends on direction in a structure whose $\varepsilon$ and $\mu$ tensors are isotropic by symmetry.
 #
-# Toward the resonance all local variants lose accuracy together, as the Bloch wavenumber grows and the fourth-order terms take over. For both permittivities the direction-specific model is within a percent up to $ka\approx2$ and reaches a few percent at the end of the range. The anisotropy fares worse: near the resonance the second-order prediction (last column) is several times larger than the exact one, because it comes from two permeabilities with different poles, while the exact wavenumbers along $\Gamma X$ and $\Gamma M$ stay within a percent of each other. The isotropic model, which ignores $\delta$, is then no worse than the direction-specific one.
+# Toward the resonance all local variants lose accuracy together, as the Bloch wavenumber grows and the fourth-order terms take over. For $\varepsilon_r=100$ the direction-specific model is within a percent over the range computed, which ends at $ka\approx2$; for $\varepsilon_r=12$ it reaches two percent at the zone boundary (printed table). The anisotropy fares worse: near the resonance the second-order prediction (last column) is several times larger than the exact one, because it comes from two permeabilities with different poles, while the exact wavenumbers along $\Gamma X$ and $\Gamma M$ stay within a percent of each other. Near the zone boundary for $\varepsilon_r=12$ the isotropic model, which ignores $\delta$, is then closer than the direction-specific one; for $\varepsilon_r=100$ at the end of its range the two errors are comparable in size and opposite in sign.
 #
 # ## 6. TM: a second-order coefficient that vanishes, and a mode the permittivity does not see
 #
-# For $\mathbf E$ along the rods the tensor has one component, and by notebook 01 its second-order coefficient $\beta$ is isotropic and always of the form of a permeability, $\mu_\parallel=1/(1-k_0^2\beta)$. Each rod has an in-plane magnetic-dipole moment, with the same loop estimate as in TE, $\beta_{\rm loop}=f(\varepsilon_r-1)R^2/8$.
+# For $\mathbf E$ along the rods the tensor has one component, and by notebook 01 its second-order coefficient $\beta$ is isotropic and always of the form of a permeability, $\mu_\parallel=1/(1-k_0^2\beta)$. Each rod has an in-plane magnetic-dipole moment, with the same loop estimate as in TE, $\beta_{\rm loop}=\eta(\varepsilon_r-1)R^2/8$.
 
 # %%
 def tm_coefficients(f, eps, rho=0.2):
@@ -379,7 +379,7 @@ check("at f = 0.01 beta is less than half a percent of the loop estimate", tm[1,
 assert tm[-1, 3] != tm[-1, 4], "the fourth-order coefficient is not isotropic"
 
 # %% [markdown]
-# The second-order coefficient is isotropic to rounding, as symmetry demands, and the fourth-order one is not. More striking, $\beta$ is not $\beta_{\rm loop}$ at low frequency: it goes to zero like $\omega^2$, so $\mu_\parallel-1$ is of order $\omega^4$ where the dipole estimate gives $\omega^2$. This is the cancellation of notebook 01, section 4, now for a strong rod. The field $E_z$ is not screened by the rod, so the loop current and the second-moment terms are driven by the same unscreened field and cancel, while in TE the screening of the dipolar field breaks the balance in favor of the loop. The magnetic-dipole radiation of the rod is real; in the bulk response it is not a permeability. In Landau and Lifshitz's terms this is a medium whose magnetization is not a meaningful quantity: the polarization current contributes to the moment of the cell as much as the loop does, at any rod permittivity.
+# The second-order coefficient is isotropic to rounding, as symmetry demands, and the fourth-order one is not. More striking, $\beta$ is not $\beta_{\rm loop}$ at low frequency: it goes to zero like $\omega^2$, so $\mu_\parallel-1$ is of order $\omega^4$ where the dipole estimate gives $\omega^2$. This is the cancellation of notebook 01, section 4, now for a strong rod. The limit itself has a one-line reason: at $\omega\to0$ with $\mathbf k$ fixed the term $k_0^2\varepsilon E$ drops out of the driven equation, the field is the plane wave of the source whatever the rods are, and $\langle P\rangle/\langle E\rangle=\eta(\varepsilon_r-1)$ at every $\mathbf k$. So $\beta$ vanishes exactly at zero frequency, for rods of any cross-section, and what the computation adds is the size of the $\omega^2$ term. The field $E_z$ is not screened by the rod, so the loop current and the second-moment terms are driven by the same unscreened field and cancel, while in TE the screening of the dipolar field breaks the balance in favor of the loop. The magnetic-dipole radiation of the rod is real; in the bulk response it is not a permeability. In Landau and Lifshitz's terms this is a medium whose magnetization is not a meaningful quantity: the polarization current contributes to the moment of the cell as much as the loop does, at any rod permittivity (by the static argument; computed here for 12 only).
 #
 # Closer to the resonance the expansion in $k$ fails for a different reason. The cell below follows $\varepsilon_{zz}(\omega,0)$ and $\beta$ through the resonance region.
 
@@ -434,15 +434,15 @@ gamma_pair = rl.bloch_frequencies((1e-3, 0.0), R, 12.0, "TM", M=4, fmax=0.45, ns
 print(f"modes at Gamma: {np.round(gamma_pair, 5)}")
 
 # %% [markdown]
-# The modes that the permittivity misses along $\Gamma X$ are exactly the ones that are odd under the mirror containing $\mathbf k$ (the mode of check (c) along $\Gamma M$ is the same thing for the diagonal mirror). Their $E_z$ averages to zero over the cell with any weight $e^{-i\mathbf k\cdot\mathbf r}$ along the axis, so $\langle\mathbf E\rangle=\langle\mathbf P\rangle=0$ and, by Faraday's law, $\langle\mathbf B\rangle=0$: the mode carries no macroscopic $\mathbf E$ or $\mathbf B$ at all, and a $z$-directed source with this $\mathbf k$ cannot excite it. In the two-tensor language it is the **longitudinal magnetic mode**: a magnetization along $\mathbf k$, whose magnetization current $i\mathbf k\times\mathbf M$ vanishes, existing at the frequency where $\mu(\omega)=0$ with $\mathbf H=-\mathbf M\neq0$ and $\mathbf B=0$. At $\Gamma$ it is degenerate with the transverse mode, as the two components of one in-plane dipole must be. Away from $\Gamma$ the transverse mode moves down in frequency and this one moves up slightly, by about one percent over the scanned range, where a local $\mu(\omega)$ would give it no dispersion at all.
+# The modes that the permittivity misses along $\Gamma X$ are exactly the ones that are odd under the mirror containing $\mathbf k$ (the mode of check (c) along $\Gamma M$ is presumably the same thing for the diagonal mirror; its parity was not computed). Their $E_z$ averages to zero over the cell with any weight $e^{-i\mathbf k\cdot\mathbf r}$ along the axis, so $\langle\mathbf E\rangle=\langle\mathbf P\rangle=0$ and, by Faraday's law, $\langle\mathbf B\rangle=0$: the mode carries no macroscopic $\mathbf E$ or $\mathbf B$ at all, and a $z$-directed source with this $\mathbf k$ cannot excite it. In the two-tensor language it is the **longitudinal magnetic mode**: a magnetization along $\mathbf k$, whose magnetization current $i\mathbf k\times\mathbf M$ vanishes, existing at the frequency where $\mu(\omega)=0$ with $\mathbf H=-\mathbf M\neq0$ and $\mathbf B=0$. At $\Gamma$ it is degenerate with the transverse mode, as the two components of one in-plane dipole must be. Away from $\Gamma$ the transverse mode moves down in frequency and this one moves up slightly, by about one percent over the scanned range, where a local $\mu(\omega)$ would give it no dispersion at all.
 #
 # This is a limit of the single-tensor bookkeeping that is easy to overlook. $\varepsilon(\omega,\mathbf k)$ is a complete description of the response to currents and of the fields $\mathbf E$ and $\mathbf B$, and precisely for that reason it has no place for an excitation that produces neither. In three dimensions the same holds for longitudinal magnetic modes in general.
 #
 # ## Summary
 #
 # - **Method.** The source-driven permittivity agrees with a plane-wave solution, with the static mixing formulas (Rayleigh's series to six digits in TE), and with the Bloch modes.
-# - **TE.** Of the three second-order coefficients only $\tau$ has the resonance pole, and only $\tau$ grows with the rod permittivity, with the current-loop slope $fR^2/8$ exactly. $\lambda$ and $\delta$ are a background of about $0.01\,a^2$ set mostly by the geometry. The permeability of the lattice is the part of the second-order spatial dispersion that escapes depolarization, and the Landau-Lifshitz ratio of that part to the rest is about 3 for $\varepsilon_r=12$ and 20 for $\varepsilon_r=100$ in the static limit.
-# - **One permeability or two.** Along $\Gamma X$ and $\Gamma M$ the apparent permeabilities differ by $\delta$. For $\varepsilon_r=100$ this is a few percent of $\mu-1$ at low frequency and less near resonance; for $\varepsilon_r=12$ it is more than half of $\mu-1$ at low frequency. The index anisotropy this implies is the one found in the exact Bloch wavenumbers.
+# - **TE.** Of the three second-order coefficients only $\tau$ has the resonance pole, and only $\tau$ grows with the rod permittivity, with the current-loop slope $\eta R^2/8$ exactly. $\delta$ (about $-0.01\,a^2$), $\lambda$ (about $0.004\,a^2$) and a part of $\tau$ that is not the loop (about $-0.015\,a^2$) are a background set mostly by the geometry. The permeability of the lattice is the part of the second-order spatial dispersion that escapes depolarization, and the Landau-Lifshitz ratio of that part to the rest is about 3 for $\varepsilon_r=12$ and 20 for $\varepsilon_r=100$ in the static limit.
+# - **One permeability or two.** Along $\Gamma X$ and $\Gamma M$ the apparent permeabilities differ through $\delta$. For $\varepsilon_r=100$ the difference is a few percent of $\mu-1$ at low frequency, for $\varepsilon_r=12$ more than half of it, and close to the resonance it grows for both because the two poles do not coincide. At low frequency the index anisotropy this implies is the one found in the exact Bloch wavenumbers; toward the resonance the second-order prediction overestimates it several times.
 # - **Reach.** With the direction-specific permeability the error of the wavenumber falls like the fourth power of frequency; near the resonance every local variant fails together as $ka$ grows.
 # - **TM.** The second-order coefficient is isotropic by symmetry and vanishes at low frequency: the magnetic dipole of the rod is canceled in the bulk response. Near the rod resonance the permittivity has a $k$-dependent pole and no expansion. The longitudinal magnetic mode exists and is invisible to $\varepsilon(\omega,\mathbf k)$.
 #

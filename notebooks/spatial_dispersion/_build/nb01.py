@@ -422,11 +422,11 @@ c_vac = ((par["vacuum"][:, 0] / par["vacuum"][:, 1]).real - 1) / (2 * np.pi * fs
 c_die = ((par["dielectric"][:, 0] / par["dielectric"][:, 1]).real - 1) / (2 * np.pi * fs) ** 2
 print(f"(mu - 1) / (k0 a)^2 at the lowest frequency: {c_vac[0]:+.4f} (cut in the vacuum), {c_die[0]:+.4f} (cut in the dielectric)")
 mu_vac, mu_die = (par["vacuum"][:, 0] / par["vacuum"][:, 1]).real, (par["dielectric"][:, 0] / par["dielectric"][:, 1]).real
-print(f"range of the retrieved mu over the first band: {mu_vac.min():.3f} to {mu_vac.max():.4f} (cut in the vacuum), {mu_die.min():.4f} to {mu_die.max():.3f} (cut in the dielectric)")
+print(f"range of the retrieved mu from a/lambda = 0.005 to 0.97 of the band edge: {mu_vac.min():.3f} to {mu_vac.max():.4f} (cut in the vacuum), {mu_die.min():.4f} to {mu_die.max():.3f} (cut in the dielectric)")
 assert mu_vac.max() < 1 < mu_die.min(), "the two cuts lie on opposite sides of one"
 
 # %% [markdown]
-# The index is one curve. The retrieved permeability is two: below one when the stack ends in the middle of the vacuum layer, above one when it ends in the middle of the dielectric, with deviations proportional to $(k_0a)^2$ at low frequency and of tens of percent before the band edge. Nothing in this structure is magnetic. In circuit terms the dielectric layer is a shunt capacitance and the cell is a T section in one cut and a $\Pi$ section in the other, whose image impedances are $Z_0\cos(qa/2)$ and $Z_0/\cos(qa/2)$ in the lumped limit. The Bloch admittance is a property of the termination, as Simovski stressed, and the "diamagnetism" of the first cut is the simplest instance of the artifacts that retrievals attribute to $\mu$.
+# The index is one curve. The retrieved permeability is two: below one when the stack ends in the middle of the vacuum layer, above one when it ends in the middle of the dielectric, with deviations proportional to $(k_0a)^2$ at low frequency that become large before the band edge (the printed range: a deficit of about two thirds for one cut and a factor of more than four for the other). Nothing in this structure is magnetic. In circuit terms the dielectric layer is a shunt capacitance and the cell is a T section in one cut and a $\Pi$ section in the other, whose image impedances are $Z_0\cos(qa/2)$ and $Z_0/\cos(qa/2)$ in the lumped limit. The Bloch admittance is a property of the termination, as Simovski stressed, and the "diamagnetism" of the first cut is the simplest instance of the artifacts that retrievals attribute to $\mu$.
 #
 # Both examples say the same thing in different words. The bulk response, in whatever bookkeeping, fixes the waves inside. What happens at a boundary depends on how the response is terminated there, which the bulk tensor does not encode.
 #
