@@ -6,6 +6,7 @@ order, the main findings and the known limits.
 | Folder | Topic |
 |---|---|
 | [`cloaking/`](cloaking/README.md) | Invisibility and cloaking: rays and invisible lenses, transformation optics, full-wave cloaks and gauge freedom, scattering cancellation, designed dielectric cloaks in the testbed |
+| [`spatial_dispersion/`](spatial_dispersion/README.md) | Spatial dispersion and optical magnetism: the Landau-Lifshitz single-tensor description, the nonlocal permittivity of a lattice of high-index rods, how much of it is a permeability, and what a slab retrieval returns instead |
 
 ## Conventions for a topic folder
 
