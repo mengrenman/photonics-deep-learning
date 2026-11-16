@@ -12,7 +12,7 @@ export const meta = {
 
 // Paths are relative to the repository root (the agents start there). Override with args if needed.
 const DIR = (args && args.dir) || 'notebooks/spatial_dispersion'
-const PY = (args && args.python) || '/Users/mengren/anaconda3/envs/photonics-dl/bin/python'
+const PY = (args && args.python) || 'python'   // pass args.python to name the interpreter of the photonics-dl environment
 
 const COMMON = `
 You are reviewing the notebook folder ${DIR} of the photonics-dl repository. Read ${DIR}/README.md and
@@ -210,7 +210,7 @@ const byNotebook = notebooks.map((nb) => ({
 const fixes = await parallel(byNotebook.map((x) => () => agent(`${COMMON}
 Fix pass for ${x.nb}. Edit ONLY ${DIR}/_build/nb${x.nb.slice(0, 2)}.py (the percent-format source of the notebook), then rebuild with
   ${DIR}/_build/build.sh nb${x.nb.slice(0, 2)} ${x.nb}
-(activate nothing; call the build script with PATH set so that "python" and "jupyter" are those next to ${PY}).
+(run it with the photonics-dl environment first on PATH, so that "python" and "jupyter" are that environment's).
 Address each item by a correction, an added computation, or a stated limit, and keep the conventions of the folder: results
 asserted with check(), prose that refers to printed output, American spelling. Do not touch rodlattice.py; if an item needs a
 change there, describe the change in your report and leave it. Do not commit.
