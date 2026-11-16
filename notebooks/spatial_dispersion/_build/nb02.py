@@ -5,7 +5,7 @@
 #
 # ## What this notebook shows
 #
-# - The scattering coefficients of one rod in both polarizations and which of them are magnetic dipoles. The two magnetic-dipole coefficients (dipole along the rod for TE, dipole in the plane for TM) are the same function of frequency, $t^{\rm TE}_0=t^{\rm TM}_1$, and their resonance tends to $k_0R\sqrt{\varepsilon_r}=2.405$ in the high-index limit.
+# - The scattering coefficients of one rod in both polarizations and which of them are magnetic dipoles. The two magnetic-dipole coefficients (dipole along the rod for TE, dipole in the plane for TM) are the same function of frequency for nonmagnetic rods, $t^{\rm TE}_0=t^{\rm TM}_1$, and their resonance tends to $k_0R\sqrt{\varepsilon_r}=2.405$ in the high-index limit.
 # - Lattice sums for the square lattice from a rapidly convergent plane-wave form, checked against brute-force sums at complex frequency.
 # - Bloch modes from a Hermitian form of the multiple-scattering condition, with multiplicities, checked against an independent plane-wave calculation.
 # - Band structures for $\varepsilon_r=12$ and $\varepsilon_r=100$. With $\varepsilon_r=12$ the magnetic resonance sits where the Bloch wavelength is about two periods; with $\varepsilon_r=100$ it sits at a vacuum wavelength of about eight periods and opens a gap in the middle of the Brillouin zone.
@@ -13,7 +13,7 @@
 #
 # ## Conventions
 #
-# Time dependence $e^{-i\omega t}$, so outgoing cylindrical waves are $H_m\equiv H^{(1)}_m$. Lengths are in units of the lattice period, $a=1$, and frequency is quoted as $f=a/\lambda_0=k_0a/2\pi$ (this folder sweeps frequency, so the period and not the wavelength is the unit). $\varepsilon_0=\mu_0=c=1$. TM is the polarization with $\mathbf E$ along the rods ($u=E_z$), TE the one with $\mathbf H$ along the rods ($u=H_z$), as in `docs/DESIGN.md`. The rods have radius $R=0.3$ (filling fraction 0.283) and $\mu=1$. The solver is `rodlattice.py` in this folder.
+# Time dependence $e^{-i\omega t}$, so outgoing cylindrical waves are $H_m\equiv H^{(1)}_m$. Lengths are in units of the lattice period, $a=1$, and frequency is quoted as $f=a/\lambda_0=k_0a/2\pi$ (this folder sweeps frequency, so the period and not the wavelength is the unit). $\varepsilon_0=\mu_0=c=1$. TM is the polarization with $\mathbf E$ along the rods ($u=E_z$), TE the one with $\mathbf H$ along the rods ($u=H_z$), as in `docs/DESIGN.md`. The rods have radius $R=0.3$ (filling fraction $\eta=\pi R^2/a^2=0.283$; $f$ is always the frequency) and $\mu=1$. The solver is `rodlattice.py` in this folder.
 
 # %%
 SETUP
@@ -78,7 +78,7 @@ check("t_0 (TE) = t_1 (TM) at every frequency and permittivity tried (max |diffe
 F_RES = {eps: res[eps][0] / (TWO_PI * np.sqrt(eps) * R) for eps in res}
 
 # %% [markdown]
-# The two columns of the table are equal, and not by accident. With $J_1'=J_0-J_1/x$ and the same relation for $H_1$, the numerator and denominator of $t^{\rm TM}_1$ reduce to $k_1J_0(k_1R)Z_1(k_0R)-k_0J_1(k_1R)Z_0(k_0R)$ with $Z=J$ and $Z=H$, which are $k_1/k_0$ times those of $t^{\rm TE}_0$: the two magnetic-dipole coefficients are the same function. The resonance tends to the first zero of $J_0$ as $\varepsilon_r\to\infty$, slowly. The two dipoles are different objects all the same. In TE the dipole points along the rod; a lattice of such rods can only have $\mu_{zz}$. In TM the dipole lies in the plane and comes with an electric response along $z$ that is never weak: the effective permittivity is at least the area average $1+0.283(\varepsilon_r-1)$, so the wavelength in the lattice is short long before the resonance is reached. The frequency at which the resonance occurs sets the scale of everything that follows: $\lambda_0\approx2.8\,a$ for $\varepsilon_r=12$, a photonic crystal as much as a metamaterial, and $\lambda_0\approx8\,a$ for $\varepsilon_r=100$.
+# The two columns of the table are equal, and not by accident. With $J_1'=J_0-J_1/x$ and the same relation for $H_1$, the numerator and denominator of $t^{\rm TM}_1$ reduce to $k_1J_0(k_1R)Z_1(k_0R)-k_0J_1(k_1R)Z_0(k_0R)$ with $Z=J$ and $Z=H$, which are $k_1/k_0$ times those of $t^{\rm TE}_0$: the two magnetic-dipole coefficients are the same function. (This uses $k_1^2=\varepsilon_rk_0^2$, a nonmagnetic rod in vacuum; with a permeability in the rod the two differ.) The resonance tends to the first zero of $J_0$ as $\varepsilon_r\to\infty$, slowly. The two dipoles are different objects all the same. In TE the dipole points along the rod; a lattice of such rods can only have $\mu_{zz}$. In TM the dipole lies in the plane and comes with an electric response along $z$ that is never weak: the effective permittivity is at least the area average $1+0.283(\varepsilon_r-1)$, so the wavelength in the lattice is short long before the resonance is reached. The frequency at which the resonance occurs sets the scale of everything that follows: $\lambda_0\approx2.8\,a$ for $\varepsilon_r=12$, a photonic crystal as much as a metamaterial, and $\lambda_0\approx8\,a$ for $\varepsilon_r=100$.
 #
 # The next figure shows the two modes for a single rod in a plane wave arriving from the left, at the resonance frequency. Color is the field along the rod; arrows are the other field in the plane. In TE the arrows are $\mathbf E$, proportional to the displacement current, which circulates. In TM the color is $E_z$, proportional to the current along the rod, which flows up on one side and down on the other.
 
@@ -280,7 +280,7 @@ check("the TE singlet and the TM doublet nearly coincide at Gamma (relative diff
 #
 # - **TE, $\varepsilon_r=12$.** The first band reaches the zone boundary before the resonance: at $X$ the Bloch wavelength is two periods at a frequency below the dashed line. The resonance shows up as a flat band that the first band meets near $X$ and $M$; at $X$ the two are split by a small amount and along the rest of the path they overlap in frequency, so there is no gap. Whether one reads the structure near $X$ as Bragg scattering or as magnetism is a matter of taste.
 # - **TM, $\varepsilon_r=12$.** The electric response along the rods makes the index large from the start, so the first band already ends near $a/\lambda_0=0.2$, well below the resonance, and a wide gap follows. Whatever happens at the magnetic resonance happens at large Bloch wavenumber.
-# - **TE, $\varepsilon_r=100$.** The resonance is at a vacuum wavelength of about eight periods. The first band bends over and flattens as it approaches it, a gap opens, and a second band starts at $\Gamma$ above the gap: the shape a resonant permeability gives, with $\mu<0$ in the gap. The single-rod resonance lies just below the top of the first band, not inside the gap: the gap runs from just below the pole of the lattice's permeability, which is slightly above the single-rod resonance, to its zero (notebook 03 computes both).
+# - **TE, $\varepsilon_r=100$.** The resonance is at a vacuum wavelength of about eight periods. The first band bends over and flattens as it approaches it, a gap opens, and a second band starts at $\Gamma$ above the gap: the shape a resonant permeability gives, with $\mu<0$ in the gap. The single-rod resonance lies just below the top of the first band, not inside the gap: the gap runs from just below the pole of the lattice's permeability, which is slightly above the single-rod resonance, to its zero (notebook 03 computes the pole; the zero is the mode at $\Gamma$ printed above).
 #
 # A curiosity in the printed modes: for $\varepsilon_r=12$ the TE mode at $\Gamma$ and the TM pair at $\Gamma$ have almost the same frequency, and the same happens at $M$. This is the identity $t^{\rm TE}_0=t^{\rm TM}_1$ at work. If $u$ is a TE field with only the $m=0$ harmonic around every rod, its electric field is purely azimuthal there, and each Cartesian component of that field is continuous with a continuous normal derivative across the rod surface, so it is a TM solution with $m=\pm1$ character. At $\Gamma$ and $M$ the TE mode in question contains only the harmonics $m=0,\pm4,\dots$, and the map fails only through the small $m=\pm4$ part.
 #
@@ -288,9 +288,9 @@ check("the TE singlet and the TM doublet nearly coincide at Gamma (relative diff
 #
 # For TE the simplest effective-medium description is a static permittivity and the permeability of O'Brien and Pendry. With $\mathbf H$ along the rods and the wavelength outside the rods long, the magnetic field outside is uniform and the field inside is $J_0(k_1r)/J_0(k_1R)$ times it, so the cell average of $B$ over the outside $H$ is
 #
-# $$\mu_{\rm OBP}(\omega)=1-f+f\,\frac{2J_1(x)}{x\,J_0(x)},\qquad x=k_0R\sqrt{\varepsilon_r},$$
+# $$\mu_{\rm OBP}(\omega)=1-\eta+\eta\,\frac{2J_1(x)}{x\,J_0(x)},\qquad x=k_0R\sqrt{\varepsilon_r},\qquad\eta=\frac{\pi R^2}{a^2}\ \text{(filling fraction)},$$
 #
-# with a pole at the zero of $J_0$ and no Lorentz shift, because the depolarizing factor along the axis is zero. The transverse static permittivity of a square array of cylinders is Rayleigh's series, $\varepsilon_{\rm st}=1+2f/\big(\beta^{-1}-f-0.3058\,\beta f^4-\dots\big)$ with $\beta=(\varepsilon_r-1)/(\varepsilon_r+1)$. The model is $k=k_0\sqrt{\varepsilon_{\rm st}\,\mu_{\rm OBP}}$.
+# with a pole at the zero of $J_0$ and no Lorentz shift, because the depolarizing factor along the axis is zero. The transverse static permittivity of a square array of cylinders is Rayleigh's series, $\varepsilon_{\rm st}=1+2\eta/\big(\beta^{-1}-\eta-0.3058\,\beta\eta^4-\dots\big)$ with $\beta=(\varepsilon_r-1)/(\varepsilon_r+1)$. The model is $k=k_0\sqrt{\varepsilon_{\rm st}\,\mu_{\rm OBP}}$.
 
 # %%
 def mu_obp(f, eps):
@@ -327,7 +327,7 @@ plt.show()
 print(" eps_r   first band near X (exact)   model reaches k = pi   pole of mu_OBP   exact / model at X")
 for eps, (fx, fm, fp) in summary.items():
     print(f"{eps:6.0f}   {fx:12.4f}              {fm:12.4f}        {fp:12.4f}      {fx / fm:10.3f}")
-check("eps_r = 100: the model puts the top of the first band within 3 percent", summary[100.0][0] / summary[100.0][1], 0.03, 1.0)
+check("eps_r = 100: the model reaches the zone boundary at X within 3 percent of the exact frequency there", summary[100.0][0] / summary[100.0][1], 0.03, 1.0)
 
 # %% [markdown]
 # For $\varepsilon_r=100$ the local model follows the first band across the whole zone, bends over with it, places the gap, and starts the upper branch at $\Gamma$ at the right frequency. For $\varepsilon_r=12$ the model is good in the lower half of the first band and then overestimates the wavenumber, so it reaches the zone boundary at a lower frequency than the exact band; both do so below the pole of $\mu_{\rm OBP}$. Its upper branch starts near the exact flat band at $\Gamma$ but disperses upward, while the exact band disperses downward. The printed table has the numbers.

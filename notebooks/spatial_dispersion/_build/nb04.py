@@ -138,15 +138,15 @@ for pol, eps, f in [("TM", 12.0, 0.10), ("TE", 12.0, 0.20), ("TE", 100.0, 0.10),
 check("retrieved index at N = 16 equals the Bloch index (relative)", worst, 5e-4)
 
 # %% [markdown]
-# The index is not in question: a slab of any thickness returns the Bloch index, with a small correction that falls like $1/N$ in TE (section 5). The rest of the notebook is about the admittance.
+# The index is not in question: the retrieved index converges to the Bloch index as the slab gets thicker, and one layer is already within a few parts in a thousand (the correction falls like $1/N$ in TE, section 6). The rest of the notebook is about the admittance.
 #
 # ## 3. TM at low frequency: three permeabilities
 #
 # Take $\varepsilon_r=12$ and frequencies far below any resonance. Three procedures assign a permeability to this lattice.
 #
-# 1. **Magnetic dipole of the rod.** The loop estimate of notebook 03, $\mu-1\approx k_0^2f(\varepsilon_r-1)R^2/8$, positive and of order $\omega^2$. Effective-medium formulas built on the $m=\pm1$ scattering coefficient are of this kind.
+# 1. **Magnetic dipole of the rod.** The loop estimate of notebook 03, $\mu-1\approx k_0^2\eta(\varepsilon_r-1)R^2/8$ with $\eta=\pi R^2/a^2$ the filling fraction, positive and of order $\omega^2$. Effective-medium formulas built on the $m=\pm1$ scattering coefficient are of this kind.
 # 2. **Bulk expansion.** $\mu-1=k_0^2\beta/(1-k_0^2\beta)$ with $\beta\propto\omega^2$: zero to order $\omega^2$ (notebook 03, section 6).
-# 3. **Slab.** $\mu=n/y$ from the retrieval.
+# 3. **Slab.** $\mu=n/y$ from the retrieval, with the faces of the slab half a period outside the outer rows of rods.
 
 # %%
 def tm_low_frequency(F, Ns=(1, 4, 16)):
@@ -205,7 +205,7 @@ check("parameters retrieved from one layer predict the reflection of eight (larg
 assert err_bulk.max() > 5 * err_ret.max()
 
 # %% [markdown]
-# All three agree on the index, and they disagree on the sign of $\mu-1$. The slab's value is *diamagnetic*, proportional to $\omega^2$, the same for one layer and for sixteen (to the printed spread, which grows toward the band edge), and it predicts the reflection of a thick slab to the printed accuracy, which the bulk parameters do not. It is nevertheless not a magnetic response of anything. The printed ratio shows what it is: the admittance of the slab exceeds the bulk admittance by $c\,(qa)^2$, where $q$ is the Bloch wavenumber. That is the Bloch admittance of a periodic medium cut between its polarizable elements, the first case of notebook 01, section 5.2. In circuit language the rods are a shunt capacitance concentrated at the center of the cell, the cut is the T section, and the lumped limit would give $c=1/8$; the rods are extended, so $c$ is smaller.
+# All three agree on the index, and they disagree on the sign of $\mu-1$. The slab's value is *diamagnetic*, proportional to $\omega^2$, the same for one layer and for sixteen (to the printed spread, which grows toward the band edge), and it predicts the reflection of a thick slab to the printed accuracy, which the bulk parameters do not. It is nevertheless not a magnetic response of anything. The printed ratio shows what it is: the admittance of the slab exceeds the bulk admittance by $c\,(qa)^2$, where $q$ is the Bloch wavenumber. That is the Bloch admittance of a periodic medium cut between its polarizable elements, the first case of notebook 01, section 5.2. In circuit language the rods are a shunt capacitance concentrated at the center of the cell, the cut is the T section, and the lumped limit would give $c=1/8$. The computed $c$ is 2.7 times smaller. That the rods are extended goes in this direction, but the factor was not derived.
 #
 # Two remarks. The magnetic dipole of the rod, which one might have expected to see, appears in neither the bulk expansion nor the slab at this order. And the bulk parameters are not wrong about the interface in the limit $qa\to0$; they are wrong at order $(qa)^2$, and $q$ is the wavenumber in the lattice, which is large in this polarization.
 #
@@ -368,17 +368,17 @@ ax.set(xlabel="1 / N", ylabel=r"$\varepsilon_{\rm retrieved}/\varepsilon_{\rm bu
 plt.show()
 
 # %% [markdown]
-# In TE a single layer of rods has a permittivity a little under one percent above the bulk value even in the static limit, and the excess falls like $1/N$: it is a fixed surface contribution. The rods polarize each other through their near fields, the rods in the outermost rows have neighbors on one side only, and their polarization differs from that of the rows inside. Extrapolated to $1/N\to0$ the retrieved $\varepsilon$ and $\mu$ are the bulk values of notebook 03 to the printed accuracy, which is the one regime in which the bulk parameters with ordinary boundary conditions are simply right: long wavelength in the lattice and a thick slab. In TM there is no such term, because a static field along the rods is uniform and the rods do not interact.
+# In TE a single layer of rods has a permittivity a little under one percent above the bulk value even in the static limit, and the excess falls like $1/N$: it is a fixed surface contribution. The rods polarize each other through their near fields, the rods in the outermost rows have neighbors on one side only, and their polarization differs from that of the rows inside. Extrapolated to $1/N\to0$ the retrieved $\varepsilon$ is the bulk value of notebook 03 to the printed accuracy, which is the one regime in which the bulk parameters with ordinary boundary conditions are simply right: long wavelength in the lattice and a thick slab. For $\mu$ the test is weak: the extrapolated and bulk values agree to about $10^{-4}$, which is the size of $\mu-1$ itself at this frequency for $\varepsilon_r=12$ and an eighth of it for $\varepsilon_r=100$. In TM there is no such term, because a static field along the rods is uniform and the rods do not interact.
 #
 # So a slab differs from "bulk parameters plus Fresnel" in two ways: a surface layer, static in origin and proportional to $1/N$ in a retrieval, and the $(qa)^2$ departure of the Bloch impedance, which does not go away with thickness. Drude's transition layers and Simovski's Bloch material parameters are the names under which the two appear in the literature.
 #
 # ## Summary
 #
-# - **Index.** A slab of any thickness returns the Bloch index of the bulk calculation.
+# - **Index.** The retrieved index converges to the Bloch index of the bulk calculation with thickness; one layer is within a few parts in a thousand in the cases printed.
 # - **Three permeabilities.** For TM at low frequency: positive from the rod's magnetic dipole, zero at order $\omega^2$ from the bulk expansion, negative from the slab. The slab's value predicts slabs; the bulk's value is the response of the medium to fields.
 # - **Antiresonance.** For TE through the magnetic resonance with lossy rods the retrieved permittivity has a resonant feature with a negative imaginary part. The bulk permittivity has no feature and is passive. Bulk parameters with Fresnel boundary conditions give little more than half of the reflection just below the resonance.
 # - **Mechanism.** The Bloch impedance at the cell boundary differs from the bulk impedance at order $(qa)^2$, downward for a concentrated electric response and upward for a concentrated magnetic one. A resonance of $\mu$ makes $qa$ large, so the departure peaks there.
-# - **Surface layer.** In TE thin slabs carry a static surface term, proportional to $1/N$; the extrapolated parameters are the bulk ones.
+# - **Surface layer.** In TE thin slabs carry a static surface term, proportional to $1/N$; the extrapolated permittivity is the bulk one (the permeability is too close to one at that frequency for the test to say much).
 #
 # What this says about optical magnetism in this structure: the permeability is a correct and economical statement about the bulk response, to second order in $ka$, in one polarization, near resonance and at high rod permittivity (notebook 03). The number a slab returns under the name $\mu$ is a different quantity that mixes this response with the periodicity. Both are legitimate; they answer different questions, and only the index is common to them.
 #

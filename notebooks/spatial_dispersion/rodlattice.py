@@ -1,6 +1,8 @@
 """Multiple scattering for a square lattice of circular rods in two dimensions.
 
-Shared by the notebooks in this folder; notebook 02 derives and validates everything here.
+Shared by the notebooks in this folder. Notebook 02 validates the Mie coefficients, the lattice sums and the mode
+finder, notebook 03 the driven response, notebook 04 the slab solver (the coupling between rows only through the slab
+checks). ``cluster`` and ``cluster_far_field`` are untested, and so is every path with mu != 1 in the rods.
 
 Conventions
 -----------
