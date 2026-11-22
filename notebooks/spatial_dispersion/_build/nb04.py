@@ -7,8 +7,8 @@
 #
 # - An exact solver for a slab of $N$ line arrays of rods, with checks.
 # - Retrieval at normal incidence returns the Bloch index, in agreement with the bulk calculation, and an admittance that is a property of the slab and its termination.
-# - TM at low frequency, where nothing resonates: three values of $\mu-1$ for one lattice, positive of order $\omega^2$ (the magnetic dipole of the rod), zero to order $\omega^2$ (the bulk expansion), and negative of order $\omega^2$ (the slab). The third is the cut-dependent artifact of notebook 01, and it obeys a $(qa)^2$ law.
-# - TE through the magnetic resonance: the retrieved permittivity has an antiresonance, with a negative imaginary part when the rods are lossy, while the bulk permittivity is featureless and passive. Just below the resonance the bulk parameters give little more than half of the reflection of a slab.
+# - TM at low frequency, where nothing resonates: three values of $\mu-1$ for one lattice, positive of order $\omega^2$ (the magnetic dipole of the rod), zero to order $\omega^2$ (the bulk expansion), and negative of order $\omega^2$ (the slab). The third is the cut-dependent artifact of notebook 01, and at low frequency it obeys a $(qa)^2$ law (the printed coefficient is constant to a few percent up to $f=0.03$ and grows toward the band edge).
+# - TE through the magnetic resonance: the retrieved permittivity has an antiresonance, with a negative imaginary part when the rods are lossy, while the bulk permittivity is featureless and passive. Just below the resonance the bulk parameters give only 0.54 to 0.65 of the reflection of a slab (printed ratio of $|r|$).
 # - One picture for both: the ratio of the Bloch impedance to the bulk impedance as a function of $qa$, which goes down when the rods act as a lumped electric response and up when they act as a lumped magnetic one.
 # - TE at low frequency: a static surface layer, visible as a $1/N$ dependence of the retrieved parameters, which extrapolate to the bulk values.
 #
@@ -45,7 +45,7 @@ def homog_slab(k0, d, n, y):
     return r01 * (1 - ph**2) / (1 - r01**2 * ph**2), (1 - r01**2) * ph / (1 - r01**2 * ph**2)
 
 
-print("flux balance and reciprocity, lossless rods (eps_r = 12), oblique incidence, up to the first diffraction orders:")
+print("flux balance and reciprocity, lossless rods (eps_r = 12), normal and oblique incidence (in every case printed only the specular order propagates):")
 worst_flux, worst_rec = 0.0, 0.0
 for pol in ("TM", "TE"):
     for f, ky, N in [(0.25, 0.0, 1), (0.33, 0.7, 4), (0.45, 1.5, 6), (0.8, 0.9, 3)]:
@@ -181,7 +181,11 @@ assert (mu_ret < 1).all() and (mu_loop > 1).all()
 check("bulk: mu - 1 is of order f^4 (exponent between the two lowest frequencies)", np.log((col("mu_bulk")[1] - 1) / (col("mu_bulk")[0] - 1)) / np.log(2), 0.1, 4.0)
 C_TM = (tm[0]["y_ret"][0] / tm[0]["y_bulk"] - 1) / tm[0]["qa"] ** 2
 check("y_ret / y_bulk - 1 = c (qa)^2 at low frequency: c at f = 0.01 against f = 0.02", (tm[1]["y_ret"][0] / tm[1]["y_bulk"] - 1) / tm[1]["qa"] ** 2 / C_TM, 0.02, 1.0)
-print(f"coefficient c = {C_TM:.4f}; a lumped shunt element cut midway between elements would give 1/8")
+print(f"coefficient c = {C_TM:.4f}; a lumped shunt element cut midway between elements gives 1/12 = {1 / 12:.4f} against the Bloch index "
+      f"(ratio {1 / 12 / C_TM:.2f}) and 1/8 against the static line admittance")
+# y_bulk is the reference here; for TM it equals the Bloch index up to terms beyond (qa)^2, because mu_bulk - 1 is of order f^4
+check("TM: y_bulk equals n_Bloch to well below c (qa)^2 at f = 0.01 (relative difference over C_TM (qa)^2)",
+      abs(tm[0]["y_bulk"] / tm[0]["nB"] - 1) / (C_TM * tm[0]["qa"] ** 2), 0.01)
 
 fig, axs = plt.subplots(1, 2, figsize=(11, 4))
 ax = axs[0]
@@ -205,7 +209,7 @@ check("parameters retrieved from one layer predict the reflection of eight (larg
 assert err_bulk.max() > 5 * err_ret.max()
 
 # %% [markdown]
-# All three agree on the index, and they disagree on the sign of $\mu-1$. The slab's value is *diamagnetic*, proportional to $\omega^2$, the same for one layer and for sixteen (to the printed spread, which grows toward the band edge), and it predicts the reflection of a thick slab to the printed accuracy, which the bulk parameters do not. It is nevertheless not a magnetic response of anything. The printed ratio shows what it is: the admittance of the slab exceeds the bulk admittance by $c\,(qa)^2$, where $q$ is the Bloch wavenumber. That is the Bloch admittance of a periodic medium cut between its polarizable elements, the first case of notebook 01, section 5.2. In circuit language the rods are a shunt capacitance concentrated at the center of the cell, the cut is the T section, and the lumped limit would give $c=1/8$. The computed $c$ is 2.7 times smaller. That the rods are extended goes in this direction, but the factor was not derived.
+# All three agree on the index, and they disagree on the sign of $\mu-1$. The slab's value is *diamagnetic*, proportional to $\omega^2$ at the lowest frequencies (the printed coefficient grows in magnitude toward the band edge), the same for one layer and for sixteen (to the printed spread, which grows toward the band edge), and it predicts the reflection of a thick slab to the printed accuracy, which the bulk parameters do not. It is nevertheless not a magnetic response of anything. The printed ratio shows what it is: the admittance of the slab exceeds the bulk admittance by $c\,(qa)^2$ at low frequency, with $c=0.046$ there (the printed column grows to 0.135 at $f=0.17$), where $q$ is the Bloch wavenumber. That is the Bloch admittance of a periodic medium cut between its polarizable elements, the first case of notebook 01, section 5.2. In circuit language the rods are a shunt capacitance concentrated at the center of the cell and the cut is the T section. Its image admittance is $Y_0/\cos(qa/2)$, which exceeds the static line admittance $Y_0$ by $(qa)^2/8$; but the reference here is $y_{\rm bulk}$, which for TM equals the Bloch index to the order that matters (the check above), and the ladder's Bloch index is itself $Y_0\,(qa/2)/\sin(qa/2)$. Against that reference the lumped limit is $\tan(qa/2)/(qa/2)$, so $c=1/12$ (derived and checked on a ladder in notebook 05, section 3; the static line admittance would give $1/8$, which is not the like-for-like reference). The computed $c$ is smaller than $1/12$ by the printed ratio. That the rods are extended and that the space between them carries capacitance too both go in this direction (notebook 05 finds the two factors in closed form for a stack), but the factor for the rods was not derived.
 #
 # Two remarks. The magnetic dipole of the rod, which one might have expected to see, appears in neither the bulk expansion nor the slab at this order. And the bulk parameters are not wrong about the interface in the limit $qa\to0$; they are wrong at order $(qa)^2$, and $q$ is the wavenumber in the lattice, which is large in this polarization.
 #
@@ -265,7 +269,7 @@ assert (m1.imag > -1e-6).all() and (tcol("mb").imag > 0).all()
 # %% [markdown]
 # The bulk permittivity does not notice the magnetic resonance: it is the Maxwell-Garnett-like constant of the lattice with a small positive imaginary part. The retrieved permittivity dips, recovers and overshoots through the resonance, and its imaginary part is negative across it, which for a passive material would be a sign of gain. Nothing is wrong with the slab or the retrieval: the retrieved index is the Bloch index wherever the slab transmits measurably, and $\operatorname{Im}\mu$ stays positive. This is the "antiresonance" of Koschny and coworkers, found here with an exact solver and with a bulk calculation next to it that shows no trace of it. It is a property of the admittance of the terminated lattice and not of the response of the medium to fields.
 #
-# The retrieved curves from one layer and from four coincide on the scale of the figure except in two narrow intervals, near $a/\lambda_0=0.087$ and $0.15$. Those are the frequencies at which the four-layer slab is half a wavelength thick and hardly reflects. The inversion divides by the reflection there and amplifies the small surface correction of section 6, a known hazard of retrieval from thick slabs and no property of the lattice. Elsewhere the retrieved parameters do not depend on thickness, so in the sense of predicting other thicknesses they are the useful ones. The next figure makes that test, and the reverse one for the bulk parameters.
+# The retrieved curves from one layer and from four coincide on the scale of the figure except in narrow intervals, near $a/\lambda_0=0.087$ and $0.15$ (the notebook prints no comparison of the two sets of curves, so this is read from the figure, and a further difference may appear where the four-layer slab is strongly attenuating). The two named intervals are the frequencies at which the four-layer slab is half a wavelength thick and hardly reflects. The inversion divides by the reflection there and amplifies the small surface correction of section 6, a known hazard of retrieval from thick slabs and no property of the lattice. Elsewhere the retrieved parameters depend little on thickness on the scale of the figure (the one-layer excess in TE is about one percent at low frequency, section 6), so in the sense of predicting other thicknesses they are the useful ones. The next figure makes that test, and the reverse one for the bulk parameters.
 
 # %%
 fig, ax = plt.subplots(figsize=(7.2, 4))
@@ -286,7 +290,7 @@ check("bulk parameters miss the reflection near the resonance by more than 0.2",
 # %% [markdown]
 # ## 5. One picture: the Bloch impedance against $qa$
 #
-# Both findings are the same mechanism. Compare the wave impedance $z=E/H$ of a single layer (the Bloch impedance at the cell boundary) with the bulk value $\sqrt{\mu/\varepsilon}$, as a function of the Bloch phase $qa$, for lossless rods on the first band. In the lumped limit a cell whose electric response sits at its center is a T section, with $z_B=z\cos(qa/2)$, and a cell whose magnetic response sits at its center is a $\Pi$ section, with $z_B=z/\cos(qa/2)$.
+# Both findings are consistent with one mechanism, a concentrated electric or magnetic response of the cell (a hypothesis that the lumped sections below illustrate and do not establish). Compare the wave impedance $z=E/H$ of a single layer (the Bloch impedance at the cell boundary) with the bulk value $\sqrt{\mu/\varepsilon}$, as a function of the Bloch phase $qa$, for lossless rods on the first band. In the lumped limit a cell whose electric response sits at its center is a T section, with $z_B=z\cos(qa/2)$, and a cell whose magnetic response sits at its center is a $\Pi$ section, with $z_B=z/\cos(qa/2)$, where $z$ is the static impedance of the line. Relative to the impedance that goes with the Bloch index, $z\,\sin(qa/2)/(qa/2)$, the same two sections give $(qa/2)/\tan(qa/2)$ and $qa/\sin(qa)$ (notebook 05, section 3). The figure shows both pairs. Which reference matches $z_{\rm bulk}$ depends on the case: for TM $z_{\rm bulk}$ is the Bloch-index impedance to order $(qa)^2$ (section 3); for TE near the magnetic resonance $\mu_{\rm bulk}$ is itself resonant and neither pair is a like-for-like limit.
 
 # %%
 def impedance_ratio(pol, eps, F):
@@ -308,9 +312,11 @@ curves = {("TM", 12.0): impedance_ratio("TM", 12.0, np.linspace(0.01, 0.185, 36)
           ("TE", 12.0): impedance_ratio("TE", 12.0, np.linspace(0.01, 0.32, 40)),
           ("TE", 100.0): impedance_ratio("TE", 100.0, np.concatenate([np.linspace(0.01, 0.11, 21), np.linspace(0.112, 0.1262, 30)]))}
 fig, ax = plt.subplots(figsize=(7.2, 4.4))
-qq = np.linspace(0, 2.9, 200)
-ax.plot(qq, np.cos(qq / 2), color=INK, ls="--", lw=1, label=r"lumped electric element, $\cos(qa/2)$")
-ax.plot(qq, 1 / np.cos(qq / 2), color=INK, ls=":", lw=1.2, label=r"lumped magnetic element, $1/\cos(qa/2)$")
+qq = np.linspace(1e-3, 2.9, 200)
+ax.plot(qq, np.cos(qq / 2), color=INK, ls="--", lw=1, label=r"lumped electric element, $\cos(qa/2)$ (static reference)")
+ax.plot(qq, 1 / np.cos(qq / 2), color=INK, ls=":", lw=1.2, label=r"lumped magnetic element, $1/\cos(qa/2)$ (static reference)")
+ax.plot(qq, (qq / 2) / np.tan(qq / 2), color=MUTED, ls="--", lw=1, label=r"same, Bloch-index reference: $(qa/2)/\tan(qa/2)$")
+ax.plot(qq, qq / np.sin(qq), color=MUTED, ls=":", lw=1.2, label=r"same, Bloch-index reference: $qa/\sin(qa)$")
 for (pol, eps), colr in zip(curves, (CAT[1], CAT[2], CAT[0])):
     c = curves[(pol, eps)]
     ax.plot(c[:, 0], c[:, 1], "o-", ms=3, color=colr, label=rf"{pol}, $\varepsilon_r={eps:g}$")
@@ -323,6 +329,8 @@ for key, c in curves.items():
     print(f"{key[0]}, eps_r = {key[1]:g}: ratio {c[0, 1]:.4f} at qa = {c[0, 0]:.2f}; {c[len(c) // 2, 1]:.3f} at qa = {c[len(c) // 2, 0]:.2f}; {c[-1, 1]:.3f} at qa = {c[-1, 0]:.2f} (f = {c[-1, 2]:.4f})")
 ctm, cte12, cte100 = curves[("TM", 12.0)], curves[("TE", 12.0)], curves[("TE", 100.0)]
 assert ((ctm[:, 1] < 1) & (ctm[:, 1] > np.cos(ctm[:, 0] / 2) - 1e-9)).all(), "TM lies between 1 and the lumped electric limit"
+check("TM lies between 1 and the lumped T limit with the Bloch-index reference (count of points outside)",
+      float(((ctm[:, 1] >= 1) | (ctm[:, 1] <= (ctm[:, 0] / 2) / np.tan(ctm[:, 0] / 2))).sum()), 0)
 assert (cte12[cte12[:, 0] > 0.5, 1] < 1).all(), "TE, eps_r = 12, lies below 1 on the first band"
 i_cross = np.argmax(cte100[:, 1] > 1)
 print(f"TE, eps_r = 100: the ratio crosses 1 at qa = {cte100[i_cross, 0]:.2f}, f = {cte100[i_cross, 2]:.4f}, and rises to {cte100[-1, 1]:.2f}")
@@ -330,9 +338,9 @@ check("TE, eps_r = 100: below 1 off resonance, above 1 and below the lumped magn
       float((cte100[:i_cross, 1] < 1).all() and (cte100[i_cross:, 1] > 1).all() and (cte100[i_cross:, 1] < 1 / np.cos(cte100[i_cross:, 0] / 2)).all()), 0, 1.0)
 
 # %% [markdown]
-# Where the rods act mainly as an electric polarizability (TM throughout, TE with $\varepsilon_r=12$ on the first band, TE with $\varepsilon_r=100$ far below resonance) the impedance of the layer falls below the bulk value, toward the T-section curve. In $(\varepsilon,\mu)$ terms the retrieved permittivity is too large and the retrieved permeability too small: the diamagnetism of section 3. Where the rods act as magnetic resonators (TE with $\varepsilon_r=100$ approaching the resonance) the ratio turns around and rises toward the $\Pi$-section curve: the retrieved permeability is too large and the retrieved permittivity too small, which is the antiresonance of section 4. The lumped curves are limits, not fits; the rods fill a good part of the cell.
+# Where the rods act mainly as an electric polarizability (TM throughout, TE with $\varepsilon_r=12$ on the first band, TE with $\varepsilon_r=100$ far below resonance) the impedance of the layer falls below the bulk value. Only for TM is it shown to lie between 1 and the T-section curve (the check above). For TE the deviation at small $qa$ includes the surface term of section 6, and the printed ratio (0.896 at $qa=2.92$) stays far from the T curve. In $(\varepsilon,\mu)$ terms the retrieved permittivity is too large and the retrieved permeability too small: the diamagnetism of section 3. Where the rods act as magnetic resonators (TE with $\varepsilon_r=100$ approaching the resonance) the ratio turns around and rises toward the $\Pi$-section curve: the retrieved permeability is too large and the retrieved permittivity too small, which is the antiresonance of section 4. The lumped curves are limits, not fits; the rods fill a good part of the cell. For TM, the one case where $z_{\rm bulk}$ is the Bloch-index impedance, the points lie between one and the T curve of that reference (the check above), which is the like-for-like bound; the static-reference curves are drawn as well, for comparison with the line admittance of the ladder.
 #
-# The departure is governed by $qa$, the phase of the Bloch wave across one cell, not by $a/\lambda_0$. A permeability resonance drives $q$ up, so the departure is largest exactly where $\mu$ is large, at any ratio of period to vacuum wavelength.
+# The departure depends on $qa$, the phase of the Bloch wave across one cell, and its sign and size on whether the electric or the magnetic response dominates (printed ratios at similar $qa$ differ among the three cases). A permeability resonance drives $q$ up, so in the case computed the departure is largest near the resonance.
 #
 # ## 6. TE at low frequency: a surface layer
 #
@@ -368,7 +376,7 @@ ax.set(xlabel="1 / N", ylabel=r"$\varepsilon_{\rm retrieved}/\varepsilon_{\rm bu
 plt.show()
 
 # %% [markdown]
-# In TE a single layer of rods has a permittivity a little under one percent above the bulk value even in the static limit, and the excess falls like $1/N$: it is a fixed surface contribution. The rods polarize each other through their near fields, the rods in the outermost rows have neighbors on one side only, and their polarization differs from that of the rows inside. Extrapolated to $1/N\to0$ the retrieved $\varepsilon$ is the bulk value of notebook 03 to the printed accuracy, which is the one regime in which the bulk parameters with ordinary boundary conditions are simply right: long wavelength in the lattice and a thick slab. For $\mu$ the test is weak: the extrapolated and bulk values agree to about $10^{-4}$, which is the size of $\mu-1$ itself at this frequency for $\varepsilon_r=12$ and an eighth of it for $\varepsilon_r=100$. In TM there is no such term, because a static field along the rods is uniform and the rods do not interact.
+# In TE a single layer of rods has a permittivity a little under one percent above the bulk value even in the static limit, and the excess falls like $1/N$: it is a fixed surface contribution. A likely reason is that the rods polarize each other through their near fields and the rods in the outermost rows have neighbors on one side only, so that their polarization differs from that of the rows inside; this was not tested. Extrapolated to $1/N\to0$ the retrieved $\varepsilon$ is the bulk value of notebook 03 to the printed accuracy, which, in TE, is the one regime computed in which the bulk parameters with ordinary boundary conditions are right to the printed accuracy: long wavelength in the lattice and a thick slab. (In TM the remaining difference is the $c\,(qa)^2$ term of section 3.) For $\mu$ the test is weak: the extrapolated and bulk values agree to about $10^{-4}$, which is the size of $\mu-1$ itself at this frequency for $\varepsilon_r=12$ and an eighth of it for $\varepsilon_r=100$. In TM there is no such term, because a static field along the rods is uniform and the rods do not interact.
 #
 # So a slab differs from "bulk parameters plus Fresnel" in two ways: a surface layer, static in origin and proportional to $1/N$ in a retrieval, and the $(qa)^2$ departure of the Bloch impedance, which does not go away with thickness. Drude's transition layers and Simovski's Bloch material parameters are the names under which the two appear in the literature.
 #
@@ -376,11 +384,11 @@ plt.show()
 #
 # - **Index.** The retrieved index converges to the Bloch index of the bulk calculation with thickness; one layer is within a few parts in a thousand in the cases printed.
 # - **Three permeabilities.** For TM at low frequency: positive from the rod's magnetic dipole, zero at order $\omega^2$ from the bulk expansion, negative from the slab. The slab's value predicts slabs; the bulk's value is the response of the medium to fields.
-# - **Antiresonance.** For TE through the magnetic resonance with lossy rods the retrieved permittivity has a resonant feature with a negative imaginary part. The bulk permittivity has no feature and is passive. Bulk parameters with Fresnel boundary conditions give little more than half of the reflection just below the resonance.
-# - **Mechanism.** The Bloch impedance at the cell boundary differs from the bulk impedance at order $(qa)^2$, downward for a concentrated electric response and upward for a concentrated magnetic one. A resonance of $\mu$ makes $qa$ large, so the departure peaks there.
+# - **Antiresonance.** For TE through the magnetic resonance with lossy rods the retrieved permittivity has a resonant feature with a negative imaginary part. The bulk permittivity has no feature and is passive. Bulk parameters with Fresnel boundary conditions give only 0.54 to 0.65 of the exact reflection just below the resonance (largest error of $|r|$ 0.279 at $f=0.1270$).
+# - **Mechanism.** The Bloch impedance at the cell boundary differs from the bulk impedance: as a $(qa)^2$ law in TM (the only case where that order was checked), downward where the electric response dominates and upward in the one resonant TE case computed. A resonance of $\mu$ makes $qa$ large, so the departure peaks there.
 # - **Surface layer.** In TE thin slabs carry a static surface term, proportional to $1/N$; the extrapolated permittivity is the bulk one (the permeability is too close to one at that frequency for the test to say much).
 #
-# What this says about optical magnetism in this structure: the permeability is a correct and economical statement about the bulk response, to second order in $ka$, in one polarization, near resonance and at high rod permittivity (notebook 03). The number a slab returns under the name $\mu$ is a different quantity that mixes this response with the periodicity. Both are legitimate; they answer different questions, and only the index is common to them.
+# What this says about optical magnetism in this structure: the permeability is a correct and economical statement about the bulk response, to second order in $ka$, in one polarization, near resonance and at high rod permittivity (notebook 03). The number a slab returns under the name $\mu$ is a different quantity that mixes this response with the periodicity. Both are legitimate; they answer different questions. They share the index, and also the parameters themselves in the limit of long wavelength in the lattice and a thick slab (sections 3 and 6).
 #
 # ## Caveats and open ends
 #
